@@ -1,0 +1,56 @@
+project:
+  name: 'ISPP-2024-L1-06'
+  owner: 'L1'
+  teamId: '06'
+  identities: {}
+  notifications:
+    email: 'XXXXXXXXXXX'
+  members:
+    member1:
+      name: 'Alexander'
+      surname: 'Sanchez' 
+      githubUsername: 'alisanhos'
+    member2:
+      name: 'Alvaro'
+      surname: 'Hidalgo' 
+      githubUsername: 'alvhidrod'
+    member3:
+      name: 'Joaquin'
+      surname: 'Aguerri' 
+      githubUsername: 'Joaquin-Arregui'
+    member4:
+      name: 'Samuel'
+      surname: 'Albalat' 
+      githubUsername: 'samalbalat'
+    member5:
+      name: 'Adrian'
+      surname: 'Garcia' 
+      githubUsername: 'adrgarcha'
+    member6:
+      name: 'Pablo'
+      surname: 'Cuenca' 
+      githubUsername: 'pabcueper'
+    member7:
+      name: 'Fran'
+      surname: 'Campos' 
+      githubUsername: 'FranCamposC'
+ member8:
+      name: 'Javi'
+      surname: 'Grosso' 
+      githubUsername: 'javgrogom'
+ member9:
+      name: 'Jose Luis'
+      surname: 'Cobo' 
+      githubUsername: 'JoseLuisCobo17'
+ member10:
+      name: 'Diego'
+      surname: 'Gonzalez' 
+      githubUsername: 'diegonqui'
+ member11:
+      name: 'Antonio'
+      surname: 'Barea' 
+      githubUsername: 'Antonio23337'
+ member12:
+      name: 'Pablo'
+      surname: 'Mateos' 
+      githubUsername: 'pabmatang'
