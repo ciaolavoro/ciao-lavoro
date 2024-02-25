@@ -41,11 +41,11 @@ jobs:
     - name: Ejecuta los tests de Python
       run: |
         cd backend
-        coverage run --source="." manage.py test
-        coverage html 
+        coverage run --branch --source=. ./manage.py test  --keepdb 
+        coverage xml
 
     - name: Sube reporte de cobertura a Codacy
       uses: codacy/codacy-coverage-reporter-action@v1
       with:
           project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-          coverage-reports: backend/coverage.html
+          coverage-reports: backend/coverage.xml
