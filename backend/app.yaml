@@ -1,0 +1,9 @@
+runtime: python312
+service: backend
+
+env_variables:
+  DJANGO_SETTINGS_MODULE: 'ciao_lavoro.settings'
+
+handlers:
+- url: /.*
+  script: auto
