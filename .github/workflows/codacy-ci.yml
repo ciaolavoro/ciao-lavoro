@@ -38,7 +38,7 @@ jobs:
         cd backend
         pip install -r requirements.txt
       
-    - name: Ejecuta los tests
+    - name: Ejecuta los tests de Python
       run: |
         cd backend
         coverage run --source="." manage.py test
