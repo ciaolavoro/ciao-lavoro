@@ -1,0 +1,48 @@
+name: Codacy CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout del codigo fuente
+      uses: actions/checkout@v2
+
+    - name: Configura Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20.11.1'
+
+    - name: Instala dependencias de Node.js
+      run: |
+        cd frontend
+        npm install
+
+    - name: Construye el frontend
+      run: npm run build
+
+    - name: Configura Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.12.2'
+
+    - name: Instala dependencias de Python
+      run: |
+        cd backend
+        pip install -r requirements.txt
+      
+    - name: Ejecuta tests Django
+      run: python manage.py tests
+    
+    - name: Sube cobertura a Codacy
+      run: |
+        curl -L -o coverage-reporter.sh https://coverage.codacy.com/get.sh
+        chmod +x coverage-reporter.sh
+        ./coverage-reporter.sh report -l Python -r coverage.xml
+      env:
+          CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
