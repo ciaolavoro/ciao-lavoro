@@ -24,7 +24,9 @@ jobs:
         npm install
 
     - name: Construye el frontend
-      run: npm run build
+      run: |
+        cd frontend
+        npm run build
 
     - name: Configura Python
       uses: actions/setup-python@v2
@@ -36,13 +38,14 @@ jobs:
         cd backend
         pip install -r requirements.txt
       
-    - name: Ejecuta tests Django
-      run: python manage.py tests
-    
-    - name: Sube cobertura a Codacy
+    - name: Ejecuta los tests
       run: |
-        curl -L -o coverage-reporter.sh https://coverage.codacy.com/get.sh
-        chmod +x coverage-reporter.sh
-        ./coverage-reporter.sh report -l Python -r coverage.xml
-      env:
-          CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
+        cd backend
+        coverage run --source="." manage.py test
+        coverage html 
+
+    - name: Sube reporte de cobertura a Codacy
+      uses: codacy/codacy-coverage-reporter-action@v1
+      with:
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          coverage-reports: backend/coverage.html
