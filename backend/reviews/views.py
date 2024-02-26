@@ -26,5 +26,4 @@ def create_review(request, worker_id):
 
     else:
         form = ReviewForm()
-
     return render(request, 'create_review.html', {'form': form})
