@@ -31,3 +31,5 @@ npm run dev
 ```
 
 6. ✅ ¡Listo! Si no has tenido ningún problema durante proceso, ya puedes comenzar a usar la aplicación y a desarrollarla.
+
+[![Bluejay Dashboard](https://img.shields.io/badge/Bluejay-Dashboard_06-blue.svg)](http://dashboard.bluejay.governify.io/dashboard/script/dashboardLoader.js?dashboardURL=https://reporter.bluejay.governify.io/api/v4/dashboards/tpa-ISPP-2024-GH-ciaolavoro_ciao-lavoro/main)
