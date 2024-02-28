@@ -25,11 +25,10 @@ from api import views
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'groups', views.GroupViewSet)
-router.register(r'accounts', views.AccountViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    #path('account/', include('account.urls', namespace='account')),
+    #path('user/', include('users.urls', namespace='users')),
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

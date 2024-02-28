@@ -1,8 +1,8 @@
 from django.contrib.auth.models import Group, User
-from account.models import Account
+from user.models import User
 from rest_framework import permissions, viewsets
 
-from api.serializers import GroupSerializer, UserSerializer, AccountSerializer
+from api.serializers import GroupSerializer, UserSerializer, UserSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -22,8 +22,8 @@ class GroupViewSet(viewsets.ModelViewSet):
     serializer_class = GroupSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-class AccountViewSet(viewsets.ModelViewSet):
+class UserViewSet(viewsets.ModelViewSet):
 
-    queryset = Account.objects.all()
-    serializer_class = AccountSerializer
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
