@@ -5,7 +5,7 @@ import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Login from './components/auth/Login.jsx'
 import About from './components/about/About.jsx'
-import Users from './components/search/Users.jsx'
+import Services from './components/search/Services.jsx'
 import Profile from './components/user/Profile.jsx'
 import Chat from './components/chat/Chat.jsx'
 import ErrorPage from './components/ErrorPage.jsx'
@@ -26,7 +26,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/search',
-    element: <Users />,
+    element: <Services />,
   },
   {
     path: '/profile/:id',
