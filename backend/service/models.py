@@ -49,8 +49,27 @@ class EnumField(models.IntegerField):
         return name, path, args, kwargs
 
 # Create your models here.
+    
+class Job(models.Model):
+
+    class Meta:
+        verbose_name = "Job"
+        verbose_name_plural = "Jobs"
+
+    name = models.CharField(max_length=100, blank = False)
+    estimated_price = models.PositiveIntegerField(blank = False)
+
+    def __str__(self) -> str:
+        return self.name
+
 
 class Service(models.Model):
+
+    class Meta:
+        verbose_name = "service"
+        verbose_name_plural = "services"
+
+    
     PROFESSIONS = [
         (1, 'Lavandero'),
         (2, 'Celador'),
@@ -59,10 +78,10 @@ class Service(models.Model):
     ]
     profession = EnumField(choices = PROFESSIONS)
     city = models.TextField()
-    works = StringIntegerField()
-    experience = models.IntegerField(validators=[
-            MaxValueValidator(80.0),
-            MinValueValidator(0.0)
-        ])
+    jobs = models.ManyToManyField(Job)
+    experience = models.PositiveIntegerField(validators=[MinValueValidator(0), MaxValueValidator(80)])
     is_active = models.BooleanField(default=True)
     is_promoted = models.BooleanField(default= False)
+
+    def __str__(self):
+        return self.get_profession_display()
