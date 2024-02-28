@@ -28,8 +28,8 @@ class User(AbstractBaseUser):
         if self.birth_date and self.birth_date < sixteen_years_ago:
             raise ValidationError("Debes tener al menos 16 años de edad.")
         eighty_years_ago = timezone.now().date() - timezone.timedelta(days=80*365)
-        if self.birth_date and self.birth_date < sixteen_years_ago:
+        if self.birth_date and self.birth_date < eighty_years_ago:
             raise ValidationError("Debes tener menos de 80 años de edad.")
-    
+
     def __str__(self):
         return self.email
