@@ -1,6 +1,6 @@
 from django.db import models
 
-from backend.user.models import User
+from user.models import User
 
 class Contrato(models.Model):
     worker = models.OneToOneField(User, on_delete = models.CASCADE, related_name = 'worker')
