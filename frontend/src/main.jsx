@@ -9,7 +9,7 @@ import Users from './components/search/Users.jsx'
 import Profile from './components/user/Profile.jsx'
 import Chat from './components/chat/Chat.jsx'
 import ErrorPage from './components/ErrorPage.jsx'
-
+import Service from './components/service/Service.jsx'
 const router = createBrowserRouter([
   {
     path: '/',
@@ -28,6 +28,11 @@ const router = createBrowserRouter([
     path: '/search',
     element: <Users />,
   },
+  ,
+  {
+    path: '/service',
+    element: <Service />,
+  },
   {
     path: '/profile/:id',
     element: <Profile />,
@@ -36,6 +41,7 @@ const router = createBrowserRouter([
     path: '/chat',
     element: <Chat />,
   },
+  
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
