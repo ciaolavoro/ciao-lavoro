@@ -18,7 +18,7 @@ class login_view(APIView):
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
 
-    def post(self, request, format=None):
+    def post(self, request, format_arg=None):
 
         email = request.data.get('email')
         password = request.data.get('password')
