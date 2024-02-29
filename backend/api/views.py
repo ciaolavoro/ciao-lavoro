@@ -1,7 +1,9 @@
 from django.contrib.auth.models import Group
+from django.db.models import Q
+from django.shortcuts import get_object_or_404
 from .models import Contract
 from user.models import User
-from rest_framework import permissions, viewsets
+from rest_framework import permissions, viewsets, generics
 
 from api.serializers import ContractSerializer, GroupSerializer, UserSerializer
 
@@ -12,7 +14,7 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    #permission_classes = [permissions.IsAuthenticated]
 
 
 class GroupViewSet(viewsets.ModelViewSet):
@@ -26,3 +28,17 @@ class GroupViewSet(viewsets.ModelViewSet):
 class ContractViewSet(viewsets.ModelViewSet):
     queryset = Contract.objects.all()
     serializer_class = ContractSerializer
+    
+class ContractClientList(generics.ListAPIView):
+    serializer_class = ContractSerializer
+    def get_queryset(self):
+        user = self.request.user.id
+        queryset= Contract.objects.filter(client=user)
+        return queryset
+    
+class ContractWorkerList(generics.ListAPIView):
+    serializer_class = ContractSerializer
+    def get_queryset(self):
+        user = self.request.user.id
+        queryset = Contract.objects.filter(worker=user)
+        return queryset
