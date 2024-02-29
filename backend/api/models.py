@@ -19,3 +19,6 @@ class Contrato(models.Model):
         ("Ca", "Cancelado"),
         ("Pa", "Pagado")
     ], default='Ne')
+    
+    def __str__(self):
+        return self.description
