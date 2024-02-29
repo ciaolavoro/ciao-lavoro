@@ -33,7 +33,7 @@ class Service(models.Model):
         (1, 'Lavandero'),
         (2, 'Celador'),
         (3, 'Albañil'),
-        
+   
     ]
     profession = EnumField(choices = PROFESSIONS, blank = False)
     city = models.TextField(blank = False)
