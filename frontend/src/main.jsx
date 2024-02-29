@@ -42,7 +42,7 @@ const router = createBrowserRouter([
         element: <Chat />,
       },
     ]
-  },
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
