@@ -18,7 +18,7 @@ class EnumField(models.IntegerField):
         return name, path, args, kwargs
 
 # Create your models here.
-    
+
 class Service(models.Model):
 
     class Meta:
