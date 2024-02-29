@@ -4,7 +4,6 @@ from user.models import User
 from rest_framework import permissions, viewsets, generics
 from api.serializers import ContractSerializer, GroupSerializer, UserSerializer, ServiceSerializer, JobSerializer
 from service.models import Service, Job
-from rest_framework import permissions, viewsets
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -30,7 +29,7 @@ class ContractClientList(generics.ListAPIView):
     serializer_class=ContractSerializer
     def get_queryset(self):
         user=self.request.user.id
-        queryset=Contract.objects.filter(client=1)
+        queryset=Contract.objects.filter(client=user)
         return queryset  
      
 class ContractWorkerList(generics.ListAPIView):
