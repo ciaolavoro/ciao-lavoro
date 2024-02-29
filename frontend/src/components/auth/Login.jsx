@@ -1,15 +1,37 @@
 import { useState } from 'react';
 import { NavLink } from "react-router-dom"
 import Background from "../Background";
+import { loginRequest } from '../../api/login.api'
+import { useNavigate } from 'react-router-dom';
+
 
 const LoginPage = () => {
  const [email, setEmail] = useState('');
  const [password, setPassword] = useState('');
+ const navigate = useNavigate();
+
+
+ async function login(email, password) {
+  try {
+     const res = await loginRequest(email, password);
+     console.log(res.data.status)
+     if (res.data.status === 'success') {
+       navigate('/');
+     } else {
+       alert('Error en el inicio de sesión. Por favor, intente de nuevo.');
+     }
+  } catch (error) {
+     alert('Error en el inicio de sesión. Por favor, intente de nuevo.');
+  }
+ }
+ 
+ 
 
  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Handle login logic here
+  event.preventDefault();
+  login(email, password);
  };
+ 
 
  return (
     <div className="relative font-sans">
