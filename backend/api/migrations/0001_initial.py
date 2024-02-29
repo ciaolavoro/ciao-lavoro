@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("acceptClient", models.BooleanField(default=False)),
+                ("accept_client", models.BooleanField(default=False)),
                 ("description", models.TextField(max_length=500)),
                 ("initial_date", models.DateField()),
                 ("fin_date", models.DateField()),
@@ -46,10 +46,10 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    "acceptWorker",
+                    "accept_worker",
                     models.OneToOneField(
                         on_delete=django.db.models.deletion.CASCADE,
-                        related_name="acceptWorker",
+                        related_name="accept_worker",
                         to="user.user",
                     ),
                 ),

@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterField(
             model_name="contract",
-            name="acceptWorker",
+            name="accept_worker",
             field=models.BooleanField(default=False),
         ),
     ]

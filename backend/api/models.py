@@ -5,8 +5,8 @@ from user.models import User
 class Contract(models.Model):
     worker = models.OneToOneField(User, on_delete = models.CASCADE, related_name = 'worker')
     client = models.OneToOneField(User, on_delete = models.CASCADE, related_name = 'client')
-    acceptWorker = models.BooleanField(default = False)
-    acceptClient = models.BooleanField(default = False)
+    accept_worker = models.BooleanField(default = False)
+    accept_client = models.BooleanField(default = False)
     description = models.TextField(blank=False, max_length=500)
     initial_date = models.DateField()
     fin_date = models.DateField()
@@ -19,6 +19,5 @@ class Contract(models.Model):
         ("Ca", "Cancelado"),
         ("Pa", "Pagado")
     ], default='Ne')
-    
     def __str__(self):
         return self.description

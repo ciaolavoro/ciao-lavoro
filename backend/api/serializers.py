@@ -3,18 +3,16 @@ from rest_framework import serializers
 from .models import Contract
 from user.models import User
 
-
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
 
-
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Group
-        fields = ['url', 'name']
-        
+        fields = ['url', 'name'] 
+              
 class ContractSerializer(serializers.ModelSerializer):
     class Meta:
         model=Contract
