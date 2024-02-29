@@ -8,6 +8,7 @@ import About from './components/about/About.jsx'
 import Users from './components/search/Users.jsx'
 import Profile from './components/user/Profile.jsx'
 import Chat from './components/chat/Chat.jsx'
+import Service from './components/service/Form.jsx'
 import ErrorPage from './components/ErrorPage.jsx'
 
 const router = createBrowserRouter([
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
   {
     path: '/chat',
     element: <Chat />,
+  },
+  {
+    path: '/service/create',
+    element: <Service />,
   },
 ]);
 
