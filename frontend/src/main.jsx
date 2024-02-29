@@ -10,6 +10,17 @@ import Profile from './components/user/Profile.jsx'
 import Chat from './components/chat/Chat.jsx'
 import ErrorPage from './components/ErrorPage.jsx'
 import Root from './components/Root.jsx'
+import Movies from './components/movies/Movies.jsx'
+import Movie from './components/movies/Movie.jsx'
+import Translation from './components/translation/Translation.jsx'
+
+const movieOptions = {
+  method: 'GET',
+	headers: {
+		'X-RapidAPI-Key': '3d2ba4298fmsh27dfae92ac8622cp16eb18jsn97e0f6948e42',
+		'X-RapidAPI-Host': 'moviesdatabase.p.rapidapi.com'
+	}
+}
 
 const router = createBrowserRouter([
   {
@@ -41,6 +52,26 @@ const router = createBrowserRouter([
         path: 'chat',
         element: <Chat />,
       },
+      {
+        path: 'movies',
+        element: <Movies />,
+        loader: async () => {
+          return fetch('https://moviesdatabase.p.rapidapi.com/titles', movieOptions)
+        },
+        children: [
+          {
+            path: ':movieId',
+            element: <Movie />,
+            loader: async ({ params }) => {
+              return fetch(`https://moviesdatabase.p.rapidapi.com/titles/${params.movieId}`, movieOptions)
+            }
+          }
+        ]
+      },
+      {
+        path: 'translation',
+        element: <Translation />,
+      }
     ]
   },
 ]);

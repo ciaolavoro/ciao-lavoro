@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom"
+import ciaoLavoroLogo from "/ciaolavoro-logo.png"
 
 export default function Navbar() {
 
@@ -25,7 +26,7 @@ export default function Navbar() {
             <nav className="flex justify-between items-center sticky w-full h-16 px-6 bg-white border border-gray-300 z-10">
                 <section>
                     <NavLink to="/">
-                        <img src="ciaolavoro-logo.png" alt="Logo de CiaoLavoro" className="w-8 object-cover rounded" />
+                        <img src={ciaoLavoroLogo} alt="Logo de CiaoLavoro" className="w-8 object-cover rounded" />
                     </NavLink>
                 </section>
                 <section>
