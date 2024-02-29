@@ -1,6 +1,6 @@
 from django.contrib.auth.models import Group
 from rest_framework import serializers
-from .models import Contrato
+from .models import Contract
 from user.models import User
 
 
@@ -15,7 +15,7 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         model = Group
         fields = ['url', 'name']
         
-class ContratoSerializer(serializers.ModelSerializer):
+class ContractSerializer(serializers.ModelSerializer):
     class Meta:
-        model=Contrato
-        fields = ['worker', 'client','description','initial_date','fin_date','cost','state']
+        model=Contract
+        fields = '__all__'
