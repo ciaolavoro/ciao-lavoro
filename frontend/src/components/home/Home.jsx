@@ -2,6 +2,7 @@ import DescriptionCard from "./DescriptionCard";
 import BriefcaseIcon from "../icons/BriefcaseIcon";
 import EuroIcon from "../icons/EuroIcon";
 import BankNotesIcon from "../icons/BankNotesIcon";
+import homeBanner from "../../assets/home/home-banner.jpg";
 
 export default function Home() {
 
@@ -12,7 +13,7 @@ export default function Home() {
           <input type="text" placeholder="Buscar servicios de trabajadores" className="w-96 pl-2 border rounded" />
           <button type="submit" className="bg-orange-300 rounded px-3 py-1 font-semibold">Buscar</button>
         </form>
-        <img src="./src/assets/home/home-banner.jpg" alt="Banner de la página de inicio" className="w-full h-[390px] px-28 object-cover" />
+        <img src={homeBanner} alt="Banner de la página de inicio" className="w-full h-[390px] px-28 object-cover" />
       </section>
       <section className="flex justify-center gap-4 px-32 py-6">
         <DescriptionCard icon={<BriefcaseIcon />} title="Encuentre los mejores trabajadores">
