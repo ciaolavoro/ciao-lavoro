@@ -24,5 +24,5 @@ class GroupViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
 class ContratoViewSet(viewsets.ModelViewSet):
-    queryset = Contrato.objects.all()
     serializer_class = ContratoSerializer
+    queryset = Contrato.objects.all()
