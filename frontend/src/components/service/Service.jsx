@@ -5,7 +5,7 @@ export default function Service() {
   const service = {
     photo: "./src/assets/home/talonflame.jpg",
     name: "Talonflame",
-    profesion: "Bird",
+    profession: "Bird",
     city: "Ciudad Luminalia",
     experience: "37",
     tasks: "Puedo volar de un lado a otro y comer pan",
