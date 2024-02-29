@@ -2,7 +2,7 @@ from django.db import models
 
 from user.models import User
 
-class Contrato(models.Model):
+class Contract(models.Model):
     worker = models.OneToOneField(User, on_delete = models.CASCADE, related_name = 'worker')
     client = models.OneToOneField(User, on_delete = models.CASCADE, related_name = 'client')
     acceptWorker = models.OneToOneField(User,on_delete = models.CASCADE, related_name = 'acceptWorker')

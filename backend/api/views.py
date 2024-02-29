@@ -1,9 +1,9 @@
 from django.contrib.auth.models import Group
-from .models import Contrato
+from .models import Contract
 from user.models import User
 from rest_framework import permissions, viewsets
 
-from api.serializers import ContratoSerializer, GroupSerializer, UserSerializer
+from api.serializers import ContractSerializer, GroupSerializer, UserSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -23,6 +23,6 @@ class GroupViewSet(viewsets.ModelViewSet):
     serializer_class = GroupSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-class ContratoViewSet(viewsets.ModelViewSet):
-    queryset = Contrato.objects.all()
-    serializer_class = ContratoSerializer
+class ContractViewSet(viewsets.ModelViewSet):
+    queryset = Contract.objects.all()
+    serializer_class = ContractSerializer
