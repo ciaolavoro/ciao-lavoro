@@ -1,5 +1,10 @@
-import axios from 'axios'
-
 export const loginRequest = async (email, password) => {
-    return axios.post('http://127.0.0.1:8000/user/login/', { email, password });
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+    };
+    return fetch('/api/user/login/', options);
 }
