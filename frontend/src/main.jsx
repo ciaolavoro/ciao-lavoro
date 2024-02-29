@@ -4,7 +4,7 @@ import Home from './components/home/Home.jsx'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Login from './components/auth/Login.jsx'
-import Register from './components/register/Register.jsx'
+//import Register from './components/register/Register.jsx'
 import About from './components/about/About.jsx'
 import Services from './components/search/Services.jsx'
 import Profile from './components/user/Profile.jsx'
@@ -43,16 +43,12 @@ const router = createBrowserRouter([
         path: 'chat',
         element: <Chat />,
       },
+      {
+        path: '/service/create',
+        element: <Service />,
+      },
     ]
-  },
-  {
-    path: '/register',
-    element: <Register />,
-  },
-  {
-    path: '/service/create',
-    element: <Service />,
-  },
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
