@@ -10,6 +10,7 @@ import Profile from './components/user/Profile.jsx'
 import Chat from './components/chat/Chat.jsx'
 import CreateService from './components/service/CreateService.jsx'
 import ErrorPage from './components/ErrorPage.jsx'
+import Service from './components/service/Service.jsx'
 import Root from './components/Root.jsx'
 
 const router = createBrowserRouter([
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: 'search',
         element: <Services />,
+      },
+      {
+        path: '/service',
+        element: <Service />,
       },
       {
         path: 'profile/:id',
