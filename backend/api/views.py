@@ -1,8 +1,9 @@
 from django.contrib.auth.models import Group
 from user.models import User
+from service.models import Service, Job
 from rest_framework import permissions, viewsets
 
-from api.serializers import GroupSerializer, UserSerializer
+from api.serializers import GroupSerializer, UserSerializer, ServiceSerializer, JobSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -20,4 +21,14 @@ class GroupViewSet(viewsets.ModelViewSet):
     """
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class ServiceViewSet(viewsets.ModelViewSet):
+    queryset = Service.objects.all()
+    serializer_class = ServiceSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class JobViewSet(viewsets.ModelViewSet):
+    queryset = Job.objects.all()
+    serializer_class = JobSerializer
     permission_classes = [permissions.IsAuthenticated]

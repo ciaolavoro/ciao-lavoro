@@ -12,7 +12,7 @@ class User(AbstractBaseUser):
     date_joined = models.DateTimeField(default=timezone.now)
     birth_date = models.DateField()
 
-    lenguage = models.CharField(max_length=50, blank=True, null=True)
+    language = models.CharField(max_length=50, blank=True, null=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['name', 'lastname', 'birth_date']
