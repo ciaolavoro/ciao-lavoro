@@ -7,12 +7,10 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
-
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Group
-        fields = ['url', 'name'] 
-              
+        fields = ['url','name']            
 class ContractSerializer(serializers.ModelSerializer):
     class Meta:
         model=Contract
