@@ -27,6 +27,7 @@ const LoginPage = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                className="w-full p-2 mb-4 border border-gray-300 rounded"
                 placeholder='Usuario/Email'
               />
             </label>
