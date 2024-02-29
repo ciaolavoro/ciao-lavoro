@@ -1,7 +1,6 @@
 # Virtual environment
 venv/
 __pycache__/
-entornovirtual/
 
 # Logs
 logs
