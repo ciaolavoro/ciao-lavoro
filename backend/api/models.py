@@ -5,7 +5,7 @@ from user.models import User
 class Contract(models.Model):
     worker = models.OneToOneField(User, on_delete = models.CASCADE, related_name = 'worker')
     client = models.OneToOneField(User, on_delete = models.CASCADE, related_name = 'client')
-    acceptWorker = models.OneToOneField(User,on_delete = models.CASCADE, related_name = 'acceptWorker')
+    acceptWorker = models.BooleanField(default = False)
     acceptClient = models.BooleanField(default = False)
     description = models.TextField(blank=False, max_length=500)
     initial_date = models.DateField()
