@@ -58,6 +58,10 @@ const router = createBrowserRouter([
         element: <ContractPage />,
         errorElement: <ErrorPage />,
       },
+      {
+        path: '/contracts/create',
+        element: <ContractForm />,
+      },
     ]
   }
 ]);
