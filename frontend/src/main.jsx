@@ -9,6 +9,7 @@ import Services from './components/search/Services.jsx'
 import Profile from './components/user/Profile.jsx'
 import Chat from './components/chat/Chat.jsx'
 import CreateService from './components/service/CreateService.jsx'
+import ServiceList from './components/service/ServicePage.jsx'
 import ErrorPage from './components/ErrorPage.jsx'
 import Service from './components/service/Service.jsx'
 import Root from './components/Root.jsx'
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: '/service/create',
         element: <CreateService />,
+      },
+      {
+        path: '/service/list',
+        element: <ServiceList />,
       },
     ]
   }
