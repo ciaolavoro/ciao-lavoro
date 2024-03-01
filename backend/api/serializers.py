@@ -15,12 +15,14 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         model = Group
         fields = ['url', 'name']
 
-class JobSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model: Job
-        fields = '__all__'
 
 class ServiceSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Service
+        fields = '__all__'
+
+
+class JobSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Job
         fields = '__all__'
