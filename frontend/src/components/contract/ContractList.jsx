@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import { getAllContracts } from "../../api/Contract.api";
+import { ContractCard } from './ContractCard'
 
 
 export function ContractList(){
@@ -17,10 +18,7 @@ export function ContractList(){
     }, []);
     return <div>
             {contracts.map(contract => (
-            <div key={contract.id}>
-                <h1>{contract.worker}</h1>
-                <p>{contract.description}</p>
-            </div>
+                <ContractCard key={contract.id} contract={contract}/>
         ))}</div>
     
 }
