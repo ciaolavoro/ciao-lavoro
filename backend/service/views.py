@@ -1,9 +1,7 @@
 from django.shortcuts import render
-from .models import Service
-from .serializers import ServiceSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import generics, viewsets
+from rest_framework import viewsets
 from .models import Service, Job
 from .serializers import ServiceSerializer, JobSerializer
 
@@ -25,10 +23,8 @@ class JobList(APIView):
         jobs = Job.objects.all()
         serializer = JobSerializer(jobs, many=True)
         return Response(serializer.data)
-    
 class JobViewSet(viewsets.ModelViewSet):
     serializer_class = JobSerializer
-
     def get_queryset(self):
         """
         Sobrescribe el método `get_queryset` para filtrar los trabajos
