@@ -32,4 +32,3 @@ class JobViewSet(viewsets.ModelViewSet):
         """
         service_id = self.kwargs['service_id']  # Obtén el ID del servicio de la URL
         return Job.objects.filter(service_id=service_id)
-    
