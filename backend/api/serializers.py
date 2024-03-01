@@ -6,6 +6,7 @@ from service.models import Job, Service
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
+    id = serializers.IntegerField()
     class Meta:
         model = User
         fields = '__all__'
