@@ -3,7 +3,7 @@ from .models import Service
 from .serializers import ServiceSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status, generics, viewsets
+from rest_framework import generics, viewsets
 from .models import Service, Job
 from .serializers import ServiceSerializer, JobSerializer
 
@@ -18,7 +18,7 @@ class ServiceList(APIView):
         services = Service.objects.all()
         serializer = ServiceSerializer(services, many=True)
         return Response(serializer.data)
-    
+
 class JobList(APIView):
     def get(self, request):
         print("Esto es una locura")
