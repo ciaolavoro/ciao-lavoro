@@ -4,7 +4,7 @@ from rest_framework import serializers
 
 class JobSerializer(serializers.ModelSerializer):
     class Meta:
-        model: Job
+        model= Job
         fields = '__all__'
 
 class ServiceSerializer(serializers.ModelSerializer):
