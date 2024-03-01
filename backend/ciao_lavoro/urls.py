@@ -27,7 +27,7 @@ router.register(r'service', views.ServiceViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/', include('user.urls', namespace='user')),
+    path('service/', include('service.urls', namespace='service')),
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('service/', include('service.urls', namespace='service')),
 ]
