@@ -2,9 +2,9 @@ from .models import Service, Job
 from rest_framework import serializers
 
 
-class TaskSerializer(serializers.ModelSerializer):
+class JobSerializer(serializers.ModelSerializer):
     class Meta:
-        model: Job
+        model= Job
         fields = '__all__'
 
 class ServiceSerializer(serializers.ModelSerializer):
