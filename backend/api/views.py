@@ -3,9 +3,11 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from .models import Contract
 from user.models import User
-from rest_framework import permissions, viewsets, generics
 
-from api.serializers import ContractSerializer, GroupSerializer, UserSerializer
+from service.models import Service, Job
+from rest_framework import permissions, viewsets, generics
+from api.serializers import GroupSerializer, UserSerializer, ServiceSerializer, JobSerializer, ContractSerializer
+
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -25,6 +27,7 @@ class GroupViewSet(viewsets.ModelViewSet):
     serializer_class = GroupSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+
 class ContractViewSet(viewsets.ModelViewSet):
     queryset = Contract.objects.all()
     serializer_class = ContractSerializer
@@ -42,3 +45,14 @@ class ContractWorkerList(generics.ListAPIView):
         user = self.request.user.id
         queryset = Contract.objects.filter(worker=user)
         return queryset
+
+class ServiceViewSet(viewsets.ModelViewSet):
+    queryset = Service.objects.all()
+    serializer_class = ServiceSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class JobViewSet(viewsets.ModelViewSet):
+    queryset = Job.objects.all()
+    serializer_class = JobSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
