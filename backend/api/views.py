@@ -27,6 +27,15 @@ class ServiceViewSet(viewsets.ModelViewSet):
     queryset = Service.objects.all()
     serializer_class = ServiceSerializer
 
+
 class JobViewSet(viewsets.ModelViewSet):
-    queryset = Job.objects.all()
     serializer_class = JobSerializer
+
+    def get_queryset(self):
+        """
+        Sobrescribe el método `get_queryset` para filtrar los trabajos
+        basados en el servicio proporcionado en la URL.
+        """
+        service_id = self.kwargs['service_id']  # Obtén el ID del servicio de la URL
+        return Job.objects.filter(service_id=service_id)
+
