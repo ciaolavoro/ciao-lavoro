@@ -32,3 +32,6 @@ dist-ssr
 
 #Database
 backend/db.sqlite3
+
+#Test REST
+backend/api/test.rest
