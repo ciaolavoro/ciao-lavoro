@@ -7,22 +7,30 @@ export function ContractCard({ contract }) {
     const [clientName, setClientName] = useState("");
 
     useEffect(() => {
-        async function loadUsers() {
-            const users = await getAllUsers();
-            for(let i = 0; i < users.data.results.length; i++){
 
-                if(users.data.results[i].id === contract.worker){
-                    setWorkerName(users.data.results[i].name);
+        const getUsers = async () => {
+            try{
+                const users = await getAllUsers();
+                if(users.status === 200){
+                    const data = await users.json();
+                    console.log(contract);
+
+                    for(let i = 0; i < data.results.length; i++){
+                        if (data.results[i].url === contract.worker){
+                            setWorkerName(data.results[i].first_name);
+                        }
+                        else if (data.results[i].url === contract.client){
+                            setClientName(data.results[i].first_name);
+                        }
+                    }
+                }else {
+                    alert('Error al cargar los usuarios');
                 }
-                if(users.data.results[i].id === contract.client){
-                    console.log(users.data.results[i].name);
-                    setClientName(users.data.results[i].name);
-                }
+            } catch (error) {
+                alert('Error al cargar los usuarios');
             }
-            console.log(users.data.results);
-
-        } loadUsers();
-
+        };
+         getUsers();
     }, [contract.worker, contract.client]);
 
 
@@ -34,9 +42,9 @@ export function ContractCard({ contract }) {
 
             <p className="mb-2"><strong>Descripción:</strong> {contract.description}</p>
             <p className="mb-2"><strong>Fecha de inicio:</strong> {contract.initial_date}</p>
-            <p className="mb-2"><strong>Fecha fin:</strong> {contract.fin_date}</p>
+            <p className="mb-2"><strong>Fecha fin:</strong> {contract.end_date}</p>
             <p className="mb-2"><strong>Coste:</strong> {contract.cost} €</p>
-            <p className="mb-2"><strong>Estado:</strong> {contract.state}</p>
+            <p className="mb-2"><strong>Estado:</strong> {contract.status}</p>
         </div>
 
     );
