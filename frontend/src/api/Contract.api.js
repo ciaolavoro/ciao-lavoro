@@ -19,5 +19,5 @@ export const getAllUsers = async () => {
         },
     };
 
-    return fetch('/api/users/', options);
+    return fetch('/api/user/', options);
 }
