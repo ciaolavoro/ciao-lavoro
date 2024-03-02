@@ -1,9 +1,9 @@
 from django.contrib.auth.models import Group
 from user.models import User
 from service.models import Service, Job
-from rest_framework import permissions, viewsets
-
-from api.serializers import GroupSerializer, UserSerializer, ServiceSerializer, JobSerializer
+from rest_framework import permissions, viewsets, generics
+from api.serializers import GroupSerializer, UserSerializer, ServiceSerializer, JobSerializer, ContractSerializer
+from contract.models import Contract
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -30,6 +30,8 @@ class ServiceViewSet(viewsets.ModelViewSet):
 
 class JobViewSet(viewsets.ModelViewSet):
     serializer_class = JobSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
 
     def get_queryset(self):
         """
@@ -39,3 +41,20 @@ class JobViewSet(viewsets.ModelViewSet):
         service_id = self.kwargs['service_id']  # Obtén el ID del servicio de la URL
         return Job.objects.filter(service_id=service_id)
 
+class ContractViewSet(viewsets.ModelViewSet):
+    queryset=Contract.objects.all()
+    serializer_class=ContractSerializer   
+
+class ContractClientList(generics.ListAPIView):
+    serializer_class=ContractSerializer
+    def get_queryset(self):
+        user=self.request.user.id
+        queryset=Contract.objects.filter(client=user)
+        return queryset  
+     
+class ContractWorkerList(generics.ListAPIView):
+    serializer_class=ContractSerializer
+    def get_queryset(self):
+        user=self.request.user.id
+        queryset=Contract.objects.filter(worker=user)
+        return queryset

@@ -8,8 +8,11 @@ import About from './components/about/About.jsx'
 import Services from './components/service/Services.jsx'
 import CreateService from './components/service/CreateService.jsx'
 import ErrorPage from './components/ErrorPage.jsx'
+import Contracts from './components/contract/Contracts.jsx'
 import Service from './components/service/Service.jsx'
 import Root from './components/Root.jsx'
+import ContractForm from './components/contract/ContractForm.jsx'
+
 
 const router = createBrowserRouter([
   {
@@ -40,6 +43,14 @@ const router = createBrowserRouter([
       {
         path: 'service/create',
         element: <CreateService />,
+      },
+      {
+        path:'contracts',
+        element: <Contracts />,
+      },
+      {
+        path: 'contracts/create',
+        element: <ContractForm />,
       },
     ]
   }
