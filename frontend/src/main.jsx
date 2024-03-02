@@ -10,8 +10,10 @@ import Profile from './components/user/Profile.jsx'
 import Chat from './components/chat/Chat.jsx'
 import CreateService from './components/service/CreateService.jsx'
 import ErrorPage from './components/ErrorPage.jsx'
+import Contracts from './components/contract/Contracts.jsx'
 import Service from './components/service/Service.jsx'
 import Root from './components/Root.jsx'
+
 
 const router = createBrowserRouter([
   {
@@ -36,7 +38,7 @@ const router = createBrowserRouter([
         element: <Services />,
       },
       {
-        path: '/service',
+        path: 'service',
         element: <Service />,
       },
       {
@@ -48,8 +50,12 @@ const router = createBrowserRouter([
         element: <Chat />,
       },
       {
-        path: '/service/create',
+        path: 'service/create',
         element: <CreateService />,
+      },
+      {
+        path:'contracts',
+        element: <Contracts />,
       },
     ]
   }
