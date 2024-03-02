@@ -1,35 +1,36 @@
 from django.contrib.auth.models import Group
 from rest_framework import serializers
-from .models import Contract
 from user.models import User
 from service.models import Job, Service
+from contract.models import Contract
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     id = serializers.IntegerField()
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ['url', 'username', 'email', 'groups']
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Group
-        fields = ['url', 'name']
+        fields = ['url', 'name'] 
 
-        
-class ContractSerializer(serializers.ModelSerializer):
+
+class ServiceSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model=Contract
+        model = Service
         fields = '__all__'
 
 
 class JobSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model: Job
+        model = Job
         fields = '__all__'
 
-class ServiceSerializer(serializers.HyperlinkedModelSerializer):
+
+class ContractSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Service
+        model = Contract
         fields = '__all__'
