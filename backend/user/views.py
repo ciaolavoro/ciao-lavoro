@@ -3,6 +3,7 @@ from .models import User
 from django.contrib.auth import login
 from django.http import JsonResponse
 from rest_framework.views import APIView
+from rest_framework.authtoken.models import Token
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 
@@ -18,7 +19,6 @@ class login_view(APIView):
         return super().dispatch(*args, **kwargs)
 
     def post(self, request, format_arg=None):
-
         username = request.data.get('username')
         password = request.data.get('password')
         user = User.objects.filter(username=username, password=password).first()
@@ -31,5 +31,12 @@ class login_view(APIView):
 class logout_view(APIView):
 
     def post(self, request, format=None):
-        request.user.auth_token.delete()
+        username = request.data.get('username')
+        password = request.data.get('password')
+        user = User.objects.filter(username=username, password=password).first()
+        try:
+            token = Token.objects.get(user=user)
+            token.delete()
+        except Token.DoesNotExist:
+            pass
         return JsonResponse({'status': 'success', 'message': 'User logged out successfully'})
