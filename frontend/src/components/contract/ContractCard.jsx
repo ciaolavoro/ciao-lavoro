@@ -1,15 +1,14 @@
-import { getAllUser } from "../../api/Contract.api";
-import {useEffect, useState} from "react";
+import { getAllUsers } from "../../api/contract.api";
+import { useEffect, useState } from "react";
 
 export function ContractCard({ contract }) {
 
     const [workerName, setWorkerName] = useState("");
     const [clientName, setClientName] = useState("");
 
-    //el useEffect lo he hecho con ayuda de ChatGPT
     useEffect(() => {
         async function loadUsers() {
-            const users = await getAllUser();
+            const users = await getAllUsers();
             for(let i = 0; i < users.data.results.length; i++){
 
                 if(users.data.results[i].id === contract.worker){

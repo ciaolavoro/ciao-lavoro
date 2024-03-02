@@ -1,9 +1,23 @@
-import axios from 'axios'
+export const getAllContracts = async () => {
 
-export const getAllContracts = () => {
-    return axios.get('http://localhost:8000/contracts')
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    };
+
+    return fetch('/api/contracts/', options);
 }
 
-export const getAllUser = () => {
-    return axios.get('http://localhost:8000/user/')
+export const getAllUsers = async () => {
+
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    };
+
+    return fetch('/api/users/', options);
 }
