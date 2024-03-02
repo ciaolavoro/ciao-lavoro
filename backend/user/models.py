@@ -1,24 +1,16 @@
 from django.forms import ValidationError
 from django.utils import timezone
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 
-class User(AbstractBaseUser):
-    name = models.CharField(max_length=40)
-    email = models.EmailField()
+class User(AbstractUser):
 
-    date_joined = models.DateTimeField(default=timezone.now)
     birth_date = models.DateField()
-
     language = models.CharField(max_length=50, blank=True, null=True)
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['name', 'lastname', 'birth_date']
-
-    def get_username(self):
-        return self.email
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'birth_date']
 
     def clean(self):
         super().clean()
@@ -32,4 +24,4 @@ class User(AbstractBaseUser):
             raise ValidationError("Debes tener menos de 80 años de edad.")
 
     def __str__(self):
-        return self.email
+        return self.username

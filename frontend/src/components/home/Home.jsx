@@ -3,16 +3,18 @@ import BriefcaseIcon from "../icons/BriefcaseIcon";
 import EuroIcon from "../icons/EuroIcon";
 import BankNotesIcon from "../icons/BankNotesIcon";
 import homeBanner from "../../assets/home/home-banner.jpg";
+import LinkButton from "./LinkButton";
 
 export default function Home() {
 
   return (
     <>
       <section>
-        <form className="flex justify-center gap-2 my-4">
-          <input type="text" placeholder="Buscar servicios de trabajadores" className="w-96 pl-2 border rounded" />
-          <button type="submit" className="bg-orange-300 rounded px-3 py-1 font-semibold">Buscar</button>
-        </form>
+        <div className="flex justify-center gap-x-8 my-4">
+          <LinkButton url="/service/create" title="Crear servicio" />
+          <LinkButton url="/services" title="Servicios disponibles" />
+          <LinkButton url="/contracts" title="Contratos" />
+        </div>
         <img src={homeBanner} alt="Banner de la página de inicio" className="w-full h-[390px] px-28 object-cover" />
       </section>
       <section className="flex justify-center gap-4 px-32 py-6">

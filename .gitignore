@@ -30,3 +30,8 @@ dist-ssr
 # Environment variables
 .env
 
+# Database
+backend/db.sqlite3
+
+# Test REST
+backend/api/test.rest

@@ -5,14 +5,14 @@ import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Login from './components/auth/Login.jsx'
 import About from './components/about/About.jsx'
-import Services from './components/search/Services.jsx'
-import Profile from './components/user/Profile.jsx'
-import Chat from './components/chat/Chat.jsx'
+import Services from './components/service/Services.jsx'
 import CreateService from './components/service/CreateService.jsx'
 import ErrorPage from './components/ErrorPage.jsx'
 import Contracts from './components/contract/Contracts.jsx'
 import Service from './components/service/Service.jsx'
 import Root from './components/Root.jsx'
+import ContractForm from './components/contract/ContractForm.jsx'
+
 
 
 const router = createBrowserRouter([
@@ -26,7 +26,7 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: 'auth',
+        path: 'login',
         element: <Login />,
       },
       {
@@ -34,20 +34,12 @@ const router = createBrowserRouter([
         element: <About />,
       },
       {
-        path: 'search',
+        path: 'services',
         element: <Services />,
       },
       {
         path: 'service',
         element: <Service />,
-      },
-      {
-        path: 'profile/:id',
-        element: <Profile />,
-      },
-      {
-        path: 'chat',
-        element: <Chat />,
       },
       {
         path: 'service/create',
@@ -56,6 +48,10 @@ const router = createBrowserRouter([
       {
         path:'contracts',
         element: <Contracts />,
+      },
+      {
+        path: 'contracts/create',
+        element: <ContractForm />,
       },
     ]
   }
