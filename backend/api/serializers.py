@@ -3,6 +3,7 @@ from rest_framework import serializers
 from .models import Contract
 from user.models import User
 from service.models import Job, Service
+from contract.models import Contract
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -15,7 +16,14 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Group
-        fields = ['url', 'name']
+        fields = ['url', 'name'] 
+
+
+class ServiceSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Service
+        fields = '__all__'
+
 
         
 class ContractSerializer(serializers.ModelSerializer):
@@ -26,10 +34,11 @@ class ContractSerializer(serializers.ModelSerializer):
 
 class JobSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model: Job
+        model = Job
         fields = '__all__'
 
-class ServiceSerializer(serializers.HyperlinkedModelSerializer):
+
+class ContractSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Service
+        model = Contract
         fields = '__all__'
