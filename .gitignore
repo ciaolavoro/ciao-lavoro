@@ -27,9 +27,8 @@ dist-ssr
 *.sln
 *.sw?
 
-
-
 # Environment variables
 .env
 
+#Database
 backend/db.sqlite3
