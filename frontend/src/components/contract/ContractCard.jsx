@@ -1,4 +1,4 @@
-import { getAllUsers } from "../../api/contract.api";
+import { getAllUsers } from "../../api/Contract.api";
 import { useEffect, useState } from "react";
 
 export function ContractCard({ contract }) {
