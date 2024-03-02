@@ -5,5 +5,9 @@ export const getAllContracts = () => {
 }
 
 export const getAllUser = () => {
-    return axios.get('http://localhost:8000/user/')
+    return axios.get('http://localhost:8000/user')
+}
+
+export const getAllServices = () => {
+    return axios.get('http://localhost:8000/service')
 }

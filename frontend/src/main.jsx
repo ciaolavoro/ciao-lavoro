@@ -13,6 +13,7 @@ import ErrorPage from './components/ErrorPage.jsx'
 import ContractPage from './components/contract/ContractPage.jsx'
 import Service from './components/service/Service.jsx'
 import Root from './components/Root.jsx'
+import ContractForm from './components/contract/ContractForm.jsx'
 
 
 const router = createBrowserRouter([

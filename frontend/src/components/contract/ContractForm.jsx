@@ -1,9 +1,32 @@
-import { useState } from "react";
-import { getAllUser } from "../../api/Contract.api";
+import { useState, useEffect } from "react";
+import { getAllUser, getAllServices } from "../../api/Contract.api";
 
-const createContractURL = '/api/service/create';
+
+const createContractURL = './api/contracts/create';
 
 export default function ContractForm(){
+    const [users, setUsers] = useState([]);
+    const [services, setService] = useState([]);
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const userData = await getAllUser();
+                const serviceData = await getAllServices();
+                setUsers(userData);
+                setService(serviceData);
+                console.log(users);
+                console.log(services);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        
+        }fetchData(); 
+        
+    }, []);
+    
+    
+    
     
 
     const [formData, setFormData] = useState({
@@ -16,6 +39,7 @@ export default function ContractForm(){
         fin_date: Date.now(),
         cost : 1,
         state : '',
+        service: '',
     });
 
     const handleChange = e => {
@@ -46,11 +70,19 @@ export default function ContractForm(){
             <h1 className="text-4xl font-bold">Creación del Contrato</h1>
             <div className="flex items-center gap-2">
                 <label>Trabajador:</label>
-                <input type="text" name="worker" value={formData.worker} onChange={handleChange} className="px-2 py-1 border rounded" />
+                <select name="worker" value={formData.worker} onChange={handleChange} className="px-2 py-1 border rounded">
+                    {users.map(user => (
+                        <option key={user.id} value={user.id}>{user.name}</option>
+                    ))}
+                </select>
             </div>
             <div className="flex items-center gap-2">
                 <label>Cliente:</label>
-                <input type="text" name="client" value={formData.client} onChange={handleChange} className="px-2 py-1 border rounded" />
+                <select name="client" value={formData.client} onChange={handleChange} className="px-2 py-1 border rounded">
+                    {users.map(user => (
+                        <option key={user.id} value={user.id}>{user.name}</option>
+                    ))}
+                </select>
             </div>
             <div className="flex flex-col items-center gap-2">
                 <div className="flex gap-2">
@@ -82,11 +114,20 @@ export default function ContractForm(){
             <div className="flex items-center gap-2">
                 <label>Estado:</label>
                 <select name="state" value={formData.state} onChange={handleChange} className="px-2 py-1 border rounded">
-                    <option value="Negociacion">Negociacion</option>
-                    <option value="Aceptado">Aceptado</option>
-                    <option value="En proceso">En proceso</option>
-                    <option value="Cancelado">Cancelado</option>
-                    <option value="Pagado">Pagado</option>
+                    <option value="Ne">Negociacion</option> 
+                    <option value="Ac">Aceptado</option>
+                    <option value="En">En proceso</option>
+                    <option value="Fi">Finalizado</option>
+                    <option value="Ca">Cancelado</option>
+                    <option value="Pa">Pagado</option>
+                </select>
+            </div>
+            <div className="flex items-center gap-2">
+                <label>Servicio:</label>
+                <select name="service" value={formData.service} onChange={handleChange} className="px-2 py-1 border rounded">
+                    {services.map(service => (
+                        <option key={service.id} value={service.id}>{service.name}</option>
+                    ))}
                 </select>
             </div>
             <button type="submit" className="bg-orange-300 rounded px-3 py-1 font-semibold">Crear Contrato</button>
