@@ -23,11 +23,15 @@ router = routers.DefaultRouter()
 router.register(r'user', views.UserViewSet)
 router.register(r'groups', views.GroupViewSet)
 router.register(r'service', views.ServiceViewSet)
+router.register(r'contracts', views.ContractViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/', include('user.urls', namespace='user')),
+    path('service/', include('service.urls', namespace='service')),
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('service/', include('service.urls', namespace='service')),
+    path('clientContractList/', views.ContractClientList.as_view(), name="client-contracts"),
+    path('workerContractList/', views.ContractWorkerList.as_view(), name="worker-contracts"),
+    path('service/', include('service.urls', namespace='services'))
 ]
