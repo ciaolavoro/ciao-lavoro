@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAllContracts } from "../../api/contract.api";
+import { getAllContracts } from "../../api/Contract.api";
 import { ContractCard } from './ContractCard'
 
 

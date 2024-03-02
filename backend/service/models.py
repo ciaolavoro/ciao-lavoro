@@ -34,7 +34,7 @@ class Service(models.Model):
         (2, 'Celador'),
         (3, 'Albañil'),
     ]
-    profession = EnumField(choices = PROFESSIONS, blank = False)
+    profession = models.IntegerField(choices = PROFESSIONS, blank = False)
     city = models.TextField(blank = False)
     experience = models.PositiveIntegerField(blank = False,validators=[MinValueValidator(0), MaxValueValidator(80)])
     #Aquí se estipulan si está ofertando trabajo con este servicio
@@ -44,6 +44,11 @@ class Service(models.Model):
 
     def __str__(self):
         return self.get_profession_display()
+    
+    
+            
+        
+    
 
 class Job(models.Model):
 
