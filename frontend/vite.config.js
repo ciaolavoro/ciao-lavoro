@@ -8,7 +8,7 @@ export default () => {
     server: {
       proxy: {
         '/api': {
-          target: URL_DEL_BACKEND,
+          target: 'http://127.0.0.1:8000/',   // poner url nueva de despliegue de backend
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, ''),
         },

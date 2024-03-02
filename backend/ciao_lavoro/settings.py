@@ -60,7 +60,7 @@ MIDDLEWARE = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
-    os.environ()
+    # os.environ()
 ]
 
 ROOT_URLCONF = 'ciao_lavoro.urls'
