@@ -3,6 +3,7 @@ from rest_framework import serializers
 from contract.models import Contract
 from user.models import User
 from service.models import Job, Service
+from contract.models import Contract
 
 
 class UserSerializer(serializers.ModelSerializer):
