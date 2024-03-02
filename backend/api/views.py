@@ -24,6 +24,25 @@ class GroupViewSet(viewsets.ModelViewSet):
     serializer_class = GroupSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+
+class ContractViewSet(viewsets.ModelViewSet):
+    queryset = Contract.objects.all()
+    serializer_class = ContractSerializer
+    
+class ContractClientList(generics.ListAPIView):
+    serializer_class = ContractSerializer
+    def get_queryset(self):
+        user = self.request.user.id
+        queryset= Contract.objects.filter(client=user)
+        return queryset
+    
+class ContractWorkerList(generics.ListAPIView):
+    serializer_class = ContractSerializer
+    def get_queryset(self):
+        user = self.request.user.id
+        queryset = Contract.objects.filter(worker=user)
+        return queryset
+
 class ServiceViewSet(viewsets.ModelViewSet):
     queryset = Service.objects.all()
     serializer_class = ServiceSerializer
@@ -31,7 +50,7 @@ class ServiceViewSet(viewsets.ModelViewSet):
 
 class JobViewSet(viewsets.ModelViewSet):
     serializer_class = JobSerializer
-
+    permission_classes = [permissions.IsAuthenticated]
     def get_queryset(self):
         """
         Sobrescribe el método `get_queryset` para filtrar los trabajos
@@ -57,3 +76,4 @@ class ContractWorkerList(generics.ListAPIView):
         user=self.request.user.id
         queryset=Contract.objects.filter(worker=user)
         return queryset
+
