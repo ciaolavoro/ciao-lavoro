@@ -28,14 +28,14 @@ class GroupViewSet(viewsets.ModelViewSet):
 class ContractViewSet(viewsets.ModelViewSet):
     queryset = Contract.objects.all()
     serializer_class = ContractSerializer
-    
+
 class ContractClientList(generics.ListAPIView):
     serializer_class = ContractSerializer
     def get_queryset(self):
         user = self.request.user.id
         queryset= Contract.objects.filter(client=user)
         return queryset
-    
+
 class ContractWorkerList(generics.ListAPIView):
     serializer_class = ContractSerializer
     def get_queryset(self):
@@ -58,22 +58,3 @@ class JobViewSet(viewsets.ModelViewSet):
         """
         service_id = self.kwargs['service_id']  # Obtén el ID del servicio de la URL
         return Job.objects.filter(service_id=service_id)
-
-class ContractViewSet(viewsets.ModelViewSet):
-    queryset=Contract.objects.all()
-    serializer_class=ContractSerializer   
-
-class ContractClientList(generics.ListAPIView):
-    serializer_class=ContractSerializer
-    def get_queryset(self):
-        user=self.request.user.id
-        queryset=Contract.objects.filter(client=user)
-        return queryset  
-     
-class ContractWorkerList(generics.ListAPIView):
-    serializer_class=ContractSerializer
-    def get_queryset(self):
-        user=self.request.user.id
-        queryset=Contract.objects.filter(worker=user)
-        return queryset
-

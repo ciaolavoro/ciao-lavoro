@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { getAllUser } from "../../api/Contract.api";
 
 const createContractURL = '/api/service/create';
 
