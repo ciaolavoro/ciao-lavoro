@@ -35,6 +35,8 @@ class ServiceViewSet(viewsets.ModelViewSet):
 
 class JobViewSet(viewsets.ModelViewSet):
     serializer_class = JobSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
 
     def get_queryset(self):
         """
