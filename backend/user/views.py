@@ -3,6 +3,8 @@ from .models import User
 from django.contrib.auth import login
 from django.http import JsonResponse
 from rest_framework.views import APIView
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.authtoken.models import Token
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
@@ -13,6 +15,8 @@ def list_users(request):
     return render(request, 'user_list.html', {'users': users})
 
 class login_view(APIView):
+    authentication_classes = []
+    permission_classes = [AllowAny]
 
     @method_decorator(csrf_exempt)
     def dispatch(self, *args, **kwargs):
@@ -27,16 +31,17 @@ class login_view(APIView):
             return JsonResponse({'status': 'success', 'message': 'User logged in successfully'})
         else:
             return JsonResponse({'status': 'error', 'message': 'Invalid login credentials'})
-        
+ 
 class logout_view(APIView):
+    permission_classes = [IsAuthenticated]
 
-    def post(self, request, format=None):
-        username = request.data.get('username')
-        password = request.data.get('password')
-        user = User.objects.filter(username=username, password=password).first()
-        try:
-            token = Token.objects.get(user=user)
-            token.delete()
-        except Token.DoesNotExist:
-            pass
-        return JsonResponse({'status': 'success', 'message': 'User logged out successfully'})
+    @csrf_exempt
+    def post(self, request):
+        request.user.auth_token.delete()
+        return JsonResponse({'message': 'Logout successful'})
+    
+class authenticated(APIView):
+    def get(self, request):
+        user = request.user
+        isAuthenticated = user.is_authenticated
+        return JsonResponse({'isAuthenticated': isAuthenticated})

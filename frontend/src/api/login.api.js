@@ -8,3 +8,13 @@ export const loginRequest = async (username, password) => {
     };
     return fetch('/api/user/login/', options);
 }
+
+export const isAuthenticated = async () => {
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    };
+    return fetch('/api/user/authenticated/', options);
+}
