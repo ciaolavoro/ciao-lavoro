@@ -6,7 +6,6 @@ from rest_framework.views import APIView
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 
-# Create your views here.
 
 def list_users(request):
     users = User.objects.all()
@@ -20,11 +19,17 @@ class login_view(APIView):
 
     def post(self, request, format_arg=None):
 
-        email = request.data.get('email')
+        username = request.data.get('username')
         password = request.data.get('password')
-        user = User.objects.filter(email=email, password=password).first()
+        user = User.objects.filter(username=username, password=password).first()
         if user is not None:
             login(request,user)
             return JsonResponse({'status': 'success', 'message': 'User logged in successfully'})
         else:
             return JsonResponse({'status': 'error', 'message': 'Invalid login credentials'})
+        
+class logout_view(APIView):
+
+    def post(self, request, format=None):
+        request.user.auth_token.delete()
+        return JsonResponse({'status': 'success', 'message': 'User logged out successfully'})

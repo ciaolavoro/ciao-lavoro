@@ -9,9 +9,9 @@ class Contract(models.Model):
     accept_client = models.BooleanField(default = False)
     description = models.TextField(blank=False, max_length=500)
     initial_date = models.DateField()
-    fin_date = models.DateField()
+    end_date = models.DateField()
     cost = models.IntegerField()
-    state = models.CharField(max_length=2, choices=[
+    status = models.CharField(max_length=2, choices=[
         ("Ne", "Negociacion"),
         ("Ac", "Aceptado"),
         ("En", "En proceso"),

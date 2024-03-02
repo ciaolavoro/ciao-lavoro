@@ -5,11 +5,10 @@ from user.models import User
 from service.models import Job, Service
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    id = serializers.IntegerField()
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ['id', 'username', 'password', 'email', 'first_name', 'last_name', 'birth_date']
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
@@ -30,7 +29,7 @@ class JobSerializer(serializers.HyperlinkedModelSerializer):
         fields = '__all__'
 
 
-class ContractSerializer(serializers.ModelSerializer):
+class ContractSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Contract
         fields = '__all__'
