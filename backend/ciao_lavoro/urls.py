@@ -33,6 +33,5 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('clientContractList/', views.ContractClientList.as_view(), name="client-contracts"),
     path('workerContractList/', views.ContractWorkerList.as_view(), name="worker-contracts"),
-    path('service/', include('service.urls', namespace='services')),
-
+    path('service/', include('service.urls', namespace='services'))
 ]

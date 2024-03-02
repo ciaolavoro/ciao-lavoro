@@ -23,14 +23,14 @@ class ServiceSerializer(serializers.HyperlinkedModelSerializer):
         model = Service
         fields = '__all__'
 
-class ContractSerializer(serializers.ModelSerializer):
-    class Meta:
-        model=Contract
-        fields = '__all__'
-
 
 class JobSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Job
         fields = '__all__'
 
+
+class ContractSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Contract
+        fields = '__all__'
