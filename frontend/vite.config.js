@@ -8,7 +8,7 @@ export default () => {
     server: {
       proxy: {
         '/api': {
-          target: 'http://127.0.0.1:8000/',
+          target: URL_DEL_BACKEND,
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, ''),
         },
