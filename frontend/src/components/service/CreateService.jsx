@@ -12,7 +12,7 @@ export default function CreateService() {
     const createService = async (email, profession, city, experience) => {
         try {
             const res = await createServiceRequest(email, profession, city, experience);
-            if (res.status === 200) {
+            if (res.status === 201) {
                 navigate('/');
             } else {
                 alert('Error al crear servicio. Por favor, intente de nuevo.');
