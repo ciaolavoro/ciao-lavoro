@@ -2,7 +2,8 @@ from django.shortcuts import render
 from user.models import User
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import viewsets
+from rest_framework.decorators import permission_classes
+from rest_framework import viewsets, permissions
 from .models import Service, Job
 from .serializers import ServiceSerializer, JobSerializer
 
@@ -35,6 +36,7 @@ class JobViewSet(viewsets.ModelViewSet):
         service_id = self.kwargs['service_id']  # Obtén el ID del servicio de la URL
         return Job.objects.filter(service_id=service_id)
 
+@permission_classes([permissions.AllowAny])
 class ServiceCreation(APIView):
     def post(self, request):
         service_data = request.data

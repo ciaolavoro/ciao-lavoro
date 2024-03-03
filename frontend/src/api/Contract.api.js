@@ -7,7 +7,7 @@ export const getAllContracts = async () => {
         },
     };
 
-    return fetch('/api/contracts/', options);
+    return fetch(`${import.meta.env.VITE_BACKEND_API_URL}/contracts/`, options);
 }
 
 export const getAllUsers = async () => {
@@ -19,7 +19,7 @@ export const getAllUsers = async () => {
         },
     };
 
-    return fetch('/api/user/', options);
+    return fetch(`${import.meta.env.VITE_BACKEND_API_URL}/user/`, options);
 }
 
 export const getAllServices = async () => {
@@ -31,7 +31,7 @@ export const getAllServices = async () => {
         },
     };
 
-    return fetch('/api/service/', options);
+    return fetch(`${import.meta.env.VITE_BACKEND_API_URL}/service/`, options);
 }
 
 export const createContractRequest = async (worker, client, accept_worker, accept_client, description, initial_date, end_date, cost, status, service) => {
@@ -42,5 +42,5 @@ export const createContractRequest = async (worker, client, accept_worker, accep
         },
         body: JSON.stringify({ worker, client, accept_worker, accept_client, description, initial_date, end_date, cost, status, service}),
     };
-    return fetch('/api/contracts/create/', options);
+    return fetch(`${import.meta.env.VITE_BACKEND_API_URL}/contracts/create/`, options);
 }

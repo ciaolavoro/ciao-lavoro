@@ -18,7 +18,7 @@ export default function Contracts() {
                     alert('Error al cargar los contratos');
                 }
             } catch (error) {
-                alert('Error al cargar los contratos');
+                console.log(`Error al cargar los contratos: ${error}`);
             }
         };
         getContracts();
