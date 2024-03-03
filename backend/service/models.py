@@ -39,7 +39,7 @@ class Service(models.Model):
     is_active = models.BooleanField(blank = False,default=True)
     #Aquí se estipula si está promocionado este servicio
     is_promoted = models.BooleanField(blank = False,default= False)
-    
+
     def __str__(self):
         return self.get_profession_display()
 
