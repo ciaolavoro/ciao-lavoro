@@ -42,6 +42,7 @@ export default function CreateContract(){
     const createContract = async (worker, client, accept_worker, accept_client, description, initial_date, end_date, cost, status, service) => {
         try {
             const res = await createContractRequest(worker, client, accept_worker, accept_client, description, initial_date, end_date, cost, status, service);
+            console.log(res)
             if (res.status === 200) {
                 navigate('/');
             } else {
@@ -63,38 +64,38 @@ export default function CreateContract(){
         <form className="flex flex-col justify-center items-center gap-4 mt-4" onSubmit={handleSubmit}>
             <h1 className="text-4xl font-bold">Creación del Contrato</h1>
             <label>Trabajador:</label>
-                <select name="worker" value={worker} onChange={(e) => setWorker(e.target.value)} className="px-2 py-1 border rounded">
-                    {users.map(user => (
-                        <option key={user.id} value={user.id}>{user.username}</option>
-                    ))}
-                </select>
+            <select name="worker" value={worker} onChange={(e) => setWorker(e.target.value)} className="px-2 py-1 border rounded">
+                {users.map(user => (
+                    <option key={user.id} value={`/user/${user.id}/`}>{user.username}</option>
+                ))}
+            </select>
             <div className="flex items-center gap-2">
-            <label>Cliente:</label>
+                <label>Cliente:</label>
                 <select name="client" value={client} onChange={(e) => setClient(e.target.value)} className="px-2 py-1 border rounded">
                     {users.map(user => (
-                        <option key={user.id} value={user.id}>{user.username}</option>
+                        <option key={user.id} value={`/user/${user.id}/`}>{user.username}</option>
                     ))}
                 </select>
-                </div>
-                <div className="flex flex-col items-center gap-2">
+            </div>
+            <div className="flex flex-col items-center gap-2">
                 <div className="flex gap-2">
                     <label htmlFor="accept_worker">Permiso trabajador:</label>
-                    <input 
-                        type="checkbox" 
-                        name="accept_worker" 
-                        checked={accept_worker} 
-                        onChange={(e) => setAccept_worker(e.target.value)} 
-                        className="mr-2" 
+                    <input
+                        type="checkbox"
+                        name="accept_worker"
+                        checked={accept_worker}
+                        onChange={(e) => setAccept_worker(e.target.value)}
+                        className="mr-2"
                     />
                 </div>
                 <div className="flex gap-2">
                     <label htmlFor="accept_client">Permiso cliente:</label>
-                    <input 
-                        type="checkbox" 
-                        name="accept_client" 
-                        checked={accept_client} 
-                        onChange={(e) => setAccept_client(e.target.value)} 
-                        className="mr-2" 
+                    <input
+                        type="checkbox"
+                        name="accept_client"
+                        checked={accept_client}
+                        onChange={(e) => setAccept_client(e.target.value)}
+                        className="mr-2"
                     />
                 </div>
             </div>
@@ -114,26 +115,24 @@ export default function CreateContract(){
                 <label>Coste del trabajo:</label>
                 <input type="number" name="cost" value={cost} onChange={(e) => setCost(e.target.value)} className="px-2 py-1 border rounded" />
             </div>
-            
             <div className="flex items-center gap-2">
                 <label>Estado:</label>
                 <select name="status" value={status} onChange={(e) => setStatus(e.target.value)} className="px-2 py-1 border rounded">
-                    <option value="Ne">Negociacion</option> 
+                    <option value="Ne">Negociacion</option>
                     <option value="Ac">Aceptado</option>
                     <option value="En">En proceso</option>
                     <option value="Fi">Finalizado</option>
                     <option value="Ca">Cancelado</option>
                     <option value="Pa">Pagado</option>
                 </select>
-            <div className="flex items-center gap-2">
-                <label>Servicio:</label>
-                <select name="service" value={service} onChange={(e) => setService(e.target.value)} className="px-2 py-1 border rounded">
-                    {services.map(service => (
-                        <option key={service.id} value={service.profession}>{service.profession}</option>
-                    ))}
-                </select>
-            </div>
-
+                <div className="flex items-center gap-2">
+                    <label>Servicio:</label>
+                    <select name="service" value={service} onChange={(e) => setService(e.target.value)} className="px-2 py-1 border rounded">
+                        {services.map(service => (
+                            <option key={service.id} value={`/service/${service.id}/`}>{service.profession}</option>
+                        ))}
+                    </select>
+                </div>
             </div>
             <button type="submit" className="bg-orange-300 rounded px-3 py-1 font-semibold">Crear Contrato</button>
         </form>
