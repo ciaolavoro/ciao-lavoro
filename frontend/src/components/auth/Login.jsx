@@ -11,10 +11,12 @@ const LoginPage = () => {
 
   async function login(username, password) {
     try {
-      const res = await loginRequest(username, password);
-      if (res.status === 200) {
+      const res = await (await loginRequest(username, password)).json();
+      console.log(res.message)
+      if (res.status === '1') {
         navigate('/');
-        window.location.reload()
+        window.location.reload();
+        alert('Se ha iniciado sesión correctamente')
       } else {
         alert('Error en el inicio de sesión. Por favor, intente de nuevo.');
       }

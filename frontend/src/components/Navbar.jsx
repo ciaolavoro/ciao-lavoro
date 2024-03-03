@@ -42,8 +42,9 @@ export default function Navbar() {
     try {
       await logoutRequest();
       setIsLoggedIn(false);
+      alert('Se ha cerrado la sesión correctamente')
     } catch (error) {
-      alert('Error during logout');
+      alert('Ha ocurrido un error durante el cierre de sesión.');
     }
  };
 

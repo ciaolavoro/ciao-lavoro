@@ -7,6 +7,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.contrib.auth import logout as auth_logout
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+from django.contrib.auth.hashers import check_password
 
 def list_users(request):
     users = User.objects.all()
@@ -23,12 +24,13 @@ class login_view(APIView):
     def post(self, request, format_arg=None):
         username = request.data.get('username')
         password = request.data.get('password')
-        user = User.objects.filter(username=username, password=password).first()
-        if user is not None:
+        user= User.objects.get(username=username)
+       #user = User.objects.filter(username=username, password=password).first()
+        if check_password(password,user.password):
             login(request,user)
-            return JsonResponse({'status': 'success', 'message': 'User logged in successfully'})
+            return JsonResponse({'status': '1', 'message': 'User logged in successfully'})
         else:
-            return JsonResponse({'status': 'error', 'message': 'Invalid login credentials'})
+            return JsonResponse({'status': '0', 'message': 'Invalid login credentials'})
  
 class logout_view(APIView):
     permission_classes = [IsAuthenticated]
@@ -39,5 +41,10 @@ class logout_view(APIView):
 class authenticated(APIView):
     def get(self, request):
         user = request.user
+        users=User.objects.all()
+        u1=list()
+        for u in users:
+            u1.append(u)
+        print(user)
         isAuthenticated = user.is_authenticated
         return JsonResponse({'isAuthenticated': isAuthenticated})
