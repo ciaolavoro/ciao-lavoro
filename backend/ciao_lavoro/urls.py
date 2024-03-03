@@ -15,8 +15,32 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include, re_path
+from rest_framework import routers
+from api import views
+
+router = routers.DefaultRouter()
+router.register(r'user', views.UserViewSet)
+router.register(r'groups', views.GroupViewSet)
+router.register(r'service', views.ServiceViewSet)
+router.register(r'contracts', views.ContractViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('user/', include('user.urls', namespace='user')),
+    path('service/', include('service.urls', namespace='service')),
+    path('contracts/', include('contract.urls', namespace='contracts')),
+    path('', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('clientContractList/', views.ContractClientList.as_view(), name="client-contracts"),
+    path('workerContractList/', views.ContractWorkerList.as_view(), name="worker-contracts"),
+
+    re_path('signup', views.signup),
+    re_path('login', views.login),
+    re_path('logout', views.logout),
+    re_path('test_token', views.test_token),
+    path('', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('clientContractList/', views.ContractClientList.as_view(), name="client-contracts"),
+    path('workerContractList/', views.ContractWorkerList.as_view(), name="worker-contracts"),
 ]
