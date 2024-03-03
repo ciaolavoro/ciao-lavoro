@@ -25,7 +25,6 @@ class login_view(APIView):
         username = request.data.get('username')
         password = request.data.get('password')
         user= User.objects.get(username=username)
-       #user = User.objects.filter(username=username, password=password).first()
         if check_password(password,user.password):
             login(request,user)
             return JsonResponse({'status': '1', 'message': 'User logged in successfully'})
@@ -41,10 +40,5 @@ class logout_view(APIView):
 class authenticated(APIView):
     def get(self, request):
         user = request.user
-        users=User.objects.all()
-        u1=list()
-        for u in users:
-            u1.append(u)
-        print(user)
         isAuthenticated = user.is_authenticated
         return JsonResponse({'isAuthenticated': isAuthenticated})

@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
 from django.forms import ValidationError
+from django.contrib.auth.password_validation import validate_password
 
 class User(AbstractUser):
     birth_date = models.DateField()
@@ -21,8 +22,8 @@ class User(AbstractUser):
             raise ValidationError("Debes tener menos de 80 años de edad.")
 
     def save(self, *args, **kwargs):
-        # Si la contraseña ha sido modificada, hashearla antes de guardar
         if self.password:
+            validate_password(self.password)
             self.set_password(self.password)
         super(User, self).save(*args, **kwargs)
 
