@@ -12,6 +12,7 @@ export default ({ mode }) => {
           target: env.BACKEND_API_URL,
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, ''),
+          prependPath: false,
         },
       },
     },

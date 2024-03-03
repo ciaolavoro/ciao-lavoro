@@ -7,7 +7,7 @@ export const getAllContracts = async () => {
         },
     };
 
-    return fetch('https://ciao-lavoro-l7qa.onrender.com/contracts/', options);
+    return fetch('/api/contracts/', options);
 }
 
 export const getAllUsers = async () => {
