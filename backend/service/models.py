@@ -20,12 +20,10 @@ class EnumField(models.IntegerField):
 # Create your models here.
 
 class Service(models.Model):
-
     class Meta:
         verbose_name = "service"
         verbose_name_plural = "services"
 
-    # Aquí se guarda la clave del usuario del servicio
     # se ha puesto nullable para evitar problemas con Django
     user = models.ForeignKey(User,default=None, null=True, on_delete=models.CASCADE)
     #Aquí se enumeran las profesiones posibles
@@ -34,7 +32,7 @@ class Service(models.Model):
         (2, 'Celador'),
         (3, 'Albañil'),
     ]
-    profession = EnumField(choices = PROFESSIONS, blank = False)
+    profession = models.IntegerField(choices = PROFESSIONS, blank = False)
     city = models.TextField(blank = False)
     experience = models.PositiveIntegerField(blank = False,validators=[MinValueValidator(0), MaxValueValidator(80)])
     #Aquí se estipulan si está ofertando trabajo con este servicio

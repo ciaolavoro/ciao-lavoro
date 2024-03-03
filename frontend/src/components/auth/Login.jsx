@@ -5,16 +5,18 @@ import { loginRequest } from '../../api/login.api'
 import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-
-  async function login(email, password) {
+  async function login(username, password) {
     try {
-      const res = await loginRequest(email, password);
-      if (res.status === 200) {
+      const res = await (await loginRequest(username, password)).json();
+      console.log(res.message)
+      if (res.status === '1') {
         navigate('/');
+        window.location.reload();
+        alert('Se ha iniciado sesión correctamente')
       } else {
         alert('Error en el inicio de sesión. Por favor, intente de nuevo.');
       }
@@ -25,7 +27,7 @@ const LoginPage = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    login(email, password);
+    login(username, password);
   };
 
 
@@ -39,14 +41,14 @@ const LoginPage = () => {
         <div className="flex flex-col items-center bg-white p-8 rounded-lg shadow-md">
           <form onSubmit={handleSubmit} className="flex flex-col items-center">
             <label className="mb-4">
-              Usuario/Email:
+              Usuario:
               <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                type="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 required
                 className="w-full p-2 mb-4 border border-gray-300 rounded"
-                placeholder='Usuario/Email'
+                placeholder='Usuario'
               />
             </label>
             <label className="mb-4">

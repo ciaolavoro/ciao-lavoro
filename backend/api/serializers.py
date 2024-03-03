@@ -3,12 +3,13 @@ from rest_framework import serializers
 from contract.models import Contract
 from user.models import User
 from service.models import Job, Service
+from contract.models import Contract
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'password', 'email', 'first_name', 'last_name', 'birth_date']
+        fields = ['url', 'id', 'username', 'password', 'email', 'first_name', 'last_name', 'birth_date']
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):

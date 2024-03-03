@@ -50,6 +50,12 @@ class ContractViewSet(viewsets.ModelViewSet):
     queryset=Contract.objects.all()
     serializer_class=ContractSerializer   
     # permission_classes = [permissions.IsAuthenticated]
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
 class ContractClientList(generics.ListAPIView):
@@ -96,7 +102,7 @@ def login(request):
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([permissions.IsAuthenticated])
 def test_token(request):
-    return Response("passed for {}" .format(request.user.email))
+    return Response("passed for {}" .format(request.user.username))
 
 @api_view(['POST'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
