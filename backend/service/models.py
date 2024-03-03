@@ -45,11 +45,6 @@ class Service(models.Model):
     def __str__(self):
         return self.get_profession_display()
     
-    
-            
-        
-    
-
 class Job(models.Model):
 
     class Meta:

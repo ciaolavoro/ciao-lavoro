@@ -4,8 +4,6 @@ import { getAllUsers } from "../../api/Contract.api";
 import { getAllServices } from "../../api/Contract.api";
 import { createContractRequest } from "../../api/Contract.api";
 
-const createContractURL = '/api/service/create';
-
 export default function CreateContract(){
     const [users, setUsers] = useState([]);
     const [services, setServices] = useState([]);
