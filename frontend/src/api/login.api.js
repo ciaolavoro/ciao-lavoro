@@ -6,5 +6,5 @@ export const loginRequest = async (email, password) => {
         },
         body: JSON.stringify({ email, password }),
     };
-    return fetch('/api/user/login/', options);
+    return fetch(`${import.meta.env.VITE_BACKEND_API_URL}/user/login/`, options);
 }

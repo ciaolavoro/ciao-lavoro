@@ -12,7 +12,6 @@ export default function CreateService() {
     const createService = async (email, profession, city, experience) => {
         try {
             const res = await createServiceRequest(email, profession, city, experience);
-            console.log(res);
             if (res.status === 200) {
                 navigate('/');
             } else {
