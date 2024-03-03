@@ -11,7 +11,6 @@ export default function Contracts() {
         const getContracts = async () => {
             try {
                 const res = await getAllContracts();
-                console.log(res);
                 if(res.status === 200){
                     const data = await res.json();
                     setContracts(data.results);
@@ -19,7 +18,7 @@ export default function Contracts() {
                     alert('Error al cargar los contratos');
                 }
             } catch (error) {
-                alert(`Error al cargar los contratos: ${error}`);
+                console.log(`Error al cargar los contratos: ${error}`);
             }
         };
         getContracts();
