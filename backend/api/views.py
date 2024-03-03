@@ -102,7 +102,7 @@ def login(request):
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([permissions.IsAuthenticated])
 def test_token(request):
-    return Response("passed for {}" .format(request.user.email))
+    return Response("passed for {}" .format(request.user.username))
 
 @api_view(['POST'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])

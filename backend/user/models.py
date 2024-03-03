@@ -1,12 +1,10 @@
-from django.forms import ValidationError
-from django.utils import timezone
-from django.db import models
 from django.contrib.auth.models import AbstractUser
-
-# Create your models here.
+from django.db import models
+from django.utils import timezone
+from django.forms import ValidationError
+from django.contrib.auth.password_validation import validate_password
 
 class User(AbstractUser):
-
     birth_date = models.DateField()
     language = models.CharField(max_length=50, blank=True, null=True)
 
@@ -22,6 +20,12 @@ class User(AbstractUser):
         eighty_years_ago = timezone.now().date() - timezone.timedelta(days=80*365)
         if self.birth_date and self.birth_date < eighty_years_ago:
             raise ValidationError("Debes tener menos de 80 años de edad.")
+
+    def save(self, *args, **kwargs):
+        if self.password:
+            validate_password(self.password)
+            self.set_password(self.password)
+        super(User, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.username
