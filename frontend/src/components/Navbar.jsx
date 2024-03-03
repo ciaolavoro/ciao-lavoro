@@ -17,7 +17,7 @@ export default function Navbar() {
         {
             id: 3,
             title: "Iniciar sesión",
-            path: "/auth",
+            path: "/login",
         },
     ];
 
