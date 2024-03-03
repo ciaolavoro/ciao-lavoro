@@ -1,10 +1,10 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import ciaoLavoroLogo from "/ciaolavoro-logo.png";
-import { isAuthenticated } from '../api/login.api';
+import { isAuthenticated, logoutRequest } from '../api/login.api';
 
 export default function Navbar() {
-  const navItems = [
+ const navItems = [
     {
       id: 1,
       title: "Inicio",
@@ -15,35 +15,44 @@ export default function Navbar() {
       title: "Sobre nosotros",
       path: "/about",
     },
-  ];
+ ];
 
-  const location = useLocation();
+ const location = useLocation();
 
-  const [isLoggedIn, setIsLoggedIn] = useState([]);
+ const [isLoggedIn, setIsLoggedIn] = useState([]);
 
-  useEffect(() => {
+ useEffect(() => {
       const getIsAuthenticated = async () => {
           try {
               const res = await isAuthenticated();
               if(res.status === 200){
-                  const data = await res.json();
-                  setIsLoggedIn(data.isAuthenticated);
+                 const data = await res.json();
+                 setIsLoggedIn(data.isAuthenticated);
               } else {
-                  alert('Error al cargar los servicios');
+                 alert('Error al cargar los servicios');
               }
           } catch (error) {
               alert('Error al cargar los servicios');
           }
       };
       getIsAuthenticated();
-  }, []);
+ }, []);
 
-  const renderAuthLinks = () => {
+ const handleLogout = async () => {
+    try {
+      await logoutRequest();
+      setIsLoggedIn(false);
+    } catch (error) {
+      alert('Error during logout');
+    }
+ };
+
+ const renderAuthLinks = () => {
     if (isLoggedIn) {
       return (
-        <NavLink to="/" className="px-2 py-1 font-semibold">
+        <button onClick={handleLogout} className="px-2 py-1 font-semibold">
           Cerrar sesión
-        </NavLink>
+        </button>
       );
     } else {
       return (
@@ -52,9 +61,9 @@ export default function Navbar() {
         </NavLink>
       );
     }
-  };
+ };
 
-  return (
+ return (
     <header>
       <nav className="flex justify-between items-center sticky w-full h-16 px-6 bg-white border border-gray-300 z-10">
         <section>
@@ -73,7 +82,7 @@ export default function Navbar() {
                 key={item.id}
                 to={item.path}
                 className={
-                  location.pathname === item.path
+                 location.pathname === item.path
                     ? "bg-slate-200 rounded"
                     : ""
                 }
@@ -86,5 +95,5 @@ export default function Navbar() {
         </section>
       </nav>
     </header>
-  );
+ );
 }

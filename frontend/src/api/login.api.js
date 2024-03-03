@@ -18,3 +18,14 @@ export const isAuthenticated = async () => {
     };
     return fetch('/api/user/authenticated/', options);
 }
+
+export const logoutRequest = async () => {
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    };
+    return fetch('/api/user/logout/', options);
+};
+

@@ -9,12 +9,12 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-
   async function login(username, password) {
     try {
       const res = await loginRequest(username, password);
       if (res.status === 200) {
         navigate('/');
+        window.location.reload()
       } else {
         alert('Error en el inicio de sesión. Por favor, intente de nuevo.');
       }

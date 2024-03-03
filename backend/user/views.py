@@ -3,12 +3,10 @@ from .models import User
 from django.contrib.auth import login
 from django.http import JsonResponse
 from rest_framework.views import APIView
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework.authtoken.models import Token
+from django.contrib.auth import logout as auth_logout
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
-
 
 def list_users(request):
     users = User.objects.all()
@@ -34,12 +32,10 @@ class login_view(APIView):
  
 class logout_view(APIView):
     permission_classes = [IsAuthenticated]
-
-    @csrf_exempt
-    def post(self, request):
-        request.user.auth_token.delete()
+    def get(self, request):
+        auth_logout(request)
         return JsonResponse({'message': 'Logout successful'})
-    
+
 class authenticated(APIView):
     def get(self, request):
         user = request.user
