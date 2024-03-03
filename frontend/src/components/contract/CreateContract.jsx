@@ -43,7 +43,8 @@ export default function CreateContract(){
         try {
             const res = await createContractRequest(worker, client, accept_worker, accept_client, description, initial_date, end_date, cost, status, service);
             console.log(res)
-            if (res.status === 200) {
+            console.log(res.json())
+            if (res.status === 201) {
                 navigate('/');
             } else {
                 alert('Error al crear el contrato. Por favor, intente de nuevo.');
@@ -58,6 +59,14 @@ export default function CreateContract(){
         createContract(worker, client, accept_worker, accept_client, description, initial_date, end_date, cost, status, service);
     };
 
+    const professionNames = {
+        1: 'Lavandero',
+        2: 'Celador',
+        3: 'Albañil'
+        
+    };
+
+    
     
 
     return(
@@ -65,6 +74,7 @@ export default function CreateContract(){
             <h1 className="text-4xl font-bold">Creación del Contrato</h1>
             <label>Trabajador:</label>
             <select name="worker" value={worker} onChange={(e) => setWorker(e.target.value)} className="px-2 py-1 border rounded">
+                <option value=""> --- </option>
                 {users.map(user => (
                     <option key={user.id} value={`/user/${user.id}/`}>{user.username}</option>
                 ))}
@@ -72,6 +82,7 @@ export default function CreateContract(){
             <div className="flex items-center gap-2">
                 <label>Cliente:</label>
                 <select name="client" value={client} onChange={(e) => setClient(e.target.value)} className="px-2 py-1 border rounded">
+                    <option value=""> --- </option>
                     {users.map(user => (
                         <option key={user.id} value={`/user/${user.id}/`}>{user.username}</option>
                     ))}
@@ -118,6 +129,7 @@ export default function CreateContract(){
             <div className="flex items-center gap-2">
                 <label>Estado:</label>
                 <select name="status" value={status} onChange={(e) => setStatus(e.target.value)} className="px-2 py-1 border rounded">
+                    <option value=""> --- </option>
                     <option value="Ne">Negociacion</option>
                     <option value="Ac">Aceptado</option>
                     <option value="En">En proceso</option>
@@ -128,8 +140,9 @@ export default function CreateContract(){
                 <div className="flex items-center gap-2">
                     <label>Servicio:</label>
                     <select name="service" value={service} onChange={(e) => setService(e.target.value)} className="px-2 py-1 border rounded">
+                        <option value=""> --- </option>
                         {services.map(service => (
-                            <option key={service.id} value={`/service/${service.id}/`}>{service.profession}</option>
+                            <option key={service.id} value={`/service/${service.id}/`}>{professionNames[service.profession]}</option>
                         ))}
                     </select>
                 </div>

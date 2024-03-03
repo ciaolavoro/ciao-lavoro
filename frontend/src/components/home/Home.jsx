@@ -14,6 +14,7 @@ export default function Home() {
           <LinkButton url="/service/create" title="Crear servicio" />
           <LinkButton url="/services" title="Servicios disponibles" />
           <LinkButton url="/contracts" title="Contratos" />
+          <LinkButton url="/contracts/create" title="Crear un contrato" />
         </div>
         <img src={homeBanner} alt="Banner de la página de inicio" className="w-full h-[390px] px-28 object-cover" />
       </section>

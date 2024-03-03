@@ -20,12 +20,10 @@ class EnumField(models.IntegerField):
 # Create your models here.
 
 class Service(models.Model):
-
     class Meta:
         verbose_name = "service"
         verbose_name_plural = "services"
 
-    # Aquí se guarda la clave del usuario del servicio
     # se ha puesto nullable para evitar problemas con Django
     user = models.ForeignKey(User,default=None, null=True, on_delete=models.CASCADE)
     #Aquí se enumeran las profesiones posibles
@@ -41,7 +39,7 @@ class Service(models.Model):
     is_active = models.BooleanField(blank = False,default=True)
     #Aquí se estipula si está promocionado este servicio
     is_promoted = models.BooleanField(blank = False,default= False)
-
+    
     def __str__(self):
         return self.get_profession_display()
 
