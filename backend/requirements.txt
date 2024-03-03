@@ -1,10 +1,12 @@
 asgiref==3.7.2
+coverage==7.4.3
 Django==5.0.2
 django-cors-headers==4.3.1
+django-environ==0.11.2
 djangorestframework==3.14.0
+gunicorn==21.2.0
+packaging==23.2
 pytz==2024.1
 sqlparse==0.4.4
 typing_extensions==4.9.0
 tzdata==2023.4
-coverage==7.4.3
-gunicorn==21.2.0
