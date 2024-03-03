@@ -1,7 +1,6 @@
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import Contract
 from api.serializers import ContractSerializer
 
 class ContractCreation(APIView):
