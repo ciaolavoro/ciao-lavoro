@@ -13,8 +13,6 @@ export function ContractCard({ contract }) {
                 const users = await getAllUsers();
                 if(users.status === 200){
                     const data = await users.json();
-                    console.log(contract);
-
                     for(let i = 0; i < data.results.length; i++){
                         if (data.results[i].url === contract.worker){
                             setWorkerName(data.results[i].first_name);

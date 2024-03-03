@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import {useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getAllUsers } from "../../api/Contract.api";
 import { getAllServices } from "../../api/Contract.api";
 import { createContractRequest } from "../../api/Contract.api";
 
-export default function CreateContract(){
+export default function CreateContract() {
     const [users, setUsers] = useState([]);
     const [services, setServices] = useState([]);
     const [worker, setWorker] = useState('');
@@ -29,21 +29,17 @@ export default function CreateContract(){
                 const serviceData = await serviceRes.json();
                 setUsers(userData.results);
                 setServices(serviceData);
-                console.log(userData.results);
-                console.log(serviceData);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
-        
-        }fetchData(); 
-        
+
+        } fetchData();
+
     }, []);
 
     const createContract = async (worker, client, accept_worker, accept_client, description, initial_date, end_date, cost, status, service) => {
         try {
             const res = await createContractRequest(worker, client, accept_worker, accept_client, description, initial_date, end_date, cost, status, service);
-            console.log(res)
-            console.log(res.json())
             if (res.status === 201) {
                 navigate('/');
             } else {
@@ -63,22 +59,21 @@ export default function CreateContract(){
         1: 'Lavandero',
         2: 'Celador',
         3: 'Albañil'
-        
+
     };
 
-    
-    
-
-    return(
+    return (
         <form className="flex flex-col justify-center items-center gap-4 mt-4" onSubmit={handleSubmit}>
             <h1 className="text-4xl font-bold">Creación del Contrato</h1>
-            <label>Trabajador:</label>
-            <select name="worker" value={worker} onChange={(e) => setWorker(e.target.value)} className="px-2 py-1 border rounded">
-                <option value=""> --- </option>
-                {users.map(user => (
-                    <option key={user.id} value={`/user/${user.id}/`}>{user.username}</option>
-                ))}
-            </select>
+            <div className="flex items-center gap-2">
+                <label>Trabajador:</label>
+                <select name="worker" value={worker} onChange={(e) => setWorker(e.target.value)} className="px-2 py-1 border rounded">
+                    <option value=""> --- </option>
+                    {users.map(user => (
+                        <option key={user.id} value={`/user/${user.id}/`}>{user.username}</option>
+                    ))}
+                </select>
+            </div>
             <div className="flex items-center gap-2">
                 <label>Cliente:</label>
                 <select name="client" value={client} onChange={(e) => setClient(e.target.value)} className="px-2 py-1 border rounded">

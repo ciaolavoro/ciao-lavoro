@@ -7,7 +7,7 @@ export const getAllServices = async () => {
         },
     };
 
-    return fetch('/api/service/', options);
+    return fetch(`${import.meta.env.VITE_BACKEND_API_URL}/service/`, options);
 }
 
 export const getAllUsers = async () => {
@@ -19,5 +19,5 @@ export const getAllUsers = async () => {
         },
     };
 
-    return fetch('/api/users/', options);
+    return fetch(`${import.meta.env.VITE_BACKEND_API_URL}/users/`, options);
 }
