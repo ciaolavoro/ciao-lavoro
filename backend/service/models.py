@@ -41,7 +41,7 @@ class Service(models.Model):
     is_promoted = models.BooleanField(blank = False,default= False)
 
     def __str__(self):
-        return self.user.username+" ("+self.get_profession_display()+")" 
+        return self.user.username+" ("+self.get_profession_display()+")"
 
 class Job(models.Model):
 
@@ -53,9 +53,9 @@ class Job(models.Model):
     service = models.ForeignKey(Service, default=None, null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=100, blank = False)
     estimated_price = models.DecimalField(
-                    max_digits=10, 
-                    decimal_places=2, 
-                    validators=[MinValueValidator(0.01)], 
+                    max_digits=10,
+                    decimal_places=2,
+                    validators=[MinValueValidator(0.01)],
                     help_text=('Introduzca el coste en euros'))
 
     def __str__(self) -> str:
