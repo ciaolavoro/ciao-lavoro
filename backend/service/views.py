@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import permission_classes
 from rest_framework import viewsets, permissions
+from rest_framework.exceptions import PermissionDenied
 from .models import Service, Job
 from .serializers import ServiceSerializer, JobSerializer
 
@@ -49,9 +50,11 @@ class ServiceCreation(APIView):
         return Response(serializer.data)
 
 class JobCreation(APIView):
-    def post(self, request):
+    def post(self, request, service_id):
         job_data = request.data
-        service = Service.objects.get(pk=job_data['service'])
+        service = Service.objects.get(pk=service_id)
+        if service.user != request.user and not request.user.is_staff:
+            raise PermissionDenied("No tienes permiso para crear un trabajo para un servicio que no te pertenece")
         name = job_data['name']
         estimated_price = job_data['estimated_price']
         job = Job.objects.create(service=service, name=name, estimated_price=estimated_price)
