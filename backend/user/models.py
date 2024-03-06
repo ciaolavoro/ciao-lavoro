@@ -8,6 +8,7 @@ from django.contrib.auth.password_validation import validate_password
 class User(AbstractUser):
     birth_date = models.DateField()
     language = models.CharField(max_length=50, blank=True, null=True)
+    image = models.ImageField(upload_to='users/', null=True, blank=False)
 
     REQUIRED_FIELDS = ['first_name', 'last_name', 'birth_date']
 
