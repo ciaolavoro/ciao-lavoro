@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+import datetime
 from django.utils import timezone
 from django.forms import ValidationError
 from django.contrib.auth.password_validation import validate_password
@@ -12,16 +13,18 @@ class User(AbstractUser):
 
     def clean(self):
         super().clean()
-        if self.birth_date and self.birth_date > timezone.now().date():
+        birth_date = datetime.datetime.strptime(self.birth_date, "%Y-%m-%d").date()
+        if birth_date and birth_date > timezone.now().date():
             raise ValidationError("La fecha de nacimiento debe ser en el pasado.")
         sixteen_years_ago = timezone.now().date() - timezone.timedelta(days=16*365)
-        if self.birth_date and self.birth_date > sixteen_years_ago:
+        if birth_date and birth_date > sixteen_years_ago:
             raise ValidationError("Debes tener al menos 16 años de edad.")
         eighty_years_ago = timezone.now().date() - timezone.timedelta(days=80*365)
-        if self.birth_date and self.birth_date < eighty_years_ago:
+        if birth_date and birth_date < eighty_years_ago:
             raise ValidationError("Debes tener menos de 80 años de edad.")
 
     def save(self, *args, **kwargs):
+        self.clean()
         if self.password:
             validate_password(self.password)
             self.set_password(self.password)
