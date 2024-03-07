@@ -4,6 +4,7 @@ import datetime
 from django.utils import timezone
 from django.forms import ValidationError
 from django.contrib.auth.password_validation import validate_password
+from django.core.validators import validate_email
 
 class User(AbstractUser):
     birth_date = models.DateField()
@@ -14,7 +15,12 @@ class User(AbstractUser):
 
     def clean(self):
         super().clean()
-        birth_date = datetime.datetime.strptime(self.birth_date, "%Y-%m-%d").date()
+        if self.email:
+            validate_email(self.email)
+        if not isinstance(self.birth_date, datetime.date):
+            birth_date = datetime.datetime.strptime(self.birth_date, "%Y-%m-%d").date()
+        else:
+            birth_date = self.birth_date
         if birth_date and birth_date > timezone.now().date():
             raise ValidationError("La fecha de nacimiento debe ser en el pasado.")
         sixteen_years_ago = timezone.now().date() - timezone.timedelta(days=16*365)
