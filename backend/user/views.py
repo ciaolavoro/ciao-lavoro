@@ -1,6 +1,6 @@
+import re
 from django.shortcuts import render
 from .models import User
-from django.contrib.auth import login
 from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -8,6 +8,10 @@ from django.contrib.auth import logout as auth_logout
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.contrib.auth.hashers import check_password
+from rest_framework.authtoken.models import Token
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.decorators import authentication_classes
+from django.shortcuts import get_object_or_404
 
 def list_users(request):
     users = User.objects.all()
@@ -24,23 +28,20 @@ class login_view(APIView):
     def post(self, request, format_arg=None):
         username = request.data.get('username')
         password = request.data.get('password')
-        user= User.objects.get(username=username)
+        user = get_object_or_404(User, username=username)
         if check_password(password,user.password):
-            login(request,user)
-            return JsonResponse({'status': '1', 'message': 'User logged in successfully'})
+            token,_ = Token.objects.get_or_create(user=user)
+            return JsonResponse({'status': '1', 'token': token.key, 'message': 'User logged in successfully'})
         else:
             return JsonResponse({'status': '0', 'message': 'Invalid login credentials'})
  
-class logout_view(APIView):
-    permission_classes = [IsAuthenticated]
-    def get(self, request):
-        auth_logout(request)
-        return JsonResponse({'message': 'Logout successful'})
-
 class authenticated(APIView):
+    @authentication_classes([TokenAuthentication])
     def get(self, request):
-        user = request.user
-        isAuthenticated = user.is_authenticated
+        token = request.headers.get('Authorization', '')
+        isAuthenticated = False
+        pattern = re.compile(r'^Token [0-9a-f]{40}$')
+        isAuthenticated = bool(pattern.match(token))
         return JsonResponse({'isAuthenticated': isAuthenticated})
 
 class register(APIView):
