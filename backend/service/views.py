@@ -20,6 +20,12 @@ class ServiceList(APIView):
         serializer = ServiceSerializer(services, many=True)
         return Response(serializer.data)
 
+class UserServiceList(APIView):
+    def get(self, request, user_id):
+        services = Service.objects.filter(user_id=user_id)
+        serializer = ServiceSerializer(services, many=True)
+        return Response(serializer.data)
+
 class JobList(APIView):
     def get(self, request):
         print("Esto es una locura")
