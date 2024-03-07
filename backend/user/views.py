@@ -42,3 +42,25 @@ class authenticated(APIView):
         user = request.user
         isAuthenticated = user.is_authenticated
         return JsonResponse({'isAuthenticated': isAuthenticated})
+
+class register(APIView):
+    
+    authentication_classes = []
+    permission_classes = [AllowAny]
+    
+    def post(self, request, format_arg=None):
+        username = request.data.get('username')
+        first_name = request.data.get('firstName')
+        last_name  = request.data.get('lastName')
+        email = request.data.get('email')
+        password = request.data.get('password')
+        language = request.data.get('language')
+        birth_date = request.data.get('birthDate')
+        image = request.FILES.get('image')
+             
+        user = User.objects.create(username= username, first_name= first_name, last_name= last_name, email= email, password = password
+        ,language = language, birth_date = birth_date, image=image)
+
+        user.save()
+
+        return JsonResponse({'status': '1', 'message': ' The user has been successfully registered'})
