@@ -74,7 +74,6 @@ class JobEdit(APIView):
         job.save()
         serializer = JobSerializer(job, many=False)
         return Response(serializer.data)
-    
 class JobDelete(APIView):
     def post(self, request, job_id):
         job = Job.objects.get(pk=job_id)
