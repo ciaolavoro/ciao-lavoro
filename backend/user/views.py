@@ -1,3 +1,4 @@
+import re
 from django.shortcuts import render
 from .models import User
 from django.http import JsonResponse
@@ -37,6 +38,8 @@ class login_view(APIView):
 class authenticated(APIView):
     @authentication_classes([TokenAuthentication])
     def get(self, request):
-        token = request.headers['Authorization'].split()[-1]
-        isAuthenticated = token != 'null'
+        token = request.headers.get('Authorization', '')
+        isAuthenticated = False
+        pattern = re.compile(r'^Token [0-9a-f]{40}$')
+        isAuthenticated = bool(pattern.match(token))
         return JsonResponse({'isAuthenticated': isAuthenticated})

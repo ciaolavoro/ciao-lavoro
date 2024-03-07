@@ -9,8 +9,6 @@ export const loginRequest = async (username, password) => {
     try {
         const response = await fetch(`${import.meta.env.VITE_BACKEND_API_URL}/user/login/`, options);
         const data = await response.json();
-
-        // Save the token to localStorage
         if (response.ok) {
             localStorage.setItem('token', data.token);
         }
@@ -36,7 +34,6 @@ export const isAuthenticated = async () => {
 }
 
 export const logoutRequest = async () => {
-    const token = localStorage.getItem('token');
     localStorage.removeItem('token');
 };
 
