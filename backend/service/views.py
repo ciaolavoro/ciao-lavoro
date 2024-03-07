@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from user.models import User
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -7,6 +7,8 @@ from rest_framework import viewsets, permissions
 from rest_framework.exceptions import PermissionDenied
 from .models import Service, Job
 from .serializers import ServiceSerializer, JobSerializer
+from django.forms import ValidationError
+from rest_framework.authtoken.models import Token
 
 # Create your views here.
 
@@ -22,7 +24,6 @@ class ServiceList(APIView):
 
 class JobList(APIView):
     def get(self, request):
-        print("Esto es una locura")
         jobs = Job.objects.all()
         serializer = JobSerializer(jobs, many=True)
         return Response(serializer.data)
@@ -41,10 +42,16 @@ class JobViewSet(viewsets.ModelViewSet):
 class ServiceCreation(APIView):
     def post(self, request):
         service_data = request.data
-        user = User.objects.get(email=service_data['email'])
+        token_id = request.headers['Authorization']
+        token = get_object_or_404(Token, key=token_id.split()[-1])
+        user = token.user
         profession = service_data['profession']
         city = service_data['city']
         experience = service_data['experience']
+        profesions = Service.PROFESSIONS
+        if profession in profesions:
+            raise Va
+
         service = Service.objects.create(user=user, profession=profession, city=city, experience=experience)
         serializer = ServiceSerializer(service, many=False)
         return Response(serializer.data)
