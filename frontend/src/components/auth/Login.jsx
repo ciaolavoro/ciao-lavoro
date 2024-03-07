@@ -11,8 +11,7 @@ const LoginPage = () => {
 
   async function login(username, password) {
     try {
-      const res = await (await loginRequest(username, password)).json();
-      console.log(res.message)
+      const res = await loginRequest(username, password)
       if (res.status === '1') {
         navigate('/');
         window.location.reload();

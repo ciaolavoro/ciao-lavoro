@@ -6,26 +6,46 @@ export const loginRequest = async (username, password) => {
         },
         body: JSON.stringify({username, password }),
     };
-    return fetch(`${import.meta.env.VITE_BACKEND_API_URL}/user/login/`, options);
+    try {
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_API_URL}/user/login/`, options);
+        const data = await response.json();
+
+        // Save the token to localStorage
+        if (response.ok) {
+            localStorage.setItem('token', data.token);
+        }
+
+        return data;
+    } catch (error) {
+        console.error('Login error:', error);
+        throw error;
+    }
 }
 
 export const isAuthenticated = async () => {
+    const token = localStorage.getItem('token');
+
     const options = {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
         },
     };
     return fetch(`${import.meta.env.VITE_BACKEND_API_URL}/user/authenticated/`, options);
 }
 
 export const logoutRequest = async () => {
+    const token = localStorage.getItem('token');
+
     const options = {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
         },
     };
+    localStorage.removeItem('token');
     return fetch(`${import.meta.env.VITE_BACKEND_API_URL}/user/logout/`, options);
 };
 
