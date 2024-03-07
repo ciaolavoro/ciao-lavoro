@@ -26,7 +26,7 @@ class ServiceList(generics.ListAPIView):
             services = services.filter(profession=search_profession)
         if search_city:
             services = services.filter(city__icontains=search_city)
-        
+
         return services
 
     def get(self, request, *args, **kwargs):
