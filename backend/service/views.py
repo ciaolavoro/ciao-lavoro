@@ -3,7 +3,7 @@ from user.models import User
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import permission_classes
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, permissions, generics, status
 from rest_framework.exceptions import PermissionDenied
 from .models import Service, Job
 from .serializers import ServiceSerializer, JobSerializer
@@ -14,11 +14,28 @@ def list_services(request):
     services = Service.objects.all()
     return render(request, 'services_list.html', {'services': services})
 
-class ServiceList(APIView):
-    def get(self, request):
+class ServiceList(generics.ListAPIView):
+    serializer_class = ServiceSerializer
+
+    def get_queryset(self):
         services = Service.objects.all()
-        serializer = ServiceSerializer(services, many=True)
-        return Response(serializer.data)
+        search_profession = self.request.query_params.get('search_profession')
+        search_city = self.request.query_params.get('search_city')
+
+        if search_profession:
+            services = services.filter(profession=search_profession)
+        if search_city:
+            services = services.filter(city__icontains=search_city)
+
+        return services
+
+    def get(self, request, *args, **kwargs):
+        try:
+            queryset = self.get_queryset()
+            serializer = self.serializer_class(queryset, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 class UserServiceList(APIView):
     def get(self, request, user_id):
