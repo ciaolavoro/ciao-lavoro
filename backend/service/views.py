@@ -66,3 +66,25 @@ class JobCreation(APIView):
         job = Job.objects.create(service=service, name=name, estimated_price=estimated_price)
         serializer = JobSerializer(job, many=False)
         return Response(serializer.data)
+
+class JobEdit(APIView):
+    def post(self, request, job_id):
+        job_data = request.data
+        job = Job.objects.get(pk=job_id)
+        if job.service.user != request.user and not request.user.is_staff:
+            raise PermissionDenied("No tienes permiso para editar un trabajo para un servicio que no te pertenece")
+        new_name = job_data['name']
+        new_estimated_price = job_data['estimated_price']
+        job.name = new_name
+        job.estimated_price = new_estimated_price
+        job.save()
+        serializer = JobSerializer(job, many=False)
+        return Response(serializer.data)
+class JobDelete(APIView):
+    def post(self, request, job_id):
+        job = Job.objects.get(pk=job_id)
+        if job.service.user != request.user and not request.user.is_staff:
+            raise PermissionDenied("No tienes permiso para eliminar un trabajo para un servicio que no te pertenece")
+        Job.delete(job)
+        serializer = JobSerializer(job, many=False)
+        return Response(serializer.data)
