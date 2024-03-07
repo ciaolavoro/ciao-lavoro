@@ -9,6 +9,7 @@ from .models import Service, Job
 from .serializers import ServiceSerializer, JobSerializer
 from django.forms import ValidationError
 from rest_framework.authtoken.models import Token
+from datetime import date
 
 # Create your views here.
 
@@ -45,13 +46,29 @@ class ServiceCreation(APIView):
         token_id = request.headers['Authorization']
         token = get_object_or_404(Token, key=token_id.split()[-1])
         user = token.user
-        profession = service_data['profession']
         city = service_data['city']
-        experience = service_data['experience']
+        profession = service_data['profession']
         profesions = Service.PROFESSIONS
-        if profession in profesions:
-            raise Va
-
+        profession_exists = False
+        for profession_id, _ in profesions:
+            if profession_id == int(profession):
+                profession_exists = True
+        if not profession_exists:
+            raise ValidationError('La profesión no es valida')
+        user_services = list(Service.objects.filter(user=user))
+        for s in user_services:
+            if s.profession == int(profession):
+                raise ValidationError('No se pueden crear dos servicios de la misma profesión')
+        experience = service_data['experience']
+        if experience == '':
+            experience = '0'
+        elif not experience.isdigit():
+            raise ValidationError('La experiencia debe ser un número')
+        birth_date = user.birth_date
+        today = date.today()
+        age = today.year - birth_date.year - ((today.month, today.day) < (birth_date.month, birth_date.day))
+        if int(experience)+16 > age:
+            raise ValidationError('La experiencia es demasiado alta')
         service = Service.objects.create(user=user, profession=profession, city=city, experience=experience)
         serializer = ServiceSerializer(service, many=False)
         return Response(serializer.data)
