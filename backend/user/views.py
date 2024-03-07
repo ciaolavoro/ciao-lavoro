@@ -34,17 +34,9 @@ class login_view(APIView):
         else:
             return JsonResponse({'status': '0', 'message': 'Invalid login credentials'})
  
-class logout_view(APIView):
-    permission_classes = [IsAuthenticated]
-    def get(self, request):
-        auth_logout(request)
-        if 'HTTP_AUTHORIZATION' in request.META:
-            del request.META['HTTP_AUTHORIZATION']
-        return JsonResponse({'message': 'Logout successful'})
-
 class authenticated(APIView):
     @authentication_classes([TokenAuthentication])
     def get(self, request):
-        token = request.headers['Authorization']
-        isAuthenticated = token != 'Token null'
+        token = request.headers['Authorization'].split()[-1]
+        isAuthenticated = token != 'null'
         return JsonResponse({'isAuthenticated': isAuthenticated})

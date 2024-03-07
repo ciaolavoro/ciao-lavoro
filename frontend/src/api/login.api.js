@@ -37,15 +37,6 @@ export const isAuthenticated = async () => {
 
 export const logoutRequest = async () => {
     const token = localStorage.getItem('token');
-
-    const options = {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Token ${token}`,
-        },
-    };
     localStorage.removeItem('token');
-    return fetch(`${import.meta.env.VITE_BACKEND_API_URL}/user/logout/`, options);
 };
 
