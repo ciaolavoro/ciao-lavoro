@@ -32,6 +32,10 @@ const RegisterPage = () => {
     }
  };
 
+ //Establece la fecha minima en el pasado a la hora de rellenar el formulario
+ const minDate = new Date();
+ minDate.setFullYear(minDate.getFullYear() - 200);
+
  return (
     <div className="relative font-sans">
       <Background />
@@ -67,6 +71,8 @@ const RegisterPage = () => {
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     required
+                    minLength={3} //El minimo de caracteres es 3
+                    maxLength={30}//El maximo es 30
                     placeholder='Nombre de usuario'
                     className="w-full p-2 mb-4 border border-gray-300 rounded-md"
                  />
@@ -78,6 +84,8 @@ const RegisterPage = () => {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
+                    minLength={3} //El minimo de caracteres es 3
+                    maxLength={30}//El maximo es 30
                     placeholder='Nombre'
                     className="w-full p-2 mb-4 border border-gray-300 rounded-md"
                  />
@@ -89,6 +97,8 @@ const RegisterPage = () => {
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
                     required
+                    minLength={3} //El minimo de caracteres es 3
+                    maxLength={60}//El maximo es 60
                     placeholder='Apellidos'
                     className="w-full p-2 mb-4 border border-gray-300 rounded-md"
                  />
@@ -104,7 +114,23 @@ const RegisterPage = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
+                    minLength={8} //Longitud minima 8 caracteres
+                    //Este patrón se ha hecho usando IA
+                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$" // Requiere al menos una mayúscula, una minúscula, un número y un carácter especial
+                    //Fin del uso de la IA
                     placeholder='Contraseña'
+                    className="w-full p-2 mb-4 border border-gray-300 rounded-md"
+                 />
+                </label>
+                <label className="block">
+                  Confirmar Contraseña:
+                 <input
+                    type="password"
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    required
+                    minLength={8} 
+                    pattern={password}
+                    placeholder='Confirmar Contraseña'
                     className="w-full p-2 mb-4 border border-gray-300 rounded-md"
                  />
                 </label>
@@ -126,6 +152,10 @@ const RegisterPage = () => {
                     value={birthdate}
                     onChange={(e) => setBirthdate(e.target.value)}
                     required
+                    //La restriccion de fecha se ha realizado consultando una IA
+                    max={new Date().toISOString().split('T')[0]} // Configura la fecha máxima como el día de hoy
+                    min={minDate.toISOString().split('T')[0]} // Configura la fecha mínima (por ejemplo, hace 100 años)
+                    //Fin del uso de la IA
                     placeholder='Fecha de nacimiento'
                     className="w-full p-2 mb-4 border border-gray-300 rounded-md"
                  />
