@@ -61,6 +61,7 @@ const RegisterPage = () => {
               <div className="w-1/2 pr-4">
               <br></br>
                 <label className="block">
+                  Nombre de usuario:
                  <input
                     type="text"
                     value={username}
@@ -71,6 +72,7 @@ const RegisterPage = () => {
                  />
                 </label>
                 <label className="block">
+                  Nombre:
                  <input
                     type="text"
                     value={name}
@@ -81,6 +83,7 @@ const RegisterPage = () => {
                  />
                 </label>
                 <label className="block">
+                  Apellido:
                  <input
                     type="text"
                     value={lastName}
@@ -95,6 +98,7 @@ const RegisterPage = () => {
               <div className="w-1/2 pr-4">
               <br></br>
                 <label className="block">
+                  Contraseña:
                  <input
                     type="password"
                     value={password}
@@ -105,6 +109,7 @@ const RegisterPage = () => {
                  />
                 </label>
                 <label className="block">
+                  Email:
                  <input
                     type="email"
                     value={email}
@@ -115,6 +120,7 @@ const RegisterPage = () => {
                  />
                 </label>
                 <label className="block">
+                  Fecha de nacimiento:
                  <input
                     type="date"
                     value={birthdate}
