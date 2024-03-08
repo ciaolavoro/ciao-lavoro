@@ -12,8 +12,6 @@ import Contracts from './components/contract/Contracts.jsx'
 import Root from './components/Root.jsx'
 import CreateContract from './components/contract/CreateContract.jsx'
 
-
-
 const router = createBrowserRouter([
   {
     path: '/',

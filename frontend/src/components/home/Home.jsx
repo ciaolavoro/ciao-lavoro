@@ -18,6 +18,7 @@ export default function Home() {
         </div>
         <img src={homeBanner} alt="Banner de la página de inicio" className="w-full h-[390px] px-28 object-cover" />
       </section>
+
       <section className="flex justify-center gap-4 px-32 py-6">
         <DescriptionCard icon={<BriefcaseIcon />} title="Encuentre los mejores trabajadores">
           Descubre una amplia gama de profesionales de diversos campos.
