@@ -96,7 +96,7 @@ Javier Grosso
 - **IA Usada:**  
 IA de Bing
 - **Respuesta obtenida:**  
-![Imagen IA 1](Fotos/ImagenIA1.png)
+![Imagen IA 1](../Fotos/ImagenIA1.png)
 
 **Logo de la aplicación "CIAO LAVORO":**
 - **Prompt:**  
@@ -106,7 +106,7 @@ Diego Gonzalez
 - **IA Usada:**  
 IA de Bing
 - **Respuesta obtenida:**  
-![Imagen IA 2](Fotos/ImagenIA2.png)
+![Imagen IA 2](../Fotos/ImagenIA2.png)
 
 ## SPRINT 1
 
@@ -219,7 +219,7 @@ proceso y estar dispuesto a realizar ajustes según sus comentarios y sugerencia
   Necesito que cierto código que he realizado usando CSS puro esté usando Tailwind
   como me pondrías esto usando Tailwind?
 
-```javascript
+
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './components/App.jsx'
@@ -228,7 +228,7 @@ import './index.css'
 function offerView({ offer }) {
   return (
     <div>
-      <h2>Detalles de la oferta</h2>
+      <h 2>Detalles de la oferta</h2>
       <p><strong>Nombre del ofertante:</strong> {offer.user.name}</p>
       <p><strong>Profesión:</strong> {offer.profession}</p>
       <p><strong>Ciudad:</strong> {offer.city}</p>
@@ -251,7 +251,7 @@ import React from 'react';
 function OfferView({ offer }) {
   return (
     <div className="max-w-md mx-auto bg-white shadow-md rounded-lg overflow-hidden p-6">
-      <h2 className="text-2xl font-semibold mb-4">Detalles de la oferta</h2>
+      <h 2 className="text-2xl font-semibold mb-4">Detalles de la oferta</h2>
       <p className="mb-2"><strong>Nombre del ofertante:</strong> {offer.user.name}</p>
       <p className="mb-2"><strong>Profesión:</strong> {offer.profession}</p>
       <p className="mb-2"><strong>Ciudad:</strong> {offer.city}</p>
@@ -276,7 +276,7 @@ export default OfferView;
 
 - **Respuesta obtenida:**
 
-![Imagen IA 1](Fotos/PericoElBarbero.png)
+![Imagen IA Perico](../Fotos/PericoElBarbero.png)
 
 ### LANDING PAGE
 
@@ -352,7 +352,7 @@ export default OfferView;
 
 
 
-##Sprint 2
+## SPRINT 2
 ### RESTRICCION DE FECHA EN FORMULARIO:
 
 - **Prompt:**
