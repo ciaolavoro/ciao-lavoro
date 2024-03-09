@@ -19,7 +19,7 @@ export const getAllUsers = async () => {
         },
     };
 
-    return fetch(`${import.meta.env.VITE_BACKEND_API_URL}/users/`, options);
+    return fetch(`${import.meta.env.VITE_BACKEND_API_URL}/user/`, options);
 }
 
 export const getServiceByCityAndProfession = async (city, profession) => {
