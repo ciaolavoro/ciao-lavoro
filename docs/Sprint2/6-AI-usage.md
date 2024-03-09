@@ -228,7 +228,7 @@ import './index.css'
 function offerView({ offer }) {
   return (
     <div>
-      <h2>Detalles de la oferta</h2>
+      <h 2>Detalles de la oferta</h2>
       <p><strong>Nombre del ofertante:</strong> {offer.user.name}</p>
       <p><strong>Profesión:</strong> {offer.profession}</p>
       <p><strong>Ciudad:</strong> {offer.city}</p>
@@ -251,7 +251,7 @@ import React from 'react';
 function OfferView({ offer }) {
   return (
     <div className="max-w-md mx-auto bg-white shadow-md rounded-lg overflow-hidden p-6">
-      <h2 className="text-2xl font-semibold mb-4">Detalles de la oferta</h2>
+      <h 2 className="text-2xl font-semibold mb-4">Detalles de la oferta</h2>
       <p className="mb-2"><strong>Nombre del ofertante:</strong> {offer.user.name}</p>
       <p className="mb-2"><strong>Profesión:</strong> {offer.profession}</p>
       <p className="mb-2"><strong>Ciudad:</strong> {offer.city}</p>
