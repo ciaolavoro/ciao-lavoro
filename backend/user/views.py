@@ -11,7 +11,6 @@ from django.contrib.auth.hashers import check_password
 from rest_framework.authtoken.models import Token
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import authentication_classes
-from rest_framework import generics
 from django.shortcuts import get_object_or_404
 from .serializers import UserSerializer
 
@@ -83,30 +82,25 @@ class UserUpdate(APIView):
         first_name = request.data.get('first_name')
         last_name  = request.data.get('last_name')
         email = request.data.get('email')
-        password = request.data.get('password')
         language = request.data.get('language')
         birth_date = request.data.get('birth_date')
         image = request.FILES.get('image')
         token_id = request.headers["Authorization"].split()[-1]
         token = get_object_or_404(Token,key=token_id)
         user = token.user
-        if username != '' and username != None:
+        if username != '' and username is not None:
             user.username = username
-        if first_name != '' and first_name != None:
-            print(first_name)
+        if first_name != '' and first_name is not None:
             user.first_name = first_name
-        if last_name != '' and last_name != None:
+        if last_name != '' and last_name is not None:
             user.last_name = last_name
-        if email != '' and email != None:
+        if email != '' and email is not None:
             user.email = email
-        if password != '' and password != None:
-            user.password = password
-        if language != '' and language != None:
+        if language != '' and language is not None:
             user.language = language
-        if birth_date != '' and birth_date != None:
-            print(birth_date)
+        if birth_date != '' and birth_date is not None:
             user.birth_date = birth_date
-        if image != '' and image != None:
+        if image != '' and image is not None:
             user.image = image
         user.save()
         serializer = UserSerializer(user, many=False)
