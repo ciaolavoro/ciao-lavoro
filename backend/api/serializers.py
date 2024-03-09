@@ -9,7 +9,7 @@ from contract.models import Contract
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ['url', 'id', 'username', 'password', 'email', 'first_name', 'last_name', 'birth_date']
+        fields = ['url', 'id', 'username', 'password', 'email', 'first_name', 'last_name', 'birth_date', 'language']
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
