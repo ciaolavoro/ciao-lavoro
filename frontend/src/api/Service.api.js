@@ -21,6 +21,16 @@ export const getUserById = async (id) => {
     return fetch(`${import.meta.env.VITE_BACKEND_API_URL}/user/${id}`, options);
 }
 
+export const getServiceByUser = async (id) => {
+    const options = {
+        method: 'Get',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    };
+    return fetch(`${import.meta.env.VITE_BACKEND_API_URL}/service/user/${id}`, options);
+}
+
 
 
 export const getServiceByCityAndProfession = async (city, profession) => {
