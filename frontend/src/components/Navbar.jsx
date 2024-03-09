@@ -12,9 +12,15 @@ export default function Navbar() {
     },
     {
       id: 2,
-      title: "Sobre nosotros",
-      path: "/about",
+      title: "Buscar Servicios",
+      path: "/services",
     },
+    {
+      id: 3,
+      title: "Sobre nosotros",
+      path: "https://ciaolavoro.github.io/landingpage",
+    },
+    
  ];
 
  const location = useLocation();
