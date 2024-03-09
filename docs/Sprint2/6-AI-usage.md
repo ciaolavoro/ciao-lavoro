@@ -96,7 +96,7 @@ Javier Grosso
 - **IA Usada:**  
 IA de Bing
 - **Respuesta obtenida:**  
-![Imagen IA 1](Fotos/ImagenIA1.png)
+![Imagen IA 1](../Fotos/ImagenIA1.png)
 
 **Logo de la aplicación "CIAO LAVORO":**
 - **Prompt:**  
@@ -106,7 +106,7 @@ Diego Gonzalez
 - **IA Usada:**  
 IA de Bing
 - **Respuesta obtenida:**  
-![Imagen IA 2](Fotos/ImagenIA2.png)
+![Imagen IA 2](../Fotos/ImagenIA2.png)
 
 ## SPRINT 1
 
@@ -276,7 +276,7 @@ export default OfferView;
 
 - **Respuesta obtenida:**
 
-![Imagen IA 1](Fotos/PericoElBarbero.png)
+![Imagen IA Perico](../Fotos/PericoElBarbero.png)
 
 ### LANDING PAGE
 
