@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import UserUpdate
 
 app_name = 'user'
 
@@ -8,4 +9,5 @@ urlpatterns = [
     path('login/', views.login_view.as_view()),
     path('authenticated/', views.authenticated.as_view(), name='authenticated'),
     path('register/', views.register.as_view(), name='register'),
+    path('edit/', UserUpdate.as_view(), name='user-update'),
 ]
