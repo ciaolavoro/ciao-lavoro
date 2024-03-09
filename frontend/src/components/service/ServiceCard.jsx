@@ -47,7 +47,9 @@ export default function Service({ service }) {
           <br/>
           <span className="text-gray-500 mr-3 uppercase text-m font-semibold">{profession}</span>
           <p className="mb-2 mt-4"><strong>Ciudad:</strong> {service.city}</p>
-          <p className="mb-2"><strong>Experiencia:</strong> {service.experience}</p>
+          <p className="mb-2">
+            <strong>Experiencia:</strong> {service.experience} {service.experience > 1 ? "años" : "año"}
+          </p>
           <p className="mb-2"><strong>Idioma:</strong> {user && user.language ? user.language : "Sin idioma"}</p>
           
         </div>

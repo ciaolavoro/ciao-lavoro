@@ -6,7 +6,6 @@ export default function Services() {
     const [city, setCity] = useState('');
     const [profession, setProfession] = useState('');
     const [services, setServices] = useState([]);
-    const [typingTimeout, setTypingTimeout] = useState(0);
 
     useEffect(() => {
         const getServices = async () => {
@@ -24,19 +23,21 @@ export default function Services() {
         };
 
         // Usado Copilot. Es para borrar algun timeout que se haya creado previamente
-        if (typingTimeout) {
-            clearTimeout(typingTimeout);
-        }
+        let timeoutId = null;
 
         // Usado Copilot. Se establece el nuevo temporizador
-        const timeout = setTimeout(() => {
-            getServices();
-        }, 1000);
+        const handleTyping = () => {
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+            }
+            timeoutId = setTimeout(() => {
+                getServices();
+            }, 1000);
+        };
 
-        setTypingTimeout(timeout);
+        handleTyping();
 
-
-        return () => clearTimeout(timeout)
+        return () => clearTimeout(timeoutId);
     }, [city, profession]);
 
     return (
