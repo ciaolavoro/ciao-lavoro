@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAllUsers } from "../../api/Service.api";
+import { getUserById } from "../../api/Service.api";
 
 export default function Service({ service }) {
 
@@ -17,15 +17,11 @@ export default function Service({ service }) {
 
     const getUser = async () => {
       try {
-        const res = await getAllUsers();
+        const res = await getUserById(service.user);
         if (res.status === 200) {
           const data = await res.json();
-          const matchingUser = data.results
-          //console.log(service.user)
-          //console.log(service.city)
-          //console.log(matchingUser)
-          const userWithMatchingId = matchingUser.find(user => user.id === service.user);
-          setUser(userWithMatchingId);
+          console.log(data)
+          setUser(data);
         } else {
           alert('Error al cargar los usuarios');
         }
@@ -40,13 +36,22 @@ export default function Service({ service }) {
 
   //console.log(user)
   return (
-    <div className="max-w-md mx-auto my-6 bg-white border rounded-lg overflow-hidden p-6">
-      <h2 className="text-2xl font-semibold mb-4">Detalles del servicio</h2>
-      <p className="mb-2 mt-4"><strong>Nombre del ofertante:</strong> {user ? user.username : "Sin usuario asignado"}</p>
-      <p className="mb-2"><strong>Profesión:</strong> {profession}</p>
-      <p className="mb-2"><strong>Ciudad:</strong> {service.city}</p>
-      <p className="mb-2"><strong>Experiencia:</strong> {service.experience}</p>
-      <p className="mb-2"><strong>Idioma:</strong> {user ? user.language : "Sin asignar"}</p>
+    <div className="w-80 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
+      <a href="#">
+        <img src="https://images.unsplash.com/photo-1646753522408-077ef9839300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NjZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
+                   className="h-80 w-80 object-cover rounded-t-xl" />
+        <div className="px-4 py-3 w-72">
+          
+          <h2 className="text-2xl font-semibold"><strong></strong> {user.first_name} {user.last_name}</h2>
+          <span className="text-gray-400 mr-3 uppercase text-s">@{user.username}</span>
+          <br/>
+          <span className="text-gray-500 mr-3 uppercase text-m font-semibold">{profession}</span>
+          <p className="mb-2 mt-4"><strong>Ciudad:</strong> {service.city}</p>
+          <p className="mb-2"><strong>Experiencia:</strong> {service.experience}</p>
+          <p className="mb-2"><strong>Idioma:</strong> {user && user.language ? user.language : "Sin idioma"}</p>
+          
+        </div>
+      </a>
     </div>
   );
 }
