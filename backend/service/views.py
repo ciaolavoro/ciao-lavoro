@@ -7,7 +7,6 @@ from rest_framework import viewsets, permissions
 from rest_framework.exceptions import PermissionDenied
 from .models import Service, Job
 from .serializers import ServiceSerializer, JobSerializer
-from django.forms import ValidationError
 from rest_framework.authtoken.models import Token
 from datetime import date
 
