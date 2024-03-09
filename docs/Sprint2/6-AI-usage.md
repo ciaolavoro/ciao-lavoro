@@ -219,7 +219,7 @@ proceso y estar dispuesto a realizar ajustes según sus comentarios y sugerencia
   Necesito que cierto código que he realizado usando CSS puro esté usando Tailwind
   como me pondrías esto usando Tailwind?
 
-```javascript
+
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './components/App.jsx'
@@ -352,7 +352,7 @@ export default OfferView;
 
 
 
-##Sprint 2
+## SPRINT 2
 ### RESTRICCION DE FECHA EN FORMULARIO:
 
 - **Prompt:**
