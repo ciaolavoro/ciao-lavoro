@@ -3,22 +3,49 @@ import { NavLink } from "react-router-dom";
 import Background from "../Background";
 import defaultImage from './imagen.png';
 
+
 const RegisterPage = () => {
  const [username, setUsername] = useState('');
  const [name, setName] = useState('');
  const [lastName, setLastName] = useState('');
  const [email, setEmail] = useState('');
  const [password, setPassword] = useState('');
- const [confirmPassword] = useState('');
+ const [confirmPassword, setConfirmPassword] = useState('');
  const [image, setImage] = useState(defaultImage);
  const [birthdate, setBirthdate] = useState('');
 
  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (password !== confirmPassword) {
+  event.preventDefault();
+    //Empieza la IA, funcion para confirmar la contraseña
+  // Convertir las cadenas en arreglos de caracteres
+  // Convertir las contraseñas en arreglos de caracteres
+  const passwordChars = Array.from(password);
+  const confirmPasswordChars = Array.from(confirmPassword);
+
+  // Verificar si las longitudes de las contraseñas son iguales
+  if (passwordChars.length !== confirmPasswordChars.length) {
       alert('Las contraseñas no coinciden');
       return;
-    }
+  }
+
+  // Inicializar una variable para rastrear las diferencias
+  let mismatch = false;
+
+  // Comparar cada carácter de las contraseñas de manera segura en tiempo constante
+  for (let i = 0; i < passwordChars.length; i++) {
+      if (passwordChars[i] !== confirmPasswordChars[i]) {
+          mismatch = true;
+      }
+  }
+
+  // Verificar si hubo alguna diferencia
+  if (mismatch) {
+      alert('Las contraseñas no coinciden');
+      return;
+  }
+
+  // Si las contraseñas coinciden, continuar con el flujo de la aplicación
+  //Termina la IA
     // Lógica de envío aquí...
  };
 
