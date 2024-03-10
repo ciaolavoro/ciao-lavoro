@@ -11,6 +11,7 @@ import ErrorPage from './components/ErrorPage.jsx'
 import Contracts from './components/contract/Contracts.jsx'
 import Root from './components/Root.jsx'
 import CreateContract from './components/contract/CreateContract.jsx'
+import { AuthContextProvider } from './components/auth/AuthContextProvider.jsx'
 
 const router = createBrowserRouter([
   {
@@ -39,7 +40,7 @@ const router = createBrowserRouter([
         element: <CreateService />,
       },
       {
-        path:'contracts',
+        path: 'contracts',
         element: <Contracts />,
       },
       {
@@ -52,6 +53,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AuthContextProvider>
+      <RouterProvider router={router} />
+    </AuthContextProvider>
   </React.StrictMode>,
 )
