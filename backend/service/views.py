@@ -105,7 +105,6 @@ class JobDelete(APIView):
         Job.delete(job)
         serializer = JobSerializer(job, many=False)
         return Response(serializer.data)
-    
 
 class UserServiceViewSet(viewsets.ModelViewSet):
     serializer_class = ServiceSerializer
