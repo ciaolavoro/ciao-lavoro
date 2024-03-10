@@ -2,6 +2,11 @@ import { useState } from 'react';
 import { NavLink } from "react-router-dom";
 import Background from "../Background";
 import defaultImage from './imagen.png';
+import { Icon } from 'react-icons-kit';
+import { eyeOff } from 'react-icons-kit/feather/eyeOff';
+import { registerRequest } from '../../api/login.api';
+import { eye } from 'react-icons-kit/feather/eye';
+import { useNavigate } from 'react-router-dom';
 
 
 const RegisterPage = () => {
@@ -10,43 +15,17 @@ const RegisterPage = () => {
  const [lastName, setLastName] = useState('');
  const [email, setEmail] = useState('');
  const [password, setPassword] = useState('');
- const [confirmPassword, setConfirmPassword] = useState('');
+ const [setConfirmPassword] = useState('');
  const [image, setImage] = useState(defaultImage);
  const [birthdate, setBirthdate] = useState('');
+ const [passwordType, setPasswordType] = useState('password');
+ const [passwordIcon, setPasswordIcon] = useState(eyeOff);
+ const navigate = useNavigate();
 
  const handleSubmit = (event) => {
-  event.preventDefault();
-    //Empieza la IA, funcion para confirmar la contraseña
-  // Convertir las cadenas en arreglos de caracteres
-  // Convertir las contraseñas en arreglos de caracteres
-  const passwordChars = Array.from(password);
-  const confirmPasswordChars = Array.from(confirmPassword);
-
-  // Verificar si las longitudes de las contraseñas son iguales
-  if (passwordChars.length !== confirmPasswordChars.length) {
-      alert('Las contraseñas no coinciden');
-      return;
-  }
-
-  // Inicializar una variable para rastrear las diferencias
-  let mismatch = false;
-
-  // Comparar cada carácter de las contraseñas de manera segura en tiempo constante
-  for (let i = 0; i < passwordChars.length; i++) {
-      if (passwordChars[i] !== confirmPasswordChars[i]) {
-          mismatch = true;
-      }
-  }
-
-  // Verificar si hubo alguna diferencia
-  if (mismatch) {
-      alert('Las contraseñas no coinciden');
-      return;
-  }
-
-  // Si las contraseñas coinciden, continuar con el flujo de la aplicación
-  //Termina la IA
-    // Lógica de envío aquí...
+    event.preventDefault();
+    registerRequest(username, password,name,lastName,email,image,birthdate);
+    navigate("/");
  };
 
  const handleImageChange = (e) => {
@@ -59,7 +38,16 @@ const RegisterPage = () => {
     }
  };
 
- //Establece la fecha minima en el pasado a la hora de rellenar el formulario
+ const togglePasswordVisibility = () => {
+    if (passwordType === 'password') {
+      setPasswordType('text');
+      setPasswordIcon(eye);
+    } else {
+      setPasswordType('password');
+      setPasswordIcon(eyeOff);
+    }
+ };
+
  const minDate = new Date();
  minDate.setFullYear(minDate.getFullYear() - 200);
 
@@ -73,96 +61,94 @@ const RegisterPage = () => {
         <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-xl">
           <form onSubmit={handleSubmit} className="flex flex-col items-center space-y-4">
             <div className="flex flex-wrap justify-between w-full">
-            <div className="w-full flex justify-center">
-              <label htmlFor="image-upload" className="block">
-                <div className="bg-green-600 text-black px-4 py-2 rounded-lg cursor-pointer" style={{ width: '150px', height: '60px', fontSize: '16px', alignItems:'center', display:'flex', justifyContent:'center' }}>
-                 Selecciona tu foto de perfil
-                 <input
-                    type="file"
-                    id="image-upload"
-                    onChange={handleImageChange}
-                    required
-                    style={{ display: 'none' }}
-                 />
-                </div>
-              </label>
-            </div>
-            
-              {/* Columna 1: Datos del usuario */}
+              <div className="w-full flex justify-center">
+                <label htmlFor="image-upload" className="block">
+                 <div className="bg-green-600 text-black px-4 py-2 rounded-lg cursor-pointer" style={{ width: '150px', height: '60px', fontSize: '16px', alignItems:'center', display:'flex', justifyContent:'center' }}>
+                    Selecciona tu foto de perfil
+                    <input
+                      type="file"
+                      id="image-upload"
+                      onChange={handleImageChange}
+                      required
+                      style={{ display: 'none' }}
+                    />
+                 </div>
+                </label>
+              </div>
               <div className="w-1/2 pr-4">
-              <br></br>
                 <label className="block">
-                  Nombre de usuario:
+                 Nombre de usuario:
                  <input
                     type="text"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     required
-                    minLength={3} //El minimo de caracteres es 3
-                    maxLength={30}//El maximo es 30
+                    minLength={3}
+                    maxLength={30}
                     placeholder='Nombre de usuario'
                     className="w-full p-2 mb-4 border border-gray-300 rounded-md"
                  />
                 </label>
                 <label className="block">
-                  Nombre:
+                 Nombre:
                  <input
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
-                    minLength={3} //El minimo de caracteres es 3
-                    maxLength={30}//El maximo es 30
+                    minLength={3}
+                    maxLength={30}
                     placeholder='Nombre'
                     className="w-full p-2 mb-4 border border-gray-300 rounded-md"
                  />
                 </label>
                 <label className="block">
-                  Apellido:
+                 Apellido:
                  <input
                     type="text"
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
                     required
-                    minLength={3} //El minimo de caracteres es 3
-                    maxLength={60}//El maximo es 60
+                    minLength={3}
+                    maxLength={60}
                     placeholder='Apellidos'
                     className="w-full p-2 mb-4 border border-gray-300 rounded-md"
                  />
                 </label>
               </div>
-              {/* Columna 2: Datos de la cuenta */}
               <div className="w-1/2 pr-4">
-              <br></br>
                 <label className="block">
-                  Contraseña:
-                 <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                    minLength={8} //Longitud minima 8 caracteres
-                    //Este patrón se ha hecho usando IA
-                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$" // Requiere al menos una mayúscula, una minúscula, un número y un carácter especial
-                    //Fin del uso de la IA
-                    placeholder='Contraseña'
-                    className="w-full p-2 mb-4 border border-gray-300 rounded-md"
-                 />
+                 Contraseña:
+                 <div className="relative">
+                    <input
+                      type={passwordType}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                      minLength={8}
+                      pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&_]+$"
+                      placeholder='Contraseña'
+                      className="w-full p-2 mb-4 border border-gray-300 rounded-md pl-10"
+                    />
+                    <span className="absolute inset-y-0 right-0 flex items-center pl-3">
+                      <Icon icon={passwordIcon} size={20} onClick={togglePasswordVisibility} />
+                    </span>
+                 </div>
                 </label>
                 <label className="block">
-                  Confirmar Contraseña:
+                 Confirmar Contraseña:
                  <input
                     type="password"
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     required
-                    minLength={8} 
+                    minLength={8}
                     pattern={password}
                     placeholder='Confirmar Contraseña'
                     className="w-full p-2 mb-4 border border-gray-300 rounded-md"
                  />
                 </label>
                 <label className="block">
-                  Email:
+                 Email:
                  <input
                     type="email"
                     value={email}
@@ -173,16 +159,14 @@ const RegisterPage = () => {
                  />
                 </label>
                 <label className="block">
-                  Fecha de nacimiento:
+                 Fecha de nacimiento:
                  <input
                     type="date"
                     value={birthdate}
                     onChange={(e) => setBirthdate(e.target.value)}
                     required
-                    //La restriccion de fecha se ha realizado consultando una IA
-                    max={new Date().toISOString().split('T')[0]} // Configura la fecha máxima como el día de hoy
-                    min={minDate.toISOString().split('T')[0]} // Configura la fecha mínima (por ejemplo, hace 100 años)
-                    //Fin del uso de la IA
+                    max={new Date().toISOString().split('T')[0]}
+                    min={minDate.toISOString().split('T')[0]}
                     placeholder='Fecha de nacimiento'
                     className="w-full p-2 mb-4 border border-gray-300 rounded-md"
                  />
