@@ -5,7 +5,7 @@ const LOGGED_USER = 'loggedUser';
 export const AuthContext = createContext();
 
 export function AuthContextProvider({ children }) {
-    const [loggedUser, setLoggedUser] = useState(window.localStorage.getItem(LOGGED_USER) ?? null);
+    const [loggedUser, setLoggedUser] = useState(JSON.parse(window.localStorage.getItem(LOGGED_USER)) ?? null);
 
     const login = useCallback((user) => {
         window.localStorage.setItem(LOGGED_USER, JSON.stringify(user));
