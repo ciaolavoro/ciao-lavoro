@@ -6,21 +6,20 @@ export default function Service({ service }) {
   const [profession, setProfession] = useState("");
   const [user, setUser] = useState("");
 
-  useEffect(() => {
-    if (service.profession === 1) {
-      setProfession("Lavandero");
-    } else if (service.profession === 2) {
-      setProfession("Celador");
-    } else {
-      setProfession("Albañil");
-    }
+  if (service.profession === 1) {
+    setProfession("Lavandero");
+  } else if (service.profession === 2) {
+    setProfession("Celador");
+  } else {
+    setProfession("Albañil");
+  }
 
+  useEffect(() => {
     const getUser = async () => {
       try {
         const res = await getUserById(service.user);
         if (res.status === 200) {
           const data = await res.json();
-          console.log(data)
           setUser(data);
         } else {
           alert('Error al cargar los usuarios');
@@ -34,7 +33,6 @@ export default function Service({ service }) {
     getUser();
   }, [service.profession, service.user, service.city]);
 
-  //console.log(user)
   return (
     <div className="w-80 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
       <a href="#">
