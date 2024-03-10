@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom';
 
 const RegisterPage = () => {
  const [username, setUsername] = useState('');
- const [name, setName] = useState('');
+ const [firstName, setName] = useState('');
  const [lastName, setLastName] = useState('');
  const [email, setEmail] = useState('');
  const [password, setPassword] = useState('');
@@ -24,7 +24,7 @@ const RegisterPage = () => {
 
  const handleSubmit = (event) => {
     event.preventDefault();
-    registerRequest(username, password,name,lastName,email,image,birthdate);
+    registerRequest(username, password,firstName,lastName,email,image,birthdate);
     navigate("/");
  };
 
@@ -69,7 +69,6 @@ const RegisterPage = () => {
                       type="file"
                       id="image-upload"
                       onChange={handleImageChange}
-                      required
                       style={{ display: 'none' }}
                     />
                  </div>
@@ -93,7 +92,7 @@ const RegisterPage = () => {
                  Nombre:
                  <input
                     type="text"
-                    value={name}
+                    value={firstName}
                     onChange={(e) => setName(e.target.value)}
                     required
                     minLength={3}

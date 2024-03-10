@@ -29,13 +29,13 @@ export const logoutRequest = async () => {
     return fetch(`${import.meta.env.VITE_BACKEND_API_URL}/user/logout/`, options);
 };
 
-export const registerRequest = async (username, password,name,lastName,email,image,birthdate) => {
+export const registerRequest = async (username, password,firstName,lastName,email,image,birthdate) => {
     const options = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({username, password,name,lastName,email,image,birthdate }),
+        body: JSON.stringify({username, password,firstName,lastName,email,image,birthdate }),
     };
     return fetch(`${import.meta.env.VITE_BACKEND_API_URL}/user/register/`, options);
 }
