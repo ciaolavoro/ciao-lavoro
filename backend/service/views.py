@@ -128,3 +128,13 @@ class JobDelete(APIView):
         Job.delete(job)
         serializer = JobSerializer(job, many=False)
         return Response(serializer.data)
+
+class UserServiceViewSet(viewsets.ModelViewSet):
+    serializer_class = ServiceSerializer
+    def get_queryset(self):
+        """
+        Sobrescribe el método `get_queryset` para filtrar los trabajos
+        basados en el servicio proporcionado en la URL.
+        """
+        user_id = self.kwargs['user_id']  # Obtén el ID del servicio de la URL
+        return Service.objects.filter(user_id=user_id)

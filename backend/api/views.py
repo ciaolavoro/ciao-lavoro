@@ -45,6 +45,16 @@ class JobViewSet(viewsets.ModelViewSet):
         """
         service_id = self.kwargs['service_id']  # Obtén el ID del servicio de la URL
         return Job.objects.filter(service_id=service_id)
+    
+
+class UserServiceViewSet(viewsets.ModelViewSet):
+    serializer_class = ServiceSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+    def get_queryset(self):
+        user_id = self.kwargs['user_id']  # Obtén el ID del servicio de la URL
+        return Service.objects.filter(user_id=user_id)
 
 class ContractViewSet(viewsets.ModelViewSet):
     queryset=Contract.objects.all()

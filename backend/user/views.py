@@ -2,6 +2,7 @@ import re
 from django.shortcuts import render
 from .models import User
 from django.http import JsonResponse
+from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from django.contrib.auth import logout as auth_logout
@@ -13,10 +14,6 @@ from rest_framework.authentication import TokenAuthentication, SessionAuthentica
 from rest_framework.decorators import authentication_classes
 from django.shortcuts import get_object_or_404
 from .serializers import UserSerializer
-
-def list_users(request):
-    users = User.objects.all()
-    return render(request, 'user_list.html', {'users': users})
 
 class login_view(APIView):
     authentication_classes = []
@@ -67,7 +64,12 @@ class register(APIView):
 
         return JsonResponse({'status': '1', 'message': ' The user has been successfully registered'})
     
-
+class UserList(APIView):
+    def get(self, request):
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)
+    
 class UserUpdate(APIView):
    
     def get(self, request, format_arg=None):
