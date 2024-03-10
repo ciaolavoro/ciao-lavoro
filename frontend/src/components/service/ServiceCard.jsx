@@ -6,15 +6,15 @@ export default function Service({ service }) {
   const [profession, setProfession] = useState("");
   const [user, setUser] = useState("");
 
-  if (service.profession === 1) {
-    setProfession("Lavandero");
-  } else if (service.profession === 2) {
-    setProfession("Celador");
-  } else {
-    setProfession("Albañil");
-  }
-
   useEffect(() => {
+    if (service.profession === 1) {
+      setProfession("Lavandero");
+    } else if (service.profession === 2) {
+      setProfession("Celador");
+    } else {
+      setProfession("Albañil");
+    }
+
     const getUser = async () => {
       try {
         const res = await getUserById(service.user);
