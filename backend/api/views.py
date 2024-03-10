@@ -66,23 +66,6 @@ class ContractViewSet(viewsets.ModelViewSet):
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-
-
-class ContractClientList(generics.ListAPIView):
-    # permission_classes = [permissions.IsAuthenticated]
-    serializer_class=ContractSerializer
-    def get_queryset(self):
-        user=self.request.user.id
-        queryset=Contract.objects.filter(client=user)
-        return queryset  
-     
-class ContractWorkerList(generics.ListAPIView):
-    # permission_classes = [permissions.IsAuthenticated]
-    serializer_class=ContractSerializer
-    def get_queryset(self):
-        user=self.request.user.id
-        queryset=Contract.objects.filter(worker=user)
-        return queryset
     
 
 @api_view(['POST'])
