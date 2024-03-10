@@ -11,6 +11,7 @@ import ErrorPage from './components/ErrorPage.jsx'
 import Contracts from './components/contract/Contracts.jsx'
 import Root from './components/Root.jsx'
 import CreateContract from './components/contract/CreateContract.jsx'
+import ServiceUser from './components/service/ServiceUser.jsx'
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: 'services',
         element: <Services />,
+      },
+      {
+        path: 'services/user',
+        element: <ServiceUser />,
       },
       {
         path: 'service/create',

@@ -57,9 +57,15 @@ export default function Navbar() {
  const renderAuthLinks = () => {
     if (isLoggedIn) {
       return (
-        <button onClick={handleLogout} className="px-2 py-1 font-semibold">
-          Cerrar sesión
-        </button>
+        <div>
+          <NavLink to="/services/user" className="px-2 py-1 font-semibold">
+            Mis Servicios
+          </NavLink>
+          <button onClick={handleLogout} className="px-2 py-1 font-semibold">
+            Cerrar sesión
+          </button>
+        </div>
+        
       );
     } else {
       return (

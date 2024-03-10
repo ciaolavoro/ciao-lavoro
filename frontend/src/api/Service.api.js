@@ -10,7 +10,24 @@ export const getAllServices = async () => {
     return fetch(`${import.meta.env.VITE_BACKEND_API_URL}/service/`, options);
 }
 
+
+export const getUserLogged = async () => {
+    const token = localStorage.getItem('token');
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
+        },
+    };
+
+    return fetch(`${import.meta.env.VITE_BACKEND_API_URL}/user/edit/`, options);
+}
+
+
+
 export const getUserById = async (id) => {
+    
     const options = {
         method: 'GET',
         headers: {
