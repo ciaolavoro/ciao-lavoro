@@ -12,6 +12,7 @@ import Root from './components/Root.jsx'
 import CreateContract from './components/contract/CreateContract.jsx'
 import UserProfile from './components/user/UserProfile.jsx'
 import { AuthContextProvider } from './components/auth/AuthContextProvider.jsx'
+import Users from './components/user/Users.jsx'
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_API_URL;
 
@@ -46,11 +47,17 @@ const router = createBrowserRouter([
         element: <CreateContract />,
       },
       {
-        path: 'users/:userId',
-        element: <UserProfile />,
-        loader: async ({ params }) => {
-          return fetch(`${BACKEND_URL}/user/${params.userId}`);
-        },
+        path: 'users',
+        element: <Users />,
+        children: [
+          {
+            path: ':userId',
+            element: <UserProfile />,
+            loader: async ({ params }) => {
+              return fetch(`${BACKEND_URL}/user/${params.userId}`);
+            },
+          },
+        ]
       },
     ]
   }
