@@ -50,6 +50,8 @@ const RegisterPage = () => {
 
  const minDate = new Date();
  minDate.setFullYear(minDate.getFullYear() - 200);
+ const maxDate = new Date();
+ maxDate.setFullYear(maxDate.getFullYear() - 16);
 
  return (
     <div className="relative font-sans">
@@ -128,6 +130,7 @@ const RegisterPage = () => {
                       pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&_]+$"
                       placeholder='Contraseña'
                       className="w-full p-2 mb-4 border border-gray-300 rounded-md pl-10"
+                      title="La contraseña debe tener mínimo una mayúscula, una minúscula, un número y un caracter especial"
                     />
                     <span className="absolute inset-y-0 right-0 flex items-center pl-3">
                       <Icon icon={passwordIcon} size={20} onClick={togglePasswordVisibility} />
@@ -144,6 +147,7 @@ const RegisterPage = () => {
                     pattern={password}
                     placeholder='Confirmar Contraseña'
                     className="w-full p-2 mb-4 border border-gray-300 rounded-md"
+                    title="Debe de coincidir con la contraseña"
                  />
                 </label>
                 <label className="block">
@@ -164,7 +168,7 @@ const RegisterPage = () => {
                     value={birthdate}
                     onChange={(e) => setBirthdate(e.target.value)}
                     required
-                    max={new Date().toISOString().split('T')[0]}
+                    max={maxDate.toISOString().split('T')[0]}
                     min={minDate.toISOString().split('T')[0]}
                     placeholder='Fecha de nacimiento'
                     className="w-full p-2 mb-4 border border-gray-300 rounded-md"
