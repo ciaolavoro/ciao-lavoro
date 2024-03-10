@@ -1,6 +1,7 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import ciaoLavoroLogo from "/ciaolavoro-logo.png";
 import { useAuthContext } from "./auth/AuthContextProvider";
+import defaultUserImage from "../assets/service/talonflame.jpg"
 
 const navItemsStyle = "px-2 py-1 font-semibold rounded hover:bg-gray-300 transition";
 
@@ -36,7 +37,14 @@ export default function Navbar() {
   const renderLoginOrLogout = () => {
     if (loggedUser) {
       return (
-        <li className={`${navItemsStyle} hover:cursor-pointer`} onClick={handleLogout}>Cerrar sesión</li>
+        <>
+          <li className={`${navItemsStyle} hover:cursor-pointer`} onClick={handleLogout}>Cerrar sesión</li>
+          <Link to={`/users/${loggedUser.id}`}>
+            <li>
+              <img src={loggedUser.image ?? defaultUserImage} alt="Avatar del usuario" className="size-8 object-cover rounded-full hover:shadow transition" />
+            </li>
+          </Link>
+        </>
       );
     } else {
       return (
