@@ -10,7 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.contrib.auth.hashers import check_password
 from rest_framework.authtoken.models import Token
-from rest_framework.authentication import TokenAuthentication
+from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from rest_framework.decorators import authentication_classes
 from django.shortcuts import get_object_or_404
 from .serializers import UserSerializer
@@ -64,11 +64,45 @@ class register(APIView):
 
         return JsonResponse({'status': '1', 'message': ' The user has been successfully registered'})
     
-
 class UserList(APIView):
     def get(self, request):
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
     
-
+class UserUpdate(APIView):
+   
+    def get(self, request, format_arg=None):
+        authentication_classes = [SessionAuthentication]
+        permission_classes = [IsAuthenticated]
+        session_id = request.session.session_key
+        print(session_id)
+        user = request.user
+        serializer = UserSerializer(user)
+        return JsonResponse(serializer.data)
+    
+    def put(self, request, format_arg=None):
+        authentication_classes = [SessionAuthentication]
+        permission_classes = [IsAuthenticated]
+        user = request.user
+        first_name = request.data.get('first_name')
+        last_name  = request.data.get('last_name')
+        email = request.data.get('email')
+        language = request.data.get('language')
+        birth_date = request.data.get('birth_date')
+        image = request.FILES.get('image')
+        if first_name:
+            user.first_name = first_name
+        if last_name:
+            user.last_name = last_name
+        if email:
+            user.email = email
+        if language:
+            user.language = language
+        if birth_date:
+            user.birth_date = birth_date
+        if image:
+            user.image = image
+        user.update()
+        serializer = UserSerializer(user)
+        return JsonResponse(serializer.data)

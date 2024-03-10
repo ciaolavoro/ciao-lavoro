@@ -6,7 +6,6 @@ class RegisterSerializer(serializers.HyperlinkedModelSerializer):
         model = User
         fields = ('username', 'password', 'birth_date', 'language')
 
-
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
