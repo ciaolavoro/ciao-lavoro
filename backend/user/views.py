@@ -29,7 +29,7 @@ class login_view(APIView):
         user = get_object_or_404(User, username=username)
         if check_password(password,user.password):
             token,_ = Token.objects.get_or_create(user=user)
-            return JsonResponse({'status': '1', 'token': token.key, 'message': 'User logged in successfully'})
+            return JsonResponse({'status': '1', 'user': UserSerializer(user).data, 'message': 'User logged in successfully'})
         else:
             return JsonResponse({'status': '0', 'message': 'Invalid login credentials'})
  
