@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 from rest_framework import status, permissions,generics
 from rest_framework.decorators import permission_classes
 from rest_framework.response import Response
@@ -19,9 +19,11 @@ class ContractCreation(APIView):
         initial_date = contract_data['initial_date']
         end_date = contract_data['end_date']
         today = date.today()
-        if end_date < initial_date:
+        Init =  datetime.strptime(initial_date, '%Y-%m-%d').date()
+        End = datetime.strptime(end_date, '%Y-%m-%d').date()
+        if End < Init:
             raise PermissionDenied("La fecha de finalizacion no puede ser antes que la inicial")
-        if initial_date < today:
+        if Init < today:
             raise PermissionDenied("La fecha de inicio no puede ser antes que hoy")
         cost = contract_data['cost']
         if cost <= 0:
@@ -31,14 +33,14 @@ class ContractCreation(APIView):
                                            end_date = end_date,
                                            cost = cost,
                                            service=service)
-        serializer = ContractSerializer(contract, many=False)
+        serializer = ContractSerializer(contract, many=False,context ={'request': request})
         return Response(serializer.data)
 
 class ContractEdit(APIView):
     def post(self, request, contract_id):
         contract_data = request.data
         contract = Contract.objects.get(pk=contract_id)
-        if (contract.client != request.user or contract.service.user != request.user) and not request.user.is_staff:
+        if contract.client != request.user and contract.service.user != request.user and not request.user.is_staff:
             raise PermissionDenied("No tienes permiso para editar un contrato que no te pertenece")
         new_accept_worker = contract_data['accept_worker']
         new_accept_client = contract_data['accept_client']
@@ -47,9 +49,10 @@ class ContractEdit(APIView):
         new_end_date = contract_data['end_date']
         new_cost = contract_data['cost']
         today = date.today()
+        Init =  datetime.strptime(new_initial_date, '%Y-%m-%d').date()
         if new_end_date < new_initial_date:
             raise PermissionDenied("La fecha de finalizacion no puede ser antes que la inicial")
-        if new_initial_date < today:
+        if Init < today:
             raise PermissionDenied("La fecha de inicio no puede ser antes que hoy")
         if new_cost <= 0:
             raise PermissionDenied("El precio no puede ser menor o igual que 0")
@@ -60,28 +63,27 @@ class ContractEdit(APIView):
         contract.end_date = new_end_date
         contract.cost = new_cost
         contract.save()
-        serializer = ContractSerializer(contract, many=False)
+        serializer = ContractSerializer(contract, many=False,context ={'request': request})
         return Response(serializer.data)
     
 class ContractStatusEdit(APIView):
     def post(self, request, status_num,contract_id):
         contract = Contract.objects.get(pk=contract_id)
-        if (contract.client != request.user or contract.service.user != request.user) and not request.user.is_staff:
+        if contract.client != request.user and contract.service.user != request.user and not request.user.is_staff:
             raise PermissionDenied("No tienes permiso para editar un contrato que no te pertenece")
         new_status = status_num
         contract.status = new_status
         contract.save()
-        serializer = ContractSerializer(contract, many=False)
+        serializer = ContractSerializer(contract, many=False,context ={'request': request})
         return Response(serializer.data)
 class ContractDelete(APIView):
     def post(self, request, contract_id):
         contract = Contract.objects.get(pk=contract_id)
-        if (contract.client != request.user or contract.service.user != request.user) and not request.user.is_staff:
+        if contract.client != request.user and contract.service.user != request.user and not request.user.is_staff:
             raise PermissionDenied("No tienes permiso para eliminar un contrato que no te pertenece")
-        contract.delete(contract)
-        serializer = ContractSerializer(contract, many=False)
+        Contract.delete(contract)
+        serializer = ContractSerializer(contract, many=False,context ={'request': request})
         return Response(serializer.data)
-    
 class ContractClientList(generics.ListAPIView):
     # permission_classes = [permissions.IsAuthenticated]
     serializer_class=ContractSerializer
