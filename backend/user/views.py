@@ -54,7 +54,7 @@ class register(APIView):
         email = request.data.get('email')
         password = request.data.get('password')
         language = request.data.get('language')
-        birth_date = request.data.get('birthDate')
+        birth_date = request.data.get('birthdate')
         image = request.FILES.get('image')
              
         user = User.objects.create(username= username, first_name= first_name, last_name= last_name, email= email, password = password
