@@ -13,8 +13,6 @@ import Root from './components/Root.jsx'
 import CreateContract from './components/contract/CreateContract.jsx'
 import Register from './components/register/Register.jsx'
 
-
-
 const router = createBrowserRouter([
   {
     path: '/',
