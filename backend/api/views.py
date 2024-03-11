@@ -56,7 +56,7 @@ class UserServiceViewSet(viewsets.ModelViewSet):
         user_id = self.kwargs['user_id']  # Obtén el ID del servicio de la URL
         return Service.objects.filter(user_id=user_id)
 
-class ContractViewSet(viewsets.ModelViewSet):
+class ContractViewSetnt(viewsets.ModelViewSet):
     queryset=Contract.objects.all()
     serializer_class=ContractSerializer   
     # permission_classes = [permissions.IsAuthenticated]
@@ -67,7 +67,10 @@ class ContractViewSet(viewsets.ModelViewSet):
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
     
-
+class ContractViewSet(viewsets.ModelViewSet):
+    serializer_class=ContractSerializer   
+    queryset=Contract.objects.all()    
+    
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
 def signup(request):
