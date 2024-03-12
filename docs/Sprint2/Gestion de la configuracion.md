@@ -25,6 +25,7 @@ GRUPO 6 | SEVILLA, 09 DE MARZO 2024 | ENTREGABLE “SPRINT 2”
 | 25/02/2024 | 1.1     | Inclusión de ramas fix en apartado “Estrategia de ramas” |
 | 28/02/2024 | 1.2     | Inclusión de los apartados 8 (Política de clockify) y 9 (Política de Issues) |
 | 09/03/2024 | 1.2.1   | Añadido el texto "Sprint 2"                      |
+| 09/03/2024 | 1.2.2   | Inclusion de reglas del tablero github en el apartado 9              |
 
 ### Contenido
 1. Estrategia de ramas:
