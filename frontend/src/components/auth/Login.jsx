@@ -18,7 +18,7 @@ export default function LoginPage() {
     try {
       const res = await loginRequest(username, password)
       if (res.status === '1') {
-        login(res.user);
+        login({ user: res.user, token: res.token });
         navigate('/');
         alert('Se ha iniciado sesión correctamente')
       } else {
