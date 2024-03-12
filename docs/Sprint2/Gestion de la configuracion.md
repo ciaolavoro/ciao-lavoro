@@ -247,3 +247,23 @@ En el menú de la derecha, en “Assignees” debe de incluir a las personas res
 dicha tarea. En “Labels” debe de colocarse el indicador del tipo de tarea (Back End, Front end,
 documentacion, fix, despliegue, desarrollo, etc)
 Con las issues de fix/arreglos la estructura y procedimiento es igual, pero en lugar de poner Task se pone Fix.
+
+Además, las Issues se gestionarán de la siguiente forma en el tablero de GitHub:
+
+**Prioridades:**
+Indica la cercanía de la tarea respecto al Deadline.
+- P0: Una tarea que tiene el Deadline a 4 días o menos
+- P1: Una tarea que tiene su Deadline a más de 4 días pero menos de 1 semana
+- P2: Una tarea que tiene su Deadline a más de 1 semana
+
+**Size:**
+Indica el nivel de complejidad de la tarea (Estimar que cada punto son 30 mins por persona asignada a la tarea):
+- XS (1/2): Tareas sencillas, simples o repetitivas
+- S (3/4): Tareas con algún tipo de complejidad menor
+- M (5/6): Tareas que aportan funcionalidades complejas o requieren de mayor código
+- L (7/8): Tareas que requieran de implementación y cambios de otros modelos, o conocimiento de varios para solventarlas
+- XL (9/10): Tareas que requieren de trastocar el proyecto entero en su totalidad
+
+**Iteración y fecha:**
+En el campo Iteration hay que indicar la iteración a la que corresponde la tarea. Y en el campo “Start Date” y “End Date” hay que poner las fechas de inicio y fin del desarrollo de dicha tarea.
+
