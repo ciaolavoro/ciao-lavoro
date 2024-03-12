@@ -1,12 +1,12 @@
 import { useState } from 'react';
+import React from 'react';
 import { NavLink } from "react-router-dom";
 import Background from "../Background";
 import defaultImage from './imagen.png';
-import { Icon } from 'react-icons-kit';
-import { eyeOff } from 'react-icons-kit/feather/eyeOff';
 import { registerRequest } from '../../api/login.api';
-import { eye } from 'react-icons-kit/feather/eye';
 import { useNavigate } from 'react-router-dom';
+import Eye from '../icons/Eye.jsx';
+import EyeOff from '../icons/Eye-slash.jsx';
 
 
 const RegisterPage = () => {
@@ -15,11 +15,11 @@ const RegisterPage = () => {
  const [lastName, setLastName] = useState('');
  const [email, setEmail] = useState('');
  const [password, setPassword] = useState('');
- const [setConfirmPassword] = useState('');
+ const [confirmPassword, setConfirmPassword] = useState('');
  const [image, setImage] = useState(defaultImage);
  const [birthdate, setBirthdate] = useState('');
  const [passwordType, setPasswordType] = useState('password');
- const [passwordIcon, setPasswordIcon] = useState(eyeOff);
+ const [passwordIcon, setPasswordIcon] = useState(EyeOff);
  const navigate = useNavigate();
 
  const handleSubmit = (event) => {
@@ -39,13 +39,9 @@ const RegisterPage = () => {
  };
 
  const togglePasswordVisibility = () => {
-    if (passwordType === 'password') {
-      setPasswordType('text');
-      setPasswordIcon(eye);
-    } else {
-      setPasswordType('password');
-      setPasswordIcon(eyeOff);
-    }
+  setPasswordType(passwordType === 'password' ? 'text' : 'password');
+  setPasswordIcon(passwordType === 'password' ? <Eye /> : <EyeOff />);
+    
  };
 
  const minDate = new Date();
@@ -132,8 +128,8 @@ const RegisterPage = () => {
                       className="w-full p-2 mb-4 border border-gray-300 rounded-md pl-10"
                       title="La contraseña debe tener mínimo una mayúscula, una minúscula, un número y un caracter especial"
                     />
-                    <span className="absolute inset-y-0 right-0 flex items-center pl-3">
-                      <Icon icon={passwordIcon} size={20} onClick={togglePasswordVisibility} />
+                    <span className="absolute inset-y-0 right-0 flex items-center pl-3cursor-pointer" onClick={() => togglePasswordVisibility()}>
+                    {passwordIcon}
                     </span>
                  </div>
                 </label>
