@@ -39,9 +39,9 @@ export default function Navbar() {
       return (
         <>
           <li className={`${navItemsStyle} hover:cursor-pointer`} onClick={handleLogout}>Cerrar sesión</li>
-          <Link to={`/users/${loggedUser.id}`}>
+          <Link to={`/users/${loggedUser.user.id}`}>
             <li>
-              <img src={loggedUser.image ?? defaultUserImage} alt="Avatar del usuario" className="size-8 object-cover rounded-full hover:shadow transition" />
+              <img src={loggedUser.user.image ?? defaultUserImage} alt="Avatar del usuario" className="size-8 object-cover rounded-full hover:shadow transition" />
             </li>
           </Link>
         </>
