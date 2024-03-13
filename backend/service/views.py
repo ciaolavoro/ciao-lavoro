@@ -10,11 +10,7 @@ from .serializers import ServiceSerializer, JobSerializer
 from rest_framework.authtoken.models import Token
 from datetime import date
 
-# Create your views here.
-
-def list_services(request):
-    services = Service.objects.all()
-    return render(request, 'services_list.html', {'services': services})
+# Create your views here
 
 class ServiceList(generics.ListAPIView):
     serializer_class = ServiceSerializer

@@ -11,6 +11,11 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         model = User
         fields = '__all__'
 
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'image']
+
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -19,6 +24,7 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class ServiceSerializer(serializers.HyperlinkedModelSerializer):
+    user = UserSerializer()
     class Meta:
         model = Service
         fields = '__all__'
