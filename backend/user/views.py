@@ -56,12 +56,11 @@ class register(APIView):
         language = request.data.get('language')
         birth_date = request.data.get('birthdate')
         image = request.FILES.get('image')
-             
-        user = User.objects.create(username= username, first_name= first_name, last_name= last_name, email= email, password = password
-        ,language = language, birth_date = birth_date, image=image)
 
+        user = User.objects.create(username=username, first_name=first_name, last_name=last_name, email=email
+        ,language=language, birth_date=birth_date, image=image)
+        user.set_password(password)
         user.save()
-
         return JsonResponse({'status': '1', 'message': ' The user has been successfully registered'})
     
 class UserList(APIView):
