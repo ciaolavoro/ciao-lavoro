@@ -33,7 +33,6 @@ export default function Service({ service }) {
     getUser();
   }, [service.profession, service.user, service.city]);
 
-  //console.log(user)
   return (
     <div className="w-80 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
       <a href="#">

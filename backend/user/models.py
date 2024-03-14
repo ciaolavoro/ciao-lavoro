@@ -3,7 +3,6 @@ from django.db import models
 import datetime
 from django.utils import timezone
 from django.forms import ValidationError
-from django.contrib.auth.password_validation import validate_password
 from django.core.validators import validate_email
 
 class User(AbstractUser):
@@ -32,9 +31,6 @@ class User(AbstractUser):
 
     def save(self, *args, **kwargs):
         self.clean()
-        if self.password:
-            validate_password(self.password)
-            self.set_password(self.password)
         super(User, self).save(*args, **kwargs)
 
     def update(self, *args, **kwargs):
