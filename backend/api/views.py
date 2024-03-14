@@ -69,7 +69,7 @@ class ContractViewSetnt(viewsets.ModelViewSet):
     
 class ContractViewSet(viewsets.ModelViewSet):
     serializer_class=ContractSerializer   
-    queryset=Contract.objects.all()    
+    queryset=Contract.objects.all()
     
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])

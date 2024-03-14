@@ -1,5 +1,5 @@
 from datetime import date, datetime
-from rest_framework import status, permissions,generics
+from rest_framework import generics
 from rest_framework.decorators import permission_classes
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -7,7 +7,6 @@ from api.serializers import ContractSerializer
 from .models import Contract
 from service.models import Service
 from rest_framework.exceptions import PermissionDenied
-        
 class ContractCreation(APIView):
     def post(self, request, service_id):
         contract_data = request.data
@@ -90,8 +89,7 @@ class ContractClientList(generics.ListAPIView):
     def get_queryset(self):
         user=self.request.user.id
         queryset=Contract.objects.filter(client=user)
-        return queryset  
-     
+        return queryset   
 class ContractWorkerList(generics.ListAPIView):
     # permission_classes = [permissions.IsAuthenticated]
     serializer_class=ContractSerializer
