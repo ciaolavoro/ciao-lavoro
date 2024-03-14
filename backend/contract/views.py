@@ -64,7 +64,6 @@ class ContractEdit(APIView):
         contract.save()
         serializer = ContractSerializer(contract, many=False,context ={'request': request})
         return Response(serializer.data)
-    
 class ContractStatusEdit(APIView):
     def post(self, request, status_num,contract_id):
         contract = Contract.objects.get(pk=contract_id)
@@ -89,7 +88,7 @@ class ContractClientList(generics.ListAPIView):
     def get_queryset(self):
         user=self.request.user.id
         queryset=Contract.objects.filter(client=user)
-        return queryset   
+        return queryset
 class ContractWorkerList(generics.ListAPIView):
     # permission_classes = [permissions.IsAuthenticated]
     serializer_class=ContractSerializer
