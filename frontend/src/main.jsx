@@ -15,6 +15,7 @@ import UserProfile from './components/user/UserProfile.jsx'
 import Service from './components/service/Service.jsx'
 import { AuthContextProvider } from './components/auth/AuthContextProvider.jsx'
 import Users from './components/user/Users.jsx'
+import ContractUser from './components/contract/ContractUser.jsx'
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_API_URL;
 
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
         path: 'contracts/create',
         element: <CreateContract />,
       },
+      {
+        path: 'contracts/mylist',
+        element: <ContractUser />,
+        },
       {
         path: 'register',
         element: <Register />,

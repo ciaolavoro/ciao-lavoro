@@ -34,3 +34,29 @@ export const createContractRequest = async (worker, client, accept_worker, accep
     };
     return fetch(`${BACKEND_URL}/contracts/create/`, options);
 }
+
+export const getWorkerContracts = async () => {
+    const token = localStorage.getItem('token');
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
+        },
+    };
+
+    return fetch(`${import.meta.env.VITE_BACKEND_API_URL}/contracts/workerList/`, options);
+}
+
+export const getClientContracts = async () => {
+    const token = localStorage.getItem('token');
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
+        },
+    };
+
+    return fetch(`${import.meta.env.VITE_BACKEND_API_URL}/contracts/clientList/`, options);
+}
