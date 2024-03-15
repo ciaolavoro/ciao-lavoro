@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { getWorkerContracts, getClientContracts } from "../../api/Contract.api";
-import { ContractCard } from "./ContractCard";
+import { ContractCard } from "./ContractCardClient";
+import { useAuthContext } from "../auth/AuthContextProvider";
+
 
 export default function ContractUser(){
     const [workerContracts, setWorkerContracts] = useState([]);

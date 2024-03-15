@@ -37,10 +37,8 @@ export function ContractCard({ contract }) {
             <h2 className="text-2xl font-semibold mb-4">Detalles del Contrato</h2>
             <p className="mb-2 mt-4"><strong>Nombre del Trabajador:</strong> {workerName}</p>
             <p className="mb-2 mt-4"><strong>Nombre del Cliente:</strong> {clientName}</p>
-            <p className="mb-2"><strong>Descripción:</strong> {contract.description}</p>
             <p className="mb-2"><strong>Fecha de inicio:</strong> {contract.initial_date}</p>
             <p className="mb-2"><strong>Fecha fin:</strong> {contract.end_date}</p>
-            <p className="mb-2"><strong>Coste:</strong> {contract.cost} €</p>
             <p className="mb-2"><strong>Estado:</strong> {contract.status}</p>
         </div>
 
