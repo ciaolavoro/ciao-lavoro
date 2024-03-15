@@ -89,10 +89,21 @@ export const getJobDetailsByServiceId = async (id) => {
     }
 }
 
-export async function getJobDetailsByServiceId2(serviceId) {
+export async function getJobDetails() {
     // Aquí deberías hacer una llamada a tu API para obtener los detalles del trabajo por el ID del servicio
-    // Retorna los detalles del trabajo
-    return { name: "Trabajo de ejemplo", estimated_price: 100 }; // Ejemplo de datos de trabajo
+    // Supongamos que obtienes los detalles de dos trabajos por el ID del servicio
+    const job1 = { "id": 1,
+    "name": "Arreglo grifos",
+    "estimated_price": "0.06",
+    "service": 1 }; // Ejemplo de datos de trabajo 1
+    const job2 = { "id": 2,
+    "name": "Arreglo tuberias",
+    "estimated_price": "0.08",
+    "service": 1 }; // Ejemplo de datos de trabajo 2
+    
+
+    // Retorna los detalles de los dos trabajos
+    return [job1, job2];
 }
 
 export async function updateServiceRequest(serviceId, serviceData,token) {
@@ -102,7 +113,7 @@ export async function updateServiceRequest(serviceId, serviceData,token) {
             'Content-Type': 'application/json',
             'Authorization': `Token ${token}`,
         },
-        body: JSON.stringify(serviceData),
+        body: serviceData,
     };
     
     try {
