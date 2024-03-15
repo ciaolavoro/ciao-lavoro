@@ -25,6 +25,7 @@ export default function CreateContract() {
             try {
                 const userRes = await getAllUsers();
                 const userData = await userRes.json();
+                console.log("UserData: ",userData)
                 const serviceRes = await getAllServices();
                 const serviceData = await serviceRes.json();
                 setUsers(userData.results);
@@ -69,7 +70,7 @@ export default function CreateContract() {
                 <label>Trabajador:</label>
                 <select name="worker" value={worker} onChange={(e) => setWorker(e.target.value)} className="px-2 py-1 border rounded">
                     <option value=""> --- </option>
-                    {users.map(user => (
+                    {users && users.map(user => (
                         <option key={user.id} value={`/user/${user.id}/`}>{user.username}</option>
                     ))}
                 </select>
@@ -78,7 +79,7 @@ export default function CreateContract() {
                 <label>Cliente:</label>
                 <select name="client" value={client} onChange={(e) => setClient(e.target.value)} className="px-2 py-1 border rounded">
                     <option value=""> --- </option>
-                    {users.map(user => (
+                    {users && users.map(user => (
                         <option key={user.id} value={`/user/${user.id}/`}>{user.username}</option>
                     ))}
                 </select>
