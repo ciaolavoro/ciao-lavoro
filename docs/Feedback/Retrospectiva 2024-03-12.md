@@ -3,37 +3,35 @@
 
 ## DIAPOSITIVAS
 
-- No debemos decir que en el sprint 1 hemos hecho el diagrama UML. Se debe poner 'clases de análisis' o 'diagrama de diseño'. 
+- El "Diagrama UML" no se debe de llamar así, un nombre más correcto es "Diagrama de diseño" o "Análisis de clases".
 - La tabla de retrospectiva esta muy bien hecha. 
-- La linea para el análisis de calidad esta mal, no es recta, debe tener altos y bajos porque los fin de semanas no se trabaja, al igual que en semana santa o la feria de abril. 
-- Decir MALA ESTIMACIÓN o problemas de recursos humanos.
-- No contemplamos que el power point se debe estar haciendo desde el primer día y se van añadiendo las cosas. DEBE SER METODOLOGIA AGIL. El primer día de la semana se construye el esqueleto y se va añadiendo las cosas a lo largo de la semana. 
-
+- En el análisis de calidad, la línea no debe ser recta. Debe de incluir altibajos debido a que los fin de semana no se trabaja en teoría, igual que los días festivos (semana santa y feria)
+- Decir **mala estimación** o problemas de recursos humanos.
+- La presentación debe de comenzar a elaborarse desde el primer dia del proyecto, y se le va añadiendo el contenido a lo largo del avance del proyecto. Se debe de seguir una **metodología agil**. El primer dia de la semana de trabajo se elabora un esqueleto de la presentación y se añade contenido a lo largo de la semana.
 - La desaparición de miembros debemos llamarlo falta de proactividad. Meterlo en la **métrica** de rendimiento para asignar los puntos. 
-
-- En las diapos, el rendimiento grupal debemos llamarlo esfuerzo en horas grupal. 
+- En las diapositivas, el esfuerzo en horas grupal **NO** debe de llamarse rendimiento grupal. Debe de llamarse esfuerzo en horas grupal.
 
 ## PROYECTO
 
-- NO SE DEBE TRABAJAR LOS FIN DE SEMANA. 
+- Los fin de semana no son laborables. No se trabaja ni los fin de semana ni los festivos. 
 
 - Mal uso de las tipeline. Entre paréntesis se pone DOCREADME. No se pone el tipo entre paréntesis. 
 
-- Al tener tanto tiempo trabajado en el S1. Debemos reducir el alcance, valorar si vamos a llegar o no y replanificar (TEORY PILL).
+- Al tener tanto tiempo trabajado en el S1. Debemos reducir el alcance, valorar si vamos a llegar o no y replanificar, para ello es interesante verse la TEORY PILL de replanificaciones.
 
 - Las tareas de ayuda deben estar en el rendimiento para que lo mejore. 
 
-- Incluir las cosas que vea en los videos de las theory pills en la documentación como código. 
+- Incluir las cosas que veamos en los videos de las theory pills en la documentación como código. 
 
 - Tener en cuenta que el project manager debe tener una métrica diferente. Y tener en cuenta que todo el tiempo que esta pendiente de todo no lo tiene en código pero porque es su rol.
 
 - Poner solo el prompt en el documento de IA Prompts, luego pasar el enlace correspondiente.
 
-- Hay que hacer acuerdo de los pilot users. Commitment Agreements. Siempre tiene un estado y una version. Si hay 4 usuarios pilot, hay 4 versiones. 
+- Hay que hacer un Commitment Agreement para los pilot users. Siempre tiene un estado y una version. Si hay 4 usuarios pilot, hay 4 versiones. 
 
 - Usar versionado semántico. 
 
-- En github una issue puede tener varias issue.
+- En github una issue puede tener varias issues asociadas.
 
 - Recordar en el discussion guide el uso de ASPOSE.
 
