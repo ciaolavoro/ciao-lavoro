@@ -136,7 +136,7 @@ class ContractWorkerList(generics.ListAPIView):
     def get(self, request, *args, **kwargs):
         try:
             queryset = self.get_queryset()
-            serializer = self.serializer_class(data = queryset, many=True)
+            serializer = self.serializer_class(queryset, many=True,context ={'request': request})
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
