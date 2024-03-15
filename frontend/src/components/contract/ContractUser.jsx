@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
 import { getWorkerContracts, getClientContracts } from "../../api/Contract.api";
 import { ContractCard } from "./ContractCard";
+import { useAuthContext } from "../auth/AuthContextProvider";
+
 
 export default function ContractUser(){
     const [workerContracts, setWorkerContracts] = useState([]);
     const [clientContracts, setClientContracts] = useState([]);
+    const {loggedUser} = useAuthContext();
 
     useEffect(() =>{
         const getClientContract = async () => {
 
             try{
-                const res = await getClientContracts();
+                const res = await getClientContracts(loggedUser.token);
                 console.log(res)
                 if (res.status === 200){
                     const data = await res.json();
@@ -26,7 +29,7 @@ export default function ContractUser(){
         }; 
         const getWorkerContract = async () => {
             try{
-                const res = await getWorkerContracts();
+                const res = await getWorkerContracts(loggedUser.token);
                 if (res.status === 200){
                     const data = await res.json();
                     setWorkerContracts(data);
@@ -36,11 +39,12 @@ export default function ContractUser(){
 
             }catch(error){
                 alert('Error al cargar los contratos', error.status);
+                console.log(error);
             }
         }; 
         getClientContract();
         getWorkerContract();
-    },[workerContracts, clientContracts]);
+    },[workerContracts, clientContracts,loggedUser]);
     return(
         <div>
             <section>

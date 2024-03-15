@@ -35,23 +35,25 @@ export const createContractRequest = async (worker, client, accept_worker, accep
     return fetch(`${BACKEND_URL}/contracts/create/`, options);
 }
 
-export const getWorkerContracts = async () => {
+export const getWorkerContracts = async (token) => {
     const options = {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
+            'Authoritation': `Token ${token}`,
+            
         },
     };
 
     return fetch(`${BACKEND_URL}/contracts/workerList/`, options);
 }
 
-export const getClientContracts = async () => {
-    
+export const getClientContracts = async (token) => {
     const options = {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
+            'Authoritation': `Token ${token}`,
         },
     };
 
