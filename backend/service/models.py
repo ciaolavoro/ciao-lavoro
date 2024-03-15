@@ -60,3 +60,17 @@ class Job(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+class Review(models.Model):
+
+    class Meta:
+        verbose_name = "review"
+        verbose_name_plural = "reviews"
+    #Aqui se registra el servicio al que pertenece,
+    # se ha puesto nullable para evitar problemas con Django
+    service = models.ForeignKey(Service, default=None, null=True, on_delete=models.CASCADE)
+    description = models.CharField(max_length=500, blank = True, default= None)
+    rating = models.PositiveIntegerField(validators=[MaxValueValidator(5)], null= False) 
+
+    def __str__(self) -> str:
+        return self.name
