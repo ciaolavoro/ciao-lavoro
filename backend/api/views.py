@@ -45,8 +45,18 @@ class JobViewSet(viewsets.ModelViewSet):
         """
         service_id = self.kwargs['service_id']  # Obtén el ID del servicio de la URL
         return Job.objects.filter(service_id=service_id)
+    
 
-class ContractViewSet(viewsets.ModelViewSet):
+class UserServiceViewSet(viewsets.ModelViewSet):
+    serializer_class = ServiceSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+    def get_queryset(self):
+        user_id = self.kwargs['user_id']  # Obtén el ID del servicio de la URL
+        return Service.objects.filter(user_id=user_id)
+
+class ContractViewSetnt(viewsets.ModelViewSet):
     queryset=Contract.objects.all()
     serializer_class=ContractSerializer   
     # permission_classes = [permissions.IsAuthenticated]
@@ -56,25 +66,11 @@ class ContractViewSet(viewsets.ModelViewSet):
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-
-
-class ContractClientList(generics.ListAPIView):
-    # permission_classes = [permissions.IsAuthenticated]
-    serializer_class=ContractSerializer
-    def get_queryset(self):
-        user=self.request.user.id
-        queryset=Contract.objects.filter(client=user)
-        return queryset  
-     
-class ContractWorkerList(generics.ListAPIView):
-    # permission_classes = [permissions.IsAuthenticated]
-    serializer_class=ContractSerializer
-    def get_queryset(self):
-        user=self.request.user.id
-        queryset=Contract.objects.filter(worker=user)
-        return queryset
     
-
+class ContractViewSet(viewsets.ModelViewSet):
+    serializer_class=ContractSerializer   
+    queryset=Contract.objects.all()
+    
 @api_view(['POST'])
 @permission_classes([permissions.AllowAny])
 def signup(request):

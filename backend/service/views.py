@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from user.models import User
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -7,6 +7,8 @@ from rest_framework import viewsets, permissions, generics, status
 from rest_framework.exceptions import PermissionDenied
 from .models import Service, Job
 from .serializers import ServiceSerializer, JobSerializer
+from rest_framework.authtoken.models import Token
+from datetime import date
 
 # Create your views here.
 
@@ -45,7 +47,6 @@ class UserServiceList(APIView):
 
 class JobList(APIView):
     def get(self, request):
-        print("Esto es una locura")
         jobs = Job.objects.all()
         serializer = JobSerializer(jobs, many=True)
         return Response(serializer.data)
@@ -64,10 +65,32 @@ class JobViewSet(viewsets.ModelViewSet):
 class ServiceCreation(APIView):
     def post(self, request):
         service_data = request.data
-        user = User.objects.get(email=service_data['email'])
-        profession = service_data['profession']
+        token_id = request.headers['AuthToken']
+        token = get_object_or_404(Token, key=token_id.split()[-1])
+        user = token.user
         city = service_data['city']
+        profession = service_data['profession']
+        profesions = Service.PROFESSIONS
+        profession_exists = False
+        for profession_id, _ in profesions:
+            if profession_id == int(profession):
+                profession_exists = True
+        if not profession_exists:
+            raise PermissionDenied('La profesión no es valida')
+        user_services = list(Service.objects.filter(user=user))
+        for s in user_services:
+            if s.profession == int(profession):
+                raise PermissionDenied('No se pueden crear dos servicios de la misma profesión')
         experience = service_data['experience']
+        if experience == '':
+            experience = 0
+        elif not isinstance(experience, int):
+            raise PermissionDenied('La experiencia debe ser un número')
+        birth_date = user.birth_date
+        today = date.today()
+        age = today.year - birth_date.year - ((today.month, today.day) < (birth_date.month, birth_date.day))
+        if experience+16 > age:
+            raise PermissionDenied('La experiencia es demasiado alta')
         service = Service.objects.create(user=user, profession=profession, city=city, experience=experience)
         serializer = ServiceSerializer(service, many=False)
         return Response(serializer.data)
@@ -105,3 +128,13 @@ class JobDelete(APIView):
         Job.delete(job)
         serializer = JobSerializer(job, many=False)
         return Response(serializer.data)
+
+class UserServiceViewSet(viewsets.ModelViewSet):
+    serializer_class = ServiceSerializer
+    def get_queryset(self):
+        """
+        Sobrescribe el método `get_queryset` para filtrar los trabajos
+        basados en el servicio proporcionado en la URL.
+        """
+        user_id = self.kwargs['user_id']  # Obtén el ID del servicio de la URL
+        return Service.objects.filter(user_id=user_id)

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { createServiceRequest } from "../../api/createService.api";
 import { useNavigate } from "react-router-dom";
+import { createServiceRequest } from "../../api/Service.api";
 
 export default function CreateService() {
     const [email, setEmail] = useState('');
