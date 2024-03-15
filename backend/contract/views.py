@@ -1,4 +1,5 @@
 from datetime import date, datetime
+from django.shortcuts import get_object_or_404
 from rest_framework import generics
 from rest_framework.decorators import permission_classes
 from rest_framework.response import Response
@@ -6,12 +7,15 @@ from rest_framework.views import APIView
 from api.serializers import ContractSerializer
 from .models import Contract
 from service.models import Service
+from rest_framework.authtoken.models import Token
 from rest_framework.exceptions import PermissionDenied
 class ContractCreation(APIView):
     def post(self, request, service_id):
+        token_id = request.headers['AuthToken']
+        token = get_object_or_404(Token, key=token_id.split()[-1])
+        client = token.user
         contract_data = request.data
         service = Service.objects.get(pk=service_id)
-        client = request.user
         if service.user == client and not request.user.is_staff:
             raise PermissionDenied("No tienes permiso para crear un contrato para tu propio servicio")
         description = contract_data['description']
