@@ -1,12 +1,15 @@
 from datetime import date, datetime
-from rest_framework import generics
+from django.shortcuts import get_object_or_404
+from rest_framework import generics, status
 from rest_framework.decorators import permission_classes
+from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from api.serializers import ContractSerializer
 from .models import Contract
 from service.models import Service
 from rest_framework.exceptions import PermissionDenied
+
 class ContractCreation(APIView):
     def post(self, request, service_id):
         contract_data = request.data
@@ -64,6 +67,7 @@ class ContractEdit(APIView):
         contract.save()
         serializer = ContractSerializer(contract, many=False,context ={'request': request})
         return Response(serializer.data)
+
 class ContractStatusEdit(APIView):
     def post(self, request, status_num,contract_id):
         contract = Contract.objects.get(pk=contract_id)
@@ -74,6 +78,7 @@ class ContractStatusEdit(APIView):
         contract.save()
         serializer = ContractSerializer(contract, many=False,context ={'request': request})
         return Response(serializer.data)
+
 class ContractDelete(APIView):
     def post(self, request, contract_id):
         contract = Contract.objects.get(pk=contract_id)
@@ -82,17 +87,73 @@ class ContractDelete(APIView):
         Contract.delete(contract)
         serializer = ContractSerializer(contract, many=False,context ={'request': request})
         return Response(serializer.data)
+
 class ContractClientList(generics.ListAPIView):
     # permission_classes = [permissions.IsAuthenticated]
     serializer_class=ContractSerializer
+
     def get_queryset(self):
-        user=self.request.user.id
-        queryset=Contract.objects.filter(client=user)
-        return queryset
+        contracts = Contract.objects.all()
+        estate = self.request.query_params.get('status')
+        initial_date = self.request.query_params.get('initial_date')
+        end_date = self.request.query_params.get('end_date')
+
+        if estate:
+            contracts = contracts.filter(status=estate)
+        if initial_date:
+            contracts = contracts.filter(initial_date=initial_date)
+        if end_date:
+            contracts = contracts.filter(end_date=end_date)
+
+        return contracts
+
+    def get(self, request):
+        try:
+            token_id = self.request.headers['Authoritation']
+            token = get_object_or_404(Token, key=token_id.split()[-1])
+            client = token.user
+            queryset = self.get_queryset()
+            queryset = queryset.filter(client = client)
+
+            if not queryset.exists():
+                return Response([], status=status.HTTP_200_OK)
+
+            serializer = self.serializer_class(queryset, many=True, context ={'request': request})
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
 class ContractWorkerList(generics.ListAPIView):
     # permission_classes = [permissions.IsAuthenticated]
-    serializer_class=ContractSerializer
+    serializer_class = ContractSerializer
     def get_queryset(self):
-        user=self.request.user.id
-        queryset=Contract.objects.filter(worker =user)
+        contracts=Contract.objects.all()
+        estate = self.request.query_params.get('status')
+        initial_date = self.request.query_params.get('initial_date')
+        end_date = self.request.query_params.get('end_date')
+
+        if estate:
+            contracts = contracts.filter(status=estate)
+        if initial_date:
+            contracts = contracts.filter(initial_date=initial_date)
+        if end_date:
+            contracts = contracts.filter(end_date=end_date)
+
+        return contracts
+
+    def get(self, request):
+        try:
+            token_id = self.request.headers['Authoritation']
+            token = get_object_or_404(Token, key=token_id.split()[-1])
+            client = token.user
+            queryset = self.get_queryset()
+            queryset = queryset.filter(worker = client)
+
+            if not queryset.exists():
+                return Response([], status=status.HTTP_200_OK)
+
+            serializer = self.serializer_class(queryset, many=True,context ={'request': request})
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
         return queryset
