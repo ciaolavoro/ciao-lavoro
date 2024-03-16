@@ -14,6 +14,8 @@ import Register from './components/register/Register.jsx'
 import UserProfile from './components/user/UserProfile.jsx'
 import { AuthContextProvider } from './components/auth/AuthContextProvider.jsx'
 import Users from './components/user/Users.jsx'
+import Review from './components/service/Review.jsx'
+import ListReview from './components/service/listReview.jsx'
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_API_URL;
 
@@ -52,7 +54,16 @@ const router = createBrowserRouter([
         path: 'register',
         element: <Register />,
         },
+        
+      {
+        path: 'review',
+        element: <Review />,
+        },
         {
+          path: 'listreview',
+          element: <ListReview />,
+          },
+      {
         path: 'users',
         element: <Users />,
         children: [
