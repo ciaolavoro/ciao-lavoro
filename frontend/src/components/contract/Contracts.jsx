@@ -1,35 +1,15 @@
-import { useEffect, useState } from "react";
-import { getAllContracts } from "../../api/Contract.api";
 import { ContractCard } from './ContractCard'
-
+import { useGetBackendData } from "../../utils/useGetBackendData";
 
 export default function Contracts() {
-
-    const [contracts, setContracts] = useState([]);
-
-    useEffect(() => {
-        const getContracts = async () => {
-            try {
-                const res = await getAllContracts();
-                if(res.status === 200){
-                    const data = await res.json();
-                    setContracts(data.results);
-                } else {
-                    alert('Error al cargar los contratos');
-                }
-            } catch (error) {
-                console.log(`Error al cargar los contratos: ${error}`);
-            }
-        };
-        getContracts();
-    }, []);
+    const { data } = useGetBackendData('/contracts');
+    const contracts = data?.results;
 
     return (
-        <div>
-            {contracts.map(contract => (
-                <ContractCard key={contract.id} contract={contract} />
+        <>
+            {contracts?.map((contract, index) => (
+                <ContractCard key={index} contract={contract} />
             ))}
-        </div>
+        </>
     )
-
 }

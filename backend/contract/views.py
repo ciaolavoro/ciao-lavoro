@@ -2,6 +2,7 @@ from datetime import date, datetime
 from django.forms import ValidationError
 from django.shortcuts import get_object_or_404
 from rest_framework import generics
+from rest_framework.decorators import permission_classes
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from api.serializers import ContractSerializer
@@ -51,6 +52,7 @@ class ContractEdit(APIView):
         contract = Contract.objects.get(pk=contract_id)
         if contract.client != request.user and contract.service.user != request.user and not request.user.is_staff:
             raise ValidationError("No tienes permiso para editar un contrato que no te pertenece")
+
         new_accept_worker = contract_data['accept_worker']
         new_accept_client = contract_data['accept_client']
         new_description = contract_data['description']
@@ -85,7 +87,7 @@ class ContractStatusEdit(APIView):
         contract.save()
         serializer = ContractSerializer(contract, many=False,context ={'request': request})
         return Response(serializer.data)
-
+      
 class ContractDelete(APIView):
     def post(self, request, contract_id):
         contract = Contract.objects.get(pk=contract_id)
@@ -109,4 +111,6 @@ class ContractWorkerList(generics.ListAPIView):
     def get_queryset(self):
         user=self.request.user.id
         queryset=Contract.objects.filter(worker =user)
+
         return queryset
+
