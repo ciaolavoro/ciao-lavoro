@@ -31,7 +31,7 @@ export const createContractRequest = async (description, initial_date, end_date,
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Token ${token}`,
+            'Authoritation': `Token ${token}`,
         },
         body: JSON.stringify({description, initial_date, end_date, cost}),
     };
