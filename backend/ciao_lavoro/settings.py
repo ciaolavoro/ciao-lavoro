@@ -68,6 +68,8 @@ CORS_ALLOWED_ORIGINS = [
     env('FRONTEND_URL'),
 ]
 
+
+
 ROOT_URLCONF = 'ciao_lavoro.urls'
 
 TEMPLATES = [

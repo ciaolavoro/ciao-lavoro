@@ -40,6 +40,8 @@ export const getWorkerContracts = async () => {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
+            
         },
     };
 
@@ -52,6 +54,7 @@ export const getClientContracts = async () => {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
         },
     };
 

@@ -112,7 +112,7 @@ class ContractClientList(generics.ListAPIView):
 
     def get(self, request, *args, **kwargs):
         try:
-            token_id = request.headers['AuthToken']
+            token_id = self.request.headers['Authorization']
             token = get_object_or_404(Token, key=token_id.split()[-1])
             client = token.user
             if client != request.user:
@@ -150,7 +150,7 @@ class ContractWorkerList(generics.ListAPIView):
 
     def get(self, request, *args, **kwargs):
         try:
-            token_id = request.headers['AuthToken']
+            token_id = self.request.headers['Authorization']
             token = get_object_or_404(Token, key=token_id.split()[-1])
             client = token.user
             if client != request.user:
