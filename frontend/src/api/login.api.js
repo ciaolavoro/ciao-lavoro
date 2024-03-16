@@ -10,7 +10,10 @@ export const loginRequest = async (username, password) => {
     };
     try {
         const response = await fetch(`${BACKEND_URL}/user/login/`, options);
-        return await response.json();
+        const data = await response.json();
+        const token = data.token;
+        localStorage.setItem("token", token);
+        return data;
     } catch (error) {
         console.error('Login error:', error);
     }
