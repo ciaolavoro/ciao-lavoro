@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getWorkerContracts, getClientContracts } from "../../api/Contract.api";
-import { ContractCard } from "./ContractCardClient";
+import { ContractCardClient } from "./ContractCardClient";
+import { ContractCardWorker } from "./ContractCardWorker";
 import { useAuthContext } from "../auth/AuthContextProvider";
 
 
@@ -14,10 +15,8 @@ export default function ContractUser(){
 
             try{
                 const res = await getClientContracts(loggedUser.token);
-                console.log(res)
                 if (res.status === 200){
                     const data = await res.json();
-                    console.log(data)
                     setClientContracts(data);
                 }else{
                     alert('Error al cargar los contratos');
@@ -39,27 +38,34 @@ export default function ContractUser(){
 
             }catch(error){
                 alert('Error al cargar los contratos', error.status);
-                console.log(error);
             }
         }; 
         getClientContract();
         getWorkerContract();
-    },[workerContracts, clientContracts,loggedUser]);
+    },[loggedUser.token]);
+
     return(
         <div>
             <section>
-                <h1 className="text-4xl font-semibold text-center my-10">Todos son todos los contratos en los que has participado</h1>
+                <h1 className="text-4xl font-semibold text-center my-10">Todos tus contratos</h1>
+            </section>
+            <section>
+                <h2 className="text-2xl font-semibold text-center my-10">Contratos en los que has trabajado</h2>
             </section>
             <section className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-left justify-left gap-y-20 gap-x-14 mt-10 mb-5">
 
-                {workerContracts.map(contract => (
-                    <ContractCard key={contract.id} contract={contract} />
+                {workerContracts.map(contractWorker => (
+                    <ContractCardWorker key={contractWorker.id} contract={contractWorker} />
                 ))}
+            </section>
+
+            <section>
+                <h2 className="text-2xl font-semibold text-center my-10">Contratos en los que eres cliente</h2>
             </section>
             <section className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-right justify-left gap-y-20 gap-x-14 mt-10 mb-5">
 
-                {clientContracts.map(contract => (
-                    <ContractCard key={contract.id} contract={contract} />
+                {clientContracts.map(contractClient => (
+                    <ContractCardClient key={contractClient.id} contract={contractClient} />
                 ))}
             </section>
         </div>

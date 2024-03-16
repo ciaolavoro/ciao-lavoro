@@ -7,7 +7,6 @@ const navItemsStyle = "px-2 py-1 font-semibold rounded hover:bg-gray-300 transit
 
 export default function Navbar() {
   const { logout, loggedUser } = useAuthContext();
-  console.log(loggedUser);
   const navigate = useNavigate();
 
   const navItems = [
@@ -43,6 +42,12 @@ export default function Navbar() {
           <Link to="/services/user" >
             <li className={`${navItemsStyle} hover:cursor-pointer`}>
               Mis Servicios
+            </li>
+          </Link>
+
+          <Link to="/contracts/myList" >
+            <li className={`${navItemsStyle} hover:cursor-pointer`}>
+              Mis Contratos
             </li>
           </Link>
 
