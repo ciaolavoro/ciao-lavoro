@@ -34,5 +34,33 @@ export const createContractRequest = async (description, initial_date, end_date,
         },
         body: JSON.stringify({description, initial_date, end_date, cost, token}),
     };
+
     return fetch(`${BACKEND_URL}/contracts/create/${service_id}/`, options);
+}
+
+export const getWorkerContracts = async (token) => {
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
+            
+        },
+    };
+
+    return fetch(`${BACKEND_URL}/contracts/workerList/`, options);
+}
+
+export const getClientContracts = async (token) => {
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
+        },
+    };
+
+    return fetch(`${BACKEND_URL}/contracts/clientList/`, options);
+
+
 }

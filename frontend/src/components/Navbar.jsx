@@ -45,6 +45,12 @@ export default function Navbar() {
             </li>
           </Link>
 
+          <Link to="/contracts/myList" >
+            <li className={`${navItemsStyle} hover:cursor-pointer`}>
+              Mis Contratos
+            </li>
+          </Link>
+
           <li className={`${navItemsStyle} hover:cursor-pointer`} onClick={handleLogout}>Cerrar sesión</li>
           {loggedUser.user && (
           <Link to={`/users/${loggedUser.user.id}`}>
