@@ -8,7 +8,7 @@ import CheckIcon from "../icons/CheckIcon";
 import CrossIcon from "../icons/CrossIcon";
 import { useState } from "react";
 import { updateUserRequest } from "../../api/user.api";
-import { checkIfEmpty, checkIfUsernameExists, checkLanguageLength, errorMessages } from "../../utils/validation";
+import { checkIfEmpty, errorMessages } from "../../utils/validation";
 
 export default function UserProfile() {
     const [isEditing, setIsEditing] = useState(false);
@@ -26,7 +26,6 @@ export default function UserProfile() {
     const [image, setImage] = useState(`${import.meta.env.VITE_BACKEND_API_URL}${user.image}`);
     const [uploadedImage, setUploadedImage] = useState(null);
     const [isRequiredError, setIsRequiredError] = useState(false);
-    const [isUsernameError, setIsUsernameError] = useState(false);
     const [isImageError, setIsImageError] = useState(false);
     const [isLanguageError, setIsLanguageError] = useState(false);
 
@@ -63,6 +62,12 @@ export default function UserProfile() {
 
     const resetErrors = () => {
         setIsRequiredError(false);
+        setIsImageError(false);
+        setIsLanguageError(false);
+    }
+
+    const resetErrors = () => {
+        setIsRequiredError(false);
         setIsUsernameError(false);
         setIsImageError(false);
         setIsLanguageError(false);
@@ -74,15 +79,11 @@ export default function UserProfile() {
         if (checkIfEmpty(username) || checkIfEmpty(firstName) || checkIfEmpty(lastName) || checkIfEmpty(birthDate) || checkIfEmpty(email)) {
             setIsRequiredError(true);
             return;
-        } else if (await checkIfUsernameExists(username, userId)) {
-            resetErrors();
-            setIsUsernameError(true);
-            return;
-        } else if (checkLanguageLength(language)) {
+        } else if (language.length > 50) {
             resetErrors();
             setIsLanguageError(true);
             return;
-        } else if (!image) {
+        } else if (!uploadedImage) {
             resetErrors();
             setIsImageError(true);
             return;
@@ -120,15 +121,18 @@ export default function UserProfile() {
                 <div className="flex flex-col gap-y-6">
                     <img src={uploadedImage ?? image ?? defaultUserImage} alt={`Foto de perfil del usuario ${username}`}
                         className="mx-auto size-64 object-cover rounded-lg" />
-                    {isEditing &&
-                        <input type="file" name="image" accept="image/*" onChange={handleImageUpload}
-                            className="block w-60 text-sm file:font-sans" />
-                    }
+                    {isEditing && (
+                        <div className="flex flex-col">
+                            <input type="file" name="image" accept="image/*" onChange={handleImageUpload}
+                                className="block w-60 text-sm file:font-sans" />
+                            {isImageError && <p className="mx-auto text-red-500 text-xs">{errorMessages.imageNotUploaded}</p>}
+                        </div>
+                    )}
                 </div>
                 <div className="flex flex-col gap-y-6">
                     <UserProfileData type={"text"} formName={"username"} labelText={"Nombre de usuario:"} inputValue={username}
-                        isReadOnly={!isEditing} onChange={(event) => setUsername(event.target.value)} isError={isRequiredError || isUsernameError}
-                        errorMessage={(isRequiredError && errorMessages.required) || (isUsernameError && errorMessages.usernameExists)} />
+                        isReadOnly={!isEditing} onChange={(event) => setUsername(event.target.value)}
+                        isError={isRequiredError} errorMessage={errorMessages.required} />
                     <div className="flex gap-x-4">
                         <UserProfileData type={"text"} formName={"firstName"} labelText={"Nombre:"} inputValue={firstName}
                             isReadOnly={!isEditing} onChange={(event) => setFirstName(event.target.value)}
