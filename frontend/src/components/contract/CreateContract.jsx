@@ -1,6 +1,7 @@
-import { useState } from "react";
-import { useNavigate,useSearchParams  } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { createContractRequest } from "../../api/Contract.api";
+import { useAuthContext } from "../auth/AuthContextProvider";
 
 export default function CreateContract() {
     const [description, setDescription] = useState('');
@@ -8,32 +9,36 @@ export default function CreateContract() {
     const [end_date, setEnd_date] = useState('');
     const [cost, setCost] = useState('');
     const [charCount, setCharCount] = useState(0);
-    
+
 
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const serviceId = searchParams.get('service_id');
+    const { loggedUser } = useAuthContext();
 
-    const createContract = async (description, initial_date, end_date, cost) => {
+    const createContract = async (token) => {
+        try {
+
+            const res = await createContractRequest(description, initial_date, end_date, cost, serviceId, token);
+            if (res.status === 200) {
+                navigate('/');
+            } else {
+                alert('Error al crear el contrato. Por favor, inténtelo de nuevo.');
+            }
+        } catch (error) {
+            alert('Error al crear el contrato. Por favor, inténtelo de nuevo.', console.error(error));
+        }
+    };
+
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
         if (charCount > 500) {
             alert('La descripción no puede superar los 500 caracteres.');
             return;
         }
-        try {
-            const res = await createContractRequest(description, initial_date, end_date, cost,serviceId);
-            if (res.status === 200) {
-                navigate('/');
-            } else {
-                alert('Error al crear el contrato. Por favor, intente de nuevo.');
-            }
-        } catch (error) {
-            alert('Error al crear el contrato. Por favor, intente de nuevo.', console.log(error));
-        }
-    }
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        createContract(description, initial_date, end_date, cost);
+        const token = loggedUser.token;
+        await createContract(token);
     };
 
     const handleDescriptionChange = (e) => {
