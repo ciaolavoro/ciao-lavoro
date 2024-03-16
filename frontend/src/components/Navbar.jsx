@@ -44,7 +44,7 @@ export default function Navbar() {
             </li>
           </Link>
           <li className={`${navItemsStyle} hover:cursor-pointer`} onClick={handleLogout}>Cerrar sesión</li>
-          <Link to={`/users/${loggedUser.user.id}`} reloadDocument>
+          <Link to={`/users/${loggedUser.user.id}`}>
             <li>
               <img src={`${import.meta.env.VITE_BACKEND_API_URL}${loggedUser.user.image}` ?? defaultUserImage} alt="Avatar del usuario"
                 className="size-8 object-cover rounded-full hover:shadow transition" />

@@ -120,13 +120,10 @@ export default function UserProfile() {
                 <div className="flex flex-col gap-y-6">
                     <img src={uploadedImage ?? image ?? defaultUserImage} alt={`Foto de perfil del usuario ${username}`}
                         className="mx-auto size-64 object-cover rounded-lg" />
-                    {isEditing && (
-                        <div className="flex flex-col">
-                            <input type="file" name="image" accept="image/*" onChange={handleImageUpload}
-                                className="block w-60 text-sm file:font-sans" />
-                            {isImageError && <p className="mx-auto text-red-500 text-xs">{errorMessages.imageNotUploaded}</p>}
-                        </div>
-                    )}
+                    {isEditing &&
+                        <input type="file" name="image" accept="image/*" onChange={handleImageUpload}
+                            className="block w-60 text-sm file:font-sans" />
+                    }
                 </div>
                 <div className="flex flex-col gap-y-6">
                     <UserProfileData type={"text"} formName={"username"} labelText={"Nombre de usuario:"} inputValue={username}
