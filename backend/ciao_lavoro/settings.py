@@ -68,12 +68,7 @@ CORS_ALLOWED_ORIGINS = [
     env('FRONTEND_URL'),
 ]
 
-CORS_ALLOW_HEADERS = [
-    'accept',
-    'accept-encoding',
-    'authoritation',
-    'content-type',
-]
+
 
 ROOT_URLCONF = 'ciao_lavoro.urls'
 
