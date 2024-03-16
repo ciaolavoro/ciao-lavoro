@@ -6,7 +6,6 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from api.serializers import ContractSerializer
-from user.models import User
 from .models import Contract
 from service.models import Service
 from rest_framework.exceptions import PermissionDenied
