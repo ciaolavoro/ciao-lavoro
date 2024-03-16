@@ -75,7 +75,7 @@ class Review(models.Model):
     service = models.ForeignKey(Service, default=None, null=True, on_delete=models.CASCADE)
     description = models.CharField(max_length=500, blank = True, default= None)
     date = models.DateTimeField(null=True)
-    rating = models.PositiveIntegerField(validators=[MaxValueValidator(5)], null= False) 
+    rating = models.PositiveIntegerField(validators=[MaxValueValidator(5)], null= False)
 
     def __str__(self) -> str:
         return f"{self.service.user.username}, {self.service.get_profession_display()}, {self.user.username}"
