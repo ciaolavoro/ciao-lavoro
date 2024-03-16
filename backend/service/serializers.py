@@ -1,4 +1,4 @@
-from .models import Service, Job
+from .models import Service, Job, Review
 from rest_framework import serializers
 
 
@@ -11,6 +11,11 @@ class ServiceSerializer(serializers.ModelSerializer):
 class JobSerializer(serializers.ModelSerializer):
     class Meta:
         model = Job
+        fields = '__all__'
+
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
         fields = '__all__'
 
 class ServiceDetailSerializer(serializers.ModelSerializer):
