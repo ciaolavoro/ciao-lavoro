@@ -6,6 +6,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from api.serializers import ContractSerializer
+from user.models import User
 from .models import Contract
 from service.models import Service
 from rest_framework.exceptions import PermissionDenied
@@ -93,10 +94,7 @@ class ContractClientList(generics.ListAPIView):
     serializer_class=ContractSerializer
 
     def get_queryset(self):
-        token_id = self.request.headers['AuthToken']
-        token = get_object_or_404(Token, key=token_id.split()[-1])
-        client = token.user
-        contracts = Contract.objects.filter(client=client)
+        contracts = Contract.objects.all()
         estate = self.request.query_params.get('status')
         initial_date = self.request.query_params.get('initial_date')
         end_date = self.request.query_params.get('end_date')
@@ -110,14 +108,13 @@ class ContractClientList(generics.ListAPIView):
 
         return contracts
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
         try:
-            token_id = self.request.headers['Authorization']
+            token_id = self.request.headers['Authoritation']
             token = get_object_or_404(Token, key=token_id.split()[-1])
             client = token.user
-            if client != request.user:
-                raise PermissionDenied("No tienes permiso para listar los datos de otro cliente")
             queryset = self.get_queryset()
+            queryset = queryset.filter(client = client)
 
             if not queryset.exists():
                 return Response([], status=status.HTTP_200_OK)
@@ -129,12 +126,9 @@ class ContractClientList(generics.ListAPIView):
 
 class ContractWorkerList(generics.ListAPIView):
     # permission_classes = [permissions.IsAuthenticated]
-    serializer_class=ContractSerializer
+    serializer_class = ContractSerializer
     def get_queryset(self):
-        token_id = self.request.headers['AuthToken']
-        token = get_object_or_404(Token, key=token_id.split()[-1])
-        client = token.user
-        contracts=Contract.objects.filter(worker=client)
+        contracts=Contract.objects.all()
         estate = self.request.query_params.get('status')
         initial_date = self.request.query_params.get('initial_date')
         end_date = self.request.query_params.get('end_date')
@@ -148,14 +142,13 @@ class ContractWorkerList(generics.ListAPIView):
 
         return contracts
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
         try:
-            token_id = self.request.headers['Authorization']
+            token_id = self.request.headers['Authoritation']
             token = get_object_or_404(Token, key=token_id.split()[-1])
             client = token.user
-            if client != request.user:
-                raise PermissionDenied("No tienes permiso para listar los datos de otro cliente")
             queryset = self.get_queryset()
+            queryset = queryset.filter(worker = client)
 
             if not queryset.exists():
                 return Response([], status=status.HTTP_200_OK)
