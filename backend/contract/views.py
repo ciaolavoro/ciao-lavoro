@@ -87,7 +87,6 @@ class ContractStatusEdit(APIView):
         contract.save()
         serializer = ContractSerializer(contract, many=False,context ={'request': request})
         return Response(serializer.data)
-      
 class ContractDelete(APIView):
     def post(self, request, contract_id):
         contract = Contract.objects.get(pk=contract_id)
