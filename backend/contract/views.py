@@ -26,8 +26,8 @@ class ContractCreation(APIView):
         initial_date = contract_data['initial_date']
         end_date = contract_data['end_date']
         today = datetime.today()
-        Init =  datetime.strptime(initial_date, '%Y-%m-%d %H:%M')
-        End = datetime.strptime(end_date, '%Y-%m-%d %H:%M')
+        Init =  datetime.strptime(initial_date, '%Y-%m-%dT%H:%M')
+        End = datetime.strptime(end_date, '%Y-%m-%dT%H:%M')
         if End < Init:
             raise ValidationError("La fecha de finalizacion no puede ser antes que la inicial")
         if Init < today:

@@ -7,7 +7,6 @@ const navItemsStyle = "px-2 py-1 font-semibold rounded hover:bg-gray-300 transit
 
 export default function Navbar() {
   const { logout, loggedUser } = useAuthContext();
-  console.log(loggedUser);
   const navigate = useNavigate();
 
   const navItems = [
