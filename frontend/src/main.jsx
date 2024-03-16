@@ -7,7 +7,6 @@ import Login from './components/auth/Login.jsx'
 import Services from './components/service/Services.jsx'
 import CreateService from './components/service/CreateService.jsx'
 import ErrorPage from './components/ErrorPage.jsx'
-import Contracts from './components/contract/Contracts.jsx'
 import Root from './components/Root.jsx'
 import CreateContract from './components/contract/CreateContract.jsx'
 import Register from './components/register/Register.jsx'
@@ -49,10 +48,6 @@ const router = createBrowserRouter([
       {
         path: 'service/create',
         element: <CreateService />,
-      },
-      {
-        path: 'contracts',
-        element: <Contracts />,
       },
       {
         path: 'contracts/create',
