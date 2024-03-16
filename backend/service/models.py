@@ -1,5 +1,6 @@
 from django.db import models
 from user.models import User
+from django.db.models import Avg
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Este campo es un campo custom para llevar el enumerado de profession
@@ -40,6 +41,10 @@ class Service(models.Model):
     #Aquí se estipula si está promocionado este servicio
     is_promoted = models.BooleanField(blank = False,default= False)
 
+    def rating(self):
+        #La siguiente linea fue creada a partir de la IA Phind
+        return self.review_set.all().aggregate(Avg('rating'))['rating__avg'] or 0
+
     def __str__(self):
         return self.user.username+" ("+self.get_profession_display()+")"
 
@@ -66,11 +71,11 @@ class Review(models.Model):
     class Meta:
         verbose_name = "review"
         verbose_name_plural = "reviews"
-    #Aqui se registra el servicio al que pertenece,
-    # se ha puesto nullable para evitar problemas con Django
+    user = models.ForeignKey(User,default=None, null=True, on_delete=models.CASCADE)
     service = models.ForeignKey(Service, default=None, null=True, on_delete=models.CASCADE)
     description = models.CharField(max_length=500, blank = True, default= None)
+    date = models.DateTimeField(null=True)
     rating = models.PositiveIntegerField(validators=[MaxValueValidator(5)], null= False) 
 
     def __str__(self) -> str:
-        return self.name
+        return f"{self.service.user.username}, {self.service.get_profession_display()}, {self.user.username}"

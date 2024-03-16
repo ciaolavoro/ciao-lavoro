@@ -5,8 +5,8 @@ from rest_framework.response import Response
 from rest_framework.decorators import permission_classes
 from rest_framework import viewsets, permissions, generics, status
 from rest_framework.exceptions import PermissionDenied
-from .models import Service, Job
-from .serializers import ServiceSerializer, JobSerializer
+from .models import Service, Job, Review
+from .serializers import ServiceSerializer, JobSerializer, ReviewSerializer
 from rest_framework.authtoken.models import Token
 from datetime import date
 
@@ -138,3 +138,15 @@ class UserServiceViewSet(viewsets.ModelViewSet):
         """
         user_id = self.kwargs['user_id']  # Obtén el ID del servicio de la URL
         return Service.objects.filter(user_id=user_id)
+
+class ReviewList(APIView):
+    def get(self, request, service_id):
+        service = get_object_or_404(Service, pk=service_id)
+        reviews = Review.objects.filter(service=service)
+        serializer = ReviewSerializer(reviews, many=True)
+        response_data = {
+            "rating": service.rating(),
+            "total_reviews": len(reviews),
+            "reviews": serializer.data
+        }
+        return Response(response_data)
