@@ -8,6 +8,7 @@ import CheckIcon from "../icons/CheckIcon";
 import CrossIcon from "../icons/CrossIcon";
 import { useState } from "react";
 import { updateUserRequest } from "../../api/user.api";
+import { checkIfEmpty, errorMessages } from "../../utils/validation";
 
 export default function Profile() {
     const [isEditing, setIsEditing] = useState(false);
@@ -23,6 +24,9 @@ export default function Profile() {
     const [email, setEmail] = useState(user.email);
     const [image, setImage] = useState(`${import.meta.env.VITE_BACKEND_API_URL}${user.image}`);
     const [uploadedImage, setUploadedImage] = useState(null);
+    const [isRequiredError, setIsRequiredError] = useState(false);
+    const [isImageError, setIsImageError] = useState(false);
+    const [isLanguageError, setIsLanguageError] = useState(false);
 
     if (!loggedUser || loggedUser.user.id !== user.id) {
         return (<Navigate to="/" />)
@@ -51,11 +55,32 @@ export default function Profile() {
         setLanguage(user.language ?? "");
         setBirthDate(user.birth_date);
         setEmail(user.email);
-        setImage(user.image);
+        setImage(`${import.meta.env.VITE_BACKEND_API_URL}${user.image}`);
+        setUploadedImage(null);
+    }
+
+    const resetErrors = () => {
+        setIsRequiredError(false);
+        setIsImageError(false);
+        setIsLanguageError(false);
     }
 
     const handleEdit = (event) => {
         event.preventDefault();
+
+        if (checkIfEmpty(username) || checkIfEmpty(firstName) || checkIfEmpty(lastName) || checkIfEmpty(birthDate) || checkIfEmpty(email)) {
+            setIsRequiredError(true);
+            return;
+        } else if (language.length > 50) {
+            resetErrors();
+            setIsLanguageError(true);
+            return;
+        } else if (!uploadedImage) {
+            resetErrors();
+            setIsImageError(true);
+            return;
+        }
+        resetErrors();
 
         const userData = new FormData();
         userData.append('username', username);
@@ -72,6 +97,7 @@ export default function Profile() {
     }
 
     const handleCancel = () => {
+        resetErrors();
         resetUserData();
         setIsEditing(false);
     }
@@ -87,28 +113,37 @@ export default function Profile() {
                 <div className="flex flex-col gap-y-6">
                     <img src={uploadedImage ?? image ?? defaultUserImage} alt={`Foto de perfil del usuario ${username}`}
                         className="mx-auto size-64 object-cover rounded-lg" />
-                    {isEditing &&
-                        <input type="file" name="image" accept="image/*" onChange={handleImageUpload}
-                            className="block w-60 text-sm file:font-sans" />
-                    }
+                    {isEditing && (
+                        <div className="flex flex-col">
+                            <input type="file" name="image" accept="image/*" onChange={handleImageUpload}
+                                className="block w-60 text-sm file:font-sans" />
+                            {isImageError && <p className="mx-auto text-red-500 text-xs">{errorMessages.imageNotUploaded}</p>}
+                        </div>
+                    )}
                 </div>
                 <div className="flex flex-col gap-y-6">
                     <UserProfileData type={"text"} formName={"username"} labelText={"Nombre de usuario:"} inputValue={username}
-                        isReadOnly={!isEditing} onChange={(event) => setUsername(event.target.value)} />
+                        isReadOnly={!isEditing} onChange={(event) => setUsername(event.target.value)}
+                        isError={isRequiredError} errorMessage={errorMessages.required} />
                     <div className="flex gap-x-4">
                         <UserProfileData type={"text"} formName={"firstName"} labelText={"Nombre:"} inputValue={firstName}
-                            isReadOnly={!isEditing} onChange={(event) => setFirstName(event.target.value)} />
+                            isReadOnly={!isEditing} onChange={(event) => setFirstName(event.target.value)}
+                            isError={isRequiredError} errorMessage={errorMessages.required} />
                         <UserProfileData type={"text"} formName={"lastName"} labelText={"Apellidos:"} inputValue={lastName}
-                            isReadOnly={!isEditing} onChange={(event) => setLastName(event.target.value)} />
+                            isReadOnly={!isEditing} onChange={(event) => setLastName(event.target.value)}
+                            isError={isRequiredError} errorMessage={errorMessages.required} />
                     </div>
                     <div className="flex gap-x-4">
                         <UserProfileData type={"text"} formName={"language"} labelText={"Idioma:"} inputValue={language}
-                            isReadOnly={!isEditing} onChange={(event) => setLanguage(event.target.value)} />
+                            isReadOnly={!isEditing} onChange={(event) => setLanguage(event.target.value)}
+                            isError={isLanguageError} errorMessage={errorMessages.languageLength} />
                         <UserProfileData type={"date"} formName={"birthDate"} labelText={"Fecha de nacimiento:"} inputValue={birthDate}
-                            isReadOnly={!isEditing} onChange={(event) => setBirthDate(event.target.value)} />
+                            isReadOnly={!isEditing} onChange={(event) => setBirthDate(event.target.value)}
+                            isError={isRequiredError} errorMessage={errorMessages.required} />
                     </div>
                     <UserProfileData type={"email"} formName={"email"} labelText={"Correo:"} inputValue={email}
-                        isReadOnly={!isEditing} onChange={(event) => setEmail(event.target.value)} />
+                        isReadOnly={!isEditing} onChange={(event) => setEmail(event.target.value)}
+                        isError={isRequiredError} errorMessage={(isRequiredError && errorMessages.required)} />
                 </div>
             </div>
             {isEditing

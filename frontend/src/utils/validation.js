@@ -14,4 +14,7 @@ export const errorMessages = {
     required: "Este campo es requerido.",
     cityLength: "La ciudad no debe tener más de 50 caracteres.",
     experienceNotValid: "La experiencia no puede ser menos que 0.",
+    languageLength: "El idioma no debe tener más de 50 caracteres.",
+    imageNotUploaded: "Debe subir una imagen.",
+    emailNotValid: "El correo electrónico no es válido.",
 }
