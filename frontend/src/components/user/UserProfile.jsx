@@ -21,9 +21,10 @@ export default function Profile() {
     const [language, setLanguage] = useState(user.language ?? "");
     const [birthDate, setBirthDate] = useState(user.birth_date);
     const [email, setEmail] = useState(user.email);
-    const [image, setImage] = useState(user.image);
+    const [image, setImage] = useState(`${import.meta.env.VITE_BACKEND_API_URL}${user.image}`);
+    const [uploadedImage, setUploadedImage] = useState(null);
 
-    if (loggedUser.user.id !== user.id) {
+    if (!loggedUser || loggedUser.user.id !== user.id) {
         return (<Navigate to="/" />)
     }
 
@@ -56,18 +57,17 @@ export default function Profile() {
     const handleEdit = (event) => {
         event.preventDefault();
 
-        const userData = {
-            username: username,
-            first_name: firstName,
-            last_name: lastName,
-            language: language,
-            birth_date: birthDate,
-            email: email,
-            image: image,
-        }
+        const userData = new FormData();
+        userData.append('username', username);
+        userData.append('first_name', firstName);
+        userData.append('last_name', lastName);
+        userData.append('language', language);
+        userData.append('birth_date', birthDate);
+        userData.append('email', email);
+        userData.append('image', image);
 
         if (window.confirm('¿Está seguro de guardar los cambios? Se cerrará la sesión si decide continuar.')) {
-            updateUser(user.id, userData);
+            updateUser(userData, loggedUser.token);
         }
     }
 
@@ -76,16 +76,21 @@ export default function Profile() {
         setIsEditing(false);
     }
 
+    const handleImageUpload = (event) => {
+        setImage(event.target.files[0]);
+        setUploadedImage(URL.createObjectURL(event.target.files[0]));
+    }
+
     return (
         <form className="flex flex-col justify-center items-center gap-y-10 mt-10 mx-44 py-14 bg-white border rounded-lg" onSubmit={handleEdit}>
             <div className="flex gap-x-20">
                 <div className="flex flex-col gap-y-6">
-                    <img src={image ?? defaultUserImage} alt={`Foto de perfil del usuario ${username}`}
+                    <img src={uploadedImage ?? image ?? defaultUserImage} alt={`Foto de perfil del usuario ${username}`}
                         className="mx-auto size-64 object-cover rounded-lg" />
-                    {isEditing
-                        ? <input type="file" name="image" accept="image/*" onChange={(event) => setImage(URL.createObjectURL(event.target.files[0]))}
+                    {isEditing &&
+                        <input type="file" name="image" accept="image/*" onChange={handleImageUpload}
                             className="block w-60 text-sm file:font-sans" />
-                        : null}
+                    }
                 </div>
                 <div className="flex flex-col gap-y-6">
                     <UserProfileData type={"text"} formName={"username"} labelText={"Nombre de usuario:"} inputValue={username}
