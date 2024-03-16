@@ -18,7 +18,7 @@ class ContractCreation(APIView):
         contract_data = request.data
         service = Service.objects.get(pk=service_id)
         worker = service.user
-        token_id = request.headers['authoritation']
+        token_id = request.headers['Authorization']
         token = get_object_or_404(Token, key=token_id.split()[-1])
         client = token.user
         description = contract_data['description']

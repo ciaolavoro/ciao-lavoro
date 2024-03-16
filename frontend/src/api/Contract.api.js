@@ -24,17 +24,15 @@ export const getAllServices = async () => {
     return fetch(`${BACKEND_URL}/service/`, options);
 }
 
-export const createContractRequest = async (description, initial_date, end_date, cost,service_id) => {
-    const token = localStorage.getItem('token');
+export const createContractRequest = async (description, initial_date, end_date, cost,service_id, token) => {
     const options = {
 
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authoritation': `Token ${token}`,
+            'Authorization': `Token ${token}`,
         },
-        body: JSON.stringify({description, initial_date, end_date, cost}),
+        body: JSON.stringify({description, initial_date, end_date, cost, token}),
     };
-    console.log(token)
     return fetch(`${BACKEND_URL}/contracts/create/${service_id}/`, options);
 }
