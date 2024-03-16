@@ -1,4 +1,4 @@
-import { ContractCard } from './ContractCard'
+import { ContractCard } from './ContractCardClient'
 import { useGetBackendData } from "../../utils/useGetBackendData";
 
 export default function Contracts() {
