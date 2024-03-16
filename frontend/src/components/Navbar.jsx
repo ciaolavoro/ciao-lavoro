@@ -7,7 +7,6 @@ const navItemsStyle = "px-2 py-1 font-semibold rounded hover:bg-gray-300 transit
 
 export default function Navbar() {
   const { logout, loggedUser } = useAuthContext();
-  console.log(loggedUser);
   const navigate = useNavigate();
 
   const navItems = [
@@ -39,21 +38,18 @@ export default function Navbar() {
     if (loggedUser) {
       return (
         <>
-          
           <Link to="/services/user" >
             <li className={`${navItemsStyle} hover:cursor-pointer`}>
               Mis Servicios
             </li>
           </Link>
-
           <li className={`${navItemsStyle} hover:cursor-pointer`} onClick={handleLogout}>Cerrar sesión</li>
-          {loggedUser.user && (
           <Link to={`/users/${loggedUser.user.id}`}>
             <li>
-              <img src={loggedUser.user.image ?? defaultUserImage} alt="Avatar del usuario" className="size-8 object-cover rounded-full hover:shadow transition" />
+              <img src={`${import.meta.env.VITE_BACKEND_API_URL}${loggedUser.user.image}` ?? defaultUserImage} alt="Avatar del usuario"
+                className="size-8 object-cover rounded-full hover:shadow transition" />
             </li>
           </Link>
-          )}
         </>
       );
     } else {
