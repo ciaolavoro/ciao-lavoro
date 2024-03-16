@@ -68,6 +68,13 @@ CORS_ALLOWED_ORIGINS = [
     env('FRONTEND_URL'),
 ]
 
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authoritation',
+    'content-type',
+]
+
 ROOT_URLCONF = 'ciao_lavoro.urls'
 
 TEMPLATES = [
@@ -162,4 +169,4 @@ REST_FRAMEWORK = {
     }
 }
 
-AUTH_USER_MODEL = 'user.User' 
+AUTH_USER_MODEL = 'user.User'
