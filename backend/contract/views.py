@@ -1,16 +1,16 @@
-from .models import Contract
+from .models import Contract, Task
 from service.models import Service
 from datetime import date, datetime
-from api.serializers import ContractSerializer
+from api.serializers import ContractSerializer, TaskSerializer
 from django.forms import ValidationError
 from django.shortcuts import get_object_or_404
-from rest_framework import generics, status
+from rest_framework import generics, status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.authtoken.models import Token
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.decorators import authentication_classes
+from rest_framework.decorators import authentication_classes, permission_classes
 
 class ContractCreation(APIView):
     @authentication_classes([TokenAuthentication])
@@ -165,3 +165,12 @@ class ContractWorkerList(generics.ListAPIView):
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
         return queryset
+
+class TaskViewSet(APIView):
+    serializer_class = TaskSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+    def get_queryset(self):
+        contract_id = self.kwargs['contract_id']  # Obtén el ID del servicio de la URL
+        return Task.objects.filter(contract_id=contract_id)

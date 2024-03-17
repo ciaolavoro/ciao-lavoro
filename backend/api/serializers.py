@@ -3,7 +3,7 @@ from rest_framework import serializers
 from contract.models import Contract
 from user.models import User
 from service.models import Job, Service
-from contract.models import Contract
+from contract.models import Contract, Task
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -45,7 +45,27 @@ class ServiceSerializer(serializers.HyperlinkedModelSerializer):
             del job['service']
         return job_data
     
-class ContractSerializer(serializers.HyperlinkedModelSerializer):
+class TaskSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Task
+        fields = '__all__'
+    
+class ContractSerializer(serializers.ModelSerializer):
+
+    total_cost = serializers.SerializerMethodField()
+    tasks = TaskSerializer(many=True, read_only=True, source='task_set')
+
     class Meta:
         model = Contract
-        fields = '__all__'
+        fields = ['worker', 'client', 'accept_worker', 'accept_client', 'description', 'total_cost', 'initial_date', 'end_date',
+                  'status', 'service', 'tasks']
+
+    def get_total_cost(self, obj):
+        return obj.total_cost
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        tasks_data = data['tasks']
+        for task_data in tasks_data:
+            del task_data['contract']
+        return data

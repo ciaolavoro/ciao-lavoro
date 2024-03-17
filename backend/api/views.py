@@ -7,8 +7,8 @@ from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
-from api.serializers import GroupSerializer, UserSerializer, ServiceSerializer, JobSerializer, ContractSerializer
-from contract.models import Contract
+from api.serializers import GroupSerializer, UserSerializer, ServiceSerializer, JobSerializer, ContractSerializer, TaskSerializer
+from contract.models import Contract, Task
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -45,6 +45,15 @@ class JobViewSet(viewsets.ModelViewSet):
         """
         service_id = self.kwargs['service_id']  # Obtén el ID del servicio de la URL
         return Job.objects.filter(service_id=service_id)
+    
+class TaskViewSet(viewsets.ModelViewSet):
+    serializer_class = TaskSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+    def get_queryset(self):
+        contract_id = self.kwargs['contract_id']  # Obtén el ID del servicio de la URL
+        return Task.objects.filter(contract_id=contract_id)
     
 
 class UserServiceViewSet(viewsets.ModelViewSet):
