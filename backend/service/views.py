@@ -24,7 +24,7 @@ class ServiceList(generics.ListAPIView):
             services = services.filter(profession=search_profession)
         if search_city:
             services = services.filter(city__icontains=search_city)
-
+    
         return services
 
     def get(self, request, *args, **kwargs):
@@ -56,6 +56,10 @@ class JobViewSet(viewsets.ModelViewSet):
         """
         service_id = self.kwargs['service_id']  # Obtén el ID del servicio de la URL
         return Job.objects.filter(service_id=service_id)
+
+class JobDetail(generics.RetrieveAPIView):
+    queryset = Job.objects.all()
+    serializer_class = JobSerializer
 
 @permission_classes([permissions.AllowAny])
 class ServiceCreation(APIView):
