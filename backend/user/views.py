@@ -89,16 +89,15 @@ class UserUpdate(APIView):
     
     @authentication_classes([TokenAuthentication])
     def put(self, request, format_arg=None):
-        token_id = request.headers['Authorization']
-        token = get_object_or_404(Token, key=token_id.split()[-1])
-        user = token.user
-        user_data = request.data
-        username = user_data['username']
-        first_name = user_data['first_name']
-        last_name  = user_data['last_name']
-        email = user_data['email']
-        language = user_data['language']
-        birth_date = user_data['birth_date']
+        authentication_classes = [SessionAuthentication]
+        permission_classes = [IsAuthenticated]
+        user = request.user
+        username = request.data.get('username')
+        first_name = request.data.get('first_name')
+        last_name  = request.data.get('last_name')
+        email = request.data.get('email')
+        language = request.data.get('language')
+        birth_date = request.data.get('birth_date')
         image = request.FILES.get('image')
         if username:
             user.username = username
