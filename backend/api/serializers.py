@@ -45,6 +45,14 @@ class ServiceSerializer(serializers.HyperlinkedModelSerializer):
             del job['service']
         return job_data
     
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        profession_number = data['profession']
+        profession_name = dict(Service.PROFESSIONS).get(profession_number)
+        if profession_name:
+            data['profession'] = profession_name
+        return data
+    
 class ContractSerializer(serializers.HyperlinkedModelSerializer):
     status = serializers.SerializerMethodField()
 
