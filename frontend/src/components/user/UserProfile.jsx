@@ -15,15 +15,15 @@ export default function Profile() {
     const user = useLoaderData();
     const navigate = useNavigate();
 
-    const [username, setUsername] = useState(loggedUser.username);
-    const [firstName, setFirstName] = useState(loggedUser.first_name);
-    const [lastName, setLastName] = useState(loggedUser.last_name);
-    const [language, setLanguage] = useState(loggedUser.language ?? "");
-    const [birthDate, setBirthDate] = useState(loggedUser.birth_date);
-    const [email, setEmail] = useState(loggedUser.email);
-    const [image, setImage] = useState(loggedUser.image);
+    const [username, setUsername] = useState(user.username);
+    const [firstName, setFirstName] = useState(user.first_name);
+    const [lastName, setLastName] = useState(user.last_name);
+    const [language, setLanguage] = useState(user.language ?? "");
+    const [birthDate, setBirthDate] = useState(user.birth_date);
+    const [email, setEmail] = useState(user.email);
+    const [image, setImage] = useState(user.image);
 
-    if (loggedUser.username !== user.username) {
+    if (loggedUser.user.id !== user.id) {
         return (<Navigate to="/" />)
     }
 
@@ -44,13 +44,13 @@ export default function Profile() {
     }
 
     const resetUserData = () => {
-        setUsername(loggedUser.username);
-        setFirstName(loggedUser.first_name);
-        setLastName(loggedUser.last_name);
-        setLanguage(loggedUser.language ?? "");
-        setBirthDate(loggedUser.birth_date);
-        setEmail(loggedUser.email);
-        setImage(loggedUser.image);
+        setUsername(user.username);
+        setFirstName(user.first_name);
+        setLastName(user.last_name);
+        setLanguage(user.language ?? "");
+        setBirthDate(user.birth_date);
+        setEmail(user.email);
+        setImage(user.image);
     }
 
     const handleEdit = (event) => {
@@ -67,7 +67,7 @@ export default function Profile() {
         }
 
         if (window.confirm('¿Está seguro de guardar los cambios? Se cerrará la sesión si decide continuar.')) {
-            updateUser(loggedUser.id, userData);
+            updateUser(user.id, userData);
         }
     }
 

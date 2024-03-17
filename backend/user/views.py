@@ -1,11 +1,9 @@
 import re
-from django.shortcuts import render
 from .models import User
 from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from django.contrib.auth import logout as auth_logout
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.contrib.auth.hashers import check_password
@@ -14,6 +12,7 @@ from rest_framework.authentication import TokenAuthentication, SessionAuthentica
 from rest_framework.decorators import authentication_classes
 from django.shortcuts import get_object_or_404
 from .serializers import UserSerializer
+from django.contrib.auth.password_validation import validate_password
 
 class login_view(APIView):
     authentication_classes = []
@@ -56,12 +55,12 @@ class register(APIView):
         language = request.data.get('language')
         birth_date = request.data.get('birthdate')
         image = request.FILES.get('image')
-             
-        user = User.objects.create(username= username, first_name= first_name, last_name= last_name, email= email, password = password
-        ,language = language, birth_date = birth_date, image=image)
 
+        user = User.objects.create(username=username, first_name=first_name, last_name=last_name, email=email
+        ,language=language, birth_date=birth_date, image=image)
+        validate_password(password)
+        user.set_password(password)
         user.save()
-
         return JsonResponse({'status': '1', 'message': ' The user has been successfully registered'})
     
 class UserList(APIView):
