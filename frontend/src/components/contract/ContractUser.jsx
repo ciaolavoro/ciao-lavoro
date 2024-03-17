@@ -8,6 +8,7 @@ import { useAuthContext } from "../auth/AuthContextProvider";
 export default function ContractUser(){
     const [workerContracts, setWorkerContracts] = useState([]);
     const [clientContracts, setClientContracts] = useState([]);
+    const {loggedUser} = useAuthContext();
 
     useEffect(() =>{
         const getClientContract = async () => {
@@ -27,7 +28,7 @@ export default function ContractUser(){
         }; 
         const getWorkerContract = async () => {
             try{
-                const res = await getWorkerContracts();
+                const res = await getWorkerContracts(loggedUser.token);
                 if (res.status === 200){
                     const data = await res.json();
                     setWorkerContracts(data);
