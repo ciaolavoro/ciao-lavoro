@@ -1,19 +1,41 @@
-from .models import Service, Job
+from .models import Service, Job, Review
+from user.models import User
 from rest_framework import serializers
+from user.models import User
 
 
 
-class ServiceSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Service
-        fields = '__all__'
+        model = User
+        fields = ['username', 'image']
+
 
 class JobSerializer(serializers.ModelSerializer):
     class Meta:
         model = Job
         fields = '__all__'
 
+class UserReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'image']
+
+class ReviewSerializer(serializers.ModelSerializer):
+    user = UserReviewSerializer(read_only=True)
+
+    class Meta:
+        model = Review
+        fields = '__all__'
+
 class ServiceDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Service
-        fields = '__all__'
+        fields = ['id', 'user', 'profession', 'city', 'experience', 'is_active', 'is_promoted' , 'jobs'] 
+    
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        jobs_data = data['jobs']
+        for job_data in jobs_data:
+            del job_data['service']
+        return data

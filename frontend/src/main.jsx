@@ -7,7 +7,6 @@ import Login from './components/auth/Login.jsx'
 import Services from './components/service/Services.jsx'
 import CreateService from './components/service/CreateService.jsx'
 import ErrorPage from './components/ErrorPage.jsx'
-import Contracts from './components/contract/Contracts.jsx'
 import Root from './components/Root.jsx'
 import CreateContract from './components/contract/CreateContract.jsx'
 import Register from './components/register/Register.jsx'
@@ -15,6 +14,7 @@ import UserProfile from './components/user/UserProfile.jsx'
 import Service from './components/service/Service.jsx'
 import { AuthContextProvider } from './components/auth/AuthContextProvider.jsx'
 import Users from './components/user/Users.jsx'
+import ContractUser from './components/contract/ContractUser.jsx'
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_API_URL;
 
@@ -50,13 +50,13 @@ const router = createBrowserRouter([
         element: <CreateService />,
       },
       {
-        path: 'contracts',
-        element: <Contracts />,
-      },
-      {
         path: 'contracts/create',
         element: <CreateContract />,
       },
+      {
+        path: 'contracts/mylist',
+        element: <ContractUser />,
+        },
       {
         path: 'register',
         element: <Register />,
