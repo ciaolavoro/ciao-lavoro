@@ -20,20 +20,9 @@ export default function ServiceDetails() {
     const [experience, setExperience] = useState(service.experience);
     const [isActive, setIsActive] = useState(service.is_active);
     const [isPromoted, setIsPromoted] = useState(service.is_promoted);
+    const [jobs,] = useState(service.jobs);
 
-    // Ejemplo de trabajos (eliminar una vez se puedan sacar del servicio)
-    const jobs = [
-        {
-            id: 1,
-            name: "Corte de cabello",
-            estimated_price: 10
-        },
-        {
-            id: 2,
-            name: "Manicura",
-            estimated_price: 15
-        }
-    ]
+    const userImageUrl = `${import.meta.env.VITE_BACKEND_API_URL}${service.user.image}`;
 
     const resetServiceData = () => {
         setCity(service.city);
@@ -87,7 +76,7 @@ export default function ServiceDetails() {
                 <div className="border bg-white shadow-md rounded-xl m-8">
                     <div className="flex flex-col gap-y-6 px-16 py-8 w-65">
                         <h2 className="text-3xl font-bold mb-4">Detalles de servicio:</h2>
-                        <img src={service.user.image ?? defaultUserImage} alt={`Foto del servicio ${service.name}`} className="mx-auto size-80 object-cover rounded-lg" />
+                        <img src={userImageUrl ?? defaultUserImage} alt={`Foto del usuario ${service.user.username}`} className="mx-auto size-80 object-cover rounded-lg" />
                     </div>
                     <div className="flex flex-col justify-center gap-y-6 px-8 py-3">
                         <ServiceData type={"text"} formName={"username"} labelText={"Usuario:"} inputValue={service.user.username ?? "Pablo"} isReadOnly={true} />
