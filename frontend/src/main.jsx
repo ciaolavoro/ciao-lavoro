@@ -59,7 +59,7 @@ const router = createBrowserRouter([
         element: <Register />,
       },
       {
-        path: ':userId',
+        path: 'users/:userId',
         element: <UserProfile />,
         loader: async ({ params }) => {
           return fetch(`${BACKEND_URL}/user/${params.userId}`);
