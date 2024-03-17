@@ -75,7 +75,7 @@ export async function updateServiceRequest(serviceId, serviceData,token) {
             'Content-Type': 'application/json',
             'Authorization': `Token ${token}`,
         },
-        body: serviceData,
+        body: JSON.stringify(serviceData),
     };
     
     try {
