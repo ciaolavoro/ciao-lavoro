@@ -12,12 +12,9 @@ export default function ServiceUser(){
         const getServices = async () => {
             try {
                 
-                console.log("HA entrado aqui");
                 const res = await getServiceByUser(loggedUser.user.id);
-                console.log(loggedUser.user.id);
                 if (res.status === 200) {
                     const data = await res.json();
-                    console.log(data);
                     setServices(data);
                 } else {
                     alert('Error al cargar los servicios');

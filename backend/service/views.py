@@ -5,16 +5,15 @@ from rest_framework.response import Response
 from rest_framework.decorators import permission_classes
 from rest_framework import viewsets, permissions, generics, status
 from rest_framework.exceptions import PermissionDenied
-from .models import Service, Job
-from .serializers import ServiceSerializer, JobSerializer
+from .models import Service, Job, Review
+from .serializers import ServiceSerializer, JobSerializer, ReviewSerializer
 from rest_framework.authtoken.models import Token
-from datetime import date
+from datetime import date, datetime
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.decorators import authentication_classes
+from django.forms import ValidationError
 
-# Create your views here.
-
-def list_services(request):
-    services = Service.objects.all()
-    return render(request, 'services_list.html', {'services': services})
+# Create your views here
 
 class ServiceList(generics.ListAPIView):
     serializer_class = ServiceSerializer
@@ -28,7 +27,7 @@ class ServiceList(generics.ListAPIView):
             services = services.filter(profession=search_profession)
         if search_city:
             services = services.filter(city__icontains=search_city)
-
+    
         return services
 
     def get(self, request, *args, **kwargs):
@@ -60,6 +59,10 @@ class JobViewSet(viewsets.ModelViewSet):
         """
         service_id = self.kwargs['service_id']  # Obtén el ID del servicio de la URL
         return Job.objects.filter(service_id=service_id)
+
+class JobDetail(generics.RetrieveAPIView):
+    queryset = Job.objects.all()
+    serializer_class = JobSerializer
 
 @permission_classes([permissions.AllowAny])
 class ServiceCreation(APIView):
@@ -138,3 +141,34 @@ class UserServiceViewSet(viewsets.ModelViewSet):
         """
         user_id = self.kwargs['user_id']  # Obtén el ID del servicio de la URL
         return Service.objects.filter(user_id=user_id)
+
+class ReviewCreation(APIView):
+    @authentication_classes([TokenAuthentication])
+    def post(self, request, service_id):
+        review_data = request.data
+        service = Service.objects.get(pk=service_id)
+        token_id = request.headers["Authorization"]
+        token = get_object_or_404(Token, key = token_id.split()[-1])
+        user = token.user
+        description = review_data['description']
+        rating = review_data['rating']
+        date = datetime.now()
+        if int(rating) > 5 or int(rating) < 0 :
+            raise ValidationError('La valoración debe de estar entre 0 y 5')
+        if len(description) > 500:
+            raise ValidationError('La descripción no puede contener más de 500 caracteres')
+        review = Review.objects.create(user=user, service=service, description=description, rating=rating, date=date)
+        serializer = ReviewSerializer(review, many=False)
+        return Response(serializer.data)
+
+class ReviewList(APIView):
+    def get(self, request, service_id):
+        service = get_object_or_404(Service, pk=service_id)
+        reviews = Review.objects.filter(service=service)
+        serializer = ReviewSerializer(reviews, many=True)
+        response_data = {
+            "rating": service.rating(),
+            "total_reviews": len(reviews),
+            "reviews": serializer.data
+        }
+        return Response(response_data)
