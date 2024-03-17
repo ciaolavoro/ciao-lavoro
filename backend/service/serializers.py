@@ -9,19 +9,22 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['username', 'image']
 
-class ServiceSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
-
-    class Meta:
-        model = Service
-        fields = '__all__'
 
 class JobSerializer(serializers.ModelSerializer):
     class Meta:
         model = Job
         fields = '__all__'
 
-class ServiceDetailSerializer(serializers.ModelSerializer):
+class ServiceSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    jobs = JobSerializer(many=True, read_only=True, source='job_set') 
     class Meta:
         model = Service
-        fields = '__all__'
+        fields = ['id', 'user', 'profession', 'city', 'experience', 'is_active', 'is_promoted' , 'jobs'] 
+    
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        jobs_data = data['jobs']
+        for job_data in jobs_data:
+            del job_data['service']
+        return data
