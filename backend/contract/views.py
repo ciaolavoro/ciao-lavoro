@@ -51,7 +51,6 @@ class ContractEdit(APIView):
         contract = Contract.objects.get(pk=contract_id)
         if contract.client != request.user and contract.service.user != request.user and not request.user.is_staff:
             raise ValidationError("No tienes permiso para editar un contrato que no te pertenece")
-
         new_accept_worker = contract_data['accept_worker']
         new_accept_client = contract_data['accept_client']
         new_description = contract_data['description']

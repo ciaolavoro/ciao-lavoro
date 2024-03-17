@@ -38,7 +38,6 @@ export default function Navbar() {
     if (loggedUser) {
       return (
         <>
-          
           <Link to="/services/user" >
             <li className={`${navItemsStyle} hover:cursor-pointer`}>
               Mis Servicios
@@ -52,13 +51,11 @@ export default function Navbar() {
           </Link>
 
           <li className={`${navItemsStyle} hover:cursor-pointer`} onClick={handleLogout}>Cerrar sesión</li>
-          {loggedUser.user && (
           <Link to={`/users/${loggedUser.user.id}`}>
             <li>
               <img src={loggedUser.user.image ?? defaultUserImage} alt="Avatar del usuario" className="size-8 object-cover rounded-full hover:shadow transition" />
             </li>
           </Link>
-          )}
         </>
       );
     } else {
