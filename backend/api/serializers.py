@@ -46,6 +46,11 @@ class ServiceSerializer(serializers.HyperlinkedModelSerializer):
         return job_data
     
 class ContractSerializer(serializers.HyperlinkedModelSerializer):
+    status = serializers.SerializerMethodField()
+
     class Meta:
         model = Contract
         fields = '__all__'
+
+    def get_status(self, obj):
+        return dict(Contract.STATUS_CHOICES).get(obj.status, "Desconocido")
