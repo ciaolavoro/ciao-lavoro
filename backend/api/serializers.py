@@ -49,10 +49,8 @@ class ServiceSerializer(serializers.HyperlinkedModelSerializer):
 class ContractSerializer(serializers.HyperlinkedModelSerializer):
     client = UserServiceSerializer()
     worker = UserServiceSerializer()
-    estatus = serializers.CharField(source='get_status_display', read_only=True)
+    statusS = serializers.CharField(source='get_status_display', read_only=True)      
 
     class Meta:
         model = Contract
-        fields = ['id', 'worker', 'client', 'estatus', 'accept_worker', 'accept_client', 'description', 'initial_date','end_date','cost','service']
-    def get_status(self, obj):
-        return dict(Contract.STATUS_CHOICES).get(obj.status, "Desconocido")
+        fields = ['id', 'worker', 'client', 'statusS', 'accept_worker', 'accept_client', 'description', 'initial_date','end_date','cost','service']
