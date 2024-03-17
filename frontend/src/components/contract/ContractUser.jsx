@@ -14,9 +14,9 @@ export default function ContractUser(){
     const {loggedUser} = useAuthContext();
 
     useEffect(() =>{
-        const getContract = async () => {
+        const getClientContract = async () => {
             try{
-                const res = await getContracts(loggedUser.token, end_date, initial_date, status);
+                const res = await getClientContracts(loggedUser.token, end_date, initial_date, status);
                 if (res.status === 200){
                     const data = await res.json();
                     setClientContracts(data.client);
@@ -29,7 +29,28 @@ export default function ContractUser(){
                 alert('Error al cargar los contratos', error.status);
             }
         }; 
-        getContract();
+        const getWorkerContract = async () => {
+            try{
+                const res = await getWorkerContracts(loggedUser.token, end_date, initial_date, status);
+                console.log(res)
+                if (res.status === 200){
+                    const data = await res.json();
+                    console.log(data)
+                    setWorkerContracts(data);
+                }else{
+                    alert('Error al cargar los contratos');
+                }
+
+            }catch(error){
+                alert('Error al cargar los contratos', error.status);
+            }
+        }; 
+        
+
+        
+
+        getClientContract();
+        getWorkerContract();
     },[loggedUser.token, end_date, initial_date, status]);
 
     return(
@@ -39,18 +60,16 @@ export default function ContractUser(){
             </section>
             <section>
                 <form className="flex justify-center gap-2 my-4">
-                    <label className="text-lg font-semibold">Fecha inicio</label>
                     <input
-                        type="date"
+                        type="datetime-local"
                         name="initial_date"
                         value={initial_date}
                         onChange={(e) => setInitial_date(e.target.value)}
                         className="px-2 py-1 border rounded"
                         min={new Date().toISOString().slice(0, 16)}
                     />
-                    <label className="text-lg font-semibold">Fecha fin</label>
                     <input
-                    type="date"
+                    type="datetime-local"
                     name="end_date"
                     value={end_date}
                     onChange={(e) => setEnd_date(e.target.value)}
