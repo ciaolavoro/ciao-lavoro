@@ -8,16 +8,16 @@ class Contract(models.Model):
     accept_worker = models.BooleanField(default = False)
     accept_client = models.BooleanField(default = False)
     description = models.TextField(blank=False, max_length=500)
-    initial_date = models.DateField()
-    end_date = models.DateField()
-    cost = models.IntegerField()
-    status = models.CharField(max_length=2, choices=[
-        ("Ne", "Negociacion"),
-        ("Ac", "Aceptado"),
-        ("En", "En proceso"),
-        ("Fi", "Finalizado"),
-        ("Ca", "Cancelado"),
-        ("Pa", "Pagado")    ], default='Ne')
+    initial_date = models.DateTimeField()
+    end_date = models.DateTimeField()
+    cost = models.DecimalField(max_digits=10, decimal_places=2)
+    status = models.IntegerField(choices=[
+        (1, "Negociacion"),
+        (2, "Aceptado"),
+        (3, "En proceso"),
+        (4, "Finalizado"),
+        (5, "Cancelado"),
+        (6, "Pagado")    ], default=1)
     service = models.ForeignKey(Service, on_delete = models.CASCADE)
     def __str__(self):
         return self.description

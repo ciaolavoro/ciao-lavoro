@@ -68,6 +68,7 @@ CORS_ALLOWED_ORIGINS = [
     env('FRONTEND_URL'),
 ]
 
+
 ROOT_URLCONF = 'ciao_lavoro.urls'
 
 TEMPLATES = [
@@ -145,6 +146,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication'
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticatedOrReadOnly'
@@ -161,4 +163,4 @@ REST_FRAMEWORK = {
     }
 }
 
-AUTH_USER_MODEL = 'user.User' 
+AUTH_USER_MODEL = 'user.User'

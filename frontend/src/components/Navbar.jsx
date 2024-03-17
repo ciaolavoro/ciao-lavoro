@@ -1,10 +1,15 @@
-import { NavLink, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import ciaoLavoroLogo from "/ciaolavoro-logo.png";
-import { isAuthenticated, logoutRequest } from '../api/login.api';
+import { useAuthContext } from "./auth/AuthContextProvider";
+import defaultUserImage from "../assets/service/talonflame.jpg"
+
+const navItemsStyle = "px-2 py-1 font-semibold rounded hover:bg-gray-300 transition";
 
 export default function Navbar() {
- const navItems = [
+  const { logout, loggedUser } = useAuthContext();
+  const navigate = useNavigate();
+
+  const navItems = [
     {
       id: 1,
       title: "Inicio",
@@ -12,89 +17,78 @@ export default function Navbar() {
     },
     {
       id: 2,
-      title: "Sobre nosotros",
-      path: "/about",
+      title: "Buscar Servicios",
+      path: "/services",
     },
- ];
-
- const location = useLocation();
-
- const [isLoggedIn, setIsLoggedIn] = useState([]);
-
- useEffect(() => {
-      const getIsAuthenticated = async () => {
-          try {
-              const res = await isAuthenticated();
-              if(res.status === 200){
-                 const data = await res.json();
-                 setIsLoggedIn(data.isAuthenticated);
-              } else {
-                 alert('Error al cargar los servicios');
-              }
-          } catch (error) {
-              alert('Error al cargar los servicios');
-          }
-      };
-      getIsAuthenticated();
- }, []);
-
- const handleLogout = async () => {
-    try {
-      await logoutRequest();
-      setIsLoggedIn(false);
-      alert('Se ha cerrado la sesión correctamente')
-    } catch (error) {
-      alert('Ha ocurrido un error durante el cierre de sesión.');
+    {
+      id: 3,
+      title: "Sobre nosotros",
+      path: "https://ciaolavoro.github.io/landingpage",
     }
- };
+  ];
 
- const renderAuthLinks = () => {
-    if (isLoggedIn) {
+  const handleLogout = () => {
+    if (window.confirm('¿Estás seguro de que deseas cerrar sesión?')) {
+      logout();
+      navigate('/');
+    }
+  };
+
+  const renderLoginOrLogout = () => {
+    if (loggedUser) {
       return (
-        <button onClick={handleLogout} className="px-2 py-1 font-semibold">
-          Cerrar sesión
-        </button>
+        <>
+          
+          <Link to="/services/user" >
+            <li className={`${navItemsStyle} hover:cursor-pointer`}>
+              Mis Servicios
+            </li>
+          </Link>
+
+          <Link to="/contracts/myList" >
+            <li className={`${navItemsStyle} hover:cursor-pointer`}>
+              Mis Contratos
+            </li>
+          </Link>
+
+          <li className={`${navItemsStyle} hover:cursor-pointer`} onClick={handleLogout}>Cerrar sesión</li>
+          {loggedUser.user && (
+          <Link to={`/users/${loggedUser.user.id}`}>
+            <li>
+              <img src={loggedUser.user.image ?? defaultUserImage} alt="Avatar del usuario" className="size-8 object-cover rounded-full hover:shadow transition" />
+            </li>
+          </Link>
+          )}
+        </>
       );
     } else {
       return (
-        <NavLink to="/login" className="px-2 py-1 font-semibold">
-          Iniciar sesión
+        <NavLink to="/login" className={({ isActive }) => isActive ? "bg-gray-300 rounded" : ""}>
+          <li className={navItemsStyle}>Iniciar sesión</li>
         </NavLink>
       );
     }
- };
+  }
 
- return (
+  return (
     <header>
       <nav className="flex justify-between items-center sticky w-full h-16 px-6 bg-white border border-gray-300 z-10">
         <section>
           <NavLink to="/">
-            <img
-              src={ciaoLavoroLogo}
-              alt="Logo de CiaoLavoro"
-              className="w-8 object-cover rounded"
-            />
+            <img src={ciaoLavoroLogo} alt="Logo de CiaoLavoro" className="w-8 object-cover rounded" />
           </NavLink>
         </section>
         <section>
           <ul className="flex gap-5 py-2">
             {navItems.map((item) => (
-              <NavLink
-                key={item.id}
-                to={item.path}
-                className={
-                 location.pathname === item.path
-                    ? "bg-slate-200 rounded"
-                    : ""
-                }
-              >
-                <li className="px-2 py-1 font-semibold">{item.title}</li>
+              <NavLink key={item.id} to={item.path} className={({ isActive }) => isActive ? "bg-gray-300 rounded" : ""}>
+                <li className={navItemsStyle}>{item.title}</li>
               </NavLink>
             ))}
-            {renderAuthLinks()}
+            {renderLoginOrLogout()}
           </ul>
         </section>
       </nav>
     </header>
- );
+  );
 }

@@ -1,5 +1,6 @@
 from django.db import models
 from user.models import User
+from django.db.models import Avg
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Este campo es un campo custom para llevar el enumerado de profession
@@ -40,19 +41,41 @@ class Service(models.Model):
     #Aquí se estipula si está promocionado este servicio
     is_promoted = models.BooleanField(blank = False,default= False)
 
+    def rating(self):
+        #La siguiente linea fue creada a partir de la IA Phind
+        return self.review_set.all().aggregate(Avg('rating'))['rating__avg'] or 0
+
     def __str__(self):
-        return self.get_profession_display()
+        return self.user.username+" ("+self.get_profession_display()+")"
 
 class Job(models.Model):
 
     class Meta:
-        verbose_name = "Job"
-        verbose_name_plural = "Jobs"
+        verbose_name = "job"
+        verbose_name_plural = "jobs"
     #Aqui se registra el servicio al que pertenece,
     # se ha puesto nullable para evitar problemas con Django
     service = models.ForeignKey(Service, default=None, null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=100, blank = False)
-    estimated_price = models.PositiveIntegerField(blank = False)
+    estimated_price = models.DecimalField(
+                    max_digits=10,
+                    decimal_places=2,
+                    validators=[MinValueValidator(0.01)],
+                    help_text=('Introduzca el coste en euros'))
 
     def __str__(self) -> str:
         return self.name
+
+class Review(models.Model):
+
+    class Meta:
+        verbose_name = "review"
+        verbose_name_plural = "reviews"
+    user = models.ForeignKey(User,default=None, null=True, on_delete=models.CASCADE)
+    service = models.ForeignKey(Service, default=None, null=True, on_delete=models.CASCADE)
+    description = models.CharField(max_length=500, blank = True, default= None)
+    date = models.DateTimeField(null=True)
+    rating = models.PositiveIntegerField(validators=[MaxValueValidator(5)], null= False)
+
+    def __str__(self) -> str:
+        return f"{self.service.user.username}, {self.service.get_profession_display()}, {self.user.username}"
