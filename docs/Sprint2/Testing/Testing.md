@@ -22,8 +22,8 @@ GRUPO 6 | SEVILLA, 09 DE MARZO 2024 | ENTREGABLE “SPRINT 2”
 | FECHA      | VERSIÓN | DESCRIPCIÓN                                      |
 |------------|---------|--------------------------------------------------|
 | 15/03/2024 | 1.0     | Creación del documento                           |
-| 17/03/2024 | 1.5     | Testing de Backend finalizado                    |
-| 18/03/2024 | 2.0     | Testing de Frontend finalizado                   |
+| 17/03/2024 | 1.1     | Testing de Backend finalizado                    |
+| 18/03/2024 | 1.2     | Testing de Frontend finalizado                   |
 
 
 ### ÍNDICE
