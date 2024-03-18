@@ -83,7 +83,7 @@ export default function UserProfile() {
             resetErrors();
             setIsLanguageError(true);
             return;
-        } else if (!uploadedImage) {
+        } else if (!image) {
             resetErrors();
             setIsImageError(true);
             return;
