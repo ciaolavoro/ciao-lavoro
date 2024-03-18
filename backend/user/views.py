@@ -84,7 +84,6 @@ class UserUpdate(APIView):
         authentication_classes = [SessionAuthentication]
         permission_classes = [IsAuthenticated]
         session_id = request.session.session_key
-        print(session_id)
         user = request.user
         serializer = UserSerializer(user)
         return JsonResponse(serializer.data)
@@ -92,7 +91,6 @@ class UserUpdate(APIView):
     def put(self, request, format_arg=None):
         authentication_classes = [SessionAuthentication]
         permission_classes = [IsAuthenticated]
-        print(request.headers['Authorization'])
         token_id = request.headers['Authorization']
         token = get_object_or_404(Token, key=token_id.split()[-1])
         user = token.user
