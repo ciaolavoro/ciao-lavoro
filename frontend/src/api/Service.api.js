@@ -75,11 +75,11 @@ export async function updateServiceRequest(serviceId, serviceData,token) {
             'Content-Type': 'application/json',
             'Authorization': `Token ${token}`,
         },
-        body: serviceData,
+        body: JSON.stringify(serviceData),
     };
     
     try {
-        const response = await fetch(`${BACKEND_URL}/service/${serviceId}/`, options);
+        const response = await fetch(`${BACKEND_URL}/service/${serviceId}/edit/`, options);
         return response;
     } catch (error) {
         console.error('Update service error:', error);
