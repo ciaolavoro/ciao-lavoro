@@ -31,10 +31,9 @@ export default function ContractUser(){
         const getWorkerContract = async () => {
             try{
                 const res = await getWorkerContracts(loggedUser.token, end_date, initial_date, status);
-                console.log(res)
+                
                 if (res.status === 200){
                     const data = await res.json();
-                    console.log(data)
                     setWorkerContracts(data);
                 }else{
                     alert('Error al cargar los contratos');
