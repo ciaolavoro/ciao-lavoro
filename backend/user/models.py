@@ -33,9 +33,5 @@ class User(AbstractUser):
         self.clean()
         super(User, self).save(*args, **kwargs)
 
-    def update(self, *args, **kwargs):
-        self.clean()
-        super(User, self).save(*args, **kwargs)
-
     def __str__(self):
         return self.username
