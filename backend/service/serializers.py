@@ -19,6 +19,8 @@ class JobSerializer(serializers.ModelSerializer):
 class ServiceSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     jobs = JobSerializer(many=True, read_only=True, source='job_set') 
+    profession = serializers.SerializerMethodField()
+
     class Meta:
         model = Service
         fields = ['id', 'user', 'profession', 'city', 'experience', 'is_active', 'is_promoted' , 'jobs'] 
@@ -29,7 +31,10 @@ class ServiceSerializer(serializers.ModelSerializer):
         for job_data in jobs_data:
             del job_data['service']
         return data
-      
+    
+    def get_profession(self, obj):
+        return dict(Service.PROFESSIONS)[obj.profession]
+    
 class UserReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
