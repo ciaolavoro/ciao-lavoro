@@ -45,7 +45,21 @@ class ServiceSerializer(serializers.HyperlinkedModelSerializer):
             del job['service']
         return job_data
     
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        profession_number = data['profession']
+        profession_name = dict(Service.PROFESSIONS).get(profession_number)
+        if profession_name:
+            data['profession'] = profession_name
+        return data
+    
 class ContractSerializer(serializers.HyperlinkedModelSerializer):
+    client = UserServiceSerializer()
+    worker = UserServiceSerializer()
+    estatus = serializers.CharField(source='get_status_display', read_only=True)
+
     class Meta:
         model = Contract
-        fields = '__all__'
+        fields = ['id', 'worker', 'client', 'estatus', 'accept_worker', 'accept_client', 'description', 'initial_date','end_date','cost','service']
+    def get_status(self, obj):
+        return dict(Contract.STATUS_CHOICES).get(obj.status, "Desconocido")

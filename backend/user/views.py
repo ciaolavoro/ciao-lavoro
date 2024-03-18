@@ -84,7 +84,6 @@ class UserUpdate(APIView):
         authentication_classes = [SessionAuthentication]
         permission_classes = [IsAuthenticated]
         session_id = request.session.session_key
-        print(session_id)
         user = request.user
         serializer = UserSerializer(user)
         return JsonResponse(serializer.data)
@@ -92,13 +91,18 @@ class UserUpdate(APIView):
     def put(self, request, format_arg=None):
         authentication_classes = [SessionAuthentication]
         permission_classes = [IsAuthenticated]
-        user = request.user
+        token_id = request.headers['Authorization']
+        token = get_object_or_404(Token, key=token_id.split()[-1])
+        user = token.user
+        username = request.data.get('username')
         first_name = request.data.get('first_name')
         last_name  = request.data.get('last_name')
         email = request.data.get('email')
         language = request.data.get('language')
         birth_date = request.data.get('birth_date')
         image = request.FILES.get('image')
+        if username:
+            user.username = username
         if first_name:
             user.first_name = first_name
         if last_name:
@@ -111,6 +115,6 @@ class UserUpdate(APIView):
             user.birth_date = birth_date
         if image:
             user.image = image
-        user.update()
+        user.save()
         serializer = UserSerializer(user)
         return JsonResponse(serializer.data)

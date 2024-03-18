@@ -53,15 +53,18 @@ export default function ServiceDetails() {
         setIsEditing(true);
 
         const serviceData = {
+            id: service.id,
             profession: profession,
             city: city,
             experience: experience,
             is_active: isActive,
             is_promoted: isPromoted,
+            jobs: service.jobs,
+            user: service.user,
         }
 
         if (window.confirm('¿Está seguro de guardar los cambios?')) {
-            updateService(service.url.charAt(service.url.length - 2), serviceData, loggedUser.token);
+            updateService(service.id, serviceData, loggedUser.token);
         }
     };
 
@@ -76,7 +79,7 @@ export default function ServiceDetails() {
                 <div className="border bg-white shadow-md rounded-xl m-8">
                     <div className="flex flex-col gap-y-6 px-16 py-8 w-65">
                         <h2 className="text-3xl font-bold mb-4">Detalles de servicio:</h2>
-                        <img src={userImageUrl ?? defaultUserImage} alt={`Foto del usuario ${service.user.username}`} className="mx-auto size-80 object-cover rounded-lg" />
+                        <img src={userImageUrl ?? defaultUserImage} alt={`Foto del usuario ${service.user.image}`} className="mx-auto size-80 object-cover rounded-lg" />
                     </div>
                     <div className="flex flex-col justify-center gap-y-6 px-8 py-3">
                         <ServiceData type={"text"} formName={"username"} labelText={"Usuario:"} inputValue={service.user.username ?? "Pablo"} isReadOnly={true} />
@@ -86,6 +89,26 @@ export default function ServiceDetails() {
                             isReadOnly={!isEditing} onChange={(event) => setCity(event.target.value)} />
                         <ServiceData type={"number"} formName={"experience"} labelText={"Experiencia:"} inputValue={experience}
                             isReadOnly={!isEditing} onChange={(event) => setExperience(event.target.value)} />
+
+                        <div className="grid grid-cols-2 gap-x-4 items-center w-full">
+                            <p className="text-1.7xl font-semibold text-right"><strong>¿Activo?:</strong></p>
+                            <p className="pl-2  w-full">
+                                <input
+                                    type="checkbox"
+                                    checked={isActive}
+                                    onChange={(event) => {
+                                        // Verificar si el usuario logueado es el mismo que el usuario asociado al servicio
+                                        if (loggedUser.user.username === service.user.username) {
+                                            setIsActive(event.target.checked);
+                                        } else {
+                                            // Mostrar algún tipo de mensaje de error o no realizar ninguna acción
+                                            console.log("No tiene permisos para cambiar el estado del servicio.");
+                                        }
+                                    }}
+                                    disabled={loggedUser.user.username !== service.user.username} // Deshabilitar el botón si el usuario logueado no es el mismo que el usuario asociado al servicio
+                                /></p>
+
+                        </div>
                         {isEditing ? (
                             <div className="flex justify-center gap-x-4">
                                 <ServiceButton type={"submit"} text={"Guardar cambios"} icon={<CheckIcon />} />
@@ -110,6 +133,6 @@ export default function ServiceDetails() {
                     ))}
                 </div>
             </div>
-        </form>        
+        </form>
     );
 }

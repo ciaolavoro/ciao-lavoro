@@ -1,19 +1,5 @@
-import { useEffect, useState } from "react";
 
 export default function ServiceUserCard({ service }) {
-
-  const [profession, setProfession] = useState("");
-
-  useEffect(() => {
-    if (service.profession === 1) {
-      setProfession("Lavandero");
-    } else if (service.profession === 2) {
-      setProfession("Celador");
-    } else {
-      setProfession("Albañil");
-    }
-
-  }, [service.profession]);
 
   //console.log(user)
   return (
@@ -23,7 +9,7 @@ export default function ServiceUserCard({ service }) {
                    className="h-80 w-80 object-cover rounded-t-xl" />
         <div className="px-4 py-3 w-72">
           
-          <h2 className="text-2xl font-semibold mb-4"><strong></strong> {profession}</h2>
+          <h2 className="text-2xl font-semibold mb-4"><strong></strong> {service.profession}</h2>
           <p className="mb-2 mt-4"><strong>Ciudad:</strong> {service.city}</p>
           <p className="mb-2">
             <strong>Experiencia:</strong> {service.experience} {service.experience > 1 ? "años" : "año"}
