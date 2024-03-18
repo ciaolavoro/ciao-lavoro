@@ -64,16 +64,6 @@ export default function ServiceDetails() {
         }
 
         if (window.confirm('¿Está seguro de guardar los cambios?')) {
-            console.log(serviceData.city)
-            console.log(serviceData.id)
-            console.log(serviceData.experience)
-            console.log(serviceData.is_active)
-            console.log(serviceData.is_promoted)
-            console.log(serviceData.jobs)
-            console.log(serviceData.user)
-            console.log("token : " + loggedUser.token)
-            console.log("username : " + loggedUser.user.username)
-            console.log("username 2 : " + service.user.username)
             updateService(service.id, serviceData, loggedUser.token);
         }
     };
