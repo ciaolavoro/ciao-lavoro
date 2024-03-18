@@ -92,7 +92,8 @@ class UserUpdate(APIView):
     def put(self, request, format_arg=None):
         authentication_classes = [SessionAuthentication]
         permission_classes = [IsAuthenticated]
-        token_id = self.request.headers['Authorization']
+        print(request.headers['Authorization'])
+        token_id = request.headers['Authorization']
         token = get_object_or_404(Token, key=token_id.split()[-1])
         user = token.user
         username = request.data.get('username')
