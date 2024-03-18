@@ -182,12 +182,6 @@ export default function ServiceDetails() {
         }
 
         if (window.confirm('¿Está seguro de guardar los cambios?')) {
-            console.log("profession:" + profession)
-            console.log("city:" + city)
-            console.log("position:" + position+1)
-            console.log("isAct:" +serviceData.is_active)
-            console.log("exper:" + serviceData.experience)
-            console.log("toke:" + loggedUser.token)
             updateService(service.id, serviceData, loggedUser.token);
         }
     };
