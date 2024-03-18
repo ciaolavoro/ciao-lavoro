@@ -180,9 +180,79 @@ GRUPO 6 | SEVILLA, 09 DE MARZO 2024 | ENTREGABLE “SPRINT 2”
    ![](./Imagenes_testing/Test_Student_Detail.png)
 
    Para terminar repasaremos brevemente el delete. No vamos a indagar ya que es la misma idea que en la vista de detalle. Mostraremos su función completa donde se observa esto mismo:
+
    ![](./Imagenes_testing/Test_Delete_Student.png)
 
 3. Testing en Frontend
+
+   1. Preparación.
+
+   Continuamos con el Testing en frontend.
+
+   React nos ofrece la libreria de React Testing para llevar a cabo estas tareas.
+
+   Salvo que ocurra algo extraño vamos a centrarnos en comprobar que en nuestra pantalla aparecen los elementos adecuados. Será parecido a cuando compruebas que aparecen textos utilizando herramientas como Selenium.
+
+   Para esta tarea React Testing y Jest nos ofrecen herramientas para ello.
+
+   En primer lugar vamos a instalar las dependencias necesarias con el siguiente script:
+
+   **npm install --save-dev jest @testing-library/react @testing-library/jest-dom**
+
+   Añadiendo el script de test al package.json (Esto ya está hecho en la rama 2.38 así que salvo algún problema la línea de declaración del script ya debería estar incluida al momento de que empeceis con el testing) ya estaríamos listos para iniciar a crear nuestros archivos.
+
+   En los ejemplos que veremos a continuación la persona que elaboró esta guía (la guía que sigo yo para redactar esta) ha utilizado archivos *.tsx* que consiste en mezclar jsx con typescript. Por ello habrá que dar un poquito de contexto a lo largo de la guía pero para la labor de testing no nos afecta la manera en la que los ejemplos implementan el typescript.
+
+   2. Iniciación
+
+   Supongamos que tenemos un archivo *Greet.tsx* que contiene las siguientes líneas:
+
+   ![](./Imagenes_testing/Greetjsx.png)
+
+   Siendo GreetProps el siguiente archivo *.ts*:
+
+   ![](./Imagenes_testing/GreetPropsts.png)
+
+   Para elaborar un testing sobre este archivo debemos crear nuestro propio archivo de testing. La manera de nombrar estos archivos es incluyendo un *.test* tras el nombre de la siguiente manera:
+
+   *Greet.test.tsx*
+
+   Al añadir el *.test* jest nos reconoce el archivo como un archivo de testing y lo lanzará cuando ejecutemos el comando **npm test** en la terminal.
+
+   Una vez creado el archivo de testing lo rellenamos de la siguiente manera:
+
+   ![](./Imagenes_testing/GreetTest.png)
+
+   Encabezamos el archivo con *describe* y dentro un nombre de la pantalla que vamos a probar, en este caso *Greet*. 
+
+   ![](./Imagenes_testing/DescribeGreet.png)
+
+   Después debemos definir nuestro testing:
+
+   ![](./Imagenes_testing/GreetTestRendersCorrectly.png)
+
+   En primer lugar definimos el nombre del test:
+
+   ![](./Imagenes_testing/GreetTestNombre.png)
+
+   Renderizamos la página en la siguiente línea:
+
+   ![](./Imagenes_testing/GreetRender.png)
+
+   Ahora debemos almacenar la búsqueda que hacemos. Para ello usamos *screen* y llamamos a *getByText*. Esto nos permite buscar una pieza de texto a lo largo de toda la pantalla. Esta pieza de código la almacenamos en una constante.
+
+   ![](./Imagenes_testing/GreetGetByText1.png)
+
+   Finalmente lanzamos el equivalente a lo que sería nuestro assert. En esta última línea le pedimos que compruebe que ese fragmento se encuentra en el documento.
+
+   ![](./Imagenes_testing/GreetExpect1.png)
+
+   Con esto ya tendríamos nuestro testing.
+
+   En la segunda parte del bloque de test probamos que al pasar el *name*, este funciona de la manera que se espera. Dado que no incluye ninguna funcionalidad nueva no es necesario indagar en  esta parte del código.
+
+   ![](./Imagenes_testing/GreetTest2.png)
+
 
 
 
