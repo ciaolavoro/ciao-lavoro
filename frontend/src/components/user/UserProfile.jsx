@@ -75,7 +75,7 @@ export default function Profile() {
             resetErrors();
             setIsLanguageError(true);
             return;
-        } else if (!uploadedImage) {
+        } else if (!image) {
             resetErrors();
             setIsImageError(true);
             return;
