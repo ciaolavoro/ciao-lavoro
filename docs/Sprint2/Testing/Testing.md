@@ -74,13 +74,13 @@ GRUPO 6 | SEVILLA, 09 DE MARZO 2024 | ENTREGABLE “SPRINT 2”
 
    Pongámonos en situación. Hemos creado el siguiente modelo:
 
-   ![](Clase_estudiante.png)
+   ![](./Imagenes_testing/Clase_estudiante.png)
 
-   ![](Reestricciones_clase_estudiante.png)
+   ![](./Imagenes_testing/Reestricciones_clase_estudiante.png)
 
    Y, sabiendo que usamos el rest\_framework, hemos creado las siguientes vistas:
 
-   ![](APIViews_Student.png)
+   ![](./Imagenes_testing/APIViews_Student.png)
 
 
 
@@ -89,11 +89,11 @@ GRUPO 6 | SEVILLA, 09 DE MARZO 2024 | ENTREGABLE “SPRINT 2”
 
    Con las siguientes URLs:
 
-   ![](Urls_Student.png)
+   ![](./Imagenes_testing/Urls_Student.png)
 
    Y con el siguiente serializer:
 
-   ![](Student_Serializer.png)
+   ![](./Imagenes_testing/Student_Serializer.png)
 
    Ahora que ya tenemos la base, comenzamos a montar nuestro tests.py.
 
@@ -101,86 +101,86 @@ GRUPO 6 | SEVILLA, 09 DE MARZO 2024 | ENTREGABLE “SPRINT 2”
 
    Creamos nuestra clase a la que llamaremos TestStudentAPIViews(TestCase) donde definiremos las distintas funciones de testing. La primera función que deberemos definir es la de setUp:
 
-   ![](Setup_Test.png)
+   ![](./Imagenes_testing/Setup_Test.png)
 
    El APIClient del Rest Framework nos permite logearnos en la API. Ese login que estamos viendo con el APIClient **NO** va a funcionar sin más. Nosotros utilizamos tokens para mantenernos logeados. 
 
-   ![](../Imagenes_testing/Credentials_Login.png)
+   ![](./Imagenes_testing/Credentials_Login.png)
 
    Con ese extra a añadir ya deberíamos tener el setUp listo para nuestros tests.
 
    A continuación mostramos el ejemplo de un setUp mas parecido a lo que debemos hacer en nuestra aplicación para evitar confusiones:
 
-   ![](../Imagenes_testing/EJemplo_Setup_Token.png)
+   ![](./Imagenes_testing/EJemplo_Setup_Token.png)
 
 
    En primer lugar testeamos el listado de estudiantes.
 
-   ![](../Imagenes_testing/Class_Student_List_Test.png)
+   ![](./Imagenes_testing/Class_Student_List_Test.png)
 
    Creamos dos estudiantes haciendo uso de mixer:
 
-   ![](../Imagenes_testing/Mixer_Students_List.png)
+   ![](./Imagenes_testing/Mixer_Students_List.png)
 
    A continuación debemos llamar a la URL de la lista de estudiantes que hemos definido en nuestro urls.py. Para ello solo debemos hacer uso de la siguiente línea donde llamadas al “name” que hemos definido al declarar el path:
 
-   ![](../Imagenes_testing/Url_Call_Student_List.png)
+   ![](./Imagenes_testing/Url_Call_Student_List.png)
 
    Y ahora llamamos a la URL a través de nuestro cliente definido para que nos devuelva los datos que tienen almacenado:
 
-   ![](../Imagenes_testing/Response_Student_List.png)
+   ![](./Imagenes_testing/Response_Student_List.png)
 
 
 
    Ahora que ya tenemos la respuesta almacenada en nuestra variable “response” solo tenemos que comprobar su contenido con los clásicos “assert”, en el ejemplo comprueba que no esté vacío, que su tamaño sea dos (Hemos creado dos estudiantes) y que el status sea 200:
 
-   ![](../Imagenes_testing/Assertions_Student_List.png)
+   ![](./Imagenes_testing/Assertions_Student_List.png)
 
    Finalmente dejamos una imagen de la función completa:
 
-   ![](../Imagenes_testing/Student_List_Test.png)
+   ![](./Imagenes_testing/Student_List_Test.png)
 
 
 
    Continuando con el create, la mecánica es parecida. Iniciamos definiendo la función:
-   ![](../Imagenes_testing/Class_Student_Create.png)
+   ![](./Imagenes_testing/Class_Student_Create.png)
 
    A continuación, debemos definir un JSON que representa la información que tiene que recibir la función de creación de un estudiante. En nuestro caso de ejemplo se ve de la siguiente manera:
 
-   ![](../Imagenes_testing/JSON_Student_Create.png)
+   ![](./Imagenes_testing/JSON_Student_Create.png)
 
    A partir de aquí la mecánica es la misma. Debemos llamar la url con la función “reverse” y el nombre de la url:
 
-   ![](../Imagenes_testing/Url_Student_Create.png)
+   ![](./Imagenes_testing/Url_Student_Create.png)
 
    Llamar la respuesta de la url (en este caso hacemos un post e incluimos el JSON que hemos definido):
 
-   ![](../Imagenes_testing/Response_Student_Create.png)
+   ![](./Imagenes_testing/Response_Student_Create.png)
 
    Y comprobarla con los assert, en este caso probamos el 201 porque es el código de creación correcta:
 
-   ![](../Imagenes_testing/Assertions_Student_Create.png)
+   ![](./Imagenes_testing/Assertions_Student_Create.png)
 
    Dejamos una foto de la función completa:
-   ![](../Imagenes_testing/Test_Student_Create.png)
+   ![](./Imagenes_testing/Test_Student_Create.png)
 
    Ahora continuaremos con la vista de detalles de un estudiante. La mecánica es muy parecida, pero en este caso necesitamos la id del estudiante para entrar en los detalles. 
 
-   ![](../Imagenes_testing/Class_Student_Detail.png)
+   ![](./Imagenes_testing/Class_Student_Detail.png)
 
    Este id lo conseguimos al tener una creación ligeramente diferente con el mixer en la que incluimos un valor para su pk. Para ello usaremos los kwargs para indicarle a reverse de que estudiante queremos sus detalles:
 
-   ![](../Imagenes_testing/Students_Detail_Creations.png)
+   ![](./Imagenes_testing/Students_Detail_Creations.png)
 
    Los assert se mantienen iguales. En este caso volvemos a buscar un 200 ya que estamos ante un get:
-   ![](../Imagenes_testing/Assertions_Student_Detail.png)
+   ![](./Imagenes_testing/Assertions_Student_Detail.png)
 
    FInalmente dejamos la función completa:
 
-   ![](../Imagenes_testing/Test_Student_Detail.png)
+   ![](./Imagenes_testing/Test_Student_Detail.png)
 
    Para terminar repasaremos brevemente el delete. No vamos a indagar ya que es la misma idea que en la vista de detalle. Mostraremos su función completa donde se observa esto mismo:
-   ![](../Imagenes_testing/Test_Delete_Student.png)
+   ![](./Imagenes_testing/Test_Delete_Student.png)
 
 3. Testing en Frontend
 
