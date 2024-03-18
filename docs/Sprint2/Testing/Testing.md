@@ -21,11 +21,10 @@ GRUPO 6 | SEVILLA, 09 DE MARZO 2024 | ENTREGABLE “SPRINT 2”
 ### CONTROL DE VERSIONES
 | FECHA      | VERSIÓN | DESCRIPCIÓN                                      |
 |------------|---------|--------------------------------------------------|
-| 20/02/2024 | 1.0     | Creación del documento                           |
-| 25/02/2024 | 1.1     | Inclusión de ramas fix en apartado “Estrategia de ramas” |
-| 28/02/2024 | 1.2     | Inclusión de los apartados 8 (Política de clockify) y 9 (Política de Issues) |
-| 09/03/2024 | 1.2.1   | Añadido el texto "Sprint 2"                      |
-| 09/03/2024 | 1.2.2   | Inclusion de reglas del tablero github en el apartado 9              |
+| 15/03/2024 | 1.0     | Creación del documento                           |
+| 17/03/2024 | 1.5     | Testing de Backend finalizado                    |
+| 18/03/2024 | 2.0     | Testing de Frontend finalizado                   |
+
 
 ### ÍNDICE
 
@@ -203,7 +202,7 @@ GRUPO 6 | SEVILLA, 09 DE MARZO 2024 | ENTREGABLE “SPRINT 2”
 
    En los ejemplos que veremos a continuación la persona que elaboró esta guía (la guía que sigo yo para redactar esta) ha utilizado archivos *.tsx* que consiste en mezclar jsx con typescript. Por ello habrá que dar un poquito de contexto a lo largo de la guía pero para la labor de testing no nos afecta la manera en la que los ejemplos implementan el typescript.
 
-   2. Iniciación
+   2. Iniciación + GetByText
 
    Supongamos que tenemos un archivo *Greet.tsx* que contiene las siguientes líneas:
 
@@ -252,6 +251,60 @@ GRUPO 6 | SEVILLA, 09 DE MARZO 2024 | ENTREGABLE “SPRINT 2”
    En la segunda parte del bloque de test probamos que al pasar el *name*, este funciona de la manera que se espera. Dado que no incluye ninguna funcionalidad nueva no es necesario indagar en  esta parte del código.
 
    ![](./Imagenes_testing/GreetTest2.png)
+
+   3. getByRole
+
+   El getByRole hace referencia a los elementos semánticos de HTML que expresan un rol, por ejemplo los botones tienen rol *Button*, los h1-h6 tienen rol *Header* y así con todos los elementos. También podemos indicar nosotros que rol queremos que tenga con el campo *rol ='rolquesea'* 
+
+   Sabiendo el contexto veamos un pequño fragmento de código.
+
+   En este fragmento definimos tanto un *h1* como un *h2*:
+
+   ![](./Imagenes_testing/GetByRole1.png)
+
+   Para el testing debemos diferenciar entre *h1* y *h2* debemos indicar el nivel que tiene el rol header que estamos testeando, esto se hace en la misma línea añadiendo un campo:
+
+   ![](./Imagenes_testing/GetByRoleTest.png)
+
+   No vamos a seguir con ejemplos pues la mecánica es siempre la misma, para observar mas ejemplos se ha dejado entre los enlaces el repositorio de donde se saca la información.
+
+   4. getByLabelText y getByPlaceholderText
+
+   Los label nos hacen referencia al elemento *label* de un HTML.
+
+   ![](./Imagenes_testing/InputForm.png)
+
+   ![](./Imagenes_testing/InputForm2.png)
+
+   A la hora de testearlo se repite la misma formula que hemos estado usando anteriormente.
+
+   ![](./Imagenes_testing/InputFormTest.png)
+
+   5. Conclusiones
+
+   Con esto llegamos a las conclusiones finales del documento.
+
+   Como habréis podido observar en este documento recogemos una manera muy simple de hacer los tests. Dado que no estamos tan versados en las tecnologías de momento puede ser mejor idea hacer los tests de manera más sencilla.
+
+   De cualquier manera, invito a cualquier persona que quiera probar código más complejo a revisar las fuentes de información o a consultar al creador del Documento para aclarar dudas de las distintas tareas de testing. 
+
+4. Bibliografía.
+
+   1. Backend:
+
+   https://www.django-rest-framework.org/api-guide/testing/
+
+   https://www.youtube.com/playlist?list=PLP1DxoSC17LZTTzgfq0Dimkm6eWJQC9ki
+
+   2. Frontend:
+
+   https://www.youtube.com/playlist?list=PLC3y8-rFHvwirqe1KHFCHJ0RqNuN61SJd
+
+   https://testing-library.com/docs/react-testing-library/example-intro/
+
+   https://testing-library.com/docs/queries/about/
+
+
 
 
 
