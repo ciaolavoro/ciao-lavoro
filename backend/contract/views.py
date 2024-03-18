@@ -152,10 +152,9 @@ class ContractWorkerList(generics.ListAPIView):
 
     def get(self, request):
         try:
-            #token_id = self.request.headers['Authorization']
-            #token = get_object_or_404(Token, key=token_id.split()[-1])
-            #client = token.user
-            client = request.user
+            token_id = self.request.headers['Authorization']
+            token = get_object_or_404(Token, key=token_id.split()[-1])
+            client = token.user
             queryset = self.get_queryset()
             queryset = queryset.filter(worker = client)
 
