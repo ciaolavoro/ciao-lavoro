@@ -172,3 +172,47 @@ class ReviewList(APIView):
             "reviews": serializer.data
         }
         return Response(response_data)
+
+class EditService(APIView):
+    @authentication_classes([TokenAuthentication])
+    def put(self, request, service_id):
+        service_data = request.data
+        service = Service.objects.get(pk=service_id)
+        token_id = request.headers["Authorization"]
+        token = get_object_or_404(Token, key = token_id.split()[-1])
+        user = token.user
+        if user != service.user:
+            raise PermissionDenied('No eres el propietario de este servicio')
+        profession = service_data['profession']
+        if not profession == '':
+            print('aa')
+            profesions = Service.PROFESSIONS
+            profession_exists = False
+            for profession_id, _ in profesions:
+                if profession_id == int(profession):
+                    profession_exists = True
+            if not profession_exists:
+                raise ValidationError('La profesión no es valida')
+            user_services = list(Service.objects.filter(user=user))
+            for s in user_services:
+                
+                if s.profession == int(profession) and service.id != s.id:
+                    raise ValidationError('No se pueden crear dos servicios de la misma profesión')
+            service.profession = profession
+        city = service_data['city']
+        if not city == '':
+            service.city = city
+        experience = service_data['experience']
+        if not experience == '':
+            birth_date = user.birth_date
+            today = date.today()
+            age = today.year - birth_date.year - ((today.month, today.day) < (birth_date.month, birth_date.day))
+            if int(experience)+16 > age:
+                raise ValidationError('La experiencia es demasiado alta')
+            service.experience = experience
+        is_active = service_data['is_active']
+        if not is_active == '':
+            service.is_active = is_active
+        service.save()
+        serializer = ServiceSerializer(service, many=False)
+        return Response(serializer.data)

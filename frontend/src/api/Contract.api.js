@@ -38,7 +38,12 @@ export const createContractRequest = async (description, initial_date, end_date,
     return fetch(`${BACKEND_URL}/contracts/create/${service_id}/`, options);
 }
 
-export const getWorkerContracts = async (token) => {
+export const getWorkerContracts = async (token,end_date, initial_date, status) => {
+    const queryParams = new URLSearchParams({ 
+        end_date: end_date, 
+        initial_date: initial_date,
+        status: status,              
+                                        });
     const options = {
         method: 'GET',
         headers: {
@@ -48,10 +53,15 @@ export const getWorkerContracts = async (token) => {
         },
     };
 
-    return fetch(`${BACKEND_URL}/contracts/workerList/`, options);
+    return fetch(`${BACKEND_URL}/contracts/workerList/?${queryParams}`, options);
 }
 
-export const getClientContracts = async (token) => {
+export const getClientContracts = async (token, end_date, initial_date, status) => {
+    const queryParams = new URLSearchParams({ 
+        end_date: end_date, 
+        initial_date: initial_date,
+        status: status,              
+                                        });
     const options = {
         method: 'GET',
         headers: {
@@ -60,7 +70,7 @@ export const getClientContracts = async (token) => {
         },
     };
 
-    return fetch(`${BACKEND_URL}/contracts/clientList/`, options);
+    return fetch(`${BACKEND_URL}/contracts/clientList/?${queryParams}`, options);
 
 
 }
