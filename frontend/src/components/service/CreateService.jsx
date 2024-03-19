@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createServiceRequest } from "../../api/Service.api";
+import { useAuthContext } from "../auth/AuthContextProvider";
 
 export default function CreateService() {
     const [email, setEmail] = useState('');
@@ -8,11 +9,14 @@ export default function CreateService() {
     const [city, setCity] = useState('');
     const [experience, setExperience] = useState('');
     const navigate = useNavigate();
+    const { loggedUser } = useAuthContext();
 
     const createService = async (email, profession, city, experience) => {
         try {
-            const res = await createServiceRequest(email, profession, city, experience);
+            console.log(profession);
+            const res = await createServiceRequest(email, profession, city, experience, loggedUser.token);
             if (res.status === 200) {
+                alert('El servicio se ha creado correctamente')
                 navigate('/');
             } else {
                 alert('Error al crear servicio. Por favor, intente de nuevo.');

@@ -62,7 +62,7 @@ class register(APIView):
         user.set_password(password)
         user.save()
         return JsonResponse({'status': '1', 'message': ' The user has been successfully registered'})
-    
+
 class UserList(APIView):
     def get(self, request):
         users = User.objects.all()
@@ -80,26 +80,25 @@ class UserDetails(APIView):
 
 class UserUpdate(APIView):
    
+    @authentication_classes([TokenAuthentication])
     def get(self, request, format_arg=None):
-        authentication_classes = [SessionAuthentication]
-        permission_classes = [IsAuthenticated]
         session_id = request.session.session_key
         user = request.user
         serializer = UserSerializer(user)
         return JsonResponse(serializer.data)
     
+    @authentication_classes([TokenAuthentication])
     def put(self, request, format_arg=None):
-        authentication_classes = [SessionAuthentication]
-        permission_classes = [IsAuthenticated]
         token_id = request.headers['Authorization']
         token = get_object_or_404(Token, key=token_id.split()[-1])
         user = token.user
-        username = request.data.get('username')
-        first_name = request.data.get('first_name')
-        last_name  = request.data.get('last_name')
-        email = request.data.get('email')
-        language = request.data.get('language')
-        birth_date = request.data.get('birth_date')
+        user_data = request.data
+        username = user_data['username']
+        first_name = user_data['first_name']
+        last_name  = user_data['last_name']
+        email = user_data['email']
+        language = user_data['language']
+        birth_date = user_data['birth_date']
         image = request.FILES.get('image')
         if username:
             user.username = username

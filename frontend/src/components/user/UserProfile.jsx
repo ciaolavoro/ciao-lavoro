@@ -29,7 +29,7 @@ export default function Profile() {
 
     const updateUser = async (userId, userData) => {
         try {
-            const response = await updateUserRequest(userId, userData);
+            const response = await updateUserRequest(userId, userData, loggedUser.token);
             if (response.ok) {
                 alert('Perfil actualizado correctamente');
                 setIsEditing(false);
