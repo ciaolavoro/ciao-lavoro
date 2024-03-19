@@ -14,9 +14,9 @@ export default function ContractUser(){
     const {loggedUser} = useAuthContext();
 
     useEffect(() =>{
-        const getClientContract = async () => {
+        const getContract = async () => {
             try{
-                const res = await getClientContracts(loggedUser.token, end_date, initial_date, status);
+                const res = await getContracts(loggedUser.token, end_date, initial_date, status);
                 if (res.status === 200){
                     const data = await res.json();
                     setClientContracts(data.client);
@@ -29,27 +29,7 @@ export default function ContractUser(){
                 alert('Error al cargar los contratos', error.status);
             }
         }; 
-        const getWorkerContract = async () => {
-            try{
-                const res = await getWorkerContracts(loggedUser.token, end_date, initial_date, status);
-                
-                if (res.status === 200){
-                    const data = await res.json();
-                    setWorkerContracts(data);
-                }else{
-                    alert('Error al cargar los contratos');
-                }
-
-            }catch(error){
-                alert('Error al cargar los contratos', error.status);
-            }
-        }; 
-        
-
-        
-
-        getClientContract();
-        getWorkerContract();
+        getContract();
     },[loggedUser.token, end_date, initial_date, status]);
 
     return(
