@@ -64,14 +64,16 @@ class TaskSerializer(serializers.ModelSerializer):
         fields = '__all__'
     
 class ContractSerializer(serializers.ModelSerializer):
-
+    client = UserServiceSerializer()
+    worker = UserServiceSerializer()
+    estatus = serializers.CharField(source='get_status_display', read_only=True)
     total_cost = serializers.SerializerMethodField()
     tasks = TaskSerializer(many=True, read_only=True, source='task_set')
 
     class Meta:
         model = Contract
         fields = ['worker', 'client', 'accept_worker', 'accept_client', 'description', 'total_cost', 'initial_date', 'end_date',
-                  'status', 'service', 'tasks']
+                  'estatus', 'service', 'tasks']
 
     def get_status(self, obj):
         return dict(Contract.STATUS_CHOICES).get(obj.status, "Desconocido")
