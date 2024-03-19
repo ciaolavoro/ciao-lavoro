@@ -60,11 +60,6 @@ export default function UserProfile() {
         setUploadedImage(null);
     }
 
-    const resetErrors = () => {
-        setIsRequiredError(false);
-        setIsImageError(false);
-        setIsLanguageError(false);
-    }
 
     const resetErrors = () => {
         setIsRequiredError(false);
@@ -83,7 +78,7 @@ export default function UserProfile() {
             resetErrors();
             setIsLanguageError(true);
             return;
-        } else if (!image) {
+        } else if (!uploadedImage) {
             resetErrors();
             setIsImageError(true);
             return;
