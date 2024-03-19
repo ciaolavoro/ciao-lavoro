@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { createContractRequest } from "../../api/Contract.api";
+import { createContractRequest, checkWorkerAssociation  } from "../../api/Contract.api";
 import { useAuthContext } from "../auth/AuthContextProvider";
 
 export default function CreateContract() {
@@ -33,11 +33,20 @@ export default function CreateContract() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        
+        const token = loggedUser.token;
+        const isAssociated = await checkWorkerAssociation(serviceId, loggedUser.userId); //La funcion a llamar
+        
+        if(isAssociated){
+            alert('No puedes contratar un servicio del que eres trabajador');
+            return;
+        }
         if (charCount > 500) {
             alert('La descripción no puede superar los 500 caracteres.');
             return;
         }
-        const token = loggedUser.token;
+        
+        
         await createContract(token);
     };
 
