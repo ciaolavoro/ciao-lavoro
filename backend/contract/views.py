@@ -95,7 +95,7 @@ class ContractDelete(APIView):
         serializer = ContractSerializer(contract, many=False,context ={'request': request})
         return Response(serializer.data)
 
-class ContractList(generics.ListAPIView):
+class ContractClientList(generics.ListAPIView):
     serializer_class=ContractSerializer
 
     def get_queryset(self):
@@ -131,38 +131,3 @@ class ContractList(generics.ListAPIView):
             return Response({"client": serializer1.data, "worker": serializer2.data}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
-
-class ContractWorkerList(generics.ListAPIView):
-    # permission_classes = [permissions.IsAuthenticated]
-    serializer_class = ContractSerializer
-    def get_queryset(self):
-        contracts=Contract.objects.all()
-        estate = self.request.query_params.get('status')
-        initial_date = self.request.query_params.get('initial_date')
-        end_date = self.request.query_params.get('end_date')
-
-        if estate:
-            contracts = contracts.filter(status=estate)
-        if initial_date:
-            contracts = contracts.filter(initial_date=initial_date)
-        if end_date:
-            contracts = contracts.filter(end_date=end_date)
-
-        return contracts
-
-    def get(self, request):
-        try:
-            token_id = self.request.headers['Authorization']
-            token = get_object_or_404(Token, key=token_id.split()[-1])
-            client = token.user
-            queryset = self.get_queryset()
-            queryset = queryset.filter(worker = client)
-
-            if not queryset.exists():
-                return Response([], status=status.HTTP_200_OK)
-
-            serializer = self.serializer_class(queryset, many=True,context ={'request': request})
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
-        return queryset
