@@ -191,3 +191,16 @@ class TaskCreation(APIView):
         task = Task.objects.create(contract=contract, title=title, amount=amount, cost=cost, complete=complete)
         serializer = TaskSerializer(task, many=False)
         return Response(serializer.data)
+    
+
+class TaskDelete(APIView):
+    def post(self, request, task_id):
+        task = Task.objects.get(pk=task_id)
+
+        if task.contract.worker != request.user:
+            raise PermissionDenied("No tienes permiso para eliminar una tarea para este contrato que no te pertenece")
+        if not request.user.is_staff:
+            raise PermissionDenied("Solo el trabajador asignado puede eliminar tareas para este contrato")
+        Task.delete(task)
+        serializer = TaskSerializer(task, many=False)
+        return Response(serializer.data)

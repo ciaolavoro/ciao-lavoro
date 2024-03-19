@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import ContractCreation, ContractEdit,ContractStatusEdit,ContractDelete,ContractWorkerList,ContractClientList, TaskViewSet, TaskCreation
+from .views import ContractCreation, ContractEdit,ContractStatusEdit,ContractDelete,ContractWorkerList,ContractClientList, TaskViewSet, TaskCreation, TaskDelete
 
 app_name = 'contracts'
 
@@ -12,7 +12,8 @@ urlpatterns = [
     path('clientList/', ContractClientList.as_view(), name="client-contracts"),
     path('workerList/', ContractWorkerList.as_view(), name="worker-contracts"),
     path('tasks/<int:pk>/', TaskViewSet.as_view(), name='task-detail'),
-    path('create/<int:contract_id>/tasks/', TaskCreation.as_view(), name='contract-task-create')
+    path('create/<int:contract_id>/tasks/', TaskCreation.as_view(), name='contract-task-create'),
+    path('delete/tasks/<int:task_id>/', TaskDelete.as_view(), name='contract-task-delete')
 
 
 
