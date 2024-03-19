@@ -23,7 +23,6 @@ from api import views
 
 router = routers.DefaultRouter()
 router.register(r'user', views.UserViewSet)
-router.register(r'groups', views.GroupViewSet)
 router.register(r'service', views.ServiceViewSet)
 router.register(r'contracts', views.ContractViewSet)
 
@@ -34,11 +33,6 @@ urlpatterns = [
     path('contracts/', include('contract.urls', namespace='contracts')),
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-
-    re_path('signup', views.signup),
-    re_path('login', views.login),
-    re_path('logout', views.logout),
-    re_path('test_token', views.test_token),
 ]
 
 if settings.DEBUG:

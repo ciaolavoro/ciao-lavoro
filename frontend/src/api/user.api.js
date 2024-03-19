@@ -6,7 +6,7 @@ export async function updateUserRequest(userData, token) {
         headers: {
             'Authorization': `Token ${token}`,
         },
-        body: userData,
+        body: JSON.stringify(userData),
     };
     
     try {
