@@ -111,7 +111,7 @@ class JobCreation(APIView):
         return Response(serializer.data)
 
 class JobEdit(APIView):
-    def post(self, request, job_id):
+    def put(self, request, job_id):
         job_data = request.data
         job = Job.objects.get(pk=job_id)
         if job.service.user != request.user and not request.user.is_staff:
@@ -124,7 +124,7 @@ class JobEdit(APIView):
         serializer = JobSerializer(job, many=False)
         return Response(serializer.data)
 class JobDelete(APIView):
-    def post(self, request, job_id):
+    def put(self, request, job_id):
         job = Job.objects.get(pk=job_id)
         if job.service.user != request.user and not request.user.is_staff:
             raise PermissionDenied("No tienes permiso para eliminar un trabajo para un servicio que no te pertenece")
