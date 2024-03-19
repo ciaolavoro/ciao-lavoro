@@ -173,3 +173,21 @@ class TaskViewSet(APIView):
     def get_queryset(self):
         contract_id = self.kwargs['contract_id']  # Obtén el ID del servicio de la URL
         return Task.objects.filter(contract_id=contract_id)
+    
+
+class TaskCreation(APIView):
+    def post(self, request, contract_id):
+        task_data = request.data
+        contract = Contract.objects.get(pk=contract_id)
+        if contract.worker != request.user:
+            raise PermissionDenied("No tienes permiso para crear una tarea para este contrato que no te pertenece")
+
+        if not request.user.is_staff:
+            raise PermissionDenied("Solo el trabajador asignado puede crear tareas para este contrato")
+        title = task_data['title']
+        amount = task_data['amount']
+        cost = task_data['cost']
+        complete = task_data['complete']
+        task = Task.objects.create(contract=contract, title=title, amount=amount, cost=cost, complete=complete)
+        serializer = TaskSerializer(task, many=False)
+        return Response(serializer.data)
