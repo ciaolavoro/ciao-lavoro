@@ -10,10 +10,11 @@ import { useState } from "react";
 import { updateUserRequest } from "../../api/user.api";
 import { checkIfEmpty, checkIfUsernameExists, checkLanguageLength, errorMessages } from "../../utils/validation";
 
-export default function Profile() {
+export default function UserProfile() {
     const [isEditing, setIsEditing] = useState(false);
     const { logout, loggedUser } = useAuthContext();
     const user = useLoaderData();
+    const userId = user.id;
     const navigate = useNavigate();
 
     const [username, setUsername] = useState(user.username);
@@ -29,8 +30,8 @@ export default function Profile() {
     const [isImageError, setIsImageError] = useState(false);
     const [isLanguageError, setIsLanguageError] = useState(false);
 
-    if (!loggedUser || loggedUser.user.id !== user.id) {
-        return (<Navigate to="/" />)
+    if (!loggedUser || !userId) {
+        return (<Navigate to="/" />);
     }
 
     const updateUser = async (userId, userData) => {
@@ -73,7 +74,7 @@ export default function Profile() {
         if (checkIfEmpty(username) || checkIfEmpty(firstName) || checkIfEmpty(lastName) || checkIfEmpty(birthDate) || checkIfEmpty(email)) {
             setIsRequiredError(true);
             return;
-        } else if (await checkIfUsernameExists(username, user.id)) {
+        } else if (await checkIfUsernameExists(username, userId)) {
             resetErrors();
             setIsUsernameError(true);
             return;
@@ -157,7 +158,7 @@ export default function Profile() {
                     <UserProfileButton type={"submit"} text={"Guardar cambios"} icon={<CheckIcon />} />
                     <UserProfileButton type={"button"} text={"Cancelar"} icon={<CrossIcon />} onClick={handleCancel} />
                 </div>)
-                : (<UserProfileButton type={"button"} text={"Editar perfil"} icon={<PencilIcon />} onClick={() => setIsEditing(true)} />)}
+                : (loggedUser.user.id === userId && <UserProfileButton type={"button"} text={"Editar perfil"} icon={<PencilIcon />} onClick={() => setIsEditing(true)} />)}
         </form>
     )
 }
