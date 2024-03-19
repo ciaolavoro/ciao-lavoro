@@ -95,7 +95,7 @@ class ContractDelete(APIView):
         serializer = ContractSerializer(contract, many=False,context ={'request': request})
         return Response(serializer.data)
 
-class ContractClientList(generics.ListAPIView):
+class ContractList(generics.ListAPIView):
     serializer_class=ContractSerializer
 
     def get_queryset(self):
