@@ -18,6 +18,7 @@ export default function CreateService() {
     const [isProfessionDuplicated, setProfessionDuplicated] = useState(false);
     const [isExperienceError, setIsExperienceError] = useState(false);
     const navigate = useNavigate();
+    const { loggedUser } = useAuthContext();
 
     const createService = async (email, professionNumber, city, experience) => {
         try {
