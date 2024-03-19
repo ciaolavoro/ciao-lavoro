@@ -79,7 +79,7 @@ export default function ServiceDetails() {
                 <div className="border bg-white shadow-md rounded-xl m-8">
                     <div className="flex flex-col gap-y-6 px-16 py-8 w-65">
                         <h2 className="text-3xl font-bold mb-4">Detalles de servicio:</h2>
-                        <img src={userImageUrl ?? defaultUserImage} alt={`Foto del usuario ${service.user.image}`} className="mx-auto size-80 object-cover rounded-lg" />
+                        <img src={"https://images.unsplash.com/photo-1646753522408-077ef9839300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NjZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"} className="mx-auto size-80 object-cover rounded-lg" />
                     </div>
                     <div className="flex flex-col justify-center gap-y-6 px-8 py-3">
                         <ServiceData type={"text"} formName={"username"} labelText={"Usuario:"} inputValue={service.user.username ?? "Pablo"} isReadOnly={true} />
