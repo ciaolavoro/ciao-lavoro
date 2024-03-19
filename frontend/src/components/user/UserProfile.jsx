@@ -74,7 +74,11 @@ export default function UserProfile() {
         if (checkIfEmpty(username) || checkIfEmpty(firstName) || checkIfEmpty(lastName) || checkIfEmpty(birthDate) || checkIfEmpty(email)) {
             setIsRequiredError(true);
             return;
-        } else if (language.length > 50) {
+        } else if (await checkIfUsernameExists(username, userId)) {
+            resetErrors();
+            setIsUsernameError(true);
+            return;
+        } else if (checkLanguageLength(language)) {
             resetErrors();
             setIsLanguageError(true);
             return;
