@@ -1,8 +1,8 @@
-from user.models import User
-from service.models import Service, Job
 from rest_framework import permissions, viewsets, status
 from rest_framework.response import Response
 from api.serializers import UserSerializer, ServiceSerializer, JobSerializer, ContractSerializer
+from user.models import User
+from service.models import Service, Job
 from contract.models import Contract
 
 
