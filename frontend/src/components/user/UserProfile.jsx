@@ -1,81 +1,103 @@
-import { Navigate, useLoaderData, useNavigate } from "react-router-dom";
-import { useAuthContext } from "../auth/AuthContextProvider";
-import defaultUserImage from "../../assets/service/talonflame.jpg"
-import UserProfileData from "./UserProfileData";
-import UserProfileButton from "./UserProfileButton";
-import PencilIcon from "../icons/PencilIcon";
-import CheckIcon from "../icons/CheckIcon";
-import CrossIcon from "../icons/CrossIcon";
-import { useState } from "react";
-import { updateUserRequest } from "../../api/user.api";
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../auth/AuthContextProvider';
+import defaultUserImage from '../../assets/service/talonflame.jpg';
+import UserProfileData from './UserProfileData';
+import UserProfileButton from './UserProfileButton';
+import PencilIcon from '../icons/PencilIcon';
+import CheckIcon from '../icons/CheckIcon';
+import CrossIcon from '../icons/CrossIcon';
+import { updateUserRequest, getUserRequest } from '../../api/user.api';
 
 export default function Profile() {
     const [isEditing, setIsEditing] = useState(false);
     const { logout, loggedUser } = useAuthContext();
-    const user = useLoaderData();
     const navigate = useNavigate();
+    const [user, setUser] = useState(null);
 
-    const [username, setUsername] = useState(user.username);
-    const [firstName, setFirstName] = useState(user.first_name);
-    const [lastName, setLastName] = useState(user.last_name);
-    const [language, setLanguage] = useState(user.language ?? "");
-    const [birthDate, setBirthDate] = useState(user.birth_date);
-    const [email, setEmail] = useState(user.email);
-    const [image, setImage] = useState(user.image);
+    // States for user fields are initialized with empty values or null
+    const [username, setUsername] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [language, setLanguage] = useState('');
+    const [birthDate, setBirthDate] = useState('');
+    const [email, setEmail] = useState('');
+    const [image, setImage] = useState('');
 
-    if (loggedUser.user.id !== user.id) {
-        return (<Navigate to="/" />)
-    }
-
-    const updateUser = async (userId, userData) => {
-        try {
-            const response = await updateUserRequest(userId, userData, loggedUser.token);
-            if (response.ok) {
-                alert('Perfil actualizado correctamente');
-                setIsEditing(false);
-                logout();
-                navigate('/');
-            } else {
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const response = await getUserRequest(loggedUser.token);
+                console.log(response);
+                setUser(response);
+            } catch (error) {
+                console.error('Error fetching user data:', error);
                 alert('Error al actualizar el perfil. Por favor, intente de nuevo.');
             }
-        } catch (error) {
-            alert('Error al actualizar el perfil. Por favor, intente de nuevo.');
+        };
+        fetchUser();
+    }, [loggedUser.token]);
+
+    useEffect(() => {
+        if (user) {
+            setUsername(user.username || '');
+            setFirstName(user.first_name || '');
+            setLastName(user.last_name || '');
+            setLanguage(user.language || '');
+            setBirthDate(user.birth_date || '');
+            setEmail(user.email || '');
+            setImage(user.image || defaultUserImage);
         }
-    }
+    }, [user]);
 
-    const resetUserData = () => {
-        setUsername(user.username);
-        setFirstName(user.first_name);
-        setLastName(user.last_name);
-        setLanguage(user.language ?? "");
-        setBirthDate(user.birth_date);
-        setEmail(user.email);
-        setImage(user.image);
-    }
-
-    const handleEdit = (event) => {
+    const handleEdit = async (event) => {
         event.preventDefault();
 
         const userData = {
-            username: username,
+            id: user.id,
+            username,
             first_name: firstName,
             last_name: lastName,
-            language: language,
+            language,
             birth_date: birthDate,
-            email: email,
-            image: image,
-        }
+            email,
+            image,
+        };
 
         if (window.confirm('¿Está seguro de guardar los cambios? Se cerrará la sesión si decide continuar.')) {
-            updateUser(user.id, userData);
+            try {
+                const response = await updateUserRequest(userData, loggedUser.token);
+                if (response.ok) {
+                    alert('Perfil actualizado correctamente');
+                    setIsEditing(false);
+                    logout();
+                    navigate('/');
+                } else {
+                    alert('Error al actualizar el perfil. Por favor, intente de nuevo.');
+                }
+            } catch (error) {
+                console.error('Error updating user profile:', error);
+                alert('Error al actualizar el perfil. Por favor, intente de nuevo.');
+            }
         }
-    }
+    };
+
+    const resetUserData = () => {
+        if (user) {
+            setUsername(user.username || '');
+            setFirstName(user.first_name || '');
+            setLastName(user.last_name || '');
+            setLanguage(user.language || '');
+            setBirthDate(user.birth_date || '');
+            setEmail(user.email || '');
+            setImage(user.image || defaultUserImage);
+        }
+    };
 
     const handleCancel = () => {
         resetUserData();
         setIsEditing(false);
-    }
-
+    };
     return (
         <form className="flex flex-col justify-center items-center gap-y-10 mt-10 mx-44 py-14 bg-white border rounded-lg" onSubmit={handleEdit}>
             <div className="flex gap-x-20">

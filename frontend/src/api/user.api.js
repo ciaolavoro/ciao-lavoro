@@ -1,6 +1,6 @@
 const BACKEND_URL = import.meta.env.VITE_BACKEND_API_URL;
 
-export async function updateUserRequest(userId, userData, token) {
+export async function updateUserRequest(userData, token) {
     const options = {
         method: 'PUT',
         headers: {
@@ -11,8 +11,25 @@ export async function updateUserRequest(userId, userData, token) {
     };
     
     try {
-        const response = await fetch(`${BACKEND_URL}/user/edit/`, options);
+        const response = await fetch(`${BACKEND_URL}/user/profile/`, options);
         return response;
+    } catch (error) {
+        console.error('Update user error:', error);
+    }
+}
+
+export async function getUserRequest(token) {
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
+        },
+    };
+    
+    try {
+        const response = await fetch(`${BACKEND_URL}/user/profile/`, options);
+        return response.json();
     } catch (error) {
         console.error('Update user error:', error);
     }

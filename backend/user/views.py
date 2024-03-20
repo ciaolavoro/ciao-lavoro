@@ -62,7 +62,7 @@ class register(APIView):
         user.save()
         return JsonResponse({'status': '1', 'message': ' The user has been successfully registered'})
 
-class UserDetails(APIView):
+class Profile(APIView):
     @authentication_classes([TokenAuthentication])
     def get(self, request, format_arg=None):
         token_id = request.headers['Authorization']
@@ -71,8 +71,6 @@ class UserDetails(APIView):
         serializer = UserSerializer(user)
         return JsonResponse(serializer.data)
 
-class UserUpdate(APIView):
-  
     @authentication_classes([TokenAuthentication])
     def put(self, request, format_arg=None):
         token_id = request.headers['Authorization']

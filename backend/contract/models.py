@@ -21,6 +21,5 @@ class Contract(models.Model):
     cost = models.DecimalField(max_digits=10, decimal_places=2)
     status = models.IntegerField(choices=STATUS_CHOICES, default=1)
     service = models.ForeignKey(Service, on_delete = models.CASCADE)
-    is_active = models.BooleanField(blank=False, default='True')
     def __str__(self):
         return self.description

@@ -10,6 +10,7 @@ class User(AbstractUser):
     birth_date = models.DateField()
     language = models.CharField(max_length=50, blank=True, null=True)
     image = models.ImageField(upload_to='users/', null=True, blank=False)
+    is_active = models.BooleanField(blank=False, default=True)
 
     REQUIRED_FIELDS = ['first_name', 'last_name', 'birth_date']
 

@@ -33,6 +33,9 @@ export default function Navbar() {
       navigate('/');
     }
   };
+  const handleProfile = () => {
+    navigate('/users/profile');
+  };
 
   const renderLoginOrLogout = () => {
     if (loggedUser) {
@@ -51,11 +54,9 @@ export default function Navbar() {
           </Link>
 
           <li className={`${navItemsStyle} hover:cursor-pointer`} onClick={handleLogout}>Cerrar sesión</li>
-          <Link to={`/users/${loggedUser.user.id}`}>
-            <li>
-              <img src={loggedUser.user.image ?? defaultUserImage} alt="Avatar del usuario" className="size-8 object-cover rounded-full hover:shadow transition" />
-            </li>
-          </Link>
+          <li  onClick={handleProfile}>
+            <img src={loggedUser.user.image ?? defaultUserImage} alt="Avatar del usuario" className="size-8 object-cover rounded-full hover:shadow transition" />
+          </li>
         </>
       );
     } else {

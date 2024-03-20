@@ -19,8 +19,6 @@ import ServiceUser from './components/service/ServiceUser.jsx'
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_API_URL;
 
-
-
 const router = createBrowserRouter([
   {
     path: '/',
@@ -71,11 +69,8 @@ const router = createBrowserRouter([
         element: <Users />,
         children: [
           {
-            path: ':userId',
+            path: 'profile',
             element: <UserProfile />,
-            loader: async ({ params }) => {
-              return fetch(`${BACKEND_URL}/user/${params.userId}`);
-            },
           },
         ]
       },
