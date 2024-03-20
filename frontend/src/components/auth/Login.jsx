@@ -27,10 +27,11 @@ export default function LoginPage() {
         navigate('/');
         alert('Se ha iniciado sesión correctamente')
       } else {
-        alert('Error en el inicio de sesión. Por favor, intente de nuevo.');
+        alert('Error en el inicio de sesión.  Por favor, verifique su usuario y contraseña.');
       }
     } catch (error) {
-      alert('Error en el inicio de sesión. Por favor, intente de nuevo.');
+      if (error)
+      alert('Error en el inicio de sesión.  Por favor, verifique su usuario y contraseña.');
     }
   }
 
