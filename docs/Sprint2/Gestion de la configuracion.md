@@ -26,6 +26,7 @@ GRUPO 6 | SEVILLA, 09 DE MARZO 2024 | ENTREGABLE “SPRINT 2”
 | 28/02/2024 | 1.2     | Inclusión de los apartados 8 (Política de clockify) y 9 (Política de Issues) |
 | 09/03/2024 | 1.2.1   | Añadido el texto "Sprint 2"                      |
 | 09/03/2024 | 1.2.2   | Inclusion de reglas del tablero github en el apartado 9              |
+| 20/03/2024 | 1.2.2   | Inclusion de las ramas de Hotfix              |
 
 ### Contenido
 1. Estrategia de ramas:
@@ -43,6 +44,7 @@ relacionada (sin el hashtag). El nombre del arreglo debe ser breve y conciso.
 Las ramas de tarea/feature y de arreglo/fix se crearán desde dentro de la Issue de github. Dentro de las issues, clickear
 en “Create a branch” en el apartado Development, desde ahí se pueden crear las ramas siguiendo lo explicado en este
 apartado.
+- Rama Hotfix: Para la creación de ramas Fix, el patrón correspondiente será: Hotfix Y.X - Nombre del arreglo/Z, donde Y es el sprint, X es el número asignado al Hotfix en el tablero Project y Z es el número de la issue de Github relacionada (sin el hashtag). El nombre del arreglo debe ser breve y conciso. Los Hotfix son arreglos grandes en tamaño que involucran backend y frontend.
 El trabajo de las funcionalidades se realizarán en sus ramas de tarea individuales, una vez que una feature esté
 completada se meterá en la rama de develop, y posteriormente una vez probado que develop funciona se hace merge
 de develop en main.
@@ -63,6 +65,7 @@ Task Y.X - Nombre de la tarea/Z DONE, donde Y es el sprint, X es el número asig
 issue relacionada (# no).
 Y para los pull requests de ramas arreglo/fix, el patrón correspondiente será: Fix Y.X - Nombre del arreglo/Z FIXED,
 donde Y es el sprint, X es el número asignado a la tarea y Z el número de la issue relacionada (# no).
+En caso de Hotfix, el patrón correspondiente será: Hotfix Y.X - Nombre del arreglo/Z FIXED, donde Y es el sprint, X es el número asignado a la tarea y Z el número de la issue relacionada (# nº). 
 
 3. Política del tablero:
 A continuación, se explicará la política que se va a seguir durante el desarrollo de la aplicación para el tablero
@@ -107,6 +110,13 @@ En caso de que el cambio arregle una funcionalidad ya existente, se seguirá la 
 - Fix [No de tarea] - [Descripción de la tarea] #[No de issue]
 Siendo descripción de la tarea una breve descripción del arreglo realizado.
 Ejemplo: Fix 14 - Arreglada traducción al castellano. #27
+
+En caso de que el cambio arregle una funcionalidad ya existente y sea un hotfix, se seguirá la siguiente estructura:
+- Hotfix [Nº de tarea] - [Descripción de la tarea] #[Nº de issue]
+Siendo descripción de la tarea una breve descripción del arreglo realizado.
+Ejemplo: Hotfix 14 - Arreglada sincronización usuario. #27
+
+
 Es importante tener en cuenta que cuando se arregle una funcionalidad también será necesario crear su rama
 y tarea correspondiente, para más información sobre la ramificación puede consultar el apartado de
 Estrategia de ramas. Los commits solo se realizarán en las ramas correspondientes a las tareas o
@@ -247,7 +257,7 @@ En la descripción de la issue hay que poner una descripción breve y concisa de
 En el menú de la derecha, en “Assignees” debe de incluir a las personas responsables de realizar y finalizar
 dicha tarea. En “Labels” debe de colocarse el indicador del tipo de tarea (Back End, Front end,
 documentacion, fix, despliegue, desarrollo, etc)
-Con las issues de fix/arreglos la estructura y procedimiento es igual, pero en lugar de poner Task se pone Fix.
+Con las issues de fix/arreglos y las de hotfix la estructura y procedimiento es igual, pero en lugar de poner Task se pone Fix o Hotfix.
 
 Además, las Issues se gestionarán de la siguiente forma en el tablero de GitHub:
 
