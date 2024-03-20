@@ -48,7 +48,7 @@
                 <section>
                     <form className="flex justify-center gap-2 my-4">
                         <input type="text" placeholder="Ciudad" className="w-96 pl-2 border rounded-lg py-2 font-semibold" value={city} onChange={(e) => setCity(e.target.value)} />
-                        <select name="status" value={profession} onChange={(e) => setProfession(e.target.value)} className="w-96 pl-2 border rounded-lg py-2 font-semibold">
+                        <select name="status" value={profession} onChange={(e) => setProfession(e.target.value)} className="w-96 pl-2 border rounded-lg py-2 bg-orange-200 font-semibold">
                             <option value=""> Profesion </option>
                             <option value="1">Lavandero</option>
                             <option value="2">Celador</option>
