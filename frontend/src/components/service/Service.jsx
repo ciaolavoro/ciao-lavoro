@@ -11,7 +11,7 @@ import CheckIcon from "../icons/CheckIcon";
 import CrossIcon from "../icons/CrossIcon";
 import { useAuthContext } from "../auth/AuthContextProvider";
 import PlusIcon from "../icons/PlusIcon";
-import LinkButton from "../home/LinkButton";
+import { checkIfEmpty, checkCityLength, checkExperienceNegative,errorMessages } from "../../utils/validation";
 
 
 export default function ServiceDetails() {
@@ -27,12 +27,14 @@ export default function ServiceDetails() {
     const [jobs, setJobs] = useState(service.jobs);
     const [editingJobId, setEditingJobId] = useState(false);
     const { serviceId } = useParams();
-    const [jobList, setJobList] = useState("");
     const [nameJob, setNameJob] = useState("");
     const [estimated_price, setEstimated_price] = useState("");
     const [job, setJob] = useState("");
     const professions = ["Lavandero", "Celador", "Albañil"];
-
+    const [isRequiredCityError, setIsRequiredCityError] = useState(false);
+    const [isRequiredExperienceError, setIsRequiredExperienceError] = useState(false);
+    const [isCityError, setIsCityError] = useState(false);
+    const [isExperienceError, setIsExperienceError] = useState(false);
     const userImageUrl = `${import.meta.env.VITE_BACKEND_API_URL}${service.user.image}`;
 
     const resetServiceData = () => {
@@ -140,12 +142,37 @@ export default function ServiceDetails() {
         }
     };
 
-    const handleEdit = (event) => {
+    const resetErrors = () => {
+        setIsRequiredCityError(false);
+        setIsRequiredExperienceError(false);
+        setIsCityError(false);
+        setIsExperienceError(false);
+    }
+
+    const handleEdit = async (event) => {
         event.preventDefault();
+        if (checkIfEmpty(city)) {
+            setIsRequiredCityError(true);
+            return;
+        } else if (checkIfEmpty(experience.toString())) {
+            resetErrors();
+            setIsRequiredExperienceError(true);
+            return;
+        } else if (checkExperienceNegative(experience)) {
+            resetErrors();
+            setIsExperienceError(true);
+            return;
+        }else if (checkCityLength(city)) {
+            resetErrors();
+            setIsCityError(true);
+            return;
+        }
+        resetErrors();    
         setIsEditing(true);
+        const position = getPosicionProfession(profession);
         const serviceData = {
             id: service.id,
-            profession: profession,
+            profession: position+1,
             city: city,
             experience: experience,
             is_active: isActive,
@@ -155,6 +182,12 @@ export default function ServiceDetails() {
         }
 
         if (window.confirm('¿Está seguro de guardar los cambios?')) {
+            console.log("profession:" + profession)
+            console.log("city:" + city)
+            console.log("position:" + position+1)
+            console.log("isAct:" +serviceData.is_active)
+            console.log("exper:" + serviceData.experience)
+            console.log("toke:" + loggedUser.token)
             updateService(service.id, serviceData, loggedUser.token);
         }
     };
@@ -162,8 +195,13 @@ export default function ServiceDetails() {
     const handleCancel = () => {
         resetServiceData();
         setIsEditing(false);
+        resetErrors();
     };
-    
+
+    function getPosicionProfession(profession){
+        return professions.lastIndexOf(profession);
+    }
+
 
 
     return (
@@ -176,14 +214,30 @@ export default function ServiceDetails() {
                     </div>
                     <div className="flex flex-col justify-center gap-y-6 px-8 py-3">
                         <ServiceData type={"text"} formName={"username"} labelText={"Usuario:"} inputValue={service.user.username ?? "Pablo"} isReadOnly={true} />
-                        <ServiceData type={"number"} formName={"profession"}
-                            labelText={"Profesión: "} inputValue={profession}
-                            isReadOnly={!isEditing} onChange={(event) => setProfession(event.target.value)}
-                        />
                         
+                        <div>
+                            <label htmlFor="profession" className="text-1.7xl font-semibold text-right">Profesión:   </label>
+                            {/* Usar un menú desplegable */}
+                            <select
+                                id="profession"
+                                name="profession"
+                                value={profession}
+                                disabled={!isEditing} // Deshabilitar si no se está editando
+                                onChange={(event) => setProfession(event.target.value)}
+                                className="pl-2 border rounded w-full md:w-64"
+                            >
+                                {/* Mapear las opciones de profesión */}
+                                {professions.map((profession, index) => (
+                                    <option key={index} value={profession}>{profession}</option>
+                                ))}
+                            </select>
+                        </div>
                         <ServiceData type={"text"} formName={"city"} labelText={"Ciudad:"} inputValue={city}
-                            isReadOnly={!isEditing} onChange={(event) => setCity(event.target.value)} />
+                            isReadOnly={!isEditing} onChange={(event) => setCity(event.target.value)} isError={isRequiredCityError || isCityError}
+                            errorMessage={(isRequiredCityError && errorMessages.required) || (isCityError && errorMessages.cityLength)}/>
                         <ServiceData type={"number"} formName={"experience"} labelText={"Experiencia:"} inputValue={experience}
+                        isError={isRequiredExperienceError || isExperienceError}
+                        errorMessage={(isRequiredExperienceError && errorMessages.required) || (isExperienceError && errorMessages.experienceNotValid)}
                             isReadOnly={!isEditing} onChange={(event) => setExperience(event.target.value)} />
 
                         <div className="grid grid-cols-2 gap-x-4 items-center w-full">
