@@ -9,6 +9,7 @@ import EyeSlashIcon from '../icons/EyeSlashIcon.jsx';
 
 export default function RegisterPage() {
   const [username, setUsername] = useState('');
+  const [usernameError,setUsernameError] =useState('');
   const [firstName, setName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -20,10 +21,32 @@ export default function RegisterPage() {
   const [passwordIcon, setPasswordIcon] = useState(EyeSlashIcon);
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleUsernameChange = (e) => {
+    const value = e.target.value;
+
+    if(value.includes(' ')){
+      setUsernameError('El nombre de usuario no debe contener espacios en blanco')
+    }else{
+      setUsernameError('')
+      setUsername(value);
+    }
+    
+  }
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    registerRequest(username, password, firstName, lastName, email, image, birthdate);
-    navigate("/");
+    try {
+      await registerRequest(username, password, firstName, lastName, email, image, birthdate);
+      navigate("/");
+  } catch (error) {
+      console.error('Error registrando usuario:', error);
+      if (error.message === 'El nombre de usuario ya está en uso') {
+          alert('El nombre de usuario ya existe. Por favor, elige otro.');
+      } else {
+          alert('Ha ocurrido un error. Por favor intentelo de nuevo');
+      }
+  }
+    
   };
 
   const handleImageChange = (e) => {
@@ -74,7 +97,7 @@ export default function RegisterPage() {
                 <input
                   type="text"
                   value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  onChange={handleUsernameChange}
                   required
                   minLength={3}
                   maxLength={30}
