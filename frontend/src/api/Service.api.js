@@ -85,3 +85,25 @@ export async function updateServiceRequest(serviceId, serviceData,token) {
         console.error('Update service error:', error);
     }
 }
+export const getJobDetailsByServiceId = async (id) => {
+    //try {
+        const options = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        };
+
+        /*const response = await fetch(`${BACKEND_URL}/service/${id}/jobs/`, options);
+
+        if (!response.ok) {
+            throw new Error('Error al obtener los detalles de la tarea');
+        }
+
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        throw new Error(`Error al obtener los detalles de la tarea: ${error.message}`);
+    }*/
+    return fetch (`${BACKEND_URL}/service/${id}/jobs/`, options);
+}

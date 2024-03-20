@@ -1,6 +1,7 @@
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, Link, useParams } from "react-router-dom";
 import { useState } from "react";
 import { updateServiceRequest } from "../../api/Service.api";
+import { updateJobRequest } from "../../api/Job.api";
 import defaultUserImage from "../../assets/service/talonflame.jpg";
 import ServiceData from "./ServiceData";
 import JobData from "./JobData";
@@ -9,6 +10,9 @@ import PencilIcon from "../icons/PencilIcon";
 import CheckIcon from "../icons/CheckIcon";
 import CrossIcon from "../icons/CrossIcon";
 import { useAuthContext } from "../auth/AuthContextProvider";
+import PlusIcon from "../icons/PlusIcon";
+import LinkButton from "../home/LinkButton";
+
 
 export default function ServiceDetails() {
     const service = useLoaderData();
@@ -20,7 +24,14 @@ export default function ServiceDetails() {
     const [experience, setExperience] = useState(service.experience);
     const [isActive, setIsActive] = useState(service.is_active);
     const [isPromoted, setIsPromoted] = useState(service.is_promoted);
-    const [jobs,] = useState(service.jobs);
+    const [jobs, setJobs] = useState(service.jobs);
+    const [editingJobId, setEditingJobId] = useState(false);
+    const { serviceId } = useParams();
+    const [jobList, setJobList] = useState("");
+    const [nameJob, setNameJob] = useState("");
+    const [estimated_price, setEstimated_price] = useState("");
+    const [job, setJob] = useState("");
+    const professions = ["Lavandero", "Celador", "Albañil"];
 
     const userImageUrl = `${import.meta.env.VITE_BACKEND_API_URL}${service.user.image}`;
 
@@ -47,11 +58,91 @@ export default function ServiceDetails() {
             resetServiceData();
         }
     }
+    const updateJob = async (jobData, token) => {
+        try {
+            const response = await updateJobRequest(jobData.id, jobData, token);
+            if (response.ok) {
+                alert('Tarea actualizado correctamente');
+                setEditingJobId(false);
+                setJobs(service.jobs)
+            } else {
+                alert('Error al actualizar la tarea. Por favor, intente de nuevo.');
+                resetJobData();
+            }
+        } catch (error) {
+            alert('Error al actualizar la tarea. Por favor, intente de nuevo.');
+            resetJobData();
+        }
+    }
+    const resetJobData = () => {
+        async function fetchJobDetails() {
+            try {
+                setJobs(service.jobs)
+            } catch (error) {
+                console.error("Error fetching job details:", error);
+            }
+        }
+
+
+        fetchJobDetails();
+        setNameJob(job.name);
+        setEstimated_price(job.estimated_price);
+
+    }
+    const handleEditJob = (jobId) => {
+        setEditingJobId(jobId);
+    };
+    const handleCancelJob = () => {
+        resetJobData();
+        setIsEditing(false);
+        setEditingJobId(false);
+
+    };
+
+
+    const handleJobInputChangeEstimatedPrice = (event, index) => {
+        const updatedJobList = [...jobs];
+        updatedJobList[index - 1] = {
+            ...updatedJobList[index - 1],
+            estimated_price: event
+        }
+        setJobs(updatedJobList)
+    };
+
+    const handleJobInputChangeName = (value, index) => {
+        const updatedJobList = [...jobs];
+        updatedJobList[index - 1] = {
+            ...updatedJobList[index - 1],
+            name: value
+        }
+        setJobs(updatedJobList)
+
+    };
+    const handleSaveJob = (jobId) => {
+        //event.preventDefault();
+        setJobs(service.jobs)
+        const JobData = {
+            id: jobId + 1,
+            name: jobs[jobId].name,
+            estimated_price: jobs[jobId].estimated_price,
+        }
+
+        if (window.confirm('¿Está seguro de guardar los cambios?')) {
+            console.log("jobs : " + jobs[jobId])
+
+            console.log(JobData.id)
+            console.log(JobData.name)
+            console.log(JobData.estimated_price)
+            console.log("token : " + loggedUser.token)
+            console.log("username : " + loggedUser.user.username)
+            console.log("username 2 : " + service.user.username)
+            updateJob(JobData, loggedUser.token);
+        }
+    };
 
     const handleEdit = (event) => {
         event.preventDefault();
         setIsEditing(true);
-
         const serviceData = {
             id: service.id,
             profession: profession,
@@ -64,16 +155,6 @@ export default function ServiceDetails() {
         }
 
         if (window.confirm('¿Está seguro de guardar los cambios?')) {
-            console.log(serviceData.city)
-            console.log(serviceData.id)
-            console.log(serviceData.experience)
-            console.log(serviceData.is_active)
-            console.log(serviceData.is_promoted)
-            console.log(serviceData.jobs)
-            console.log(serviceData.user)
-            console.log("token : " + loggedUser.token)
-            console.log("username : " + loggedUser.user.username)
-            console.log("username 2 : " + service.user.username)
             updateService(service.id, serviceData, loggedUser.token);
         }
     };
@@ -82,6 +163,8 @@ export default function ServiceDetails() {
         resetServiceData();
         setIsEditing(false);
     };
+    
+
 
     return (
         <form className="flex flex-col justify-center items-center gap-y-10 my-10 mx-10 bg-white border rounded-lg" onSubmit={handleEdit}>
@@ -93,8 +176,11 @@ export default function ServiceDetails() {
                     </div>
                     <div className="flex flex-col justify-center gap-y-6 px-8 py-3">
                         <ServiceData type={"text"} formName={"username"} labelText={"Usuario:"} inputValue={service.user.username ?? "Pablo"} isReadOnly={true} />
-                        <ServiceData type={"number"} formName={"profession"} labelText={"Profesión:"} inputValue={profession}
-                            isReadOnly={!isEditing} onChange={(event) => setProfession(event.target.value)} />
+                        <ServiceData type={"number"} formName={"profession"}
+                            labelText={"Profesión: "} inputValue={profession}
+                            isReadOnly={!isEditing} onChange={(event) => setProfession(event.target.value)}
+                        />
+                        
                         <ServiceData type={"text"} formName={"city"} labelText={"Ciudad:"} inputValue={city}
                             isReadOnly={!isEditing} onChange={(event) => setCity(event.target.value)} />
                         <ServiceData type={"number"} formName={"experience"} labelText={"Experiencia:"} inputValue={experience}
@@ -135,12 +221,25 @@ export default function ServiceDetails() {
                         <div key={job.id} className="w-90 border bg-white shadow-md rounded-xl m-8">
                             <div className="flex flex-col gap-y-6 px-10 py-6">
                                 <JobData type={"text"} formName={`nameJob-${job.id}`} labelText={"Nombre:"}
-                                    inputValue={job.name} isReadOnly={true} />
+                                    inputValue={job.name} isReadOnly={!setEditingJobId}
+                                    onChange={(event) => handleJobInputChangeName(event.target.value, job.id)} />
                                 <JobData type={"number"} formName={`estimatedJobPrice-${job.id}`} labelText={"Precio estimado:"}
-                                    inputValue={job.estimated_price} isReadOnly={true} />
+                                    inputValue={job.estimated_price} isReadOnly={!setEditingJobId}
+                                    onChange={(event) => handleJobInputChangeEstimatedPrice(event.target.value, job.id)} />
                             </div>
+                            {editingJobId === job.id ? (
+                                <div className="flex gap-x-4">
+                                    <ServiceButton type={"button"} text={"Guardar cambios"} icon={<CheckIcon />} onClick={() => handleSaveJob(editingJobId - 1)} />
+                                    <ServiceButton type={"button"} text={"Cancelar"} icon={<CrossIcon />} onClick={() => handleCancelJob()} />
+                                </div>
+                            ) : (
+                                <ServiceButton type={"button"} text={"Editar Tarea"} icon={<PencilIcon />} onClick={() => handleEditJob(job.id)} />
+                            )}
                         </div>
                     ))}
+                    <Link to={`/services/${serviceId}/job/create`} className="link-button">
+                        <PlusIcon /> Crear tarea
+                    </Link>
                 </div>
             </div>
         </form>
