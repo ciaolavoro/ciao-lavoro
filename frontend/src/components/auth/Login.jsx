@@ -3,11 +3,15 @@ import { Link, NavLink, Navigate } from "react-router-dom"
 import { loginRequest } from '../../api/login.api'
 import { useNavigate } from 'react-router-dom';
 import { useAuthContext } from './AuthContextProvider';
+import EyeIcon from '../icons/EyeIcon.jsx';
+import EyeSlashIcon from '../icons/EyeSlashIcon.jsx';
 
 export default function LoginPage() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const { login, loggedUser } = useAuthContext();
+  const [passwordType, setPasswordType] = useState('password');
+  const [passwordIcon, setPasswordIcon] = useState(EyeSlashIcon);
   const navigate = useNavigate();
 
   if(loggedUser) {
@@ -34,6 +38,11 @@ export default function LoginPage() {
     event.preventDefault();
     loginUser(username, password);
   };
+  const togglePasswordVisibility = () => {
+    setPasswordType(passwordType === 'password' ? 'text' : 'password');
+    setPasswordIcon(passwordType === 'password' ? <EyeIcon /> : <EyeSlashIcon />);
+
+  };
 
   return (
     <div className='flex flex-col justify-center items-center mt-6'>
@@ -48,8 +57,17 @@ export default function LoginPage() {
         </div>
         <div className='flex flex-col w-full'>
           <label>Contraseña:</label>
-          <input type="password" value={password} placeholder='Contraseña' onChange={(e) => setPassword(e.target.value)} required
-            className="p-2 border border-gray-300 rounded" />
+          <input 
+            type={passwordType} 
+            value={password} 
+            placeholder='Contraseña' 
+            onChange={(e) => setPassword(e.target.value)} 
+            required 
+            className="p-2 border border-gray-300 rounded" 
+            />
+          <span className="cursor-pointer" onClick={() => togglePasswordVisibility()}>
+            {passwordIcon}
+          </span>
         </div>
         <button type="submit" className="p-2 bg-orange-400 text-black rounded cursor-pointer font-inherit border-none">Iniciar sesión</button>
         <div className='flex flex-col items-center'>
