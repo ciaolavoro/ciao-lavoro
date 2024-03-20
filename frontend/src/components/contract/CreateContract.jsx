@@ -13,13 +13,13 @@ export default function CreateContract() {
 
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
-    const serviceId = searchParams.get('service_id');
+    const service_Id = searchParams.get('service_id');
     const { loggedUser } = useAuthContext();
 
     const createContract = async (token) => {
         try {
 
-            const res = await createContractRequest(description, initial_date, end_date, cost, serviceId, token);
+            const res = await createContractRequest(description, initial_date, end_date, cost, service_Id, token);
             if (res.status === 200) {
                 navigate('/');
             } else {
@@ -35,19 +35,22 @@ export default function CreateContract() {
         event.preventDefault();
         
         const token = loggedUser.token;
-        const isAssociated = await checkWorkerAssociation(serviceId, loggedUser.userId); //La funcion a llamar
+        const isAssociated = await checkWorkerAssociation(service_Id); //La funcion a llamar
         
-        if(isAssociated){
+        if(!isAssociated){
+
+            if (charCount > 500) {
+                alert('La descripción no puede superar los 500 caracteres.');
+                return;
+                
+            }
+            await createContract(token);
+            
+        }else{
             alert('No puedes contratar un servicio del que eres trabajador');
-            return;
-        }
-        if (charCount > 500) {
-            alert('La descripción no puede superar los 500 caracteres.');
-            return;
+            
         }
         
-        
-        await createContract(token);
     };
 
     const handleDescriptionChange = (e) => {
