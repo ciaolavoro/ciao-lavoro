@@ -46,16 +46,15 @@ export default function Navbar() {
               Mis Servicios
             </li>
           </Link>
-
           <Link to="/contracts/myList" >
             <li className={`${navItemsStyle} hover:cursor-pointer`}>
               Mis Contratos
             </li>
           </Link>
-
           <li className={`${navItemsStyle} hover:cursor-pointer`} onClick={handleLogout}>Cerrar sesión</li>
           <li  onClick={handleProfile}>
-            <img src={loggedUser.user.image ?? defaultUserImage} alt="Avatar del usuario" className="size-8 object-cover rounded-full hover:shadow transition" />
+            <img src={`${import.meta.env.VITE_BACKEND_API_URL}${loggedUser.user.image}` ?? defaultUserImage} alt="Avatar del usuario"
+                className="size-8 object-cover rounded-full hover:shadow transition" />
           </li>
         </>
       );
