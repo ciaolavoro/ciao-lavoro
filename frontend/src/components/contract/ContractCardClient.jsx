@@ -28,7 +28,7 @@ export function ContractCardClient({ contract }) {
 
     return (
         <a href="#">
-            <div className={`max-w-md mx-auto my-6 border rounded-lg overflow-hidden p-6 ${getStatusColor(contract.estatus)}`}>
+            <div className={`max-w-md mx-auto my-2 border rounded-lg overflow-hidden p-6 ${getStatusColor(contract.estatus)}`}>
                 <h2 className="text-2xl font-semibold text-center">Nombre del Trabajador:</h2>
                 <p className="mb-2 mt-1 text-2xl text-center"><strong>{contract.worker.username}</strong></p>
                 <p className="mb-2"><strong>Fecha de inicio:</strong> {formatDate(contract.initial_date)}</p>
