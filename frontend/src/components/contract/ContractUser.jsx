@@ -57,7 +57,7 @@ export default function ContractUser() {
                         className="px-2 py-1 border rounded"
                         min={initial_date}
                     />
-                    <select name="status" value={status} onChange={(e) => setStatus(e.target.value)} className="w-full sm:w-auto pl-2 border rounded-lg py-2 font-semibold">
+                    <select name="status" value={status} onChange={(e) => setStatus(e.target.value)} className="w-full bg-orange-200 sm:w-auto pl-2 border rounded-lg py-2 font-semibold">
                         <option value=""> Estado </option>
                         <option value="1">En negociacion</option>
                         <option value="2">Aceptado</option>
