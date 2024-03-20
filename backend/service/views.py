@@ -121,7 +121,19 @@ class UserServiceViewSet(viewsets.ModelViewSet):
         user_id = self.kwargs['user_id']  # Obtén el ID del servicio de la URL
         return Service.objects.filter(user_id=user_id)
 
-class ReviewCreation(APIView):
+class ReviewView(APIView):
+
+    def get(self, request, service_id):
+        service = get_object_or_404(Service, pk=service_id)
+        reviews = Review.objects.filter(service=service)
+        serializer = ReviewSerializer(reviews, many=True)
+        response_data = {
+            "rating": service.rating(),
+            "total_reviews": len(reviews),
+            "reviews": serializer.data
+        }
+        return Response(response_data)
+    
     @authentication_classes([TokenAuthentication])
     def post(self, request, service_id):
         review_data = request.data
@@ -140,17 +152,6 @@ class ReviewCreation(APIView):
         serializer = ReviewSerializer(review, many=False)
         return Response(serializer.data)
 
-class ReviewList(APIView):
-    def get(self, request, service_id):
-        service = get_object_or_404(Service, pk=service_id)
-        reviews = Review.objects.filter(service=service)
-        serializer = ReviewSerializer(reviews, many=True)
-        response_data = {
-            "rating": service.rating(),
-            "total_reviews": len(reviews),
-            "reviews": serializer.data
-        }
-        return Response(response_data)
 
 class ServicesView(APIView):
 
@@ -217,6 +218,8 @@ class ServicesView(APIView):
         city = service_data['city']
         if not city == '':
             service.city = city
+        elif city == "":
+            raise ValidationError("Debe indicar la ciudad")
         experience = service_data['experience']
         if not experience == '':
             birth_date = user.birth_date
