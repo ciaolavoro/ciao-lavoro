@@ -44,90 +44,73 @@ class UserServiceList(APIView):
         serializer = ServiceSerializer(services, many=True)
         return Response(serializer.data)
 
-class JobList(APIView):
+class JobView(APIView):
+
+    @authentication_classes([TokenAuthentication])
     def get(self, request):
         jobs = Job.objects.all()
         serializer = JobSerializer(jobs, many=True)
         return Response(serializer.data)
+    
 
-class JobViewSet(viewsets.ModelViewSet):
-    serializer_class = JobSerializer
-    def get_queryset(self):
-        """
-        Sobrescribe el método `get_queryset` para filtrar los trabajos
-        basados en el servicio proporcionado en la URL.
-        """
-        service_id = self.kwargs['service_id']  # Obtén el ID del servicio de la URL
-        return Job.objects.filter(service_id=service_id)
-
-class JobDetail(generics.RetrieveAPIView):
-    queryset = Job.objects.all()
-    serializer_class = JobSerializer
-
-class ServiceCreation(APIView):
     @authentication_classes([TokenAuthentication])
-    def post(self, request):
-        service_data = request.data
-        token_id = request.headers['Authorization']
-        token = get_object_or_404(Token, key=token_id.split()[-1])
-        user = token.user
-        city = service_data['city']
-        profession = service_data['profession']
-        profesions = Service.PROFESSIONS
-        profession_exists = False
-        for profession_id, _ in profesions:
-            if profession_id == int(profession):
-                profession_exists = True
-        if not profession_exists:
-            raise ValidationError('La profesión no es valida')
-        user_services = list(Service.objects.filter(user=user))
-        for s in user_services:
-            if s.profession == int(profession):
-                raise ValidationError('No se pueden crear dos servicios de la misma profesión')
-        experience = service_data['experience']
-        if experience == '':
-            experience = 0
-        elif not experience.isdigit():
-            raise ValidationError('La experiencia debe ser un número')
-        birth_date = user.birth_date
-        today = date.today()
-        age = today.year - birth_date.year - ((today.month, today.day) < (birth_date.month, birth_date.day))
-        if int(experience)+16 > age:
-            raise ValidationError('La experiencia es demasiado alta')
-        service = Service.objects.create(user=user, profession=profession, city=city, experience=experience)
-        serializer = ServiceSerializer(service, many=False)
-        return Response(serializer.data)
-
-class JobCreation(APIView):
     def post(self, request, service_id):
         job_data = request.data
         service = Service.objects.get(pk=service_id)
-        if service.user != request.user and not request.user.is_staff:
-            raise PermissionDenied("No tienes permiso para crear un trabajo para un servicio que no te pertenece")
+        token_id = request.headers["Authorization"]
+        token = get_object_or_404(Token, key = token_id.split()[-1])
+        user = token.user
+        if user != service.user:
+            raise PermissionDenied('No eres el propietario de este servicio')
         name = job_data['name']
+        if name == '':
+            raise ValidationError('El nombre no puede estar vacio')
+        elif len(name) > 100:
+            raise ValidationError('La cantidad de caracteres del nombre no puede ser superio a 100')
         estimated_price = job_data['estimated_price']
+        if estimated_price == '':
+            estimated_price = 0.1
+        elif not estimated_price.isdigit():
+            raise ValidationError('El precio estimado debe ser un número')
         job = Job.objects.create(service=service, name=name, estimated_price=estimated_price)
         serializer = JobSerializer(job, many=False)
         return Response(serializer.data)
 
-class JobEdit(APIView):
+    @authentication_classes([TokenAuthentication])
     def put(self, request, job_id):
         job_data = request.data
         job = Job.objects.get(pk=job_id)
-        if job.service.user != request.user and not request.user.is_staff:
-            raise PermissionDenied("No tienes permiso para editar un trabajo para un servicio que no te pertenece")
+        service = job.service
+        token_id = request.headers["Authorization"]
+        token = get_object_or_404(Token, key = token_id.split()[-1])
+        user = token.user
+        if user != service.user:
+            raise PermissionDenied('No puedes editar un trabajo de un servicio que no te pertenece')
         new_name = job_data['name']
+        if new_name == '':
+            raise ValidationError('El nombre no puede estar vacio')
+        elif len(new_name) > 100:
+            raise ValidationError('La cantidad de caracteres del nombre no puede ser superio a 100')
         new_estimated_price = job_data['estimated_price']
+        if new_estimated_price == '':
+            new_estimated_price = 0.1
+        elif not new_estimated_price.isdigit():
+            raise ValidationError('El precio estimado debe ser un número')
         job.name = new_name
         job.estimated_price = new_estimated_price
         job.save()
         serializer = JobSerializer(job, many=False)
         return Response(serializer.data)
-class JobDelete(APIView):
-    def put(self, request, job_id):
+    
+    @authentication_classes([TokenAuthentication])
+    def delete(self, request, job_id):
         job = Job.objects.get(pk=job_id)
-        if job.service.user != request.user and not request.user.is_staff:
-            raise PermissionDenied("No tienes permiso para eliminar un trabajo para un servicio que no te pertenece")
+        service = job.service
+        token_id = request.headers["Authorization"]
+        token = get_object_or_404(Token, key = token_id.split()[-1])
+        user = token.user
+        if user != service.user:
+            raise PermissionDenied('No puedes eliminar un trabajo de un servicio que no te pertenece')
         Job.delete(job)
         serializer = JobSerializer(job, many=False)
         return Response(serializer.data)
@@ -135,10 +118,6 @@ class JobDelete(APIView):
 class UserServiceViewSet(viewsets.ModelViewSet):
     serializer_class = ServiceSerializer
     def get_queryset(self):
-        """
-        Sobrescribe el método `get_queryset` para filtrar los trabajos
-        basados en el servicio proporcionado en la URL.
-        """
         user_id = self.kwargs['user_id']  # Obtén el ID del servicio de la URL
         return Service.objects.filter(user_id=user_id)
 
@@ -173,7 +152,44 @@ class ReviewList(APIView):
         }
         return Response(response_data)
 
-class EditService(APIView):
+class ServicesView(APIView):
+
+    @authentication_classes([TokenAuthentication])
+    def post(self, request):
+        service_data = request.data
+        token_id = request.headers['Authorization']
+        token = get_object_or_404(Token, key=token_id.split()[-1])
+        user = token.user
+        city = service_data['city']
+        if city == "":
+            raise ValidationError("Debe indicar la ciudad")
+        profession = service_data['profession']
+        profesions = Service.PROFESSIONS
+        profession_exists = False
+        for profession_id, _ in profesions:
+            if profession_id == int(profession):
+                profession_exists = True
+        if not profession_exists:
+            raise ValidationError('La profesión no es valida')
+        user_services = list(Service.objects.filter(user=user))
+        for s in user_services:
+            if s.profession == int(profession):
+                raise ValidationError('No se pueden crear dos servicios de la misma profesión')
+        experience = service_data['experience']
+        if experience == '':
+            experience = 0
+        elif not experience.isdigit():
+            raise ValidationError('La experiencia debe ser un número')
+        birth_date = user.birth_date
+        today = date.today()
+        age = today.year - birth_date.year - ((today.month, today.day) < (birth_date.month, birth_date.day))
+        if int(experience)+16 > age:
+            raise ValidationError('La experiencia es demasiado alta')
+        service = Service.objects.create(user=user, profession=profession, city=city, experience=experience)
+        serializer = ServiceSerializer(service, many=False)
+        return Response(serializer.data)
+    
+
     @authentication_classes([TokenAuthentication])
     def put(self, request, service_id):
         service_data = request.data

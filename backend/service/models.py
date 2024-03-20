@@ -32,6 +32,15 @@ class Service(models.Model):
         (1, 'Lavandero'),
         (2, 'Celador'),
         (3, 'Albañil'),
+        (4, 'Carpintero'),
+        (5, 'Cerrajero'),
+        (6, 'Mecánico'),
+        (7, 'Electricista'),
+        (8, 'Conductor'),
+        (9, 'Pintor'),
+        (10, 'Herrero'),
+        (11, 'Sastre'),
+        (12, 'Profesor particular'),
     ]
     profession = models.IntegerField(choices = PROFESSIONS, blank = False)
     city = models.TextField(blank = False)
