@@ -1,4 +1,4 @@
-
+import React from "react";
 export function ContractCardWorker({ contract }) {
 
     const formatDate = (dateString) => {
