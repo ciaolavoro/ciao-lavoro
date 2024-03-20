@@ -33,7 +33,7 @@ class User(AbstractUser):
             raise ValidationError("Los apellidos no pueden estar vacios")
         if self.language.strip() == '':
             raise ValidationError("El idioma no puede estar vacio")
-        if self.birth_date.strip() == '':
+        if self.birth_date == '':
             raise ValidationError("La fecha de nacimiento no puede estar vacia")
 
         if not isinstance(self.birth_date, datetime.date):

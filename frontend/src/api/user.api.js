@@ -4,9 +4,11 @@ export async function updateUserRequest(userData, token) {
     const options = {
         method: 'PUT',
         headers: {
+            'Content-Type': 'application/json',
             'Authorization': `Token ${token}`,
         },
-        body: userData,
+        body: JSON.stringify(userData),
+
     };
     
     try {
