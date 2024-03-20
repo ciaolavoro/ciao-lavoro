@@ -64,23 +64,15 @@ class register(APIView):
         return JsonResponse({'status': '1', 'message': ' The user has been successfully registered'})
 
 class UserDetails(APIView):
-    def get(self, request, format_arg=None, *args, **kwargs):
-        authentication_classes = [SessionAuthentication]
-        permission_classes = [IsAuthenticated]
-        user_id = self.kwargs['user_id']
-        user = get_object_or_404(User, id=user_id)
+    def get(self, request, format_arg=None):
+        token_id = request.headers['Authorization']
+        token = get_object_or_404(Token, key=token_id.split()[-1])
+        user = token.user
         serializer = UserSerializer(user)
         return JsonResponse(serializer.data)
 
 class UserUpdate(APIView):
-   
-    @authentication_classes([TokenAuthentication])
-    def get(self, request, format_arg=None):
-        session_id = request.session.session_key
-        user = request.user
-        serializer = UserSerializer(user)
-        return JsonResponse(serializer.data)
-    
+  
     @authentication_classes([TokenAuthentication])
     def put(self, request, format_arg=None):
         token_id = request.headers['Authorization']
