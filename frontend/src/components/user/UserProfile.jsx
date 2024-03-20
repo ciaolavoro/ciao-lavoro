@@ -15,7 +15,6 @@ export default function Profile() {
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
 
-    // States for user fields are initialized with empty values or null
     const [username, setUsername] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
