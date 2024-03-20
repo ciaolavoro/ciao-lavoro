@@ -9,7 +9,6 @@ import EyeSlashIcon from '../icons/EyeSlashIcon.jsx';
 
 export default function RegisterPage() {
   const [username, setUsername] = useState('');
-  const [usernameError,setUsernameError] =useState('');
   const [firstName, setName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -25,9 +24,8 @@ export default function RegisterPage() {
     const value = e.target.value;
 
     if(value.includes(' ')){
-      setUsernameError('El nombre de usuario no debe contener espacios en blanco')
+      alert('El nombre de usuario no debe contener espacios en blanco')
     }else{
-      setUsernameError('')
       setUsername(value);
     }
     
