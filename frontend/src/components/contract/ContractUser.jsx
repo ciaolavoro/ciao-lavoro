@@ -75,12 +75,18 @@ export default function ContractUser() {
                     <section>
                         <h2 className="text-2xl font-semibold text-center my-10">Contratos en los que has trabajado</h2>
                     </section>
-                    <section className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 justify-items-left justify-left gap-y-20 gap-x-14 mt-10 mb-5">
 
-                        {workerContracts.map(contractWorker => (
-                            <ContractCardWorker key={contractWorker.id} contract={contractWorker} />
-                        ))}
-                    </section>
+                    {workerContracts.length === 0 ? (
+                        <p className="text-center">No tienes contratos en los que seas trabajador.</p>
+                    ) : (
+                        <section className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 justify-items-left justify-left gap-y-20 gap-x-14 mt-10 mb-5">
+
+                            {workerContracts.map(contractWorker => (
+                                <ContractCardWorker key={contractWorker.id} contract={contractWorker} />
+                            ))}
+                        </section>
+                    )}
+
 
                 </div>
 
@@ -88,12 +94,17 @@ export default function ContractUser() {
                     <section>
                         <h2 className="text-2xl font-semibold text-center my-10">Contratos en los que eres cliente</h2>
                     </section>
-                    <section className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 justify-items-right justify-left gap-y-20 gap-x-14 mt-10 mb-5">
 
-                        {clientContracts.map(contractClient => (
-                            <ContractCardClient key={contractClient.id} contract={contractClient} />
-                        ))}
-                    </section>
+                    {clientContracts.length === 0 ? (
+                        <p className="text-center">No tienes contratos en los que seas cliente.</p>
+                    ) : (
+                        <section className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 justify-items-right justify-left gap-y-20 gap-x-14 mt-10 mb-5">
+
+                            {clientContracts.map(contractClient => (
+                                <ContractCardClient key={contractClient.id} contract={contractClient} />
+                            ))}
+                        </section>
+                    )}
                 </div>
 
             </div>
