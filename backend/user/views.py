@@ -63,12 +63,6 @@ class register(APIView):
         user.save()
         return JsonResponse({'status': '1', 'message': ' The user has been successfully registered'})
 
-class UserList(APIView):
-    def get(self, request):
-        users = User.objects.all()
-        serializer = UserSerializer(users, many=True)
-        return Response(serializer.data)
-
 class UserDetails(APIView):
     def get(self, request, format_arg=None, *args, **kwargs):
         authentication_classes = [SessionAuthentication]
