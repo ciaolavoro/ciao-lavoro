@@ -45,5 +45,19 @@ export const registerRequest = async (username, password,firstName,lastName,emai
         },
         body: JSON.stringify({username, password,firstName,lastName,email,image,birthdate }),
     };
-    return fetch(`${import.meta.env.VITE_BACKEND_API_URL}/user/register/`, options);
+    try{
+        const response = await fetch(`${import.meta.env.VITE_BACKEND_API_URL}/user/register/`, options);
+        const data = await response.json();
+
+        if (response.ok) { //verifica que el registro fue exitoso
+            return data; 
+        } else if (response.status === 400 && data.message === 'El nombre de usuario ya está en uso') {
+            throw new Error(data.message); // Lanzar el error si el nombre de usuario existe
+        } else {
+            throw new Error('Ha ocurrido un error en el registro'); // Error generico para cualquier otro error
+        }
+    }catch(error){
+        console.error('Registro error:', error);
+        throw error;
+    }
 };
