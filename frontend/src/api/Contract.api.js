@@ -86,7 +86,7 @@ export const checkWorkerAssociation = async (serviceId) => {
     };
 
     try {
-        const response = await fetch(`${import.meta.env.VITE_BACKEND_API_URL}/service/${serviceId}/userProperty/`, options);
+        const response = await fetch(`${BACKEND_URL}/service/${serviceId}/userProperty/`, options);
         const data = await response.json();
         return data.user_state;
     } catch (error) {
