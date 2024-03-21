@@ -3,6 +3,7 @@ import { getContracts } from "../../api/Contract.api";
 import { ContractCardClient } from "./ContractCardClient";
 import { ContractCardWorker } from "./ContractCardWorker";
 import { useAuthContext } from "../auth/AuthContextProvider";
+import { Navigate } from "react-router-dom";
 
 
 export default function ContractUser() {
@@ -13,7 +14,14 @@ export default function ContractUser() {
     const [status, setStatus] = useState("");
     const { loggedUser } = useAuthContext();
 
+    
+
     useEffect(() => {
+
+        if (!loggedUser) {
+            return (<Navigate to="/" />);
+        }
+    
         const getContract = async () => {
             try {
                 const res = await getContracts(loggedUser.token, end_date, initial_date, status);

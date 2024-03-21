@@ -12,6 +12,7 @@ export const getAllUsers = async () => {
     return fetch(`${BACKEND_URL}/user/`, options);
 }
 
+
 export const getAllServices = async () => {
 
     const options = {
@@ -36,6 +37,23 @@ export const createContractRequest = async (description, initial_date, end_date,
     };
 
     return fetch(`${BACKEND_URL}/contracts/create/${service_id}/`, options);
+}
+
+export async function updateContractStatus(contractId, statusNum,token) {
+    const options = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
+        },
+    };
+    
+    try {
+        const response = await fetch(`${BACKEND_URL}/contracts/edit/${contractId}/${statusNum}/`, options);
+        return response;
+    } catch (error) {
+        console.error('Update Contract Status error:', error);
+    }
 }
 
 export const getContracts = async (token,end_date, initial_date, status) => {
