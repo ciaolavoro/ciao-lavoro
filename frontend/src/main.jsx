@@ -14,13 +14,10 @@ import Register from './components/register/Register.jsx'
 import UserProfile from './components/user/UserProfile.jsx'
 import Service from './components/service/Service.jsx'
 import { AuthContextProvider } from './components/auth/AuthContextProvider.jsx'
-import Users from './components/user/Users.jsx'
 import ContractUser from './components/contract/ContractUser.jsx'
 import ServiceUser from './components/service/ServiceUser.jsx'
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_API_URL;
-
-
 
 const router = createBrowserRouter([
   {
@@ -69,23 +66,17 @@ const router = createBrowserRouter([
       {
         path: 'contracts/mylist',
         element: <ContractUser />,
-        },
+      },
       {
         path: 'register',
         element: <Register />,
+      },
+      {
+        path: 'users/:userId',
+        element: <UserProfile />,
+        loader: async ({ params }) => {
+          return fetch(`${BACKEND_URL}/user/${params.userId}`);
         },
-        {
-        path: 'users',
-        element: <Users />,
-        children: [
-          {
-            path: ':userId',
-            element: <UserProfile />,
-            loader: async ({ params }) => {
-              return fetch(`${BACKEND_URL}/user/${params.userId}`);
-            },
-          },
-        ]
       },
     ]
   }
