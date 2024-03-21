@@ -133,7 +133,7 @@ class ContractList(generics.ListAPIView):
             contracts = contracts.filter(initial_date=initial_date)
         if end_date:
             contracts = contracts.filter(end_date=end_date)
-        return contracts   
+        return contracts
     @authentication_classes([TokenAuthentication])
     def get(self, request):
         token_id = self.request.headers['Authorization']
