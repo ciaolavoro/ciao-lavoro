@@ -35,9 +35,9 @@ export default function CreateContract() {
         event.preventDefault();
         
         const token = loggedUser.token;
-        const isAssociated = await checkWorkerAssociation(service_Id); //La funcion a llamar
+        const isNotAssociated = await checkWorkerAssociation(service_Id); //La funcion a llamar, si esta asociado devuelve false
         
-        if(!isAssociated){
+        if(isNotAssociated){
 
             if (charCount > 500) {
                 alert('La descripción no puede superar los 500 caracteres.');
