@@ -1,7 +1,6 @@
 import { useLoaderData } from "react-router-dom";
 import { useState } from "react";
 import { updateServiceRequest } from "../../api/Service.api";
-import defaultUserImage from "../../assets/service/talonflame.jpg";
 import ServiceData from "./ServiceData";
 import JobData from "./JobData";
 import ServiceButton from "./ServiceButton";
@@ -21,8 +20,7 @@ export default function ServiceDetails() {
     const [isActive, setIsActive] = useState(service.is_active);
     const [isPromoted, setIsPromoted] = useState(service.is_promoted);
     const [jobs,] = useState(service.jobs);
-
-    const userImageUrl = `${import.meta.env.VITE_BACKEND_API_URL}${service.user.image}`;
+    const [reviews,] = useState(service.reviews);
 
     const resetServiceData = () => {
         setCity(service.city);
@@ -71,8 +69,9 @@ export default function ServiceDetails() {
     const handleCancel = () => {
         resetServiceData();
         setIsEditing(false);
+        
     };
-
+console.log(service)
     return (
         <form className="flex flex-col justify-center items-center gap-y-10 my-10 mx-10 bg-white border rounded-lg" onSubmit={handleEdit}>
             <div className="flex w-full m-10">
@@ -83,31 +82,26 @@ export default function ServiceDetails() {
                     </div>
                     <div className="flex flex-col justify-center gap-y-6 px-8 py-3">
                         <ServiceData type={"text"} formName={"username"} labelText={"Usuario:"} inputValue={service.user.username ?? "Pablo"} isReadOnly={true} />
-                        <ServiceData type={"number"} formName={"profession"} labelText={"Profesión:"} inputValue={profession}
-                            isReadOnly={!isEditing} onChange={(event) => setProfession(event.target.value)} />
-                        <ServiceData type={"text"} formName={"city"} labelText={"Ciudad:"} inputValue={city}
-                            isReadOnly={!isEditing} onChange={(event) => setCity(event.target.value)} />
-                        <ServiceData type={"number"} formName={"experience"} labelText={"Experiencia:"} inputValue={experience}
-                            isReadOnly={!isEditing} onChange={(event) => setExperience(event.target.value)} />
+                        <ServiceData type={"number"} formName={"profession"} labelText={"Profesión:"} inputValue={profession} isReadOnly={!isEditing} onChange={(event) => setProfession(event.target.value)} />
+                        <ServiceData type={"text"} formName={"city"} labelText={"Ciudad:"} inputValue={city} isReadOnly={!isEditing} onChange={(event) => setCity(event.target.value)} />
+                        <ServiceData type={"number"} formName={"experience"} labelText={"Experiencia:"} inputValue={experience} isReadOnly={!isEditing} onChange={(event) => setExperience(event.target.value)} />
 
                         <div className="grid grid-cols-2 gap-x-4 items-center w-full">
                             <p className="text-1.7xl font-semibold text-right"><strong>¿Activo?:</strong></p>
-                            <p className="pl-2  w-full">
+                            <p className="pl-2 w-full">
                                 <input
                                     type="checkbox"
                                     checked={isActive}
                                     onChange={(event) => {
-                                        // Verificar si el usuario logueado es el mismo que el usuario asociado al servicio
                                         if (loggedUser.user.username === service.user.username) {
                                             setIsActive(event.target.checked);
                                         } else {
-                                            // Mostrar algún tipo de mensaje de error o no realizar ninguna acción
                                             console.log("No tiene permisos para cambiar el estado del servicio.");
                                         }
                                     }}
-                                    disabled={loggedUser.user.username !== service.user.username} // Deshabilitar el botón si el usuario logueado no es el mismo que el usuario asociado al servicio
-                                /></p>
-
+                                    disabled={loggedUser.user.username !== service.user.username}
+                                />
+                            </p>
                         </div>
                         {isEditing ? (
                             <div className="flex justify-center gap-x-4">
@@ -124,15 +118,46 @@ export default function ServiceDetails() {
                     {jobs.map((job) => (
                         <div key={job.id} className="w-90 border bg-white shadow-md rounded-xl m-8">
                             <div className="flex flex-col gap-y-6 px-10 py-6">
-                                <JobData type={"text"} formName={`nameJob-${job.id}`} labelText={"Nombre:"}
-                                    inputValue={job.name} isReadOnly={true} />
-                                <JobData type={"number"} formName={`estimatedJobPrice-${job.id}`} labelText={"Precio estimado:"}
-                                    inputValue={job.estimated_price} isReadOnly={true} />
+                                <JobData type={"text"} formName={`nameJob-${job.id}`} labelText={"Nombre:"} inputValue={job.name} isReadOnly={true} />
+                                <JobData type={"number"} formName={`estimatedJobPrice-${job.id}`} labelText={"Precio estimado:"} inputValue={job.estimated_price} isReadOnly={true} />
                             </div>
                         </div>
                     ))}
+
+{/* Sección de Valoraciones */}
+<h2 className="text-3xl font-bold mb-4">Valoraciones:</h2>
+{reviews.map((review) => (
+    <div key={review.id} className="w-90 border bg-white shadow-md rounded-xl m-8">
+        <div className="px-10 py-6">
+            <div className="flex justify-between items-start mb-6">
+                <div className="flex flex-col">
+                    <label className="block text-lg font-medium mb-1">Nombre de usuario:</label>
+                    <div className="border p-2 rounded-md mb-4">{review.user.username}</div>
+                </div>
+                {/* Hecho con IA */}
+                <div className="flex flex-col items-end">
+                    <label className="block text-lg font-medium mb-1"></label>
+                    <div className="flex">
+                        {[1, 2, 3, 4, 5].map((value) => (
+                            <span key={value} className={`text-4xl ${review.rating >= value ? 'text-yellow-500' : 'text-gray-300'}`}>★</span>
+                        ))}
+                    </div>
+                </div>
+            </div>
+            {/* Hasta aquí */}
+            <div className="flex flex-col w-full">
+                <label className="block text-lg font-medium mb-1">Descripción:</label>
+                <div className="border p-2 rounded-md">{review.description}</div>
+            </div>
+        </div>
+    </div>
+))}
+
+
+
                 </div>
             </div>
         </form>
     );
 }
+
