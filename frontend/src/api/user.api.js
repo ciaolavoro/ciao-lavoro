@@ -1,13 +1,12 @@
 const BACKEND_URL = import.meta.env.VITE_BACKEND_API_URL;
 
-export async function updateUserRequest(userId, userData, token) {
+export async function updateUserRequest(userData, token) {
     const options = {
         method: 'PUT',
         headers: {
-            'Content-Type': 'application/json',
             'Authorization': `Token ${token}`,
         },
-        body: JSON.stringify(userData),
+        body: userData,
     };
     
     try {
