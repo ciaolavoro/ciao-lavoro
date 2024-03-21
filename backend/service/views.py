@@ -164,6 +164,8 @@ class ServicesView(APIView):
         city = service_data['city']
         if city == "":
             raise ValidationError("Debe indicar la ciudad")
+        elif (len(city) > 200):
+            raise ValidationError("La ciudad no puede contener más de 200 caracteres")
         profession = service_data['profession']
         profesions = Service.PROFESSIONS
         profession_exists = False
@@ -220,6 +222,8 @@ class ServicesView(APIView):
             service.city = city
         elif city == "":
             raise ValidationError("Debe indicar la ciudad")
+        elif (len(city)>200):
+            raise ValidationError("La ciudad no puede contener más de 200 caracteres")
         experience = service_data['experience']
         if not experience == '':
             birth_date = user.birth_date

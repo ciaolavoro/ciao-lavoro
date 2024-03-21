@@ -43,7 +43,7 @@ class Service(models.Model):
         (12, 'Profesor particular'),
     ]
     profession = models.IntegerField(choices = PROFESSIONS, blank = False)
-    city = models.TextField(blank = False)
+    city = models.TextField(blank = False, max_length=200)
     experience = models.PositiveIntegerField(blank = False,validators=[MinValueValidator(0), MaxValueValidator(80)])
     #Aquí se estipulan si está ofertando trabajo con este servicio
     is_active = models.BooleanField(blank = False,default=True)
