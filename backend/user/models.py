@@ -4,7 +4,7 @@ import datetime
 from django.utils import timezone
 from django.forms import ValidationError
 from django.core.validators import validate_email
-import requests
+#import requests
 
 class User(AbstractUser):
     birth_date = models.DateField()
