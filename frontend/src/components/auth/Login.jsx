@@ -58,6 +58,7 @@ export default function LoginPage() {
         </div>
         <div className='flex flex-col w-full'>
           <label>Contraseña:</label>
+          <div className="relative">
           <input 
             type={passwordType} 
             value={password} 
@@ -66,9 +67,10 @@ export default function LoginPage() {
             required 
             className="p-2 border border-gray-300 rounded" 
             />
-          <span className="cursor-pointer" onClick={() => togglePasswordVisibility()}>
+          <span className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer" onClick={() => togglePasswordVisibility()}>
             {passwordIcon}
           </span>
+          </div>
         </div>
         <button type="submit" className="p-2 bg-orange-400 text-black rounded cursor-pointer font-inherit border-none">Iniciar sesión</button>
         <div className='flex flex-col items-center'>
