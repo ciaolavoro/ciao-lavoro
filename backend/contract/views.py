@@ -80,7 +80,6 @@ class ContractEdit(APIView):
         new_description = contract_data['description']
         if len(new_description) > 500:
             raise ValidationError("La descripción no puede superar los 500 caracteres")
-        
         if contract_data['initial_date']:
             new_initial_date = contract_data['initial_date']
         else:
@@ -177,8 +176,6 @@ class ContractDetail(generics.ListAPIView):
         user = token.user
         if contract.client != user and contract.service.user != user and not user.is_staff:
             raise PermissionDenied("No tienes permiso para contemplar un contrato que no te pertenece")
-        if contract == None:
-            return Response([], status=status.HTTP_200_OK)
         serializer = self.serializer_class(contract, many = False,
                                             context ={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
