@@ -1,6 +1,7 @@
 import re
 from .models import User
 from django.http import JsonResponse
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -56,13 +57,17 @@ class register(APIView):
         birth_date = request.data.get('birthdate')
         image = request.FILES.get('image')
 
+        if User.objects.filter(username=username).exists():
+            return JsonResponse({'status': '0', 'message': 'El nombre de usuario ya está en uso'},status=status.HTTP_400_BAD_REQUEST)
+
+
         user = User.objects.create(username=username, first_name=first_name, last_name=last_name, email=email
         ,language=language, birth_date=birth_date, image=image)
         validate_password(password)
         user.set_password(password)
         user.save()
         return JsonResponse({'status': '1', 'message': ' The user has been successfully registered'})
-    
+
 class UserList(APIView):
     def get(self, request):
         users = User.objects.all()
@@ -80,26 +85,25 @@ class UserDetails(APIView):
 
 class UserUpdate(APIView):
    
+    @authentication_classes([TokenAuthentication])
     def get(self, request, format_arg=None):
-        authentication_classes = [SessionAuthentication]
-        permission_classes = [IsAuthenticated]
         session_id = request.session.session_key
         user = request.user
         serializer = UserSerializer(user)
         return JsonResponse(serializer.data)
     
+    @authentication_classes([TokenAuthentication])
     def put(self, request, format_arg=None):
-        authentication_classes = [SessionAuthentication]
-        permission_classes = [IsAuthenticated]
         token_id = request.headers['Authorization']
         token = get_object_or_404(Token, key=token_id.split()[-1])
         user = token.user
-        username = request.data.get('username')
-        first_name = request.data.get('first_name')
-        last_name  = request.data.get('last_name')
-        email = request.data.get('email')
-        language = request.data.get('language')
-        birth_date = request.data.get('birth_date')
+        user_data = request.data
+        username = user_data['username']
+        first_name = user_data['first_name']
+        last_name  = user_data['last_name']
+        email = user_data['email']
+        language = user_data['language']
+        birth_date = user_data['birth_date']
         image = request.FILES.get('image')
         if username:
             user.username = username

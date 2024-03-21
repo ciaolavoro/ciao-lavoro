@@ -57,11 +57,25 @@ export const getServiceByCityAndProfession = async (city, profession) => {
     return fetch(`${BACKEND_URL}/service/?${queryParams}`, options);
 }
 
-export const createServiceRequest = async (email, profession, city, experience) => {
+export const getAllServices = async () => {
+
+
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    };
+
+    return fetch(`${BACKEND_URL}/service`, options);
+}
+
+export const createServiceRequest = async (email, profession, city, experience, token) => {
     const options = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
         },
         body: JSON.stringify({ email, profession, city, experience }),
     };
