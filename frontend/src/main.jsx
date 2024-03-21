@@ -14,7 +14,6 @@ import UserProfile from './components/user/UserProfile.jsx'
 import Service from './components/service/Service.jsx'
 import { AuthContextProvider } from './components/auth/AuthContextProvider.jsx'
 import Review from './components/service/Review.jsx'
-import ListReview from './components/service/listReview.jsx'
 import ContractUser from './components/contract/ContractUser.jsx'
 import ServiceUser from './components/service/ServiceUser.jsx'
 
@@ -78,10 +77,7 @@ const router = createBrowserRouter([
         path: 'review',
         element: <Review />,
         },
-        {
-          path: 'listreview',
-          element: <ListReview />,
-          },
+
       {
         path: 'users',
         children: [

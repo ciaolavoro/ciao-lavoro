@@ -85,4 +85,16 @@ export async function updateServiceRequest(serviceId, serviceData,token) {
     } catch (error) {
         console.error('Update service error:', error);
     }
+    
+}
+export const createServiceReview = async (service_id, rating, description,token) => {
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
+        },
+        body: JSON.stringify({rating, description }),
+    };
+    return fetch(`${BACKEND_URL}/service/${service_id}/create/review/`, options);
 }

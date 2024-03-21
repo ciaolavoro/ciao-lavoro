@@ -1,8 +1,16 @@
 import  { useState } from 'react';
+import { createServiceReview } from '../../api/Service.api';
+import { useNavigate,useSearchParams } from "react-router-dom";
+import { useAuthContext } from "../auth/AuthContextProvider";
+
 
 const Review = () => {
  const [rating, setRating] = useState(0);
  const [reviewText, setReviewText] = useState('');
+ const navigate = useNavigate();
+ const { loggedUser } = useAuthContext();
+ const [searchParams] = useSearchParams();
+ const service_id = searchParams.get('service_id');
 
  const handleRating = (value) => {
     setRating(value);
@@ -12,9 +20,23 @@ const Review = () => {
     setReviewText(event.target.value);
  };
 
+ const createReview = async (rating,review) => {
+  try {
+
+      const res = await createServiceReview(service_id, rating, review, loggedUser.token);
+      if (res.status === 200) {
+          alert('La valoración se ha creado correctamente')
+          navigate('/');
+      } else {
+          alert('Error al crear la valoración. Por favor, intentelo de nuevo.');
+      }
+  } catch (error) {
+      console.log(`Error al crear valoración: ${error}`);
+  }
+}
  const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(`Rating: ${rating}, Review: ${reviewText}`);
+    createReview(rating,reviewText);
  };
 
  return (
@@ -37,6 +59,7 @@ const Review = () => {
                  checked={rating === value}
                  onChange={() => handleRating(value)}
                  className="hidden"
+                 required
                 />
                 <span className={`text-4xl ${rating >= value ? 'text-yellow-500' : 'text-gray-300'}`}>★</span>
               </label>
@@ -49,6 +72,7 @@ const Review = () => {
           onChange={handleReviewTextChange}
           placeholder="Escribe tu opinión aquí..."
           className="mt-4 w-full p-2 border border-gray-300 rounded-md"
+          required
         />
         <button type="submit" className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">Enviar</button>
       </form>
