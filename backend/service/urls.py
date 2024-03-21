@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import ServiceList,UserHasService, UserServiceList, JobViewSet 
-from .views import JobList, ServiceCreation, JobCreation, JobEdit 
+from .views import ServiceList,UserHasService, UserServiceList, JobViewSet
+from .views import JobList, ServiceCreation, JobCreation, JobEdit
 from .views import JobDelete, ReviewCreation, ReviewList, EditService
 app_name = 'service'
 
