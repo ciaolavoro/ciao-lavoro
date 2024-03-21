@@ -24,13 +24,35 @@ export const getAllServices = async () => {
     return fetch(`${BACKEND_URL}/service/`, options);
 }
 
-export const createContractRequest = async (worker, client, accept_worker, accept_client, description, initial_date, end_date, cost, status, service) => {
+export const createContractRequest = async (description, initial_date, end_date, cost,service_id, token) => {
     const options = {
+
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
         },
-        body: JSON.stringify({ worker, client, accept_worker, accept_client, description, initial_date, end_date, cost, status, service}),
+        body: JSON.stringify({description, initial_date, end_date, cost, token}),
     };
-    return fetch(`${BACKEND_URL}/contracts/create/`, options);
+
+    return fetch(`${BACKEND_URL}/contracts/create/${service_id}/`, options);
+}
+
+export const getContracts = async (token,end_date, initial_date, status) => {
+    const queryParams = new URLSearchParams({ 
+        end_date: end_date, 
+        initial_date: initial_date,
+        status: status,              
+                                        });
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
+            
+        },
+    };
+
+    return fetch(`${BACKEND_URL}/contracts/list/?${queryParams}`, options);
+
 }

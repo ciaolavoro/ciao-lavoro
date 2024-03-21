@@ -68,6 +68,7 @@ CORS_ALLOWED_ORIGINS = [
     env('FRONTEND_URL'),
 ]
 
+
 ROOT_URLCONF = 'ciao_lavoro.urls'
 
 TEMPLATES = [
@@ -136,6 +137,9 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+MEDIA_URL = 'users/'
+MEDIA_ROOT = BASE_DIR / 'users'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -162,4 +166,4 @@ REST_FRAMEWORK = {
     }
 }
 
-AUTH_USER_MODEL = 'user.User' 
+AUTH_USER_MODEL = 'user.User'

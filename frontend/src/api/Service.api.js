@@ -1,6 +1,20 @@
 const BACKEND_URL = import.meta.env.VITE_BACKEND_API_URL;
 
+export const getUserLogged = async () => {
+    const token = localStorage.getItem('token');
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
+        },
+    };
+
+    return fetch(`${import.meta.env.VITE_BACKEND_API_URL}/user/edit/`, options);
+}
+
 export const getUserById = async (id) => {
+    
     const options = {
         method: 'GET',
         headers: {
@@ -8,7 +22,23 @@ export const getUserById = async (id) => {
         },
     };
 
-    return fetch(`${BACKEND_URL}/user/${id}`, options);
+    if (typeof id !== 'number' || !Number.isInteger(id)) {
+        // El id no es un número entero
+        return fetch(`${id}`, options);
+    } else {
+        // El id es un número entero
+        return fetch(`${BACKEND_URL}/user/${id}`, options);
+    }  
+}
+
+export const getServiceByUser = async (id) => {
+    const options = {
+        method: 'Get',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    };
+    return fetch(`${import.meta.env.VITE_BACKEND_API_URL}/service/user/${id}`, options);
 }
 
 export const getServiceByCityAndProfession = async (city, profession) => {
@@ -27,13 +57,32 @@ export const getServiceByCityAndProfession = async (city, profession) => {
     return fetch(`${BACKEND_URL}/service/?${queryParams}`, options);
 }
 
-export const createServiceRequest = async (email, profession, city, experience) => {
+export const createServiceRequest = async (email, profession, city, experience, token) => {
     const options = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
         },
         body: JSON.stringify({ email, profession, city, experience }),
     };
     return fetch(`${BACKEND_URL}/service/create/`, options);
+}
+
+export async function updateServiceRequest(serviceId, serviceData,token) {
+    const options = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
+        },
+        body: JSON.stringify(serviceData),
+    };
+    
+    try {
+        const response = await fetch(`${BACKEND_URL}/service/${serviceId}/edit/`, options);
+        return response;
+    } catch (error) {
+        console.error('Update service error:', error);
+    }
 }

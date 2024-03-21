@@ -8,7 +8,7 @@ from django.core.validators import validate_email
 class User(AbstractUser):
     birth_date = models.DateField()
     language = models.CharField(max_length=50, blank=True, null=True)
-    image = models.ImageField(upload_to='users/', null=True, blank=False)
+    image = models.ImageField(null=True, blank=False)
 
     REQUIRED_FIELDS = ['first_name', 'last_name', 'birth_date']
 
@@ -30,10 +30,6 @@ class User(AbstractUser):
             raise ValidationError("Debes tener menos de 80 años de edad.")
 
     def save(self, *args, **kwargs):
-        self.clean()
-        super(User, self).save(*args, **kwargs)
-
-    def update(self, *args, **kwargs):
         self.clean()
         super(User, self).save(*args, **kwargs)
 
