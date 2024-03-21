@@ -15,7 +15,7 @@ class ContractCreation(APIView):
     @authentication_classes([TokenAuthentication])
     def post(self, request, service_id):
         contract_data = request.data
-        service = Service.objects.get(pk=service_id)
+        service = get_object_or_404(Service, pk=service_id)
         worker = service.user
         token_id = request.headers['Authorization']
         token = get_object_or_404(Token, key=token_id.split()[-1])
@@ -23,8 +23,14 @@ class ContractCreation(APIView):
         description = contract_data['description']
         if len(description) > 500:
             raise ValidationError("La descripción no puede superar los 500 caracteres")
-        initial_date = contract_data['initial_date']
-        end_date = contract_data['end_date']
+        if contract_data['initial_date']:
+            initial_date = contract_data['initial_date']
+        else:
+            raise ValidationError("Todo contrato ha de tener una fecha de inicio")
+        if contract_data['end_date']:
+            end_date = contract_data['end_date']
+        else:
+            raise ValidationError("Todo contrato ha de tener una fecha de fin")
         today = datetime.today()
         Init =  datetime.strptime(initial_date, '%Y-%m-%dT%H:%M')
         End = datetime.strptime(end_date, '%Y-%m-%dT%H:%M')
@@ -32,7 +38,10 @@ class ContractCreation(APIView):
             raise ValidationError("La fecha de finalizacion no puede ser antes que la inicial")
         if Init < today:
             raise ValidationError("La fecha de inicio no puede ser antes que hoy")
-        cost = float(contract_data['cost'])
+        if contract_data['cost']:
+            cost = float(contract_data['cost'])
+        else:
+            raise ValidationError("Todo contrato ha de tener un valor de coste aunque no sea definitivo")
         if cost <= 0.0:
             raise ValidationError("El precio no puede ser menor o igual que 0")
         if client == worker:
@@ -71,8 +80,15 @@ class ContractEdit(APIView):
         new_description = contract_data['description']
         if len(new_description) > 500:
             raise ValidationError("La descripción no puede superar los 500 caracteres")
-        new_initial_date = contract_data['initial_date']
-        new_end_date = contract_data['end_date']
+        
+        if contract_data['initial_date']:
+            new_initial_date = contract_data['initial_date']
+        else:
+            raise ValidationError("Todo contrato ha de tener una fecha de inicio")
+        if contract_data['end_date']:
+            new_end_date = contract_data['end_date']
+        else:
+            raise ValidationError("Todo contrato ha de tener una fecha de fin")
         today = datetime.today()
         Init =  datetime.strptime(new_initial_date, '%Y-%m-%dT%H:%M')
         End = datetime.strptime(new_end_date, '%Y-%m-%dT%H:%M')
@@ -103,7 +119,7 @@ class ContractStatusEdit(APIView):
             raise PermissionDenied("No tienes permiso para editar un contrato que no te pertenece")
         new_status = status_num
         if contract.status >= new_status:
-            raise ValidationError("No puedes volver atrás al cambiar el estado")
+            raise ValidationError("El campo estado solo puede avanzar en estado")
         contract.status = new_status
         contract.save()
         serializer = ContractSerializer(contract, many=False,context ={'request': request})
