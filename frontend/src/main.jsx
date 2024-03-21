@@ -13,7 +13,6 @@ import Register from './components/register/Register.jsx'
 import UserProfile from './components/user/UserProfile.jsx'
 import Service from './components/service/Service.jsx'
 import { AuthContextProvider } from './components/auth/AuthContextProvider.jsx'
-import Users from './components/user/Users.jsx'
 import Review from './components/service/Review.jsx'
 import ListReview from './components/service/listReview.jsx'
 import ContractUser from './components/contract/ContractUser.jsx'
@@ -85,7 +84,6 @@ const router = createBrowserRouter([
           },
       {
         path: 'users',
-        element: <Users />,
         children: [
           {
             path: ':userId',
