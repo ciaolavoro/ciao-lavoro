@@ -61,7 +61,7 @@ class ContractEdit(APIView):
             if user != contract.worker:
                 raise ValidationError("No tienes permiso para cambiar la aceptación de la otra parte")
         else:
-            new_accept_worker = contract.accept_worker        
+            new_accept_worker = contract.accept_worker
         if contract_data['accept_client']:
             new_accept_client = contract_data['accept_client']
             if user != contract.client:
@@ -133,8 +133,7 @@ class ContractList(generics.ListAPIView):
             contracts = contracts.filter(initial_date=initial_date)
         if end_date:
             contracts = contracts.filter(end_date=end_date)
-        return contracts
-    
+        return contracts   
     @authentication_classes([TokenAuthentication])
     def get(self, request):
         token_id = self.request.headers['Authorization']
@@ -162,7 +161,7 @@ class ContractDetail(generics.ListAPIView):
         user = token.user
         if contract.client != user and contract.service.user != user and not user.is_staff:
             raise PermissionDenied("No tienes permiso para contemplar un contrato que no te pertenece")
-        if not contract != None:
+        if contract == None:
             return Response([], status=status.HTTP_200_OK)
         serializer = self.serializer_class(contract, many = False,
                                             context ={'request': request})
