@@ -33,6 +33,14 @@ export default function RegisterPage() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    if ( !firstName.trim()){
+      alert('El nombre no puede estar vacío');
+      return;
+    }
+    if ( !lastName.trim()){
+      alert('El apellido no puede estar vacío');
+      return;
+    }
     try {
       await registerRequest(username, password, firstName, lastName, email, image, birthdate);
       navigate("/");
