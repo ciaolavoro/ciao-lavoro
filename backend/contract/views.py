@@ -55,17 +55,17 @@ class ContractEdit(APIView):
         token = get_object_or_404(Token, key=token_id.split()[-1])
         user = token.user
         if contract.client != user and contract.service.user != user and not user.is_staff:
-            raise ValidationError("No tienes permiso para editar un contrato que no te pertenece")
+            raise PermissionDenied("No tienes permiso para editar un contrato que no te pertenece")
         if contract_data['accept_worker']:
             new_accept_worker = contract_data['accept_worker']
             if user != contract.worker:
-                raise ValidationError("No tienes permiso para cambiar la aceptación de la otra parte")
+                raise PermissionDenied("No tienes permiso para cambiar la aceptación de la otra parte")
         else:
             new_accept_worker = contract.accept_worker
         if contract_data['accept_client']:
             new_accept_client = contract_data['accept_client']
             if user != contract.client:
-                raise ValidationError("No tienes permiso para cambiar la aceptación de la otra parte")
+                raise PermissionDenied("No tienes permiso para cambiar la aceptación de la otra parte")
         else:
             new_accept_client = contract.accept_client
         new_description = contract_data['description']
