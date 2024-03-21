@@ -13,7 +13,6 @@ export default function CreateService() {
 
     const createService = async (email, profession, city, experience) => {
         try {
-            console.log(profession);
             const res = await createServiceRequest(email, profession, city, experience, loggedUser.token);
             if (res.status === 200) {
                 alert('El servicio se ha creado correctamente')
@@ -22,7 +21,7 @@ export default function CreateService() {
                 alert('Error al crear servicio. Por favor, intente de nuevo.');
             }
         } catch (error) {
-            console.log(`Error al crear servicio: ${error}`);
+            alert(`Error al crear servicio: ${error}`);
         }
     }
 

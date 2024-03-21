@@ -2,7 +2,6 @@ import { useLoaderData, Link, useParams } from "react-router-dom";
 import { useState } from "react";
 import { updateServiceRequest } from "../../api/Service.api";
 import { updateJobRequest } from "../../api/Job.api";
-import defaultUserImage from "../../assets/service/talonflame.jpg";
 import ServiceData from "./ServiceData";
 import JobData from "./JobData";
 import ServiceButton from "./ServiceButton";
@@ -11,8 +10,6 @@ import CheckIcon from "../icons/CheckIcon";
 import CrossIcon from "../icons/CrossIcon";
 import { useAuthContext } from "../auth/AuthContextProvider";
 import PlusIcon from "../icons/PlusIcon";
-import LinkButton from "../home/LinkButton";
-
 
 export default function ServiceDetails() {
     const service = useLoaderData();
@@ -27,13 +24,9 @@ export default function ServiceDetails() {
     const [jobs, setJobs] = useState(service.jobs);
     const [editingJobId, setEditingJobId] = useState(false);
     const { serviceId } = useParams();
-    const [jobList, setJobList] = useState("");
-    const [nameJob, setNameJob] = useState("");
-    const [estimated_price, setEstimated_price] = useState("");
-    const [job, setJob] = useState("");
-    const professions = ["Lavandero", "Celador", "Albañil"];
-
-    const userImageUrl = `${import.meta.env.VITE_BACKEND_API_URL}${service.user.image}`;
+    const [, setNameJob] = useState("");
+    const [, setEstimated_price] = useState("");
+    const [job, ] = useState("");
 
     const resetServiceData = () => {
         setCity(service.city);
@@ -119,7 +112,6 @@ export default function ServiceDetails() {
 
     };
     const handleSaveJob = (jobId) => {
-        //event.preventDefault();
         setJobs(service.jobs)
         const JobData = {
             id: jobId + 1,
@@ -128,14 +120,6 @@ export default function ServiceDetails() {
         }
 
         if (window.confirm('¿Está seguro de guardar los cambios?')) {
-            console.log("jobs : " + jobs[jobId])
-
-            console.log(JobData.id)
-            console.log(JobData.name)
-            console.log(JobData.estimated_price)
-            console.log("token : " + loggedUser.token)
-            console.log("username : " + loggedUser.user.username)
-            console.log("username 2 : " + service.user.username)
             updateJob(JobData, loggedUser.token);
         }
     };
@@ -188,20 +172,18 @@ export default function ServiceDetails() {
 
                         <div className="grid grid-cols-2 gap-x-4 items-center w-full">
                             <p className="text-1.7xl font-semibold text-right"><strong>¿Activo?:</strong></p>
-                            <p className="pl-2  w-full">
+                            <p className="pl-2 w-full">
                                 <input
                                     type="checkbox"
                                     checked={isActive}
                                     onChange={(event) => {
-                                        // Verificar si el usuario logueado es el mismo que el usuario asociado al servicio
                                         if (loggedUser.user.username === service.user.username) {
                                             setIsActive(event.target.checked);
                                         } else {
-                                            // Mostrar algún tipo de mensaje de error o no realizar ninguna acción
-                                            console.log("No tiene permisos para cambiar el estado del servicio.");
+                                            alert("No tiene permisos para cambiar el estado del servicio.");
                                         }
                                     }}
-                                    disabled={loggedUser.user.username !== service.user.username} // Deshabilitar el botón si el usuario logueado no es el mismo que el usuario asociado al servicio
+                                    disabled={loggedUser.user.username !== service.user.username}
                                 /></p>
 
                         </div>
@@ -217,8 +199,11 @@ export default function ServiceDetails() {
                 </div>
                 <div className="flex flex-col gap-y-6 px-10 py-6">
                     <h2 className="text-3xl font-bold mb-4">Trabajos:</h2>
+                    <Link to={`/services/${serviceId}/job/create`} className="link-button">
+                        <button className="flex items-center gap-x-2 p-1 pr-2 border rounded"><PlusIcon /> Crear trabajo</button>
+                    </Link>
                     {jobs.map((job) => (
-                        <div key={job.id} className="w-90 border bg-white shadow-md rounded-xl m-8">
+                        <div key={job.id} className="w-90 border bg-white shadow-md rounded-xl m-8 pb-4">
                             <div className="flex flex-col gap-y-6 px-10 py-6">
                                 <JobData type={"text"} formName={`nameJob-${job.id}`} labelText={"Nombre:"}
                                     inputValue={job.name} isReadOnly={!setEditingJobId}
@@ -228,18 +213,15 @@ export default function ServiceDetails() {
                                     onChange={(event) => handleJobInputChangeEstimatedPrice(event.target.value, job.id)} />
                             </div>
                             {editingJobId === job.id ? (
-                                <div className="flex gap-x-4">
+                                <div className="flex justify-center gap-x-4">
                                     <ServiceButton type={"button"} text={"Guardar cambios"} icon={<CheckIcon />} onClick={() => handleSaveJob(editingJobId - 1)} />
                                     <ServiceButton type={"button"} text={"Cancelar"} icon={<CrossIcon />} onClick={() => handleCancelJob()} />
                                 </div>
                             ) : (
-                                <ServiceButton type={"button"} text={"Editar Tarea"} icon={<PencilIcon />} onClick={() => handleEditJob(job.id)} />
+                                <ServiceButton type={"button"} text={"Editar Trabajo"} icon={<PencilIcon />} onClick={() => handleEditJob(job.id)} />
                             )}
                         </div>
                     ))}
-                    <Link to={`/services/${serviceId}/job/create`} className="link-button">
-                        <PlusIcon /> Crear tarea
-                    </Link>
                 </div>
             </div>
         </form>
