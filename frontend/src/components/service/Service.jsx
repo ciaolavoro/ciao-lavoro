@@ -125,7 +125,7 @@ console.log(service)
                     ))}
 
 {/* Sección de Valoraciones */}
-<h2 className="text-3xl font-bold mb-4">Valoraciones:</h2>
+<h2 className="text-3xl font-bold mb-4">Opiniones de otros usuarios</h2>
 {reviews.map((review) => (
     <div key={review.id} className="w-90 border bg-white shadow-md rounded-xl m-8">
         <div className="px-10 py-6">
