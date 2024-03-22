@@ -31,12 +31,12 @@ class ReviewSerializer(serializers.ModelSerializer):
 class ServiceSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     jobs = JobSerializer(many=True, read_only=True, source='job_set')
-    reviews = ReviewSerializer(many=True, read_only=True, source='review_set') 
+    reviews = ReviewSerializer(many=True, read_only=True, source='review_set')
     profession = serializers.SerializerMethodField()
 
     class Meta:
         model = Service
-        fields = ['id', 'user', 'profession', 'city', 'experience', 'is_active', 'is_promoted' , 'jobs', 'reviews'] 
+        fields = ['id', 'user', 'profession', 'city', 'experience', 'is_active', 'is_promoted', 'jobs', 'reviews']
     
     def to_representation(self, instance):
         data = super().to_representation(instance)
