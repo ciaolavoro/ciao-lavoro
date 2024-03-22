@@ -2,26 +2,23 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import ciaoLavoroLogo from "/ciaolavoro-logo.png";
 import { useAuthContext } from "./auth/AuthContextProvider";
 import defaultUserImage from "../assets/service/talonflame.jpg"
+import { useState } from "react";
 
 const navItemsStyle = "px-2 py-1 font-semibold rounded hover:bg-gray-300 transition";
 
 export default function Navbar() {
   const { logout, loggedUser } = useAuthContext();
   const navigate = useNavigate();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navItems = [
     {
       id: 1,
-      title: "Inicio",
-      path: "/",
-    },
-    {
-      id: 2,
       title: "Buscar Servicios",
       path: "/services",
     },
     {
-      id: 3,
+      id: 2,
       title: "Sobre nosotros",
       path: "https://ciaolavoro.github.io/landingpage",
     }
@@ -74,7 +71,8 @@ export default function Navbar() {
             <img src={ciaoLavoroLogo} alt="Logo de CiaoLavoro" className="w-8 object-cover rounded" />
           </NavLink>
         </section>
-        <section>
+        
+        <section className="hidden md:flex">
           <ul className="flex gap-5 py-2">
             {navItems.map((item) => (
               <NavLink key={item.id} to={item.path} className={({ isActive }) => isActive ? "bg-gray-300 rounded" : ""}>
@@ -83,6 +81,24 @@ export default function Navbar() {
             ))}
             {renderLoginOrLogout()}
           </ul>
+        </section>
+
+        <section className="md:hidden">
+          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="flex items-center px-3 py-2 border rounded text-gray-500 border-gray-300 hover:text-gray-700 hover:border-gray-700 focus:outline-none focus:text-gray-700 focus:border-gray-700">
+            <svg className="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" /></svg>
+          </button>
+          {isMenuOpen && (
+            <div className="absolute right-0 w-48 mt-2 py-2 bg-white border rounded shadow-xl">
+              <ul>
+                {navItems.map((item) => (
+                  <NavLink key={item.id} to={item.path} className={({ isActive }) => isActive ? "bg-gray-300 rounded" : ""}>
+                    <li className={navItemsStyle}>{item.title}</li>
+                  </NavLink>
+                ))}
+                {renderLoginOrLogout()}
+              </ul>
+            </div>
+          )}
         </section>
       </nav>
     </header>
