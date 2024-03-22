@@ -1,8 +1,7 @@
-import { useLoaderData, Link, useParams } from "react-router-dom";
+import { useLoaderData, useParams } from "react-router-dom";
 import { useState } from "react";
 import { updateServiceRequest } from "../../api/Service.api";
 import { updateJobRequest } from "../../api/Job.api";
-import defaultUserImage from "../../assets/service/talonflame.jpg";
 import ServiceData from "./ServiceData";
 import JobData from "./JobData";
 import ServiceButton from "./ServiceButton";
@@ -10,14 +9,14 @@ import PencilIcon from "../icons/PencilIcon";
 import CheckIcon from "../icons/CheckIcon";
 import CrossIcon from "../icons/CrossIcon";
 import { useAuthContext } from "../auth/AuthContextProvider";
-import PlusIcon from "../icons/PlusIcon";
-import { checkIfEmpty, checkCityLength, checkExperienceNegative,errorMessages } from "../../utils/validation";
+import LinkButtonJob from "./LinkButtonJob";
+import { checkIfEmpty, checkCityLength, checkExperienceNegative, errorMessages } from "../../utils/validation";
+import LinkButtonContract from "./LinkButtonContract";
 
 
 export default function ServiceDetails() {
     const service = useLoaderData();
     const { loggedUser } = useAuthContext();
-
     const [isEditing, setIsEditing] = useState(false);
     const [city, setCity] = useState(service.city);
     const [profession, setProfession] = useState(service.profession);
@@ -27,15 +26,11 @@ export default function ServiceDetails() {
     const [jobs, setJobs] = useState(service.jobs);
     const [editingJobId, setEditingJobId] = useState(false);
     const { serviceId } = useParams();
-    const [nameJob, setNameJob] = useState("");
-    const [estimated_price, setEstimated_price] = useState("");
-    const [job, setJob] = useState("");
     const professions = ["Lavandero", "Celador", "Albañil"];
     const [isRequiredCityError, setIsRequiredCityError] = useState(false);
     const [isRequiredExperienceError, setIsRequiredExperienceError] = useState(false);
     const [isCityError, setIsCityError] = useState(false);
     const [isExperienceError, setIsExperienceError] = useState(false);
-    const userImageUrl = `${import.meta.env.VITE_BACKEND_API_URL}${service.user.image}`;
 
     const resetServiceData = () => {
         setCity(service.city);
@@ -66,7 +61,8 @@ export default function ServiceDetails() {
             if (response.ok) {
                 alert('Tarea actualizado correctamente');
                 setEditingJobId(false);
-                setJobs(service.jobs)
+                setJobs(service.jobs);
+                window.location.reload();
             } else {
                 alert('Error al actualizar la tarea. Por favor, intente de nuevo.');
                 resetJobData();
@@ -84,28 +80,24 @@ export default function ServiceDetails() {
                 console.error("Error fetching job details:", error);
             }
         }
-
-
         fetchJobDetails();
-        setNameJob(job.name);
-        setEstimated_price(job.estimated_price);
-
     }
+
     const handleEditJob = (jobId) => {
         setEditingJobId(jobId);
     };
+
     const handleCancelJob = () => {
         resetJobData();
         setIsEditing(false);
         setEditingJobId(false);
-
     };
 
 
     const handleJobInputChangeEstimatedPrice = (event, index) => {
         const updatedJobList = [...jobs];
-        updatedJobList[index - 1] = {
-            ...updatedJobList[index - 1],
+        updatedJobList[index] = {
+            ...updatedJobList[index],
             estimated_price: event
         }
         setJobs(updatedJobList)
@@ -113,31 +105,23 @@ export default function ServiceDetails() {
 
     const handleJobInputChangeName = (value, index) => {
         const updatedJobList = [...jobs];
-        updatedJobList[index - 1] = {
-            ...updatedJobList[index - 1],
+        updatedJobList[index] = {
+            ...updatedJobList[index],
             name: value
         }
         setJobs(updatedJobList)
-
     };
-    const handleSaveJob = (jobId) => {
-        //event.preventDefault();
+
+    const handleSaveJob =  async (jobId,index) => {
+        event.preventDefault();
         setJobs(service.jobs)
         const JobData = {
-            id: jobId + 1,
+            id: index,
             name: jobs[jobId].name,
             estimated_price: jobs[jobId].estimated_price,
         }
 
         if (window.confirm('¿Está seguro de guardar los cambios?')) {
-            console.log("jobs : " + jobs[jobId])
-
-            console.log(JobData.id)
-            console.log(JobData.name)
-            console.log(JobData.estimated_price)
-            console.log("token : " + loggedUser.token)
-            console.log("username : " + loggedUser.user.username)
-            console.log("username 2 : " + service.user.username)
             updateJob(JobData, loggedUser.token);
         }
     };
@@ -162,17 +146,17 @@ export default function ServiceDetails() {
             resetErrors();
             setIsExperienceError(true);
             return;
-        }else if (checkCityLength(city)) {
+        } else if (checkCityLength(city)) {
             resetErrors();
             setIsCityError(true);
             return;
         }
-        resetErrors();    
+        resetErrors();
         setIsEditing(true);
         const position = getPosicionProfession(profession);
         const serviceData = {
             id: service.id,
-            profession: position+1,
+            profession: position + 1,
             city: city,
             experience: experience,
             is_active: isActive,
@@ -190,9 +174,10 @@ export default function ServiceDetails() {
         resetServiceData();
         setIsEditing(false);
         resetErrors();
+
     };
 
-    function getPosicionProfession(profession){
+    function getPosicionProfession(profession) {
         return professions.lastIndexOf(profession);
     }
 
@@ -208,9 +193,9 @@ export default function ServiceDetails() {
                     </div>
                     <div className="flex flex-col justify-center gap-y-6 px-8 py-3">
                         <ServiceData type={"text"} formName={"username"} labelText={"Usuario:"} inputValue={service.user.username ?? "Pablo"} isReadOnly={true} />
-                        
+
                         <div>
-                            <label htmlFor="profession" className="text-1.7xl font-semibold text-right">Profesión:   </label>
+                            <label htmlFor="profession" className="flex flex-col gap-x-4 text-1.7xl font-semibold">Profesión:   </label>
                             {/* Usar un menú desplegable */}
                             <select
                                 id="profession"
@@ -218,7 +203,7 @@ export default function ServiceDetails() {
                                 value={profession}
                                 disabled={!isEditing} // Deshabilitar si no se está editando
                                 onChange={(event) => setProfession(event.target.value)}
-                                className="pl-2 border rounded w-full md:w-64"
+                                className="pl-2 border rounded w-full md:w-94"
                             >
                                 {/* Mapear las opciones de profesión */}
                                 {professions.map((profession, index) => (
@@ -228,10 +213,10 @@ export default function ServiceDetails() {
                         </div>
                         <ServiceData type={"text"} formName={"city"} labelText={"Ciudad:"} inputValue={city}
                             isReadOnly={!isEditing} onChange={(event) => setCity(event.target.value)} isError={isRequiredCityError || isCityError}
-                            errorMessage={(isRequiredCityError && errorMessages.required) || (isCityError && errorMessages.cityLength)}/>
+                            errorMessage={(isRequiredCityError && errorMessages.required) || (isCityError && errorMessages.cityLength)} />
                         <ServiceData type={"number"} formName={"experience"} labelText={"Experiencia:"} inputValue={experience}
-                        isError={isRequiredExperienceError || isExperienceError}
-                        errorMessage={(isRequiredExperienceError && errorMessages.required) || (isExperienceError && errorMessages.experienceNotValid)}
+                            isError={isRequiredExperienceError || isExperienceError}
+                            errorMessage={(isRequiredExperienceError && errorMessages.required) || (isExperienceError && errorMessages.experienceNotValid)}
                             isReadOnly={!isEditing} onChange={(event) => setExperience(event.target.value)} />
 
                         <div className="grid grid-cols-2 gap-x-4 items-center w-full">
@@ -249,7 +234,9 @@ export default function ServiceDetails() {
                                             console.log("No tiene permisos para cambiar el estado del servicio.");
                                         }
                                     }}
-                                    disabled={loggedUser.user.username !== service.user.username} // Deshabilitar el botón si el usuario logueado no es el mismo que el usuario asociado al servicio
+
+                                    disabled={(loggedUser && service.user) ? loggedUser.user.username !== service.user.username : false}
+                                // Deshabilitar el botón si el usuario logueado no es el mismo que el usuario asociado al servicio
                                 /></p>
 
                         </div>
@@ -259,35 +246,40 @@ export default function ServiceDetails() {
                                 <ServiceButton type={"button"} text={"Cancelar"} icon={<CrossIcon />} onClick={handleCancel} />
                             </div>
                         ) : (
-                            <ServiceButton type={"button"} text={"Editar servicio"} icon={<PencilIcon />} onClick={() => setIsEditing(true)} />
+                            loggedUser && loggedUser.user && loggedUser.user.username === service.user.username && (
+                                <ServiceButton type={"button"} text={"Editar servicio"} icon={<PencilIcon />} onClick={() => setIsEditing(true)} />
+                            )
                         )}
+
                     </div>
                 </div>
                 <div className="flex flex-col gap-y-6 px-10 py-6">
                     <h2 className="text-3xl font-bold mb-4">Trabajos:</h2>
-                    {jobs.map((job) => (
-                        <div key={job.id} className="w-90 border bg-white shadow-md rounded-xl m-8">
+                    {jobs.map((job, index) => (
+                        <div key={index} className="w-90 border bg-white shadow-md rounded-xl m-8">
                             <div className="flex flex-col gap-y-6 px-10 py-6">
-                                <JobData type={"text"} formName={`nameJob-${job.id}`} labelText={"Nombre:"}
-                                    inputValue={job.name} isReadOnly={!setEditingJobId}
-                                    onChange={(event) => handleJobInputChangeName(event.target.value, job.id)} />
-                                <JobData type={"number"} formName={`estimatedJobPrice-${job.id}`} labelText={"Precio estimado:"}
-                                    inputValue={job.estimated_price} isReadOnly={!setEditingJobId}
-                                    onChange={(event) => handleJobInputChangeEstimatedPrice(event.target.value, job.id)} />
+                                <JobData type={"text"} formName={`nameJob-${index}`} labelText={"Nombre:"}
+                                    inputValue={job.name} isReadOnly={index !== editingJobId}
+                                    onChange={(event) => handleJobInputChangeName(event.target.value, index)} />
+                                <JobData type={"number"} formName={`estimatedJobPrice-${index}`} labelText={"Precio estimado:"}
+                                    inputValue={job.estimated_price} isReadOnly={index !== editingJobId}
+                                    onChange={(event) => handleJobInputChangeEstimatedPrice(event.target.value, index)} />
                             </div>
-                            {editingJobId === job.id ? (
+                            {editingJobId === index ? (
                                 <div className="flex gap-x-4">
-                                    <ServiceButton type={"button"} text={"Guardar cambios"} icon={<CheckIcon />} onClick={() => handleSaveJob(editingJobId - 1)} />
+                                    <ServiceButton type={"button"} text={"Guardar cambios"} icon={<CheckIcon />} onClick={() => handleSaveJob(index,job.id)} />
                                     <ServiceButton type={"button"} text={"Cancelar"} icon={<CrossIcon />} onClick={() => handleCancelJob()} />
                                 </div>
                             ) : (
-                                <ServiceButton type={"button"} text={"Editar Tarea"} icon={<PencilIcon />} onClick={() => handleEditJob(job.id)} />
+                                <ServiceButton type={"button"} text={"Editar Tarea"} icon={<PencilIcon />} onClick={() => handleEditJob(index)} />
                             )}
                         </div>
                     ))}
-                    <Link to={`/services/${serviceId}/job/create`} className="link-button">
-                        <PlusIcon /> Crear tarea
-                    </Link>
+
+                    <div className="flex gap-20 ml-20">
+                        <LinkButtonContract url="/contracts/create" title="Crear un contrato" />
+                        <LinkButtonJob url={`/services/${serviceId}/job/create`} title="Crear una tarea" />
+                    </div>
                 </div>
             </div>
         </form>

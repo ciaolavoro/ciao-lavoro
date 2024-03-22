@@ -20,6 +20,9 @@ export function checkCityLength(city) {
 export function checkExperienceNegative(experience) {
     return experience < 0;
 }
+export function checkProfessionDuplicated(profession,professions) {
+    return professions.includes(profession);
+}
 
 export const errorMessages = {
     required: "Este campo es requerido.",
@@ -29,4 +32,5 @@ export const errorMessages = {
     imageNotUploaded: "Debe subir una imagen.",
     emailNotValid: "El correo electrónico no es válido.",
     usernameExists: "El nombre de usuario ya existe.",
+    professionDuplicate : "No se pueden crear dos servicios con la misma profesión",
 }

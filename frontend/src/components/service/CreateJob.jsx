@@ -1,5 +1,5 @@
 import { useState,useEffect } from "react";
-import { useNavigate,useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { createJobRequest } from "../../api/Job.api.js";
 import { useAuthContext } from "../auth/AuthContextProvider";
 
@@ -8,7 +8,6 @@ export default function CreateService() {
     const [estimated_price, setEstimated_price] = useState(null);
     const [serviceId, setServiceId] = useState(null);
     const { loggedUser } = useAuthContext();
-    const { serviceIdFromUrl } = useParams();
     const navigate = useNavigate();
 
     useEffect(() => {
