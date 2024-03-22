@@ -69,9 +69,8 @@ export default function ServiceDetails() {
     const handleCancel = () => {
         resetServiceData();
         setIsEditing(false);
-        
     };
-console.log(service)
+
     return (
         <form className="flex flex-col justify-center items-center gap-y-10 my-10 mx-10 bg-white border rounded-lg" onSubmit={handleEdit}>
             <div className="flex w-full m-10">
@@ -89,7 +88,7 @@ console.log(service)
                         <div className="grid grid-cols-2 gap-x-4 items-center w-full">
                             <p className="text-1.7xl font-semibold text-right"><strong>¿Activo?:</strong></p>
                             <p className="pl-2 w-full">
-                                <input
+                            <input
                                     type="checkbox"
                                     checked={isActive}
                                     onChange={(event) => {
@@ -123,41 +122,36 @@ console.log(service)
                             </div>
                         </div>
                     ))}
-
-{/* Sección de Valoraciones */}
-<h2 className="text-3xl font-bold mb-4">Opiniones de otros usuarios</h2>
-{reviews.map((review) => (
-    <div key={review.id} className="w-90 border bg-white shadow-md rounded-xl m-8">
-        <div className="px-10 py-6">
-            <div className="flex justify-between items-start mb-6">
-                <div className="flex flex-col">
-                    <label className="block text-lg font-medium mb-1">Nombre de usuario:</label>
-                    <div className="border p-2 rounded-md mb-4">{review.user.username}</div>
-                </div>
-                {/* Hecho con IA */}
-                <div className="flex flex-col items-end">
-                    <label className="block text-lg font-medium mb-1"></label>
-                    <div className="flex">
-                        {[1, 2, 3, 4, 5].map((value) => (
-                            <span key={value} className={`text-4xl ${review.rating >= value ? 'text-yellow-500' : 'text-gray-300'}`}>★</span>
-                        ))}
-                    </div>
-                </div>
-            </div>
-            {/* Hasta aquí */}
-            <div className="flex flex-col w-full">
-                <label className="block text-lg font-medium mb-1">Descripción:</label>
-                <div className="border p-2 rounded-md">{review.description}</div>
-            </div>
-        </div>
-    </div>
-))}
-
-
-
+                    <h2 className="text-3xl font-bold mb-4">Opiniones de otros usuarios:</h2>
+                    {reviews.length > 0 ? (
+                        reviews.map((review) => (
+                            <div key={review.id} className="w-90 border bg-white shadow-md rounded-xl m-8">
+                                <div className="px-10 py-6">
+                                    <div className="flex justify-between items-start mb-6">
+                                        <div className="flex flex-col">
+                                            <label className="block text-lg font-medium mb-1">Nombre de usuario:</label>
+                                            <div className="border p-2 rounded-md mb-4">{review.user.username}</div>
+                                        </div>
+                                        <div className="flex flex-col items-end">
+                                            <div className="flex">
+                                                {[1, 2, 3, 4, 5].map((value) => (
+                                                    <span key={value} className={`text-4xl ${review.rating >= value ? 'text-yellow-500' : 'text-gray-300'}`}>★</span>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="flex flex-col w-full">
+                                        <label className="block text-lg font-medium mb-1">Descripción:</label>
+                                        <div className="border p-2 rounded-md">{review.description}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))
+                    ) : (
+                        <div className="w-full text-center py-4">Aún no hay opiniones para este servicio.</div>
+                    )}
                 </div>
             </div>
         </form>
     );
 }
-
