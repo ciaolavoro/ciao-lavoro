@@ -61,12 +61,14 @@ export default function ContractUser() {
                         title=
                         '¿Cuántos estados hay?'
                         answer=
-                        {`<br />En total hay 6 estados:<br /><br />
-                        - Negociación: el contrato se ha creado, y esta pendiente de que el trabajador lo acepte o deniegue.<br />
-                        - Aceptado: el contrato ha sido aceptado por el trabajador y el cliente debe realizar el pago.<br />
-                        - Cancelado: El contrato ha sido cancelado por el trabajador. <br />
-                        - Pagado: el pago ha sido realizado. Solo falta esperar a que llegue el momento de realizar el trabajo.<br />
-                        - En proceso: el trabajador debe indicar que ya ha comenzado a realizar el trabajo para el cual se le habia contactado.<br />
+                        {`
+                        En total hay 6 estados:
+
+                        - Negociación: el contrato se ha creado, y esta pendiente de que el trabajador lo acepte o deniegue.
+                        - Aceptado: el contrato ha sido aceptado por el trabajador y el cliente debe realizar el pago.
+                        - Cancelado: El contrato ha sido cancelado por el trabajador. 
+                        - Pagado: el pago ha sido realizado. Solo falta esperar a que llegue el momento de realizar el trabajo.
+                        - En proceso: el trabajador debe indicar que ya ha comenzado a realizar el trabajo para el cual se le habia contactado.
                         - Finalizado: una vez el trabajo ha sido acabado, el cliente debe marcar como finalizado el contrato.`}
                     />
 
@@ -74,13 +76,15 @@ export default function ContractUser() {
                         title=
                         '¿Que significan los colores?'
                         answer=
-                        {`<br />Dependiendo del estado en el que se encuentre el contrato, aparecerá como un color u otro para que sea más fácil de 
-                        reconocer:<br /><br />
-                        - Negociación: azul.<br />
-                        - Aceptado: verde.<br />
-                        - Cancelado: rojo. <br />
-                        - Pagado: violeta.<br />
-                        - En proceso: amarillo.<br />
+                        {`
+                        Dependiendo del estado en el que se encuentre el contrato, aparecerá como un color u otro para que sea más fácil de 
+                        reconocer:
+
+                        - Negociación: azul.
+                        - Aceptado: verde.
+                        - Cancelado: rojo. 
+                        - Pagado: violeta.
+                        - En proceso: amarillo.
                         - Finalizado: blanco.`}
                     />
 
@@ -88,14 +92,16 @@ export default function ContractUser() {
                         title=
                         '¿Como funcionan los botones?'
                         answer=
-                        {`<br />Teniendo en cuenta la explicación que damos sobre los estados en el primer apartado, hay que tener en 
-                        cuenta las siguientes cosas:<br /><br />
-                        - Negociación: si esta en estado de negociación, solo el trabajador podra aceptaro o denegarlo. <br />
+                        {`
+                        Teniendo en cuenta la explicación que damos sobre los estados en el primer apartado, hay que tener en 
+                        cuenta las siguientes cosas:
+                        
+                        - Negociación: si esta en estado de negociación, solo el trabajador podra aceptaro o denegarlo.
                         - Aceptado: una vez aceptado, aparecera un boton para pagar al cliente. Hasta que no se pague no se pondrá en 
-                        marcha el trabajo llegado el día.<br />
+                        marcha el trabajo llegado el día.
                         - Pagado: si se encuentra en estado de pagado, cuando llegue el dia, el trabajador deberá marcar que se ha comenzado 
-                        el trabajo para que pase a estar en proceso. <br />
-                        - En proceso: si el contrato no se encuentra en estado de En proceso, no se podrá finalizar. <br />
+                        el trabajo para que pase a estar en proceso. 
+                        - En proceso: si el contrato no se encuentra en estado de En proceso, no se podrá finalizar. 
                         - Finalizado: solo el cliente podrá finalizar una vez esté el trabajo terminado.`}
                     />
                 </div>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const Accordion = ({title, answer}) => {
+const Accordion = ({ title, answer }) => {
 
     const [isOpen, setIsOpen] = useState(false);
     return (
@@ -38,7 +38,9 @@ const Accordion = ({title, answer}) => {
                 : 'grid-rows-[0fr] opacity-0'
                 }`}>
                 <div className="overflow-hidden">
-                    <p dangerouslySetInnerHTML={{ __html: answer }}></p>
+                    {answer.split('\n').map((line, index) => (
+                        <p key={index}>{line}</p>
+                    ))}
                 </div>
             </div>
         </div>
