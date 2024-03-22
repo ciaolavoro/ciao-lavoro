@@ -67,7 +67,6 @@ class ContractEdit(APIView):
         token_id = request.headers['Authorization']
         token = get_object_or_404(Token, key=token_id.split()[-1])
         user = token.user
-        
         if contract.client != user and contract.service.user != user and not user.is_staff:
             raise PermissionDenied("No tienes permiso para editar un contrato que no te pertenece")
 
