@@ -16,7 +16,7 @@ from .serializers import UserSerializer
 from django.contrib.auth.password_validation import validate_password
 
 class login_view(APIView):
-    authentication_classes = []
+
     permission_classes = [AllowAny]
 
     @method_decorator(csrf_exempt)
@@ -44,9 +44,8 @@ class authenticated(APIView):
 
 class register(APIView):
     
-    authentication_classes = []
     permission_classes = [AllowAny]
-    
+
     def post(self, request, format_arg=None):
         username = request.data.get('username')
         first_name = request.data.get('firstName')
@@ -67,13 +66,13 @@ class register(APIView):
         user.set_password(password)
         user.save()
         return JsonResponse({'status': '1', 'message': ' The user has been successfully registered'})
-
+    
 class UserList(APIView):
     def get(self, request):
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
-
+    
 class UserDetails(APIView):
     def get(self, request, format_arg=None, *args, **kwargs):
         authentication_classes = [SessionAuthentication]
@@ -83,15 +82,15 @@ class UserDetails(APIView):
         serializer = UserSerializer(user)
         return JsonResponse(serializer.data)
 
-class UserUpdate(APIView):
-   
+class Profile(APIView):
     @authentication_classes([TokenAuthentication])
     def get(self, request, format_arg=None):
-        session_id = request.session.session_key
-        user = request.user
+        token_id = request.headers['Authorization']
+        token = get_object_or_404(Token, key=token_id.split()[-1])
+        user = token.user
         serializer = UserSerializer(user)
         return JsonResponse(serializer.data)
-    
+
     @authentication_classes([TokenAuthentication])
     def put(self, request, format_arg=None):
         token_id = request.headers['Authorization']

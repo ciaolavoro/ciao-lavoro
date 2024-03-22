@@ -158,7 +158,8 @@ export default function UserProfile() {
                     <UserProfileButton type={"submit"} text={"Guardar cambios"} icon={<CheckIcon />} />
                     <UserProfileButton type={"button"} text={"Cancelar"} icon={<CrossIcon />} onClick={handleCancel} />
                 </div>)
-                : (loggedUser.user.id === userId && <UserProfileButton type={"button"} text={"Editar perfil"} icon={<PencilIcon />} onClick={() => setIsEditing(true)} />)}
+                : (loggedUser.user.id === userId && <UserProfileButton type={"button"} text={"Editar perfil"}
+                    icon={<PencilIcon />} onClick={() => setIsEditing(true)} />)}
         </form>
     )
 }

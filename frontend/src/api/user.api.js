@@ -8,9 +8,9 @@ export async function updateUserRequest(userData, token) {
         },
         body: userData,
     };
-    
+
     try {
-        const response = await fetch(`${BACKEND_URL}/user/edit/`, options);
+        const response = await fetch(`${BACKEND_URL}/user/profile/`, options);
         return response;
     } catch (error) {
         console.error('Update user error:', error);
