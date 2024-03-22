@@ -46,7 +46,6 @@ class UserServiceList(APIView):
 
 class JobView(APIView):
 
-    @authentication_classes([TokenAuthentication])
     def get(self, request):
         jobs = Job.objects.all()
         serializer = JobSerializer(jobs, many=True)
@@ -62,7 +61,7 @@ class JobView(APIView):
         user = token.user
         if user != service.user:
             raise PermissionDenied('No eres el propietario de este servicio')
-        name = job_data['name']
+        name = job_data['name'].strip()
         if name == '':
             raise ValidationError('El nombre no puede estar vacio')
         elif len(name) > 100:
@@ -86,7 +85,7 @@ class JobView(APIView):
         user = token.user
         if user != service.user:
             raise PermissionDenied('No puedes editar un trabajo de un servicio que no te pertenece')
-        new_name = job_data['name']
+        new_name = job_data['name'].strip()
         if new_name == '':
             raise ValidationError('El nombre no puede estar vacio')
         elif len(new_name) > 100:
@@ -161,8 +160,8 @@ class ServicesView(APIView):
         token_id = request.headers['Authorization']
         token = get_object_or_404(Token, key=token_id.split()[-1])
         user = token.user
-        city = service_data['city']
-        if city == "":
+        city = service_data['city'].strip()
+        if city == '':
             raise ValidationError("Debe indicar la ciudad")
         elif (len(city) > 200):
             raise ValidationError("La ciudad no puede contener más de 200 caracteres")
@@ -217,10 +216,10 @@ class ServicesView(APIView):
                 if s.profession == int(profession) and service.id != s.id:
                     raise ValidationError('No se pueden crear dos servicios de la misma profesión')
             service.profession = profession
-        city = service_data['city']
-        if not city == '':
+        city = service_data['city'].strip()
+        if  city != '':
             service.city = city
-        elif city == "":
+        elif city == '':
             raise ValidationError("Debe indicar la ciudad")
         elif (len(city)>200):
             raise ValidationError("La ciudad no puede contener más de 200 caracteres")
