@@ -43,12 +43,6 @@ export default function ContractUser() {
         getContract();
     }, [loggedUser, end_date, initial_date, status]);
 
-    // (1, "Negociacion"),
-    // (2, "Aceptado"),
-    // (3, "En proceso"),
-    // (4, "Finalizado"),
-    // (5, "Cancelado"),
-    // (6, "Pagado")
     return (
         <div>
             <section className="px-5">

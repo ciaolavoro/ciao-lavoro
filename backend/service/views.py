@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from user.models import User
 from rest_framework.views import APIView
@@ -215,3 +216,18 @@ class EditService(APIView):
         service.save()
         serializer = ServiceSerializer(service, many=False)
         return Response(serializer.data)
+    
+class UserHasService(APIView):
+    @authentication_classes([TokenAuthentication])
+    def get(self, request, service_id):
+        service = Service.objects.get(pk=service_id)
+        token_id = request.headers["Authorization"]
+        token = get_object_or_404(Token, key = token_id.split()[-1])
+        user = token.user
+        if user != service.user:
+            state = True
+        else :
+            state = False
+        data = {'user_state': state}
+        return JsonResponse(data)
+    

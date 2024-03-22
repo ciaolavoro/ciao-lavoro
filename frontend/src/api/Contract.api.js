@@ -56,6 +56,23 @@ export async function updateContractStatus(contractId, statusNum,token) {
     }
 }
 
+export const getContractsWorkers = async (token,end_date, initial_date, status) => {
+    const queryParams = new URLSearchParams({ 
+        end_date: end_date, 
+        initial_date: initial_date,
+        status: status,              
+                                        });
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
+            
+        },
+    };
+    return fetch(`${BACKEND_URL}/contracts/list/1/?${queryParams}`, options);
+}
+
 export const getContractsClients = async (token,end_date, initial_date, status) => {
     const queryParams = new URLSearchParams({ 
         end_date: end_date, 
@@ -73,19 +90,22 @@ export const getContractsClients = async (token,end_date, initial_date, status) 
     return fetch(`${BACKEND_URL}/contracts/list/0/?${queryParams}`, options);
 }
 
-export const getContractsWorkers = async (token,end_date, initial_date, status) => {
-    const queryParams = new URLSearchParams({ 
-        end_date: end_date, 
-        initial_date: initial_date,
-        status: status,              
-                                        });
+export const checkWorkerAssociation = async (serviceId) => {
+    const token = localStorage.getItem('token');
     const options = {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Token ${token}`,
-            
         },
     };
-    return fetch(`${BACKEND_URL}/contracts/list/1/?${queryParams}`, options);
+
+    try {
+        const response = await fetch(`${BACKEND_URL}/service/${serviceId}/userProperty/`, options);
+        const data = await response.json();
+        return data.user_state;
+    } catch (error) {
+        console.error('Error al verificar la asociación del trabajador:', error);
+        return true;
+    }
 }
