@@ -531,3 +531,53 @@ function Formulario() {
   placeholder='Confirmar Contraseña'
   className="w-full p-2 mb-4 border border-gray-300 rounded-md"
   />
+
+
+### CAMBIAR ICONO CONTRASEÑA DINAMICAMENTE:
+- **Persona que ha hecho el prompt:** Javier Grosso
+
+- **IA Usada:** Chat GPT 3.5
+
+---
+
+- **Prompt y respuestas:** Descritos en el enlace: [https://chat.openai.com/share/1f633138-8817-4b86-a521-caa2802d0834](https://chat.openai.com/share/1f633138-8817-4b86-a521-caa2802d0834)
+
+### ERROR DE VARIABLE MAP:
+- **Persona que ha hecho el prompt:** Javier Grosso
+
+- **IA Usada:** Chat GPT 3.5
+
+---
+
+- **Prompt y respuestas:** Descritos en el enlace: [https://chat.openai.com/share/e33e7f1b-b784-4ff4-9942-9fc9afcd2eea](https://chat.openai.com/share/e33e7f1b-b784-4ff4-9942-9fc9afcd2eea)
+y
+[https://chat.openai.com/share/97c7dfe5-f949-43fb-80c3-5a30a1fa1d71](https://chat.openai.com/share/97c7dfe5-f949-43fb-80c3-5a30a1fa1d71)
+y
+[https://chat.openai.com/share/87a22d9a-8a51-4510-8660-1ed19809432e](https://chat.openai.com/share/87a22d9a-8a51-4510-8660-1ed19809432e)
+
+### CORRECCION ERROR CON EL CORS:
+- **Persona que ha hecho el prompt:** Javier Grosso
+
+- **IA Usada:** Chat GPT 3.5
+
+---
+
+- **Prompt y respuestas:** Descritos en el enlace: [https://chat.openai.com/share/acc5dcab-30ac-4a5e-8500-6c18cb15bafe](https://chat.openai.com/share/acc5dcab-30ac-4a5e-8500-6c18cb15bafe)
+
+### VERIFICACION TRABAJADOR ASOCIADO:
+- **Persona que ha hecho el prompt:** Javier Grosso
+
+- **IA Usada:** Chat GPT 3.5
+
+---
+
+- **Prompt y respuestas:** Descritos en el enlace: [https://chat.openai.com/share/229e6803-cda7-4e12-aa14-18020ba10c6d](https://chat.openai.com/share/229e6803-cda7-4e12-aa14-18020ba10c6d)
+
+### PEQUEÑA AYUDA VALIDACIONES DE USUARIO:
+- **Persona que ha hecho el prompt:** Javier Grosso
+
+- **IA Usada:** Chat GPT 3.5
+
+---
+
+- **Prompt y respuestas:** Descritos en el enlace: [https://chat.openai.com/share/8c5d4827-9919-4a62-9489-183a60913007](https://chat.openai.com/share/8c5d4827-9919-4a62-9489-183a60913007)
