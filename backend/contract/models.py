@@ -16,9 +16,9 @@ class Contract(models.Model):
     accept_worker = models.BooleanField(default = False)
     accept_client = models.BooleanField(default = False)
     description = models.TextField(blank=False, max_length=500)
-    initial_date = models.DateTimeField()
-    end_date = models.DateTimeField()
-    cost = models.DecimalField(max_digits=10, decimal_places=2)
+    initial_date = models.DateTimeField(blank=False,null=False)
+    end_date = models.DateTimeField(blank=False,null=False)
+    cost = models.DecimalField(blank=False,null=False,max_digits=10, decimal_places=2)
     status = models.IntegerField(choices=STATUS_CHOICES, default=1)
     service = models.ForeignKey(Service, on_delete = models.CASCADE)
     def __str__(self):

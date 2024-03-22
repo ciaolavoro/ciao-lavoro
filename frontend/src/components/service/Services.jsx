@@ -45,7 +45,7 @@
                 <section>
                     <h1 className="text-4xl font-semibold text-center my-10">Encuentra el servicio que necesitas</h1>
                 </section>
-                <section>
+                <section className="px-5">
                     <form className="flex justify-center gap-2 my-4">
                         <input type="text" placeholder="Ciudad" className="w-96 pl-2 border rounded-lg py-2 font-semibold" value={city} onChange={(e) => setCity(e.target.value)} />
                         <select name="status" value={profession} onChange={(e) => setProfession(e.target.value)} className="w-96 pl-2 border rounded-lg py-2 bg-orange-200 font-semibold">
