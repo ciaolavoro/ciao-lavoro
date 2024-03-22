@@ -1,8 +1,7 @@
-from rest_framework import serializers
-from contract.models import Contract
 from user.models import User
 from service.models import Job, Service,Review
 from contract.models import Contract
+from rest_framework import serializers
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
