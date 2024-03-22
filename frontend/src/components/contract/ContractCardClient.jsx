@@ -1,11 +1,9 @@
-import { useNavigate } from "react-router-dom";
 import { updateContractStatus } from "../../api/Contract.api";
 import { useAuthContext } from "../auth/AuthContextProvider";
 
 export function ContractCardClient({ contract }) {
 
     const { loggedUser } = useAuthContext();
-    const navigate = useNavigate();
 
     const formatDate = (dateString) => {
         const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false };
@@ -36,7 +34,7 @@ export function ContractCardClient({ contract }) {
             const response = await updateContractStatus(contractId, statusNum, token);
             if (response.ok) {
                 alert('Estado actualizado correctamente');
-                navigate('/contracts/mylist');
+                window.location.reload();
             } else {
                 alert('Error al actualizar el estado. Por favor, intente de nuevo.');
             }
