@@ -8,7 +8,8 @@ import CheckIcon from "../icons/CheckIcon";
 import CrossIcon from "../icons/CrossIcon";
 import { useState } from "react";
 import { updateUserRequest } from "../../api/user.api";
-import { checkIfEmpty, errorMessages } from "../../utils/validation";
+import { checkIfEmpty, checkIfUsernameExists, checkLanguageLength, errorMessages } from "../../utils/validation";
+
 
 export default function UserProfile() {
     const [isEditing, setIsEditing] = useState(false);
@@ -26,6 +27,7 @@ export default function UserProfile() {
     const [image, setImage] = useState(`${import.meta.env.VITE_BACKEND_API_URL}${user.image}`);
     const [uploadedImage, setUploadedImage] = useState(null);
     const [isRequiredError, setIsRequiredError] = useState(false);
+    const [isUsernameError, setIsUsernameError] = useState(false);
     const [isImageError, setIsImageError] = useState(false);
     const [isLanguageError, setIsLanguageError] = useState(false);
 
@@ -60,7 +62,6 @@ export default function UserProfile() {
         setUploadedImage(null);
     }
 
-
     const resetErrors = () => {
         setIsRequiredError(false);
         setIsUsernameError(false);
@@ -82,7 +83,7 @@ export default function UserProfile() {
             resetErrors();
             setIsLanguageError(true);
             return;
-        } else if (!uploadedImage) {
+        } else if (!image) {
             resetErrors();
             setIsImageError(true);
             return;
@@ -130,8 +131,8 @@ export default function UserProfile() {
                 </div>
                 <div className="flex flex-col gap-y-6">
                     <UserProfileData type={"text"} formName={"username"} labelText={"Nombre de usuario:"} inputValue={username}
-                        isReadOnly={!isEditing} onChange={(event) => setUsername(event.target.value)}
-                        isError={isRequiredError} errorMessage={errorMessages.required} />
+                        isReadOnly={!isEditing} onChange={(event) => setUsername(event.target.value)} isError={isRequiredError || isUsernameError}
+                        errorMessage={(isRequiredError && errorMessages.required) || (isUsernameError && errorMessages.usernameExists)} />
                     <div className="flex gap-x-4">
                         <UserProfileData type={"text"} formName={"firstName"} labelText={"Nombre:"} inputValue={firstName}
                             isReadOnly={!isEditing} onChange={(event) => setFirstName(event.target.value)}

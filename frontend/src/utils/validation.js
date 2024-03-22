@@ -33,4 +33,5 @@ export const errorMessages = {
     emailNotValid: "El correo electrónico no es válido.",
     usernameExists: "El nombre de usuario ya existe.",
     professionDuplicate : "No se pueden crear dos servicios con la misma profesión",
+
 }

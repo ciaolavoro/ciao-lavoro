@@ -43,6 +43,11 @@ export default function Navbar() {
               Mis Servicios
             </li>
           </Link>
+          <Link to="/contracts/myList" >
+            <li className={`${navItemsStyle} hover:cursor-pointer`}>
+              Mis Contratos
+            </li>
+          </Link>
           <li className={`${navItemsStyle} hover:cursor-pointer`} onClick={handleLogout}>Cerrar sesión</li>
           <Link to={`/users/${loggedUser.user.id}`} reloadDocument>
             <li>
