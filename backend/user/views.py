@@ -1,6 +1,7 @@
 import re
 from .models import User
 from django.http import JsonResponse
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -54,6 +55,10 @@ class register(APIView):
         language = request.data.get('language')
         birth_date = request.data.get('birthdate')
         image = request.FILES.get('image')
+
+        if User.objects.filter(username=username).exists():
+            return JsonResponse({'status': '0', 'message': 'El nombre de usuario ya está en uso'},status=status.HTTP_400_BAD_REQUEST)
+
 
         user = User.objects.create(username=username, first_name=first_name, last_name=last_name, email=email
         ,language=language, birth_date=birth_date, image=image)

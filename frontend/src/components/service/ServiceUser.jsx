@@ -3,12 +3,18 @@ import { getServiceByUser } from "../../api/Service.api";
 import ServiceUserCard from "./ServiceUserCard";
 import { useAuthContext } from "../auth/AuthContextProvider";
 import LinkButton from "../home/LinkButton";
+import { Navigate } from "react-router-dom";
 
 export default function ServiceUser(){
 
     const [services, setServices] = useState([]);
     const { loggedUser } = useAuthContext();
     useEffect(() => {
+
+        if (!loggedUser) {
+            return (<Navigate to="/" />);
+        }
+        
         const getServices = async () => {
             try {
                 
