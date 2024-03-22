@@ -4,6 +4,7 @@ import { ContractCardClient } from "./ContractCardClient";
 import { ContractCardWorker } from "./ContractCardWorker";
 import { useAuthContext } from "../auth/AuthContextProvider";
 import { Navigate } from "react-router-dom";
+import Accordion from "./Accordion";
 
 
 export default function ContractUser() {
@@ -14,14 +15,14 @@ export default function ContractUser() {
     const [status, setStatus] = useState("");
     const { loggedUser } = useAuthContext();
 
-    
+
 
     useEffect(() => {
 
         if (!loggedUser) {
             return (<Navigate to="/" />);
         }
-    
+
         const getContract = async () => {
             try {
                 const res = await getContracts(loggedUser.token, end_date, initial_date, status);
@@ -38,14 +39,67 @@ export default function ContractUser() {
             }
         };
         getContract();
-    }, [loggedUser.token, end_date, initial_date, status]);
+    }, [loggedUser, end_date, initial_date, status]);
 
+    // (1, "Negociacion"),
+    // (2, "Aceptado"),
+    // (3, "En proceso"),
+    // (4, "Finalizado"),
+    // (5, "Cancelado"),
+    // (6, "Pagado")
     return (
         <div>
-            <section>
+            <section className="px-5">
                 <h1 className="text-4xl font-semibold text-center my-10">Todos tus contratos</h1>
             </section>
-            <section>
+
+            <section className="px-5 lg:px-80 md:px-30 sm:px-20 py-6 ">
+                <div className="p-4 bg-white rounded-lg divide-y-2">
+                    <Accordion
+                        title=
+                        '¿Cuántos estados hay?'
+                        answer=
+                        {`<br />En total hay 6 estados:<br /><br />
+                        - Negociación: el contrato se ha creado, y esta pendiente de que el trabajador lo acepte o deniegue.<br />
+                        - Aceptado: el contrato ha sido aceptado por el trabajador y el cliente debe realizar el pago.<br />
+                        - Cancelado: El contrato ha sido cancelado por el trabajador. <br />
+                        - Pagado: el pago ha sido realizado. Solo falta esperar a que llegue el momento de realizar el trabajo.<br />
+                        - En proceso: el trabajador debe indicar que ya ha comenzado a realizar el trabajo para el cual se le habia contactado.<br />
+                        - Finalizado: una vez el trabajo ha sido acabado, el cliente debe marcar como finalizado el contrato.`}
+                    />
+
+                    <Accordion
+                        title=
+                        '¿Que significan los colores?'
+                        answer=
+                        {`<br />Dependiendo del estado en el que se encuentre el contrato, aparecerá como un color u otro para que sea más fácil de 
+                        reconocer:<br /><br />
+                        - Negociación: azul.<br />
+                        - Aceptado: verde.<br />
+                        - Cancelado: rojo. <br />
+                        - Pagado: violeta.<br />
+                        - En proceso: amarillo.<br />
+                        - Finalizado: blanco.`}
+                    />
+
+                    <Accordion
+                        title=
+                        '¿Como funcionan los botones?'
+                        answer=
+                        {`<br />Teniendo en cuenta la explicación que damos sobre los estados en el primer apartado, hay que tener en 
+                        cuenta las siguientes cosas:<br /><br />
+                        - Negociación: si esta en estado de negociación, solo el trabajador podra aceptaro o denegarlo. <br />
+                        - Aceptado: una vez aceptado, aparecera un boton para pagar al cliente. Hasta que no se pague no se pondrá en 
+                        marcha el trabajo llegado el día.<br />
+                        - Pagado: si se encuentra en estado de pagado, cuando llegue el dia, el trabajador deberá marcar que se ha comenzado 
+                        el trabajo para que pase a estar en proceso. <br />
+                        - En proceso: si el contrato no se encuentra en estado de En proceso, no se podrá finalizar. <br />
+                        - Finalizado: solo el cliente podrá finalizar una vez esté el trabajo terminado.`}
+                    />
+                </div>
+            </section>
+
+            <section className="px-5 lg:px-80 md:px-30 sm:px-20 py-6 ">
                 <form className="flex flex-col sm:flex-row justify-center gap-2 my-4">
                     <label className="text-lg sm:text-xl font-semibold">Fecha inicio</label>
                     <input
@@ -78,7 +132,7 @@ export default function ContractUser() {
             </section>
 
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap 2 divide-x-4 mx-auto ">
+            <div className="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap 2 lg:divide-x-4 md:divide-x-2 mx-auto px-5">
                 <div>
                     <section>
                         <h2 className="text-2xl font-semibold text-center my-10">Contratos en los que has trabajado</h2>
