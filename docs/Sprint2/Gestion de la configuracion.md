@@ -27,6 +27,7 @@ GRUPO 6 | SEVILLA, 09 DE MARZO 2024 | ENTREGABLE “SPRINT 2”
 | 09/03/2024 | 1.2.1   | Añadido el texto "Sprint 2"                      |
 | 09/03/2024 | 1.2.2   | Inclusion de reglas del tablero github en el apartado 9              |
 | 20/03/2024 | 1.2.2   | Inclusion de las ramas de Hotfix              |
+| 22/03/2024 | 1.3   | Modificacion de los mensajes de commit             |
 
 ### Contenido
 1. Estrategia de ramas:
@@ -102,18 +103,15 @@ las urls, la lógica de negocio, etc...
 
 5. Política de mensajes de commit:
 La estructura general de los commits será la siguiente:
-- Task [No de tarea] - [Descripción de la tarea] #[No de issue]
-Siendo descripción de la tarea una pequeña descripción de lo realizado en el commit.
+- Task [No de tarea] - [Nombre de la tarea] #[No de issue]
 Ejemplo: Tarea 13 - Traducción al castellano. #23
 
 En caso de que el cambio arregle una funcionalidad ya existente, se seguirá la siguiente estructura:
-- Fix [No de tarea] - [Descripción de la tarea] #[No de issue]
-Siendo descripción de la tarea una breve descripción del arreglo realizado.
+- Fix [No de tarea] - [Nombre de la tarea] #[No de issue]
 Ejemplo: Fix 14 - Arreglada traducción al castellano. #27
 
 En caso de que el cambio arregle una funcionalidad ya existente y sea un hotfix, se seguirá la siguiente estructura:
-- Hotfix [Nº de tarea] - [Descripción de la tarea] #[Nº de issue]
-Siendo descripción de la tarea una breve descripción del arreglo realizado.
+- Hotfix [Nº de tarea] - [Nombre de la tarea] #[Nº de issue]
 Ejemplo: Hotfix 14 - Arreglada sincronización usuario. #27
 
 
@@ -123,9 +121,9 @@ Estrategia de ramas. Los commits solo se realizarán en las ramas correspondient
 funcionalidades, que posteriormente pasarán a la rama “develop” para comprobar su funcionalidad y
 finalmente a la rama “main”.
 El hashtag y el número de la issue es para enlazar la issue al commit y es diferente al número de la tarea.
-De forma adicional, se puede añadir al commit información más detallada si es necesario, siguiendo la
-siguiente estructura:
-- Task [No de tarea] - [Descripción de la tarea] #[No de issue]
+
+De forma adicional, se debe  añadir al commit información más detallada si es necesario, siguiendo la siguiente estructura:
+- Task [No de tarea] - [Nombre de la tarea] #[No de issue]
 -
 [Info mas detallada]
 Para lograr esto en la tabla de comandos, seria usar “git commit -a” y así podreis escribir mas de una línea.
