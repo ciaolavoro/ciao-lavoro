@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getContracts } from "../../api/Contract.api";
+import { getContractsClients, getContractsWorkers } from "../../api/Contract.api";
 import { ContractCardClient } from "./ContractCardClient";
 import { ContractCardWorker } from "./ContractCardWorker";
 import { useAuthContext } from "../auth/AuthContextProvider";
@@ -25,11 +25,13 @@ export default function ContractUser() {
 
         const getContract = async () => {
             try {
-                const res = await getContracts(loggedUser.token, end_date, initial_date, status);
-                if (res.status === 200) {
-                    const data = await res.json();
-                    setClientContracts(data.client);
-                    setWorkerContracts(data.worker);
+                const resClient = await getContractsClients(loggedUser.token, end_date, initial_date, status);
+                const resWorker = await getContractsWorkers(loggedUser.token, end_date, initial_date, status);
+                if (resClient.status === 200 && resWorker.status === 200) {
+                    const dataClient = await resClient.json();
+                    const dataWorker = await resWorker.json();
+                    setClientContracts(dataClient);
+                    setWorkerContracts(dataWorker);
                 } else {
                     alert('Error al cargar los contratos');
                 }
