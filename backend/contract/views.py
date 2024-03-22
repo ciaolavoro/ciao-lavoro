@@ -150,21 +150,19 @@ class ContractList(generics.ListAPIView):
             contracts = contracts.filter(end_date=end_date)
         return contracts
     @authentication_classes([TokenAuthentication])
-    def get(self, request):
+    def get(self, request,cow_id):
         token_id = self.request.headers['Authorization']
         token = get_object_or_404(Token, key=token_id.split()[-1])
         client = token.user
         queryset = self.get_queryset()
-        queryset1 = queryset.filter(worker = client)
-        queryset2 = queryset.filter(client = client)
+        if cow_id == 1:
+            queryset = queryset.filter(worker = client)
+        else:
+            queryset = queryset.filter(client = client)
         if not queryset.exists():
             return Response([], status=status.HTTP_200_OK)
-        serializer1 = self.serializer_class(queryset1, many=True,
-                                            context ={'request': request})
-        serializer2 = self.serializer_class(queryset2, many=True,
-                                            context ={'request': request})
-        return Response({"worker": serializer1.data, "client": serializer2.data},
-                            status=status.HTTP_200_OK)
+        serializer = self.serializer_class(queryset, many=True, context ={'request': request})
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 class ContractDetail(generics.ListAPIView):
     serializer_class = ContractSerializer
