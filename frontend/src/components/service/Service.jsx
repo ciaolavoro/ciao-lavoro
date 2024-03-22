@@ -59,16 +59,16 @@ export default function ServiceDetails() {
         try {
             const response = await updateJobRequest(jobData.id, jobData, token);
             if (response.ok) {
-                alert('Tarea actualizado correctamente');
+                alert('Trabajo actualizado correctamente');
                 setEditingJobId(false);
                 setJobs(service.jobs);
                 window.location.reload();
             } else {
-                alert('Error al actualizar la tarea. Por favor, intente de nuevo.');
+                alert('Error al actualizar el trabajo. Por favor, intente de nuevo.');
                 resetJobData();
             }
         } catch (error) {
-            alert('Error al actualizar la tarea. Por favor, intente de nuevo.');
+            alert('Error al actualizar el trabajo. Por favor, intente de nuevo.');
             resetJobData();
         }
     }
@@ -181,8 +181,6 @@ export default function ServiceDetails() {
         return professions.lastIndexOf(profession);
     }
 
-
-
     return (
         <form className="flex flex-col justify-center items-center gap-y-10 my-10 mx-10 bg-white border rounded-lg" onSubmit={handleEdit}>
             <div className="flex w-full m-10">
@@ -196,16 +194,14 @@ export default function ServiceDetails() {
 
                         <div>
                             <label htmlFor="profession" className="flex flex-col gap-x-4 text-1.7xl font-semibold">Profesión:   </label>
-                            {/* Usar un menú desplegable */}
                             <select
                                 id="profession"
                                 name="profession"
                                 value={profession}
-                                disabled={!isEditing} // Deshabilitar si no se está editando
+                                disabled={!isEditing}
                                 onChange={(event) => setProfession(event.target.value)}
                                 className="pl-2 border rounded w-full md:w-94"
                             >
-                                {/* Mapear las opciones de profesión */}
                                 {professions.map((profession, index) => (
                                     <option key={index} value={profession}>{profession}</option>
                                 ))}
@@ -226,17 +222,13 @@ export default function ServiceDetails() {
                                     type="checkbox"
                                     checked={isActive}
                                     onChange={(event) => {
-                                        // Verificar si el usuario logueado es el mismo que el usuario asociado al servicio
                                         if (loggedUser.user.username === service.user.username) {
                                             setIsActive(event.target.checked);
                                         } else {
-                                            // Mostrar algún tipo de mensaje de error o no realizar ninguna acción
                                             console.log("No tiene permisos para cambiar el estado del servicio.");
                                         }
                                     }}
-
                                     disabled={(loggedUser && service.user) ? loggedUser.user.username !== service.user.username : false}
-                                // Deshabilitar el botón si el usuario logueado no es el mismo que el usuario asociado al servicio
                                 /></p>
 
                         </div>
@@ -250,7 +242,6 @@ export default function ServiceDetails() {
                                 <ServiceButton type={"button"} text={"Editar servicio"} icon={<PencilIcon />} onClick={() => setIsEditing(true)} />
                             )
                         )}
-
                     </div>
                 </div>
                 <div className="flex flex-col gap-y-6 px-10 py-6">
@@ -271,14 +262,14 @@ export default function ServiceDetails() {
                                     <ServiceButton type={"button"} text={"Cancelar"} icon={<CrossIcon />} onClick={() => handleCancelJob()} />
                                 </div>
                             ) : (
-                                <ServiceButton type={"button"} text={"Editar Tarea"} icon={<PencilIcon />} onClick={() => handleEditJob(index)} />
+                                <ServiceButton type={"button"} text={"Editar Trabajo"} icon={<PencilIcon />} onClick={() => handleEditJob(index)} />
                             )}
                         </div>
                     ))}
 
                     <div className="flex gap-20 ml-20">
                         <LinkButtonContract url="/contracts/create" title="Crear un contrato" />
-                        <LinkButtonJob url={`/services/${serviceId}/job/create`} title="Crear una tarea" />
+                        <LinkButtonJob url={`/services/${serviceId}/job/create`} title="Crear una trabajo" />
                     </div>
                 </div>
             </div>

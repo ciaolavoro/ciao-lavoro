@@ -13,6 +13,11 @@ export function checkIfEmpty(text) {
     return text.trim().length === 0;
 }
 
+export function checkOnlyCharactersInText(text) {
+    const onlyCharactersRegex = /^[a-zA-Z]+$/;
+    return !onlyCharactersRegex.test(text);
+}
+
 export function checkCityLength(city) {
     return city.length > 50;
 }
@@ -32,6 +37,6 @@ export const errorMessages = {
     imageNotUploaded: "Debe subir una imagen.",
     emailNotValid: "El correo electrónico no es válido.",
     usernameExists: "El nombre de usuario ya existe.",
-    professionDuplicate : "No se pueden crear dos servicios con la misma profesión",
-
+    professionDuplicate : "No se pueden crear dos servicios con la misma profesión.",
+    onlyCharacters: "Este campo solo puede contener letras.",
 }
