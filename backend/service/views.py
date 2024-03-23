@@ -13,11 +13,8 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import authentication_classes
 from django.forms import ValidationError
 
-# Create your views here
-
 class ServiceList(generics.ListAPIView):
     serializer_class = ServiceSerializer
-
     def get_queryset(self):
         services = Service.objects.all()
         search_profession = self.request.query_params.get('search_profession')
@@ -44,14 +41,12 @@ class UserServiceList(APIView):
         serializer = ServiceSerializer(services, many=True)
         return Response(serializer.data)
 
-class JobView(APIView):
-
+class ProfessionsList(APIView):
     def get(self, request):
-        jobs = Job.objects.all()
-        serializer = JobSerializer(jobs, many=True)
-        return Response(serializer.data)
+        professions = Service.PROFESSIONS
+        return Response(professions)
     
-
+class JobView(APIView):
     @authentication_classes([TokenAuthentication])
     def post(self, request, service_id):
         job_data = request.data
@@ -61,15 +56,17 @@ class JobView(APIView):
         user = token.user
         if user != service.user:
             raise PermissionDenied('No eres el propietario de este servicio')
-        name = job_data['name'].strip()
-        if name == '':
-            raise ValidationError('El nombre no puede estar vacio')
-        elif len(name) > 100:
-            raise ValidationError('La cantidad de caracteres del nombre no puede ser superio a 100')
+        if job_data['name'] and job_data['name'].strip() != '':
+            name = job_data['name'].strip()
+        else:
+            raise ValidationError('El nombre no puede estar vacío')
+        
+        if len(name) > 100:
+            raise ValidationError('La cantidad de caracteres del nombre no puede ser superior a 100')
         estimated_price = job_data['estimated_price']
         if estimated_price == '':
-            estimated_price = 0.1
-        elif not estimated_price.isdigit():
+            estimated_price = 10
+        if not isinstance(estimated_price, int):
             raise ValidationError('El precio estimado debe ser un número')
         job = Job.objects.create(service=service, name=name, estimated_price=estimated_price)
         serializer = JobSerializer(job, many=False)
@@ -85,15 +82,17 @@ class JobView(APIView):
         user = token.user
         if user != service.user:
             raise PermissionDenied('No puedes editar un trabajo de un servicio que no te pertenece')
-        new_name = job_data['name'].strip()
-        if new_name == '':
-            raise ValidationError('El nombre no puede estar vacio')
-        elif len(new_name) > 100:
-            raise ValidationError('La cantidad de caracteres del nombre no puede ser superio a 100')
+        if job_data['name'] and job_data['name'].strip() != '':
+            new_name = job_data['name'].strip()
+        else:
+            raise ValidationError('El nombre no puede estar vacío')
+        
+        if len(new_name) > 100:
+            raise ValidationError('La cantidad de caracteres del nombre no puede ser superior a 100')
         new_estimated_price = job_data['estimated_price']
         if new_estimated_price == '':
-            new_estimated_price = 0.1
-        elif not new_estimated_price.isdigit():
+            new_estimated_price = 10
+        if not isinstance(new_estimated_price, int):
             raise ValidationError('El precio estimado debe ser un número')
         job.name = new_name
         job.estimated_price = new_estimated_price
@@ -114,14 +113,7 @@ class JobView(APIView):
         serializer = JobSerializer(job, many=False)
         return Response(serializer.data)
 
-class UserServiceViewSet(viewsets.ModelViewSet):
-    serializer_class = ServiceSerializer
-    def get_queryset(self):
-        user_id = self.kwargs['user_id']  # Obtén el ID del servicio de la URL
-        return Service.objects.filter(user_id=user_id)
-
 class ReviewView(APIView):
-
     def get(self, request, service_id):
         service = get_object_or_404(Service, pk=service_id)
         reviews = Review.objects.filter(service=service)
@@ -140,8 +132,15 @@ class ReviewView(APIView):
         token_id = request.headers["Authorization"]
         token = get_object_or_404(Token, key = token_id.split()[-1])
         user = token.user
-        description = review_data['description']
-        rating = review_data['rating']
+        if review_data['description'] and review_data['description'].strip() != '':
+            description = review_data['description'].strip()
+        else:
+            raise ValidationError("Una valoración debe contener una descripción")
+        if review_data['rating'] and review_data['rating'] != '':
+            rating = review_data['rating']
+        else:
+            raise ValidationError("Una valoración esta incompleta sin la puntuación")
+        
         date = datetime.now()
         if int(rating) > 5 or int(rating) < 0 :
             raise ValidationError('La valoración debe de estar entre 0 y 5')
@@ -151,21 +150,22 @@ class ReviewView(APIView):
         serializer = ReviewSerializer(review, many=False)
         return Response(serializer.data)
 
-
-class ServicesView(APIView):
-
+class ServiceView(APIView):
     @authentication_classes([TokenAuthentication])
     def post(self, request):
         service_data = request.data
         token_id = request.headers['Authorization']
         token = get_object_or_404(Token, key=token_id.split()[-1])
         user = token.user
-        city = service_data['city'].strip()
-        if city == '':
+        if service_data['city'] and service_data['city'].strip() != '':
+            city = service_data['city'].strip()
+        else:
             raise ValidationError("Debe indicar la ciudad")
-        elif (len(city) > 200):
-            raise ValidationError("La ciudad no puede contener más de 200 caracteres")
-        profession = service_data['profession']
+        if service_data['profession'] and service_data['profession'] != '':
+            profession = service_data['profession']
+        else: 
+            raise ValidationError("Se debe introducir una profesión")
+        
         profesions = Service.PROFESSIONS
         profession_exists = False
         for profession_id, _ in profesions:
@@ -180,8 +180,10 @@ class ServicesView(APIView):
         experience = service_data['experience']
         if experience == '':
             experience = 0
-        elif not experience.isdigit():
-            raise ValidationError('La experiencia debe ser un número')
+        if (len(city) > 200):
+            raise ValidationError("La ciudad no puede contener más de 200 caracteres")
+        if not isinstance(experience, int):
+            raise ValidationError('La experiencia debe ser un número entero')
         birth_date = user.birth_date
         today = date.today()
         age = today.year - birth_date.year - ((today.month, today.day) < (birth_date.month, birth_date.day))
@@ -191,7 +193,6 @@ class ServicesView(APIView):
         serializer = ServiceSerializer(service, many=False)
         return Response(serializer.data)
     
-
     @authentication_classes([TokenAuthentication])
     def put(self, request, service_id):
         service_data = request.data
@@ -201,39 +202,44 @@ class ServicesView(APIView):
         user = token.user
         if user != service.user:
             raise PermissionDenied('No eres el propietario de este servicio')
-        profession = service_data['profession']
-        if not profession == '':
-            profesions = Service.PROFESSIONS
-            profession_exists = False
-            for profession_id, _ in profesions:
-                if profession_id == int(profession):
-                    profession_exists = True
-            if not profession_exists:
-                raise ValidationError('La profesión no es valida')
-            user_services = list(Service.objects.filter(user=user))
-            for s in user_services:
-                
-                if s.profession == int(profession) and service.id != s.id:
-                    raise ValidationError('No se pueden crear dos servicios de la misma profesión')
-            service.profession = profession
-        city = service_data['city'].strip()
-        if  city != '':
+        if  service_data['city'] and service_data['city'].strip() != '':
+            city = service_data['city'].strip()
             service.city = city
-        elif city == '':
+        else:
             raise ValidationError("Debe indicar la ciudad")
-        elif (len(city)>200):
-            raise ValidationError("La ciudad no puede contener más de 200 caracteres")
+        if service_data['profession'] and service_data['profession'] != '':
+            profession = service_data['profession']
+        else: 
+            raise ValidationError("Se debe introducir una profesión")
+        profesions = Service.PROFESSIONS
+        profession_exists = False
+        for profession_id, _ in profesions:
+            if profession_id == int(profession):
+                profession_exists = True
+        if not profession_exists:
+            raise ValidationError('La profesión no es valida')
+        user_services = list(Service.objects.filter(user=user))
+        for s in user_services:  
+            if s.profession == int(profession) and service.id != s.id:
+                raise ValidationError('No se pueden crear dos servicios de la misma profesión')
+        service.profession = profession
         experience = service_data['experience']
-        if not experience == '':
-            birth_date = user.birth_date
-            today = date.today()
-            age = today.year - birth_date.year - ((today.month, today.day) < (birth_date.month, birth_date.day))
-            if int(experience)+16 > age:
-                raise ValidationError('La experiencia es demasiado alta')
-            service.experience = experience
+        if  experience == '':
+            experience = 0  
+        if not isinstance(experience, int):
+            raise ValidationError('La experiencia debe ser un número entero')
         is_active = service_data['is_active']
         if not is_active == '':
             service.is_active = is_active
+
+        if (len(city)>200):
+            raise ValidationError("La ciudad no puede contener más de 200 caracteres")
+        birth_date = user.birth_date
+        today = date.today()
+        age = today.year - birth_date.year - ((today.month, today.day) < (birth_date.month, birth_date.day))
+        if int(experience)+16 > age:
+            raise ValidationError('La experiencia es demasiado alta')
+        service.experience = experience
         service.save()
         serializer = ServiceSerializer(service, many=False)
         return Response(serializer.data)

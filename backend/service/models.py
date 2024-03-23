@@ -67,7 +67,7 @@ class Job(models.Model):
     service = models.ForeignKey(Service, default=None, null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=100, blank = False)
     estimated_price = models.DecimalField(
-                    max_digits=10,
+                    max_digits=7,
                     decimal_places=2,
                     validators=[MinValueValidator(0.01)],
                     help_text=('Introduzca el coste en euros'))
