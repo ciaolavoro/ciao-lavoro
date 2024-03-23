@@ -121,3 +121,14 @@ export const createServiceReview = async (service_id, rating, description, token
     };
     return fetchBackend(`/service/${service_id}/create/review/`, options);
 }
+
+export const getProfessionsList = async (token) => {
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
+        },
+    };
+    return fetchBackend(`/service/professionsList/`, options);
+}

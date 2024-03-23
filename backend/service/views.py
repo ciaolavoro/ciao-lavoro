@@ -28,13 +28,18 @@ class ServiceList(generics.ListAPIView):
     
         return services
 
-    def get(self, request, *args, **kwargs):
-        try:
-            queryset = self.get_queryset()
-            serializer = self.serializer_class(queryset, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+class ProfessionList(APIView):
+    def get(self, request):
+        token_id = request.headers["Authorization"]
+        token = get_object_or_404(Token, key = token_id.split()[-1])
+        user = token.user
+        all_professions = Service.PROFESSIONS
+        professions = []
+        for p in all_professions:
+            service = Service.objects.filter(user=user, profession=p[0])
+            if not service:
+                professions.append(p[1])
+        return Response({"professions": professions})
 
 class UserServiceList(APIView):
     def get(self, request, user_id):
