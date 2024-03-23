@@ -32,9 +32,18 @@ class Service(models.Model):
         (1, 'Lavandero'),
         (2, 'Celador'),
         (3, 'Albañil'),
+        (4, 'Carpintero'),
+        (5, 'Cerrajero'),
+        (6, 'Mecánico'),
+        (7, 'Electricista'),
+        (8, 'Conductor'),
+        (9, 'Pintor'),
+        (10, 'Herrero'),
+        (11, 'Sastre'),
+        (12, 'Profesor particular'),
     ]
     profession = models.IntegerField(choices = PROFESSIONS, blank = False)
-    city = models.TextField(blank = False)
+    city = models.TextField(blank = False, max_length=200)
     experience = models.PositiveIntegerField(blank = False,validators=[MinValueValidator(0), MaxValueValidator(80)])
     #Aquí se estipulan si está ofertando trabajo con este servicio
     is_active = models.BooleanField(blank = False,default=True)
@@ -58,7 +67,7 @@ class Job(models.Model):
     service = models.ForeignKey(Service, default=None, null=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=100, blank = False)
     estimated_price = models.DecimalField(
-                    max_digits=10,
+                    max_digits=7,
                     decimal_places=2,
                     validators=[MinValueValidator(0.01)],
                     help_text=('Introduzca el coste en euros'))
