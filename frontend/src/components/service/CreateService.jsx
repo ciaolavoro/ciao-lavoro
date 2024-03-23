@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { createServiceRequest } from "../../api/Service.api";
 import { useAuthContext } from "../auth/AuthContextProvider";
 import { getServiceByUser } from "../../api/Service.api";
-import { checkProfessionDuplicated, checkIfEmpty, checkCityLength, checkExperienceNegative, errorMessages, checkOnlyCharactersInText } from "../../utils/validation";
+import { checkProfessionDuplicated, checkIfEmpty, checkCityLength, checkExperienceNegative, errorMessages, checkOnlyCharactersInText, checkExperienceYears } from "../../utils/validation";
 
 export default function CreateService() {
     const { loggedUser } = useAuthContext();
@@ -20,6 +20,7 @@ export default function CreateService() {
     const [isProfessionDuplicated, setProfessionDuplicated] = useState(false);
     const [isExperienceError, setIsExperienceError] = useState(false);
     const [isOnlyCharacters, setIsOnlyCharacters] = useState(false);
+    const [isBigExperienceError, setIsBigExperienceError] = useState(false);
 
     const createService = async (email, professionNumber, city, experience) => {
         try {
@@ -27,21 +28,25 @@ export default function CreateService() {
             if (checkIfEmpty(city)) {
                 setIsRequiredCityError(true);
                 return;
-            } else if (checkIfEmpty(experience.toString())) {
-                resetErrors();
-                setIsRequiredExperienceError(true);
-                return;
             } else if (checkOnlyCharactersInText(city)) {
                 resetErrors();
                 setIsOnlyCharacters(true);
+                return;
+            } else if (checkCityLength(city)) {
+                resetErrors();
+                setIsCityError(true);
+                return;
+            } else if (checkIfEmpty(experience.toString())) {
+                resetErrors();
+                setIsRequiredExperienceError(true);
                 return;
             } else if (checkExperienceNegative(experience)) {
                 resetErrors();
                 setIsExperienceError(true);
                 return;
-            } else if (checkCityLength(city)) {
+            } else if (checkExperienceYears(experience, loggedUser.user.birth_date)) {
                 resetErrors();
-                setIsCityError(true);
+                setIsBigExperienceError(true);
                 return;
             } else if (checkProfessionDuplicated(professions[professionNumber - 1], listprofession)) {
                 resetErrors();
@@ -49,6 +54,7 @@ export default function CreateService() {
                 return;
             }
             resetErrors();
+
             const res = await createServiceRequest(email, professionNumber, city, experience, loggedUser.token);
             if (res.status === 200) {
                 alert('El servicio se ha creado correctamente')
@@ -125,9 +131,11 @@ export default function CreateService() {
                     <label>Experiencia:</label>
                     <input type="number" name="experience" value={experience} onChange={(e) => setExperience(e.target.value)} className="px-2 py-1 border rounded" />
                 </div>
-                {(isRequiredExperienceError || isExperienceError) && (
+                {(isRequiredExperienceError || isExperienceError || isBigExperienceError) && (
                     <p className="text-red-500">
-                        {isRequiredExperienceError ? errorMessages.required : isExperienceError && errorMessages.experienceNotValid}
+                        {(isRequiredExperienceError && errorMessages.required)
+                            || (isExperienceError && errorMessages.experienceNotValid)
+                            || (isBigExperienceError && errorMessages.tooMuchExperience)}
                     </p>
                 )}
             </div>

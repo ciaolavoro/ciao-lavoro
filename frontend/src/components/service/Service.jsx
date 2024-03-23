@@ -1,4 +1,4 @@
-import { useLoaderData, useParams } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import { useState } from "react";
 import { updateServiceRequest } from "../../api/Service.api";
 import ServiceData from "./ServiceData";
@@ -7,21 +7,21 @@ import PencilIcon from "../icons/PencilIcon";
 import CheckIcon from "../icons/CheckIcon";
 import CrossIcon from "../icons/CrossIcon";
 import { useAuthContext } from "../auth/AuthContextProvider";
-import { checkIfEmpty, checkCityLength, checkExperienceNegative, errorMessages } from "../../utils/validation";
+import { checkIfEmpty, checkCityLength, checkExperienceNegative, errorMessages, checkExperienceYears } from "../../utils/validation";
 import Jobs from "./Jobs";
 
 
 export default function ServiceDetails() {
     const service = useLoaderData();
     const { loggedUser } = useAuthContext();
+    const professions = ["Lavandero", "Celador", "Albañil"];
+
     const [isEditing, setIsEditing] = useState(false);
     const [city, setCity] = useState(service.city);
     const [profession, setProfession] = useState(service.profession);
     const [experience, setExperience] = useState(service.experience);
     const [isActive, setIsActive] = useState(service.is_active);
     const [isPromoted, setIsPromoted] = useState(service.is_promoted);
-    const { serviceId } = useParams();
-    const professions = ["Lavandero", "Celador", "Albañil"];
     const [isRequiredCityError, setIsRequiredCityError] = useState(false);
     const [isRequiredExperienceError, setIsRequiredExperienceError] = useState(false);
     const [isBigExperienceError, setIsBigExperienceError] = useState(false);
@@ -38,7 +38,7 @@ export default function ServiceDetails() {
 
     const updateService = async (serviceId, serviceData, token) => {
         try {
-            const response = await updateServiceRequest(serviceId, serviceData, token);
+            const response = await updateServiceRequest(service.id, serviceData, token);
             if (response.ok) {
                 alert('Servicio actualizado correctamente');
                 setIsEditing(false);
@@ -51,92 +51,6 @@ export default function ServiceDetails() {
             resetServiceData();
         }
     }
-    const updateJob = async (jobData, token) => {
-        try {
-            const response = await updateJobRequest(jobData.id, jobData, token);
-            if (response.ok) {
-                alert('Trabajo actualizado correctamente');
-                setEditingJobId(false);
-                setJobs(service.jobs);
-                window.location.reload();
-            } else {
-                alert('Error al actualizar el trabajo. Por favor, intente de nuevo.');
-                resetJobData();
-            }
-        } catch (error) {
-            alert('Error al actualizar el trabajo. Por favor, intente de nuevo.');
-            resetJobData();
-        }
-    }
-    const resetJobData = () => {
-        async function fetchJobDetails() {
-            try {
-                setJobs(service.jobs)
-            } catch (error) {
-                console.error("Error fetching job details:", error);
-            }
-        }
-        fetchJobDetails();
-    }
-
-    const handleEditJob = (jobId) => {
-        setEditingJobId(jobId);
-    };
-
-    const handleCancelJob = () => {
-        resetJobData();
-        setIsEditing(false);
-        setEditingJobId(false);
-    };
-
-
-    const handleJobInputChangeEstimatedPrice = (event, index) => {
-        const updatedJobList = [...jobs];
-        updatedJobList[index] = {
-            ...updatedJobList[index],
-            estimated_price: event
-        }
-        setJobs(updatedJobList)
-    };
-
-    const handleJobInputChangeName = (value, index) => {
-        const updatedJobList = [...jobs];
-        updatedJobList[index] = {
-            ...updatedJobList[index],
-            name: value
-        }
-        setJobs(updatedJobList)
-    };
-
-    const handleSaveJob = async (jobId, index) => {
-        event.preventDefault();
-        setJobs(service.jobs);
-    
-
-        const { name, estimated_price } = jobs[jobId];
-    
-
-        if (!name.trim()) {
-            alert('El nombre no puede estar vacío.');
-            return; 
-        }
-    
-        if (!estimated_price || estimated_price < 0) {
-            alert('El precio estimado no puede estar vacío ni ser negativo.');
-            return; 
-        }
-    
-        const JobData = {
-            id: index,
-            name,
-            estimated_price,
-        };
-    
-        if (window.confirm('¿Está seguro de guardar los cambios?')) {
-            updateJob(JobData, loggedUser.token);
-        }
-    };
-    
 
     const resetErrors = () => {
         setIsRequiredCityError(false);
@@ -149,19 +63,6 @@ export default function ServiceDetails() {
     const handleEdit = async (event) => {
         event.preventDefault();
 
-        // Se ha usado IA en esta parte.
-        // Esto es para comprobar la experiencia 
-        const today = new Date();
-        const birthDate = new Date(service.user.birth_date);
-        console.log(service.user);
-        let age = today.getFullYear() - birthDate.getFullYear();
-        const month = today.getMonth() - birthDate.getMonth();
-        //Esto es para ver si aun no ha cumplido años en ese año
-        if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
-            age--;
-        }
-
-        
         if (checkIfEmpty(city)) {
             setIsRequiredCityError(true);
             return;
@@ -173,17 +74,18 @@ export default function ServiceDetails() {
             resetErrors();
             setIsExperienceError(true);
             return;
-        }else if (parseInt(experience)+16 > age) {
+        } else if (checkExperienceYears(experience, loggedUser.user.birth_date)) {
             resetErrors();
             setIsBigExperienceError(true);
-            return;        
-        }else if (checkCityLength(city)) {
+            return;
+        } else if (checkCityLength(city)) {
             resetErrors();
             setIsCityError(true);
             return;
         }
         resetErrors();
         setIsEditing(true);
+
         const position = getPosicionProfession(profession);
         const serviceData = {
             id: service.id,
@@ -242,12 +144,12 @@ export default function ServiceDetails() {
                             errorMessage={(isRequiredCityError && errorMessages.required) || (isCityError && errorMessages.cityLength)} />
                         <ServiceData type={"number"} formName={"experience"} labelText={"Experiencia:"} inputValue={experience}
                             isError={isRequiredExperienceError || isExperienceError || isBigExperienceError}
-                            errorMessage={(isRequiredExperienceError && errorMessages.required) || (isExperienceError && errorMessages.experienceNotValid) 
-                            || (isBigExperienceError && errorMessages.experienceBig)}
+                            errorMessage={(isRequiredExperienceError && errorMessages.required) || (isExperienceError && errorMessages.experienceNotValid)
+                                || (isBigExperienceError && errorMessages.tooMuchExperience)}
                             isReadOnly={!isEditing} onChange={(event) => setExperience(event.target.value)} />
 
                         <div className="grid grid-cols-2 gap-x-4 items-center w-full">
-                            <p className="text-1.7xl font-semibold text-right"><strong>¿Activo?:</strong></p>
+                            <p className="text-2xl font-semibold text-right"><strong>¿Activo?:</strong></p>
                             <p className="pl-2  w-full">
                                 <input
                                     type="checkbox"
@@ -275,7 +177,7 @@ export default function ServiceDetails() {
                         )}
                     </div>
                 </div>
-                <Jobs jobs={service.jobs} serviceId={serviceId} />
+                <Jobs />
             </div>
         </form>
     );

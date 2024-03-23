@@ -8,11 +8,13 @@ import { useAuthContext } from "../auth/AuthContextProvider";
 import LinkButtonContract from "./LinkButtonContract";
 import LinkButtonJob from "./LinkButtonJob";
 import { updateJobRequest } from "../../api/Job.api";
+import { useLoaderData } from "react-router-dom";
 
-export default function Jobs({ serviceJobs, serviceId }) {
+export default function Jobs() {
     const { loggedUser } = useAuthContext();
+    const service = useLoaderData();
 
-    const [jobs, setJobs] = useState(serviceJobs);
+    const [jobs, setJobs] = useState(service.jobs);
     const [editingJobId, setEditingJobId] = useState(false);
 
     const updateJob = async (jobData, token) => {
@@ -21,7 +23,7 @@ export default function Jobs({ serviceJobs, serviceId }) {
             if (response.ok) {
                 alert('Trabajo actualizado correctamente');
                 setEditingJobId(false);
-                setJobs(serviceJobs);
+                setJobs(service.jobs);
                 window.location.reload();
             } else {
                 alert('Error al actualizar el trabajo. Por favor, intente de nuevo.');
@@ -54,7 +56,7 @@ export default function Jobs({ serviceJobs, serviceId }) {
     const resetJobData = () => {
         async function fetchJobDetails() {
             try {
-                setJobs(serviceJobs)
+                setJobs(service.jobs)
             } catch (error) {
                 console.error("Error fetching job details:", error);
             }
@@ -69,12 +71,23 @@ export default function Jobs({ serviceJobs, serviceId }) {
 
     const handleSaveJob = async (jobId, index) => {
         event.preventDefault();
-        setJobs(serviceJobs)
+        setJobs(service.jobs);
+
+        const { name, estimated_price } = jobs[jobId];
+
+        if (!name.trim()) {
+            alert('El nombre no puede estar vacío.');
+            return;
+        } else if (!estimated_price || estimated_price < 0) {
+            alert('El precio estimado no puede estar vacío ni ser negativo.');
+            return;
+        }
+
         const JobData = {
             id: index,
-            name: jobs[jobId].name,
-            estimated_price: jobs[jobId].estimated_price,
-        }
+            name,
+            estimated_price,
+        };
 
         if (window.confirm('¿Está seguro de guardar los cambios?')) {
             updateJob(JobData, loggedUser.token);
@@ -84,8 +97,12 @@ export default function Jobs({ serviceJobs, serviceId }) {
     return (
         <div className="flex flex-col gap-y-6 px-10 py-6">
             <h2 className="text-3xl font-bold mb-4">Trabajos:</h2>
+            <div className="flex gap-20 ml-20">
+                <LinkButtonContract url="/contracts/create" title="Crear un contrato" />
+                <LinkButtonJob url={`/services/${service.id}/job/create`} title="Crear una trabajo" />
+            </div>
             {jobs.map((job, index) => (
-                <div key={index} className="w-90 border bg-white shadow-md rounded-xl m-8">
+                <div key={index} className="w-90 border bg-white shadow-md rounded-xl m-8 pb-4">
                     <div className="flex flex-col gap-y-6 px-10 py-6">
                         <JobData type={"text"} formName={`nameJob-${index}`} labelText={"Nombre:"}
                             inputValue={job.name} isReadOnly={index !== editingJobId}
@@ -95,7 +112,7 @@ export default function Jobs({ serviceJobs, serviceId }) {
                             onChange={(event) => handleJobInputChangeEstimatedPrice(event.target.value, index)} />
                     </div>
                     {editingJobId === index ? (
-                        <div className="flex gap-x-4">
+                        <div className="flex justify-center gap-x-4">
                             <ServiceButton type={"button"} text={"Guardar cambios"} icon={<CheckIcon />} onClick={() => handleSaveJob(index, job.id)} />
                             <ServiceButton type={"button"} text={"Cancelar"} icon={<CrossIcon />} onClick={() => handleCancelJob()} />
                         </div>
@@ -104,11 +121,6 @@ export default function Jobs({ serviceJobs, serviceId }) {
                     )}
                 </div>
             ))}
-
-            <div className="flex gap-20 ml-20">
-                <LinkButtonContract url="/contracts/create" title="Crear un contrato" />
-                <LinkButtonJob url={`/services/${serviceId}/job/create`} title="Crear una trabajo" />
-            </div>
         </div>
     )
 }
