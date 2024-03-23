@@ -10,6 +10,7 @@ import { useAuthContext } from "../auth/AuthContextProvider";
 import { checkIfEmpty, checkCityLength, checkExperienceNegative, errorMessages } from "../../utils/validation";
 import Jobs from "./Jobs";
 
+
 export default function ServiceDetails() {
     const service = useLoaderData();
     const { loggedUser } = useAuthContext();
@@ -23,6 +24,7 @@ export default function ServiceDetails() {
     const professions = ["Lavandero", "Celador", "Albañil"];
     const [isRequiredCityError, setIsRequiredCityError] = useState(false);
     const [isRequiredExperienceError, setIsRequiredExperienceError] = useState(false);
+    const [isBigExperienceError, setIsBigExperienceError] = useState(false);
     const [isCityError, setIsCityError] = useState(false);
     const [isExperienceError, setIsExperienceError] = useState(false);
 
@@ -49,16 +51,117 @@ export default function ServiceDetails() {
             resetServiceData();
         }
     }
+    const updateJob = async (jobData, token) => {
+        try {
+            const response = await updateJobRequest(jobData.id, jobData, token);
+            if (response.ok) {
+                alert('Trabajo actualizado correctamente');
+                setEditingJobId(false);
+                setJobs(service.jobs);
+                window.location.reload();
+            } else {
+                alert('Error al actualizar el trabajo. Por favor, intente de nuevo.');
+                resetJobData();
+            }
+        } catch (error) {
+            alert('Error al actualizar el trabajo. Por favor, intente de nuevo.');
+            resetJobData();
+        }
+    }
+    const resetJobData = () => {
+        async function fetchJobDetails() {
+            try {
+                setJobs(service.jobs)
+            } catch (error) {
+                console.error("Error fetching job details:", error);
+            }
+        }
+        fetchJobDetails();
+    }
+
+    const handleEditJob = (jobId) => {
+        setEditingJobId(jobId);
+    };
+
+    const handleCancelJob = () => {
+        resetJobData();
+        setIsEditing(false);
+        setEditingJobId(false);
+    };
+
+
+    const handleJobInputChangeEstimatedPrice = (event, index) => {
+        const updatedJobList = [...jobs];
+        updatedJobList[index] = {
+            ...updatedJobList[index],
+            estimated_price: event
+        }
+        setJobs(updatedJobList)
+    };
+
+    const handleJobInputChangeName = (value, index) => {
+        const updatedJobList = [...jobs];
+        updatedJobList[index] = {
+            ...updatedJobList[index],
+            name: value
+        }
+        setJobs(updatedJobList)
+    };
+
+    const handleSaveJob = async (jobId, index) => {
+        event.preventDefault();
+        setJobs(service.jobs);
+    
+
+        const { name, estimated_price } = jobs[jobId];
+    
+
+        if (!name.trim()) {
+            alert('El nombre no puede estar vacío.');
+            return; 
+        }
+    
+        if (!estimated_price || estimated_price < 0) {
+            alert('El precio estimado no puede estar vacío ni ser negativo.');
+            return; 
+        }
+    
+        const JobData = {
+            id: index,
+            name,
+            estimated_price,
+        };
+    
+        if (window.confirm('¿Está seguro de guardar los cambios?')) {
+            updateJob(JobData, loggedUser.token);
+        }
+    };
+    
 
     const resetErrors = () => {
         setIsRequiredCityError(false);
         setIsRequiredExperienceError(false);
         setIsCityError(false);
         setIsExperienceError(false);
+        setIsBigExperienceError(false);
     }
 
     const handleEdit = async (event) => {
         event.preventDefault();
+
+        // Se ha usado IA en esta parte.
+        // Esto es para comprobar la experiencia 
+        const today = new Date();
+        const birthDate = new Date(service.user.birth_date);
+        console.log(service.user);
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const month = today.getMonth() - birthDate.getMonth();
+        //Esto es para ver si aun no ha cumplido años en ese año
+        if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+
+        
         if (checkIfEmpty(city)) {
             setIsRequiredCityError(true);
             return;
@@ -70,7 +173,11 @@ export default function ServiceDetails() {
             resetErrors();
             setIsExperienceError(true);
             return;
-        } else if (checkCityLength(city)) {
+        }else if (parseInt(experience)+16 > age) {
+            resetErrors();
+            setIsBigExperienceError(true);
+            return;        
+        }else if (checkCityLength(city)) {
             resetErrors();
             setIsCityError(true);
             return;
@@ -134,8 +241,9 @@ export default function ServiceDetails() {
                             isReadOnly={!isEditing} onChange={(event) => setCity(event.target.value)} isError={isRequiredCityError || isCityError}
                             errorMessage={(isRequiredCityError && errorMessages.required) || (isCityError && errorMessages.cityLength)} />
                         <ServiceData type={"number"} formName={"experience"} labelText={"Experiencia:"} inputValue={experience}
-                            isError={isRequiredExperienceError || isExperienceError}
-                            errorMessage={(isRequiredExperienceError && errorMessages.required) || (isExperienceError && errorMessages.experienceNotValid)}
+                            isError={isRequiredExperienceError || isExperienceError || isBigExperienceError}
+                            errorMessage={(isRequiredExperienceError && errorMessages.required) || (isExperienceError && errorMessages.experienceNotValid) 
+                            || (isBigExperienceError && errorMessages.experienceBig)}
                             isReadOnly={!isEditing} onChange={(event) => setExperience(event.target.value)} />
 
                         <div className="grid grid-cols-2 gap-x-4 items-center w-full">

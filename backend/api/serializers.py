@@ -12,7 +12,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class UserServiceSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ['username', 'image']
+        fields = ['username', 'image', 'birth_date']
 
 class JobSerializer(serializers.ModelSerializer):
     
