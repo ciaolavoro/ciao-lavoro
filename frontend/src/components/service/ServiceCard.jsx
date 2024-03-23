@@ -13,7 +13,6 @@ export default function Service({ service }) {
         <div className="px-4 py-3 w-72">
           
           <h2 className="text-2xl font-semibold"><strong></strong> {service.first_name} {service.user.last_name}</h2>
-          
           <span className="text-gray-400 mr-3 uppercase text-s">@{service.user.username}</span>
           <br/>
           <span className="text-gray-500 mr-3 uppercase text-m font-semibold">{service.profession}</span>

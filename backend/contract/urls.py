@@ -12,3 +12,4 @@ urlpatterns = [
     path('list/<int:cow_id>/', ContractList.as_view(), name="user-contracts"),
     path('list/<int:contract_id>/', ContractDetail.as_view(), name="user-contract")
 ]
+

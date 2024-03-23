@@ -9,6 +9,7 @@ import CreateService from './components/service/CreateService.jsx'
 import ErrorPage from './components/ErrorPage.jsx'
 import Root from './components/Root.jsx'
 import CreateContract from './components/contract/CreateContract.jsx'
+import CreateJob from './components/service/CreateJob.jsx'
 import Register from './components/register/Register.jsx'
 import UserProfile from './components/user/UserProfile.jsx'
 import Service from './components/service/Service.jsx'
@@ -47,6 +48,13 @@ const router = createBrowserRouter([
         element: <Service />,
         loader: async ({ params }) => {
           return fetch(`${BACKEND_URL}/service/${params.serviceId}`);
+        },
+      },
+      {
+        path: 'services/:serviceId/job/create',
+        element: <CreateJob />,
+        loader: async ({ params }) => {
+          return fetch(`${BACKEND_URL}/service/${params.serviceId}/job/create`);
         },
       },
       {
