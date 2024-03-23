@@ -14,6 +14,7 @@ import { checkIfEmpty, checkCityLength, checkExperienceNegative, errorMessages }
 import LinkButtonContract from "./LinkButtonContract";
 
 
+
 export default function ServiceDetails() {
     const service = useLoaderData();
     const { loggedUser } = useAuthContext();
@@ -112,19 +113,35 @@ export default function ServiceDetails() {
         setJobs(updatedJobList)
     };
 
-    const handleSaveJob =  async (jobId,index) => {
+    const handleSaveJob = async (jobId, index) => {
         event.preventDefault();
-        setJobs(service.jobs)
+        setJobs(service.jobs);
+    
+
+        const { name, estimated_price } = jobs[jobId];
+    
+
+        if (!name.trim()) {
+            alert('El nombre no puede estar vacío.');
+            return; 
+        }
+    
+        if (!estimated_price || estimated_price < 0) {
+            alert('El precio estimado no puede estar vacío ni ser negativo.');
+            return; 
+        }
+    
         const JobData = {
             id: index,
-            name: jobs[jobId].name,
-            estimated_price: jobs[jobId].estimated_price,
-        }
-
+            name,
+            estimated_price,
+        };
+    
         if (window.confirm('¿Está seguro de guardar los cambios?')) {
             updateJob(JobData, loggedUser.token);
         }
     };
+    
 
     const resetErrors = () => {
         setIsRequiredCityError(false);
@@ -257,14 +274,17 @@ export default function ServiceDetails() {
                                     onChange={(event) => handleJobInputChangeEstimatedPrice(event.target.value, index)} />
                             </div>
                             {editingJobId === index ? (
-                                <div className="flex gap-x-4">
+                                <div className="flex justify-center">
                                     <ServiceButton type={"button"} text={"Guardar cambios"} icon={<CheckIcon />} onClick={() => handleSaveJob(index,job.id)} />
                                     <ServiceButton type={"button"} text={"Cancelar"} icon={<CrossIcon />} onClick={() => handleCancelJob()} />
                                 </div>
+
                             ) : (
                                 <ServiceButton type={"button"} text={"Editar Trabajo"} icon={<PencilIcon />} onClick={() => handleEditJob(index)} />
                             )}
+                            <br></br>
                         </div>
+                        
                     ))}
 
                     <div className="flex gap-20 ml-20">
