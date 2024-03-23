@@ -133,8 +133,6 @@ class ContractStatusEdit(APIView):
         if contract.client != user and contract.service.user != user and not user.is_staff:
             raise PermissionDenied("No tienes permiso para editar un contrato que no te pertenece")
         new_status = status_num
-        if contract.status >= new_status:
-            raise ValidationError("El campo estado solo puede avanzar en estado")
         contract.status = new_status
         contract.save()
         serializer = ContractSerializer(contract, many=False,context ={'request': request})

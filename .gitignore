@@ -30,8 +30,8 @@ dist-ssr
 # Environment variables
 .env
 
-# User images
-backend/users/*
+# Fotos de los usuarios
+**/users/*
 
 # Test REST
-*.rest
+backend/api/test.rest
