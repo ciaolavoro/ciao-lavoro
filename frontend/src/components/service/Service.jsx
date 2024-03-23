@@ -30,6 +30,7 @@ export default function ServiceDetails() {
     const professions = ["Lavandero", "Celador", "Albañil"];
     const [isRequiredCityError, setIsRequiredCityError] = useState(false);
     const [isRequiredExperienceError, setIsRequiredExperienceError] = useState(false);
+    const [isBigExperienceError, setIsBigExperienceError] = useState(false);
     const [isCityError, setIsCityError] = useState(false);
     const [isExperienceError, setIsExperienceError] = useState(false);
 
@@ -148,10 +149,25 @@ export default function ServiceDetails() {
         setIsRequiredExperienceError(false);
         setIsCityError(false);
         setIsExperienceError(false);
+        setIsBigExperienceError(false);
     }
 
     const handleEdit = async (event) => {
         event.preventDefault();
+
+        // Se ha usado IA en esta parte.
+        // Esto es para comprobar la experiencia 
+        const today = new Date();
+        const birthDate = new Date(service.user.birth_date);
+        console.log(service.user);
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const month = today.getMonth() - birthDate.getMonth();
+        //Esto es para ver si aun no ha cumplido años en ese año
+        if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+
+        
         if (checkIfEmpty(city)) {
             setIsRequiredCityError(true);
             return;
@@ -163,7 +179,11 @@ export default function ServiceDetails() {
             resetErrors();
             setIsExperienceError(true);
             return;
-        } else if (checkCityLength(city)) {
+        }else if (parseInt(experience)+16 > age) {
+            resetErrors();
+            setIsBigExperienceError(true);
+            return;        
+        }else if (checkCityLength(city)) {
             resetErrors();
             setIsCityError(true);
             return;
@@ -228,8 +248,9 @@ export default function ServiceDetails() {
                             isReadOnly={!isEditing} onChange={(event) => setCity(event.target.value)} isError={isRequiredCityError || isCityError}
                             errorMessage={(isRequiredCityError && errorMessages.required) || (isCityError && errorMessages.cityLength)} />
                         <ServiceData type={"number"} formName={"experience"} labelText={"Experiencia:"} inputValue={experience}
-                            isError={isRequiredExperienceError || isExperienceError}
-                            errorMessage={(isRequiredExperienceError && errorMessages.required) || (isExperienceError && errorMessages.experienceNotValid)}
+                            isError={isRequiredExperienceError || isExperienceError || isBigExperienceError}
+                            errorMessage={(isRequiredExperienceError && errorMessages.required) || (isExperienceError && errorMessages.experienceNotValid) 
+                            || (isBigExperienceError && errorMessages.experienceBig)}
                             isReadOnly={!isEditing} onChange={(event) => setExperience(event.target.value)} />
 
                         <div className="grid grid-cols-2 gap-x-4 items-center w-full">
