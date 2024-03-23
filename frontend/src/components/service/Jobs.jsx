@@ -98,7 +98,7 @@ export default function Jobs() {
       <div className="flex flex-col gap-y-6 px-10 py-6">
          <h2 className="text-3xl font-bold mb-4">Trabajos:</h2>
          <div className="flex gap-20 ml-20">
-            <LinkButtonContract url="/contracts/create" title="Crear un contrato" />
+            <LinkButtonContract url={`/contracts/create?service_id=${service.id}`} title="Crear un contrato" />
             <LinkButtonJob url={`/services/${service.id}/job/create`} title="Crear una trabajo" />
          </div>
          {jobs.map((job, index) => (
