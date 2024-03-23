@@ -1,18 +1,14 @@
 import { useLoaderData, useParams } from "react-router-dom";
 import { useState } from "react";
 import { updateServiceRequest } from "../../api/Service.api";
-import { updateJobRequest } from "../../api/Job.api";
 import ServiceData from "./ServiceData";
-import JobData from "./JobData";
 import ServiceButton from "./ServiceButton";
 import PencilIcon from "../icons/PencilIcon";
 import CheckIcon from "../icons/CheckIcon";
 import CrossIcon from "../icons/CrossIcon";
 import { useAuthContext } from "../auth/AuthContextProvider";
-import LinkButtonJob from "./LinkButtonJob";
 import { checkIfEmpty, checkCityLength, checkExperienceNegative, errorMessages } from "../../utils/validation";
-import LinkButtonContract from "./LinkButtonContract";
-
+import Jobs from "./Jobs";
 
 export default function ServiceDetails() {
     const service = useLoaderData();
@@ -23,8 +19,6 @@ export default function ServiceDetails() {
     const [experience, setExperience] = useState(service.experience);
     const [isActive, setIsActive] = useState(service.is_active);
     const [isPromoted, setIsPromoted] = useState(service.is_promoted);
-    const [jobs, setJobs] = useState(service.jobs);
-    const [editingJobId, setEditingJobId] = useState(false);
     const { serviceId } = useParams();
     const professions = ["Lavandero", "Celador", "Albañil"];
     const [isRequiredCityError, setIsRequiredCityError] = useState(false);
@@ -55,76 +49,6 @@ export default function ServiceDetails() {
             resetServiceData();
         }
     }
-    const updateJob = async (jobData, token) => {
-        try {
-            const response = await updateJobRequest(jobData.id, jobData, token);
-            if (response.ok) {
-                alert('Trabajo actualizado correctamente');
-                setEditingJobId(false);
-                setJobs(service.jobs);
-                window.location.reload();
-            } else {
-                alert('Error al actualizar el trabajo. Por favor, intente de nuevo.');
-                resetJobData();
-            }
-        } catch (error) {
-            alert('Error al actualizar el trabajo. Por favor, intente de nuevo.');
-            resetJobData();
-        }
-    }
-    const resetJobData = () => {
-        async function fetchJobDetails() {
-            try {
-                setJobs(service.jobs)
-            } catch (error) {
-                console.error("Error fetching job details:", error);
-            }
-        }
-        fetchJobDetails();
-    }
-
-    const handleEditJob = (jobId) => {
-        setEditingJobId(jobId);
-    };
-
-    const handleCancelJob = () => {
-        resetJobData();
-        setIsEditing(false);
-        setEditingJobId(false);
-    };
-
-
-    const handleJobInputChangeEstimatedPrice = (event, index) => {
-        const updatedJobList = [...jobs];
-        updatedJobList[index] = {
-            ...updatedJobList[index],
-            estimated_price: event
-        }
-        setJobs(updatedJobList)
-    };
-
-    const handleJobInputChangeName = (value, index) => {
-        const updatedJobList = [...jobs];
-        updatedJobList[index] = {
-            ...updatedJobList[index],
-            name: value
-        }
-        setJobs(updatedJobList)
-    };
-
-    const handleSaveJob =  async (jobId,index) => {
-        event.preventDefault();
-        setJobs(service.jobs)
-        const JobData = {
-            id: index,
-            name: jobs[jobId].name,
-            estimated_price: jobs[jobId].estimated_price,
-        }
-
-        if (window.confirm('¿Está seguro de guardar los cambios?')) {
-            updateJob(JobData, loggedUser.token);
-        }
-    };
 
     const resetErrors = () => {
         setIsRequiredCityError(false);
@@ -174,7 +98,6 @@ export default function ServiceDetails() {
         resetServiceData();
         setIsEditing(false);
         resetErrors();
-
     };
 
     function getPosicionProfession(profession) {
@@ -244,34 +167,7 @@ export default function ServiceDetails() {
                         )}
                     </div>
                 </div>
-                <div className="flex flex-col gap-y-6 px-10 py-6">
-                    <h2 className="text-3xl font-bold mb-4">Trabajos:</h2>
-                    {jobs.map((job, index) => (
-                        <div key={index} className="w-90 border bg-white shadow-md rounded-xl m-8">
-                            <div className="flex flex-col gap-y-6 px-10 py-6">
-                                <JobData type={"text"} formName={`nameJob-${index}`} labelText={"Nombre:"}
-                                    inputValue={job.name} isReadOnly={index !== editingJobId}
-                                    onChange={(event) => handleJobInputChangeName(event.target.value, index)} />
-                                <JobData type={"number"} formName={`estimatedJobPrice-${index}`} labelText={"Precio estimado:"}
-                                    inputValue={job.estimated_price} isReadOnly={index !== editingJobId}
-                                    onChange={(event) => handleJobInputChangeEstimatedPrice(event.target.value, index)} />
-                            </div>
-                            {editingJobId === index ? (
-                                <div className="flex gap-x-4">
-                                    <ServiceButton type={"button"} text={"Guardar cambios"} icon={<CheckIcon />} onClick={() => handleSaveJob(index,job.id)} />
-                                    <ServiceButton type={"button"} text={"Cancelar"} icon={<CrossIcon />} onClick={() => handleCancelJob()} />
-                                </div>
-                            ) : (
-                                <ServiceButton type={"button"} text={"Editar Trabajo"} icon={<PencilIcon />} onClick={() => handleEditJob(index)} />
-                            )}
-                        </div>
-                    ))}
-
-                    <div className="flex gap-20 ml-20">
-                        <LinkButtonContract url="/contracts/create" title="Crear un contrato" />
-                        <LinkButtonJob url={`/services/${serviceId}/job/create`} title="Crear una trabajo" />
-                    </div>
-                </div>
+                <Jobs jobs={service.jobs} serviceId={serviceId} />
             </div>
         </form>
     );
