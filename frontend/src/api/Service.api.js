@@ -1,4 +1,4 @@
-const BACKEND_URL = import.meta.env.VITE_BACKEND_API_URL;
+import { fetchBackend } from "../utils/backendApi";
 
 export const getUserLogged = async () => {
     const token = localStorage.getItem('token');
@@ -10,11 +10,11 @@ export const getUserLogged = async () => {
         },
     };
 
-    return fetch(`${import.meta.env.VITE_BACKEND_API_URL}/user/edit/`, options);
+    return fetchBackend(`/user/edit/`, options);
 }
 
 export const getUserById = async (id) => {
-    
+
     const options = {
         method: 'GET',
         headers: {
@@ -24,11 +24,11 @@ export const getUserById = async (id) => {
 
     if (typeof id !== 'number' || !Number.isInteger(id)) {
         // El id no es un número entero
-        return fetch(`${id}`, options);
+        return fetchBackend(`${id}`, options);
     } else {
         // El id es un número entero
-        return fetch(`${BACKEND_URL}/user/${id}`, options);
-    }  
+        return fetchBackend(`/user/${id}`, options);
+    }
 }
 
 export const getServiceByUser = async (id) => {
@@ -38,14 +38,15 @@ export const getServiceByUser = async (id) => {
             'Content-Type': 'application/json',
         },
     };
-    return fetch(`${import.meta.env.VITE_BACKEND_API_URL}/service/user/${id}`, options);
+    return fetchBackend(`/service/user/${id}`, options);
 }
 
 export const getServiceByCityAndProfession = async (city, profession) => {
 
-    const queryParams = new URLSearchParams({ 
-        search_city: city, 
-        search_profession: profession });
+    const queryParams = new URLSearchParams({
+        search_city: city,
+        search_profession: profession
+    });
 
     const options = {
         method: 'GET',
@@ -54,7 +55,20 @@ export const getServiceByCityAndProfession = async (city, profession) => {
         },
     };
 
-    return fetch(`${BACKEND_URL}/service/?${queryParams}`, options);
+    return fetchBackend(`/service/?${queryParams}`, options);
+}
+
+export const getAllServices = async () => {
+
+
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    };
+
+    return fetchBackend(`/service`, options);
 }
 
 export const createServiceRequest = async (email, profession, city, experience, token) => {
@@ -66,10 +80,10 @@ export const createServiceRequest = async (email, profession, city, experience, 
         },
         body: JSON.stringify({ email, profession, city, experience }),
     };
-    return fetch(`${BACKEND_URL}/service/create/`, options);
+    return fetchBackend(`/service/create/`, options);
 }
 
-export async function updateServiceRequest(serviceId, serviceData,token) {
+export async function updateServiceRequest(serviceId, serviceData, token) {
     const options = {
         method: 'PUT',
         headers: {
@@ -78,11 +92,23 @@ export async function updateServiceRequest(serviceId, serviceData,token) {
         },
         body: JSON.stringify(serviceData),
     };
-    
+
     try {
-        const response = await fetch(`${BACKEND_URL}/service/${serviceId}/edit/`, options);
+        const response = await fetchBackend(`/service/${serviceId}/edit/`, options);
         return response;
     } catch (error) {
         console.error('Update service error:', error);
     }
+
+}
+export const createServiceReview = async (service_id, rating, description, token) => {
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
+        },
+        body: JSON.stringify({ rating, description }),
+    };
+    return fetchBackend(`/service/${service_id}/create/review/`, options);
 }

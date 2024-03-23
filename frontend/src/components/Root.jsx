@@ -7,7 +7,7 @@ export default function Root() {
         <div className="relative font-sans">
             <Navbar />
             <Background />
-            <main className="h-screen">
+            <main className="min-h-screen">
                 <Outlet />
             </main>
         </div>

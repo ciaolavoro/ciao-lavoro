@@ -20,10 +20,39 @@ export default function RegisterPage() {
   const [passwordIcon, setPasswordIcon] = useState(EyeSlashIcon);
   const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleUsernameChange = (e) => {
+    const value = e.target.value;
+
+    if(value.includes(' ')){
+      alert('El nombre de usuario no debe contener espacios en blanco')
+    }else{
+      setUsername(value);
+    }
+    
+  }
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    registerRequest(username, password, firstName, lastName, email, image, birthdate);
-    navigate("/");
+    if ( !firstName.trim()){
+      alert('El nombre no puede estar vacío');
+      return;
+    }
+    if ( !lastName.trim()){
+      alert('El apellido no puede estar vacío');
+      return;
+    }
+    try {
+      await registerRequest(username, password, firstName, lastName, email, image, birthdate);
+      navigate("/");
+  } catch (error) {
+      console.error('Error registrando usuario:', error);
+      if (error.message === 'El nombre de usuario ya está en uso') {
+          alert('El nombre de usuario ya existe. Por favor, elige otro.');
+      } else {
+          alert('Ha ocurrido un error. Por favor intentelo de nuevo');
+      }
+  }
+    
   };
 
   const handleImageChange = (e) => {
@@ -74,7 +103,7 @@ export default function RegisterPage() {
                 <input
                   type="text"
                   value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  onChange={handleUsernameChange}
                   required
                   minLength={3}
                   maxLength={30}
