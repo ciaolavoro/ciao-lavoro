@@ -90,7 +90,7 @@ export default function ServiceDetails() {
          id: service.id,
          profession: position + 1,
          city: city,
-         experience: experience,
+         experience: Number(experience),
          is_active: isActive,
          is_promoted: isPromoted,
          jobs: service.jobs,
@@ -210,8 +210,8 @@ export default function ServiceDetails() {
                   )}
                </div>
             </div>
-            <Jobs />
             <div className="flex flex-col gap-y-6 px-10 py-6">
+               <Jobs />
                <h2 className="text-3xl font-bold mb-4">Opiniones de otros usuarios:</h2>
                {service.reviews.length > 0 ? (
                   service.reviews.map(review => (

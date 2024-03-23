@@ -39,7 +39,7 @@ export function checkExperienceYears(experience, userBirthDate) {
         age--;
     }
 
-    return parseInt(experience) + 16 > age;
+    return Number(experience) + 16 > age;
 }
 
 export const errorMessages = {
