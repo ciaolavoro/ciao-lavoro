@@ -1,31 +1,32 @@
-import { useEffect, useState } from "react";
+import { Link } from "react-router-dom"
+import { BACKEND_URL } from "@/utils/backendApi"
 
-export default function Service({ service }) {
+const DEFAULT_USER_IMG =
+   "https://images.unsplash.com/photo-1646753522408-077ef9839300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NjZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
 
-  const [profession, setProfession] = useState("");
-  useEffect(() => {
-    if(service.profession === 1) {
-      setProfession("Lavandero");
-    } else if (service.profession === 2) {
-      setProfession("Celador");
-    } else {
-      setProfession("Albañil");
-    }
-  }, [service.profession])
-
-  return (
-    <div className="max-w-md mx-auto my-6 bg-white border rounded-lg overflow-hidden p-6">
-      <h2 className="text-2xl font-semibold mb-4">Detalles del servicio</h2>
-      <p className="mb-2 mt-4"><strong>Nombre del ofertante:</strong> {service.name}</p>
-      <p className="mb-2"><strong>Profesión:</strong> {profession}</p>
-      <p className="mb-2"><strong>Ciudad:</strong> {service.city}</p>
-      <p className="mb-2"><strong>Experiencia:</strong> {service.experience}</p>
-      <p className="mb-2"><strong>Tareas:</strong> {service.tasks}</p>
-      <p className="mb-2"><strong>Idioma:</strong> {service.language}</p>
-    </div>
-  );
+export default function ServiceCard({ service }) {
+   return (
+      <div className="w-80 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
+         <Link to={`/services/${service.id}`}>
+            <img src={`${BACKEND_URL}${service.user.image}` ?? DEFAULT_USER_IMG} className="h-80 w-80 object-cover rounded-t-xl" />
+            <div className="px-4 py-3 w-72">
+               <h2 className="text-2xl font-semibold">
+                  <strong></strong> {service.user.first_name} {service.user.last_name}
+               </h2>
+               <span className="text-gray-400 mr-3 uppercase text-s">@{service.user.username}</span>
+               <br />
+               <span className="text-gray-500 mr-3 uppercase text-m font-semibold">{service.profession}</span>
+               <p className="mb-2 mt-4">
+                  <strong>Ciudad:</strong> {service.city}
+               </p>
+               <p className="mb-2">
+                  <strong>Experiencia:</strong> {service.experience} {service.experience > 1 ? "años" : "año"}
+               </p>
+               <p className="mb-2">
+                  <strong>Idioma:</strong> {service.user && service.user.language ? service.user.language : "Sin idioma"}
+               </p>
+            </div>
+         </Link>
+      </div>
+   )
 }
-
-
-
-

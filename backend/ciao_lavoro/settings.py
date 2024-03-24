@@ -31,6 +31,9 @@ SECRET_KEY = env('DJANGO_SECRET_KEY')
 DEBUG = env('DJANGO_DEBUG')
 DEBUG_PROPAGATE_EXCEPTIONS = True
 
+#Stripe Key
+STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY')
+
 ALLOWED_HOSTS = [
     env('DJANGO_ALLOWED_HOST'),
 ]
@@ -67,6 +70,7 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     env('FRONTEND_URL'),
 ]
+
 
 ROOT_URLCONF = 'ciao_lavoro.urls'
 
@@ -136,6 +140,9 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+MEDIA_URL = 'users/'
+MEDIA_ROOT = BASE_DIR / 'users'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -145,6 +152,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication'
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticatedOrReadOnly'
@@ -161,4 +169,4 @@ REST_FRAMEWORK = {
     }
 }
 
-AUTH_USER_MODEL = 'user.User' 
+AUTH_USER_MODEL = 'user.User'

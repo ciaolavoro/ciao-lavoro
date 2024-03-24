@@ -1,31 +1,70 @@
+import { fetchBackend } from "../utils/backendApi";
+
 export const loginRequest = async (username, password) => {
     const options = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({username, password }),
+        body: JSON.stringify({ username, password }),
     };
-    return fetch(`${import.meta.env.VITE_BACKEND_API_URL}/user/login/`, options);
-}
-
-export const isAuthenticated = async () => {
-    const options = {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    };
-    return fetch(`${import.meta.env.VITE_BACKEND_API_URL}/user/authenticated/`, options);
-}
-
-export const logoutRequest = async () => {
-    const options = {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    };
-    return fetch(`${import.meta.env.VITE_BACKEND_API_URL}/user/logout/`, options);
+    try {
+        const response = await fetchBackend(`/user/login/`, options);
+        const data = await response.json();
+        const token = data.token;
+        localStorage.setItem("token", token);
+        return data;
+    } catch (error) {
+        console.error('Login error:', error);
+    }
 };
 
+
+export const isAuthenticated = async () => {
+    const token = localStorage.getItem('token');
+
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
+        },
+    };
+    return fetchBackend(`/user/authenticated/`, options);
+};
+
+export const logoutRequest = async () => {
+    localStorage.removeItem('token');
+};
+
+export const registerRequest = async (username, password, firstName, lastName, email, image, birthdate) => {
+    
+    const formData = new FormData();
+    formData.append('username', username);
+    formData.append('password', password);
+    formData.append('firstName', firstName);
+    formData.append('lastName', lastName);
+    formData.append('email', email);
+    formData.append('image', image);
+    formData.append('birthdate', birthdate);
+    const options = {
+        method: 'POST',
+        body: formData
+    };
+    try {
+        console.log(image)
+        const response = await fetchBackend(`/user/register/`, options);
+        const data = await response.json();
+
+        if (response.ok) {
+            return data;
+        } else if (response.status === 400 && data.message === 'El nombre de usuario ya está en uso') {
+            throw new Error(data.message);
+        } else {
+            throw new Error('Ha ocurrido un error en el registro');
+        }
+    } catch (error) {
+        console.error('Registro error:', error);
+        throw error;
+    }
+};

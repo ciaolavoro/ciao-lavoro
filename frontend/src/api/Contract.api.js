@@ -1,14 +1,4 @@
-export const getAllContracts = async () => {
-
-    const options = {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    };
-
-    return fetch(`${import.meta.env.VITE_BACKEND_API_URL}/contracts/`, options);
-}
+import { fetchBackend } from "../utils/backendApi";
 
 export const getAllUsers = async () => {
 
@@ -19,8 +9,9 @@ export const getAllUsers = async () => {
         },
     };
 
-    return fetch(`${import.meta.env.VITE_BACKEND_API_URL}/user/`, options);
+    return fetchBackend(`/user/`, options);
 }
+
 
 export const getAllServices = async () => {
 
@@ -31,16 +22,112 @@ export const getAllServices = async () => {
         },
     };
 
-    return fetch(`${import.meta.env.VITE_BACKEND_API_URL}/service/`, options);
+    return fetchBackend(`/service/`, options);
 }
 
-export const createContractRequest = async (worker, client, accept_worker, accept_client, description, initial_date, end_date, cost, status, service) => {
+export const createContractRequest = async (description, initial_date, end_date, cost, service_id, token) => {
+    const options = {
+
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
+        },
+        body: JSON.stringify({ description, initial_date, end_date, cost, token }),
+    };
+
+    return fetchBackend(`/contracts/create/${service_id}/`, options);
+}
+
+export async function updateContractStatus(contractId, statusNum, token) {
+    const options = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
+        },
+    };
+
+    try {
+        const response = await fetchBackend(`/contracts/edit/${contractId}/${statusNum}/`, options);
+        return response;
+    } catch (error) {
+        console.error('Update Contract Status error:', error);
+    }
+}
+
+export async function handleContractPayment(contractId, token, returnURL) {
     const options = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
         },
-        body: JSON.stringify({ worker, client, accept_worker, accept_client, description, initial_date, end_date, cost, status, service}),
+        body: JSON.stringify({ returnURL }),
     };
-    return fetch(`${import.meta.env.VITE_BACKEND_API_URL}/contracts/create/`, options);
+
+    try {
+        const response = await fetchBackend(`/contracts/${contractId}/payment/`, options);
+        const data = await response.json();
+        console.log(data)
+        if (response.ok) {
+            return data; 
+        }
+    } catch (error) {
+        console.error('Contract Payment error:', error);
+    }
+}
+
+export const getContractsWorkers = async (token, end_date, initial_date, status) => {
+    const queryParams = new URLSearchParams({
+        end_date: end_date,
+        initial_date: initial_date,
+        status: status,
+    });
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
+
+        },
+    };
+    return fetchBackend(`/contracts/list/1/?${queryParams}`, options);
+}
+
+export const getContractsClients = async (token, end_date, initial_date, status) => {
+    const queryParams = new URLSearchParams({
+        end_date: end_date,
+        initial_date: initial_date,
+        status: status,
+    });
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
+
+        },
+    };
+    return fetchBackend(`/contracts/list/0/?${queryParams}`, options);
+}
+
+export const checkWorkerAssociation = async (serviceId) => {
+    const token = localStorage.getItem('token');
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
+        },
+    };
+
+    try {
+        const response = await fetchBackend(`/service/${serviceId}/userProperty/`, options);
+        const data = await response.json();
+        return data.user_state;
+    } catch (error) {
+        console.error('Error al verificar la asociación del trabajador:', error);
+        return true;
+    }
 }
