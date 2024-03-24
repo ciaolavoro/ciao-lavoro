@@ -1,3 +1,6 @@
+
+from django.conf import settings
+from django.http import JsonResponse
 from .models import Contract
 from service.models import Service
 from .serializers import ContractSerializer
@@ -11,6 +14,8 @@ from rest_framework.decorators import authentication_classes
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.response import Response
 from rest_framework.views import APIView
+import stripe
+
 class ContractCreation(APIView):
     @authentication_classes([TokenAuthentication])
     def post(self, request, service_id):
@@ -191,3 +196,40 @@ class ContractDetail(generics.ListAPIView):
         serializer = self.serializer_class(contract, many = False,
                                             context ={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+class ContractPayment(APIView):
+    @authentication_classes([TokenAuthentication])
+    def post(self, request, contract_id):
+        contract = get_object_or_404(Contract, pk = contract_id)
+        token_id = self.request.headers['Authorization']
+        returnURL = request.data.get('returnURL')
+        token = get_object_or_404(Token, key = token_id.split()[-1])
+        user = token.user
+        if user != contract.client:
+            raise PermissionDenied("No puedes proceder al pago de un contrato que no te pertenece")
+        try:
+            stripe.api_key = settings.STRIPE_SECRET_KEY
+            contractReceipt = stripe.Product.create(
+                name = 'Contrato de Prueba',
+                description = contract.description
+            )
+            price = stripe.Price.create(
+                unit_amount = int(contract.cost * 100),
+                currency = 'eur',
+                product = contractReceipt.id,
+            )
+
+            session = stripe.checkout.Session.create(
+                payment_method_types = ['card'],
+                line_items = [{
+                    'price': price.id,
+                    'quantity': 1,
+                    }],
+                mode = 'payment',
+                customer_email = user.email,
+                success_url = returnURL,
+            )
+            return JsonResponse({'sessionUrl': session.url})
+        except stripe.error.StripeError as e:
+            error_msg = str(e)
+            return Response({'Error al completar el pago': error_msg}, status=status.HTTP_400_BAD_REQUEST)
