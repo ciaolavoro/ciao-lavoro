@@ -18,9 +18,9 @@ export default function ServiceDetails() {
    useEffect(() => {
       const fetchProfessions = async () => {
          try {
-            const response = await getProfessionsList(loggedUser.token)
-            const data = await response.json()
-            setProfessions(data.professions)
+               const response = await getProfessionsList(loggedUser.token)
+               const data = await response.json()
+               setProfessions(data.professions)
          } catch (error) {
             console.error("Failed to fetch professions", error)
          }
@@ -29,7 +29,7 @@ export default function ServiceDetails() {
       if (loggedUser && loggedUser.token) {
          fetchProfessions()
       }
-   }, [loggedUser, loggedUser.token])
+   }, [])
 
    const [isEditing, setIsEditing] = useState(false)
    const [city, setCity] = useState(service.city)
@@ -158,10 +158,11 @@ export default function ServiceDetails() {
                         name="profession"
                         value={profession}
                         disabled={!isEditing}
-                        onChange={event => console.log(event.target.value)>setProfession(event.target.value)}
+                        onChange={event => setProfession(event.target.value)}
                         className="pl-2 border rounded w-full md:w-94">
+                        <option>{profession}</option>
                         {professions.map((prof, index) => (
-                           <option key={index} value={prof.id}>
+                           <option key={index} value={prof.name}>
                               {prof.name}
                            </option>
                         ))}

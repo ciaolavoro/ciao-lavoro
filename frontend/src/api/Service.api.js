@@ -133,7 +133,7 @@ export const getProfessionsList = async (token) => {
     return fetchBackend(`/service/professionsList/`, options);
 }
 
-export const getAllProfessionsList = async (token) => {
+export const getAllProfessionsList = async () => {
     const options = {
         method: 'GET',
         headers: {

@@ -64,11 +64,6 @@ class UserServiceList(APIView):
         serializer = ServiceSerializer(services, many=True)
         return Response(serializer.data)
 
-class ProfessionsList(APIView):
-    def get(self, request):
-        professions = Service.PROFESSIONS
-        return Response(professions)
-    
 class JobView(APIView):
     @authentication_classes([TokenAuthentication])
     def post(self, request, service_id):
@@ -236,16 +231,17 @@ class ServiceView(APIView):
             raise ValidationError("Se debe introducir una profesión")
         profesions = Service.PROFESSIONS
         profession_exists = False
-        for profession_id, _ in profesions:
-            if profession_id == int(profession):
+        for profession_id, profession_name in profesions:
+            if profession_name == profession:
                 profession_exists = True
+                profession = profession_id
         if not profession_exists:
             raise ValidationError('La profesión no es valida')
         user_services = list(Service.objects.filter(user=user))
         for s in user_services:  
-            if s.profession == int(profession) and service.id != s.id:
+            if s.profession == profession and service.id != s.id:
                 raise ValidationError('No se pueden crear dos servicios de la misma profesión')
-        service.profession = int(profession)
+        service.profession = profession
         experience = service_data['experience']
         if  experience == '':
             experience = 0  
