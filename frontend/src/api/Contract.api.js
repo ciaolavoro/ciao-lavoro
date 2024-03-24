@@ -56,6 +56,28 @@ export async function updateContractStatus(contractId, statusNum, token) {
     }
 }
 
+export async function handleContractPayment(contractId, token, returnURL) {
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
+        },
+        body: JSON.stringify({ returnURL }),
+    };
+
+    try {
+        const response = await fetchBackend(`/contracts/${contractId}/payment/`, options);
+        const data = await response.json();
+        console.log(data)
+        if (response.ok) {
+            return data; 
+        }
+    } catch (error) {
+        console.error('Contract Payment error:', error);
+    }
+}
+
 export const getContractsWorkers = async (token, end_date, initial_date, status) => {
     const queryParams = new URLSearchParams({
         end_date: end_date,
