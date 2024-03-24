@@ -14,6 +14,9 @@ from rest_framework.decorators import authentication_classes
 from django.shortcuts import get_object_or_404
 from .serializers import UserSerializer
 from django.contrib.auth.password_validation import validate_password
+import os
+from django.conf import settings
+from django.core.files.base import ContentFile
 
 class login_view(APIView):
 
@@ -57,7 +60,10 @@ class register(APIView):
         image = request.FILES.get('image')
         if User.objects.filter(username=username).exists():
             return JsonResponse({'status': '0', 'message': 'El nombre de usuario ya está en uso'},status=status.HTTP_400_BAD_REQUEST)
-
+        if not image:
+            default_image_path = os.path.join(settings.BASE_DIR, 'users', 'default.png').replace('\\','/')
+            with open(default_image_path, 'rb') as default_image_file:
+                image = ContentFile(default_image_file.read(), 'default.png')
 
         user = User.objects.create(username=username, first_name=first_name, last_name=last_name, email=email
         ,language=language, birth_date=birth_date, image=image)
