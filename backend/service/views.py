@@ -36,17 +36,34 @@ class ServiceList(generics.ListAPIView):
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
+class ProfessionList(APIView):
+    @authentication_classes([TokenAuthentication])
+    def get(self, request):
+        token_id = request.headers["Authorization"]
+        token = get_object_or_404(Token, key = token_id.split()[-1])
+        user = token.user
+        all_professions = Service.PROFESSIONS
+        professions = []
+        for p in all_professions:
+            service = Service.objects.filter(user=user, profession=p[0])
+            if not service:
+                professions.append({"id":p[0],"name":p[1]})
+        return Response({"professions": professions})
+
+class AllProfessionList(APIView):
+    def get(self, request):
+        professions = Service.PROFESSIONS
+        professions_json = []
+        for p in professions:
+            professions_json.append({"id":p[0],"name":p[1]})
+        return Response({"professions": professions_json})
+
 class UserServiceList(APIView):
     def get(self, request, user_id):
         services = Service.objects.filter(user_id=user_id)
         serializer = ServiceSerializer(services, many=True)
         return Response(serializer.data)
 
-class ProfessionsList(APIView):
-    def get(self, request):
-        professions = Service.PROFESSIONS
-        return Response(professions)
-    
 class JobView(APIView):
     @authentication_classes([TokenAuthentication])
     def post(self, request, service_id):
@@ -214,14 +231,15 @@ class ServiceView(APIView):
             raise ValidationError("Se debe introducir una profesión")
         profesions = Service.PROFESSIONS
         profession_exists = False
-        for profession_id, _ in profesions:
-            if profession_id == int(profession):
+        for profession_id, profession_name in profesions:
+            if profession_name == profession:
                 profession_exists = True
+                profession = profession_id
         if not profession_exists:
             raise ValidationError('La profesión no es valida')
         user_services = list(Service.objects.filter(user=user))
         for s in user_services:  
-            if s.profession == int(profession) and service.id != s.id:
+            if s.profession == profession and service.id != s.id:
                 raise ValidationError('No se pueden crear dos servicios de la misma profesión')
         service.profession = profession
         experience = service_data['experience']
