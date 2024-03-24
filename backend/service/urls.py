@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import ProfessionsList, UserHasService, ServiceList, ServiceView, JobView, ReviewView, UserServiceList, ProfessionList, AllProfessionList
+from .views import UserHasService, ServiceList, ServiceView, JobView, ReviewView, UserServiceList, ProfessionList, AllProfessionList
 app_name = 'service'
 
 urlpatterns = [
