@@ -54,11 +54,13 @@ export function ContractCardClient({ contract }) {
     return (
         <a href="#">
             <div className={`max-w-md mx-auto my-2 border rounded-lg overflow-hidden p-6 ${getStatusColor(contract.estatus)}`}>
-                <h2 className="text-2xl font-semibold text-center">Nombre del Trabajador:</h2>
+                <h2 className="text-2xl font-semibold text-center">Nombre del trabajador:</h2>
                 <p className="mb-2 mt-1 text-2xl text-center"><strong>{contract.worker.username}</strong></p>
                 <p className="mb-2"><strong>Fecha de inicio:</strong> {formatDate(contract.initial_date)}</p>
                 <p className="mb-2"><strong>Fecha fin:</strong> {formatDate(contract.end_date)}</p>
                 <p className={"mb-2"}><strong>Estado:</strong> {contract.estatus}</p>
+                <p className="mb-2"><strong>Remuneración a recibir:</strong> {contract.cost}€</p>
+                <p className="mb-2"><strong>Descripción del contrato:</strong> {contract.description}</p>
 
                 <div className="flex justify-center">
                     {contract.estatus === "Aceptado" && (
