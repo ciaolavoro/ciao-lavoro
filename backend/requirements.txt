@@ -10,3 +10,5 @@ pytz==2024.1
 sqlparse==0.4.4
 typing_extensions==4.9.0
 tzdata==2023.4
+Pillow==10.2.0
+stripe==8.8.0

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Service, Job
+from .models import Service, Job, Review
 
 # Register your models here.
 
@@ -12,3 +12,8 @@ class ServiceAdmin(admin.ModelAdmin):
 class JobAdmin(admin.ModelAdmin):
     list_display = ['service', 'name','estimated_price']
     search_fields = ['service', 'name','estimated_price']
+
+@admin.register(Review)
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ['service', 'user','date']
+    search_fields = ['service', 'user','date']
