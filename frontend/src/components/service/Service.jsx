@@ -112,17 +112,18 @@ export default function ServiceDetails() {
       return professions.lastIndexOf(profession)
    }
 
+   console.log(service.user.image)
+
    return (
       <form className="flex flex-col justify-center items-center gap-y-10 my-10 mx-10 bg-white border rounded-lg" onSubmit={handleEdit}>
          <div className="flex w-full m-10">
             <div className="border bg-white shadow-md rounded-xl m-8">
                <div className="flex flex-col gap-y-6 px-16 py-8 w-65">
                   <h2 className="text-3xl font-bold mb-4">Detalles de servicio:</h2>
-                  <img
-                     src={
-                        "https://images.unsplash.com/photo-1646753522408-077ef9839300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NjZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-                     }
-                     className="mx-auto size-80 object-cover rounded-lg"
+                  <img 
+                     src={service.user.image ? service.user.image : "https://images.unsplash.com/photo-1646753522408-077ef9839300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NjZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"} 
+                     className="object-cover rounded-t-xl max-w-full max-h-full" 
+                     style={{ maxWidth: '80%', maxHeight: '80%' }}
                   />
                </div>
                <div className="flex flex-col justify-center gap-y-6 px-8 py-3">
@@ -181,19 +182,21 @@ export default function ServiceDetails() {
                      <p className="text-2xl font-semibold text-right">
                         <strong>¿Activo?:</strong>
                      </p>
-                     <p className="pl-2  w-full">
-                        <input
-                           type="checkbox"
-                           checked={isActive}
-                           onChange={event => {
-                              if (loggedUser.user.username === service.user.username) {
-                                 setIsActive(event.target.checked)
-                              } else {
-                                 console.log("No tiene permisos para cambiar el estado del servicio.")
-                              }
-                           }}
-                           disabled={loggedUser && service.user ? loggedUser.user.username !== service.user.username : false}
-                        />
+                     <p className="pl-2 font-semibold w-full">
+                        <strong>
+                           <input
+                              type="checkbox"
+                              checked={isActive}
+                              onChange={event => {
+                                 if (loggedUser.user.username === service.user.username) {
+                                    setIsActive(event.target.checked)
+                                 } else {
+                                    console.log("No tiene permisos para cambiar el estado del servicio.")
+                                 }
+                              }}
+                              disabled={loggedUser && service.user ? loggedUser.user.username !== service.user.username : false}
+                           />
+                        </strong>
                      </p>
                   </div>
                   {isEditing ? (
