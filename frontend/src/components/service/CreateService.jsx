@@ -1,8 +1,7 @@
-import { useState } from "react"
+import { useState, useEffect  } from "react"
 import { useNavigate } from "react-router-dom"
-import { createServiceRequest } from "../../api/Service.api"
 import { useAuthContext } from "../auth/AuthContextProvider"
-import { getServiceByUser } from "../../api/Service.api"
+import { createServiceRequest, getServiceByUser, getProfessionsList  } from "../../api/Service.api"
 import {
    checkProfessionDuplicated,
    checkIfEmpty,
@@ -15,7 +14,7 @@ import {
 
 export default function CreateService() {
    const { loggedUser } = useAuthContext()
-   const professions = ["Lavandero", "Celador", "Albañil"]
+   const [professions, setProfessions] = useState([])
    const navigate = useNavigate()
 
    const [email] = useState(loggedUser.user.email)
@@ -29,6 +28,23 @@ export default function CreateService() {
    const [isExperienceError, setIsExperienceError] = useState(false)
    const [isOnlyCharacters, setIsOnlyCharacters] = useState(false)
    const [isBigExperienceError, setIsBigExperienceError] = useState(false)
+
+   useEffect(() => {
+      const fetchProfessions = async () => {
+         try {
+            const response = await getProfessionsList(loggedUser.token);
+            const data = await response.json();
+            console.log(data.professions);
+            setProfessions(data.professions);
+         } catch (error) {
+            console.error("Failed to fetch professions", error);
+         }
+      }
+
+      if (loggedUser && loggedUser.token) {
+         fetchProfessions();
+      }
+   }, [loggedUser, loggedUser.token])
 
    const createService = async (email, professionNumber, city, experience) => {
       try {
@@ -115,10 +131,8 @@ export default function CreateService() {
                   }}
                   className="px-2 py-1 border rounded">
                   {professions.map((prof, index) => (
-                     <option key={index} value={index + 1}>
-                        {prof}
-                     </option>
-                  ))}
+                            <option key={index} value={prof.id}>{prof.name}</option>
+                        ))}
                </select>
             </div>
             {isProfessionDuplicated && <p className="text-red-500">{errorMessages.professionDuplicate}</p>}
