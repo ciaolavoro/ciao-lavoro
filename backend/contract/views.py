@@ -1,4 +1,4 @@
-import time
+
 from django.conf import settings
 from django.http import JsonResponse
 from .models import Contract
@@ -6,7 +6,7 @@ from service.models import Service
 from .serializers import ContractSerializer
 from django.forms import ValidationError
 from datetime import datetime
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404
 from rest_framework import generics, status
 from rest_framework.authtoken.models import Token
 from rest_framework.authentication import TokenAuthentication

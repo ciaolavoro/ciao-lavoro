@@ -1,7 +1,6 @@
 import { handleContractPayment} from "../../api/Contract.api";
 import { updateContractStatus } from "../../api/Contract.api";
 import { useAuthContext } from "../auth/AuthContextProvider";
-import { loadStripe } from '@stripe/stripe-js';
 
 export function ContractCardClient({ contract }) {
 
