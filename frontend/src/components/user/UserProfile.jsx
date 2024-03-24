@@ -11,6 +11,7 @@ import { updateUserRequest } from "../../api/user.api"
 import { checkIfEmpty, checkIfUsernameExists, checkLanguageLength, errorMessages } from "../../utils/validation"
 import { BACKEND_URL } from "../../utils/backendApi"
 
+
 export default function UserProfile() {
    const [isEditing, setIsEditing] = useState(false)
    const { logout, loggedUser } = useAuthContext()

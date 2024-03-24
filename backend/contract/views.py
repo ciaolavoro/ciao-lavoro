@@ -26,7 +26,6 @@ class ContractCreation(APIView):
         token = get_object_or_404(Token, key=token_id.split()[-1])
         client = token.user
         description = contract_data['description']
-
         if contract_data['initial_date'] and contract_data['initial_date'].strip() != '':
             initial_date = contract_data['initial_date']
         else:

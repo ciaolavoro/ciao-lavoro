@@ -13,3 +13,4 @@ urlpatterns = [
     path('list/<int:contract_id>/', ContractDetail.as_view(), name="user-contract"),
     path('<int:contract_id>/payment/', ContractPayment.as_view(), name="contract-payment")
 ]
+

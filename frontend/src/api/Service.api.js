@@ -23,10 +23,8 @@ export const getUserById = async (id) => {
     };
 
     if (typeof id !== 'number' || !Number.isInteger(id)) {
-        // El id no es un número entero
         return fetchBackend(`${id}`, options);
     } else {
-        // El id es un número entero
         return fetchBackend(`/user/${id}`, options);
     }
 }
@@ -99,8 +97,19 @@ export async function updateServiceRequest(serviceId, serviceData, token) {
     } catch (error) {
         console.error('Update service error:', error);
     }
-
 }
+
+export const getJobDetailsByServiceId = async (id) => {
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    };
+
+    return fetchBackend(`/service/${id}/jobs/`, options);
+}
+
 export const createServiceReview = async (service_id, rating, description, token) => {
     const options = {
         method: 'POST',

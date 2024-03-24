@@ -112,7 +112,7 @@ class Profile(APIView):
             user.last_name = last_name
         if email:
             user.email = email
-        if language:
+        if language and language.strip() != '':
             user.language = language
         if birth_date:
             user.birth_date = birth_date

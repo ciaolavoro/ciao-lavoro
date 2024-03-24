@@ -1,60 +1,164 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { createServiceRequest } from "../../api/Service.api";
-import { useAuthContext } from "../auth/AuthContextProvider";
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+import { createServiceRequest } from "../../api/Service.api"
+import { useAuthContext } from "../auth/AuthContextProvider"
+import { getServiceByUser } from "../../api/Service.api"
+import {
+   checkProfessionDuplicated,
+   checkIfEmpty,
+   checkCityLength,
+   checkExperienceNegative,
+   errorMessages,
+   checkOnlyCharactersInText,
+   checkExperienceYears,
+} from "../../utils/validation"
 
 export default function CreateService() {
-    const [email, setEmail] = useState('');
-    const [profession, setProfession] = useState(null);
-    const [city, setCity] = useState('');
-    const [experience, setExperience] = useState('');
-    const navigate = useNavigate();
-    const { loggedUser } = useAuthContext();
+   const { loggedUser } = useAuthContext()
+   const professions = ["Lavandero", "Celador", "Albañil"]
+   const navigate = useNavigate()
 
-    const createService = async (email, profession, city, experience) => {
-        try {
-            console.log(profession);
-            const res = await createServiceRequest(email, profession, city, experience, loggedUser.token);
-            if (res.status === 200) {
-                alert('El servicio se ha creado correctamente')
-                navigate('/');
-            } else {
-                alert('Error al crear servicio. Por favor, intente de nuevo.');
-            }
-        } catch (error) {
-            console.log(`Error al crear servicio: ${error}`);
-        }
-    }
+   const [email] = useState(loggedUser.user.email)
+   const [profession, setProfession] = useState("1")
+   const [city, setCity] = useState("")
+   const [experience, setExperience] = useState("")
+   const [isRequiredCityError, setIsRequiredCityError] = useState(false)
+   const [isRequiredExperienceError, setIsRequiredExperienceError] = useState(false)
+   const [isCityError, setIsCityError] = useState(false)
+   const [isProfessionDuplicated, setProfessionDuplicated] = useState(false)
+   const [isExperienceError, setIsExperienceError] = useState(false)
+   const [isOnlyCharacters, setIsOnlyCharacters] = useState(false)
+   const [isBigExperienceError, setIsBigExperienceError] = useState(false)
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        createService(email, Number(profession), city, experience);
-    };
+   const createService = async (email, professionNumber, city, experience) => {
+      try {
+         const listprofession = await getProfessionsByUser(loggedUser.user.id)
+         if (checkIfEmpty(city)) {
+            setIsRequiredCityError(true)
+            return
+         } else if (checkOnlyCharactersInText(city)) {
+            resetErrors()
+            setIsOnlyCharacters(true)
+            return
+         } else if (checkCityLength(city)) {
+            resetErrors()
+            setIsCityError(true)
+            return
+         } else if (checkIfEmpty(experience.toString())) {
+            resetErrors()
+            setIsRequiredExperienceError(true)
+            return
+         } else if (checkExperienceNegative(experience)) {
+            resetErrors()
+            setIsExperienceError(true)
+            return
+         } else if (checkExperienceYears(experience, loggedUser.user.birth_date)) {
+            resetErrors()
+            setIsBigExperienceError(true)
+            return
+         } else if (checkProfessionDuplicated(professions[professionNumber - 1], listprofession)) {
+            resetErrors()
+            setProfessionDuplicated(true)
+            return
+         }
+         resetErrors()
 
-    return (
-        <form className="flex flex-col justify-center items-center gap-4 mt-4" onSubmit={handleSubmit}>
-            <h1 className="text-4xl font-bold">Creación del servicio</h1>
-            <div className="flex items-center gap-2">
-                <label>Email:</label>
-                <input type="text" name="email" value={email} onChange={(e) => setEmail(e.target.value)} className="px-2 py-1 border rounded" />
+         const res = await createServiceRequest(email, professionNumber, city, experience, loggedUser.token)
+         if (res.status === 200) {
+            alert("El servicio se ha creado correctamente")
+            navigate("/")
+         } else {
+            alert("Error al crear servicio. Por favor, intente de nuevo.")
+         }
+      } catch (error) {
+         alert(`Error al crear servicio: ${error}`)
+      }
+   }
+
+   const getProfessionsByUser = async userId => {
+      try {
+         const serviceResponse = await getServiceByUser(userId)
+         const services = await serviceResponse.json()
+         const professionTypes = services.map(service => service.profession)
+         const uniqueProfessions = [...new Set(professionTypes)]
+         return uniqueProfessions
+      } catch (error) {
+         alert("Error fetching professions:", error)
+         return []
+      }
+   }
+
+   const resetErrors = () => {
+      setIsRequiredCityError(false)
+      setIsRequiredExperienceError(false)
+      setIsCityError(false)
+      setIsExperienceError(false)
+      setProfessionDuplicated(false)
+      setIsOnlyCharacters(false)
+   }
+
+   const handleSubmit = event => {
+      event.preventDefault()
+      createService(email, Number(profession), city, Number(experience))
+   }
+
+   return (
+      <form className="flex flex-col justify-center items-center gap-y-10 mt-10 mx-44 py-14 bg-white border rounded-lg" onSubmit={handleSubmit}>
+         <h1 className="text-4xl font-bold">Creación del servicio</h1>
+         <div className="flex flex-col items-center gap-2">
+            <div className="flex gap-x-2">
+               <label>Profesión:</label>
+               <select
+                  name="profession"
+                  onChange={e => {
+                     setProfession(e.target.value)
+                  }}
+                  className="px-2 py-1 border rounded">
+                  {professions.map((prof, index) => (
+                     <option key={index} value={index + 1}>
+                        {prof}
+                     </option>
+                  ))}
+               </select>
             </div>
-            <div className="flex items-center gap-2">
-                <label>Profesión:</label>
-                <select name="profession" value={profession} onChange={(e) => setProfession(e.target.value)} className="px-2 py-1 border rounded">
-                    <option value="1">Lavandero</option>
-                    <option value="2">Celador</option>
-                    <option value="3">Albañil</option>
-                </select>
+            {isProfessionDuplicated && <p className="text-red-500">{errorMessages.professionDuplicate}</p>}
+         </div>
+         <div className="flex flex-col items-center gap-2">
+            <div className="flex gap-x-2">
+               <label>Ciudad:</label>
+               <input type="text" name="city" value={city} onChange={e => setCity(e.target.value)} className="px-2 py-1 border rounded" />
             </div>
-            <div className="flex items-center gap-2">
-                <label>Ciudad:</label>
-                <input type="text" name="city" value={city} onChange={(e) => setCity(e.target.value)} className="px-2 py-1 border rounded" />
+            {(isRequiredCityError || isCityError || isOnlyCharacters) && (
+               <p className="text-red-500">
+                  {(isRequiredCityError && errorMessages.required) ||
+                     (isCityError && errorMessages.cityLength) ||
+                     (isOnlyCharacters && errorMessages.onlyCharacters)}
+               </p>
+            )}
+         </div>
+
+         <div className="flex flex-col items-center gap-2">
+            <div className="flex gap-x-2">
+               <label>Experiencia:</label>
+               <input
+                  type="number"
+                  name="experience"
+                  value={experience}
+                  onChange={e => setExperience(e.target.value)}
+                  className="px-2 py-1 border rounded"
+               />
             </div>
-            <div className="flex items-center gap-2">
-                <label>Experiencia:</label>
-                <input type="number" name="experience" value={experience} onChange={(e) => setExperience(e.target.value)} className="px-2 py-1 border rounded" />
-            </div>
-            <button type="submit" className="bg-orange-300 rounded px-3 py-1 font-semibold">Crear Servicio</button>
-        </form>
-    );
+            {(isRequiredExperienceError || isExperienceError || isBigExperienceError) && (
+               <p className="text-red-500">
+                  {(isRequiredExperienceError && errorMessages.required) ||
+                     (isExperienceError && errorMessages.experienceNotValid) ||
+                     (isBigExperienceError && errorMessages.tooMuchExperience)}
+               </p>
+            )}
+         </div>
+         <button type="submit" className="bg-orange-300 rounded px-3 py-1 font-semibold">
+            Crear Servicio
+         </button>
+      </form>
+   )
 }

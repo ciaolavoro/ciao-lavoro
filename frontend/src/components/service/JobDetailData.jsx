@@ -1,4 +1,4 @@
-export default function JobData({ type, formName, labelText, inputValue, isReadOnly, onChange }) {
+export default function JobDetailsData({ type, formName, labelText, inputValue, isReadOnly, onChange }) {
     return (
         <div className="grid grid-cols-2 gap-x-2 items-center w-full">
             <label htmlFor={formName} className="text-1.7xl font-semibold text-left">{labelText}</label>
