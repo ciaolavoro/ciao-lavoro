@@ -119,19 +119,10 @@ export default function Navbar() {
                         <span className="ml-1">Iniciar Sesión</span>
                      </DropdownMenuItem>
                   </Link>
-
                </DropdownMenuContent>
             </DropdownMenu>
-
-
-
-
-            // <NavLink to="/login" className={({ isActive }) => (isActive ? "bg-gray-300 rounded" : "")}>
-            //    <li className={navItemsStyle}>Iniciar sesión</li>
-            // </NavLink>
          )
       }
-
    }
 
    const renderLoginOrLogout = () => {
@@ -181,14 +172,15 @@ export default function Navbar() {
                </NavLink>
             </section>
 
-            <section className="hidden md:flex"> {/* Ocultar en pantallas pequeñas */}
+            <section className="hidden md:flex">
+               {" "}
                <ul className="flex gap-5 px-4 py-2">
-                  {navItems.map((item) => (
+                  {navItems.map(item => (
                      <NavLink
                         key={item.id}
                         to={item.path}
-                        target={item.out && "_blank"}
-                        className={({ isActive }) => isActive ? "bg-gray-300 rounded" : ""}>
+                        target={item.out ? "_blank" : ""}
+                        className={({ isActive }) => (isActive ? "bg-gray-300 rounded" : "")}>
                         <li className={navItemsStyle}>{item.title}</li>
                      </NavLink>
                   ))}
@@ -196,12 +188,10 @@ export default function Navbar() {
                </ul>
             </section>
 
-            <section className="md:hidden"> {/* Mostrar solo en pantallas pequeñas */}
-               <ul>
-                  {renderNabarResponsive()}
-               </ul>
+            <section className="md:hidden">
+               {" "}
+               <ul>{renderNabarResponsive()}</ul>
             </section>
-
          </nav>
       </header>
    )

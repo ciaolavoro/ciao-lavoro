@@ -98,14 +98,12 @@ export default function Jobs() {
       <div className="flex flex-col gap-y-6 px-10 py-6">
          <h2 className="text-3xl font-bold mb-4">Trabajos:</h2>
          <div className="flex gap-20 ml-20">
-
             {loggedUser && loggedUser.user.username !== service.user.username && (
                <LinkButtonContract url={`/contracts/create?service_id=${service.id}`} title="Crear un contrato" />
             )}
             {loggedUser && loggedUser.user.username === service.user.username && (
                <LinkButtonJob url={`/services/${service.id}/job/create`} title="Crear una trabajo" />
             )}
-            
          </div>
          {jobs.map((job, index) => (
             <div key={index} className="w-90 border bg-white shadow-md rounded-xl m-8 pb-4">
