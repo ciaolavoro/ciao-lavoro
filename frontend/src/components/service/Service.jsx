@@ -213,7 +213,8 @@ export default function ServiceDetails() {
             <div className="flex flex-col gap-y-6 px-10 py-6">
                <Jobs />
                <h2 className="text-3xl font-bold mb-4">Opiniones de otros usuarios:</h2>
-               {loggedUser && (
+               {loggedUser && 
+               loggedUser.user.username != service.user.username && (
                   <>
                     <Link to={`/review?service_id=${service.id}`}>
                       <button className="bg-slate-300 rounded px-2 py-1 font-semibold flex">Añadir una nueva reseña</button>
