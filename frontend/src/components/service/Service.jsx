@@ -1,6 +1,6 @@
 import { useLoaderData } from "react-router-dom"
-import { useState } from "react"
-import { updateServiceRequest } from "../../api/Service.api"
+import { useState, useEffect } from "react"
+import { updateServiceRequest, getProfessionsList } from "../../api/Service.api"
 import ServiceData from "./ServiceData"
 import ServiceButton from "./ServiceButton"
 import PencilIcon from "../icons/PencilIcon"
@@ -13,7 +13,23 @@ import Jobs from "./Jobs"
 export default function ServiceDetails() {
    const service = useLoaderData()
    const { loggedUser } = useAuthContext()
-   const professions = ["Lavandero", "Celador", "Albañil"]
+   const [professions, setProfessions] = useState([])
+
+   useEffect(() => {
+      const fetchProfessions = async () => {
+         try {
+            const response = await getProfessionsList(loggedUser.token)
+            const data = await response.json()
+            setProfessions(data.professions)
+         } catch (error) {
+            console.error("Failed to fetch professions", error)
+         }
+      }
+
+      if (loggedUser && loggedUser.token) {
+         fetchProfessions()
+      }
+   }, [loggedUser, loggedUser.token])
 
    const [isEditing, setIsEditing] = useState(false)
    const [city, setCity] = useState(service.city)
@@ -85,10 +101,9 @@ export default function ServiceDetails() {
       resetErrors()
       setIsEditing(true)
 
-      const position = getPosicionProfession(profession)
       const serviceData = {
          id: service.id,
-         profession: position + 1,
+         profession: profession,
          city: city,
          experience: Number(experience),
          is_active: isActive,
@@ -143,11 +158,11 @@ export default function ServiceDetails() {
                         name="profession"
                         value={profession}
                         disabled={!isEditing}
-                        onChange={event => setProfession(event.target.value)}
+                        onChange={event => console.log(event.target.value)>setProfession(event.target.value)}
                         className="pl-2 border rounded w-full md:w-94">
-                        {professions.map((profession, index) => (
-                           <option key={index} value={profession}>
-                              {profession}
+                        {professions.map((prof, index) => (
+                           <option key={index} value={prof.id}>
+                              {prof.name}
                            </option>
                         ))}
                      </select>

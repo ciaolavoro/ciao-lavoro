@@ -32,17 +32,17 @@ export default function CreateService() {
    useEffect(() => {
       const fetchProfessions = async () => {
          try {
-            const response = await getProfessionsList(loggedUser.token)
-            const data = await response.json()
-            console.log(data.professions)
-            setProfessions(data.professions)
+            const response = await getProfessionsList(loggedUser.token);
+            const data = await response.json();
+            console.log(data.professions);
+            setProfessions(data.professions);
          } catch (error) {
-            console.error("Failed to fetch professions", error)
+            console.error("Failed to fetch professions", error);
          }
       }
 
       if (loggedUser && loggedUser.token) {
-         fetchProfessions()
+         fetchProfessions();
       }
    }, [loggedUser, loggedUser.token])
 
@@ -131,10 +131,8 @@ export default function CreateService() {
                   }}
                   className="px-2 py-1 border rounded">
                   {professions.map((prof, index) => (
-                     <option key={index} value={index + 1}>
-                        {prof}
-                     </option>
-                  ))}
+                            <option key={index} value={prof.id}>{prof.name}</option>
+                        ))}
                </select>
             </div>
             {isProfessionDuplicated && <p className="text-red-500">{errorMessages.professionDuplicate}</p>}

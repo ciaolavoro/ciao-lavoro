@@ -28,7 +28,16 @@ class ServiceList(generics.ListAPIView):
     
         return services
 
+    def get(self, request, *args, **kwargs):
+        try:
+            queryset = self.get_queryset()
+            serializer = self.serializer_class(queryset, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
 class ProfessionList(APIView):
+    @authentication_classes([TokenAuthentication])
     def get(self, request):
         token_id = request.headers["Authorization"]
         token = get_object_or_404(Token, key = token_id.split()[-1])
@@ -38,8 +47,16 @@ class ProfessionList(APIView):
         for p in all_professions:
             service = Service.objects.filter(user=user, profession=p[0])
             if not service:
-                professions.append(p[1])
+                professions.append({"id":p[0],"name":p[1]})
         return Response({"professions": professions})
+
+class AllProfessionList(APIView):
+    def get(self, request):
+        professions = Service.PROFESSIONS
+        professions_json = []
+        for p in professions:
+            professions_json.append({"id":p[0],"name":p[1]})
+        return Response({"professions": professions_json})
 
 class UserServiceList(APIView):
     def get(self, request, user_id):
@@ -228,7 +245,7 @@ class ServiceView(APIView):
         for s in user_services:  
             if s.profession == int(profession) and service.id != s.id:
                 raise ValidationError('No se pueden crear dos servicios de la misma profesión')
-        service.profession = profession
+        service.profession = int(profession)
         experience = service_data['experience']
         if  experience == '':
             experience = 0  

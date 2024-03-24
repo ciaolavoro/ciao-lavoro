@@ -1,10 +1,9 @@
 from django.urls import path
-from .views import ProfessionsList, UserHasService, ServiceList, ServiceView, JobView, ReviewView, UserServiceList, ProfessionList
+from .views import ProfessionsList, UserHasService, ServiceList, ServiceView, JobView, ReviewView, UserServiceList, ProfessionList, AllProfessionList
 app_name = 'service'
 
 urlpatterns = [
     path('', ServiceList.as_view(), name='service-list'),
-    path('professions/', ProfessionsList.as_view(), name='profession-list'),
     path('<int:service_id>/edit/', ServiceView.as_view(), name='service-edit'),
     path('create/', ServiceView.as_view(), name='service-create'),
     path('user/<int:user_id>', UserServiceList.as_view(), name='user-service-list'),
@@ -14,5 +13,6 @@ urlpatterns = [
     path('<int:service_id>/create/review/', ReviewView.as_view()),
     path('<int:service_id>/reviews', ReviewView.as_view(), name='service-review'),
     path('professionsList/', ProfessionList.as_view(), name='service-professions'),
+    path('allProfessionsList/', AllProfessionList.as_view(), name='service-all-professions'),
     path('<int:service_id>/userProperty/', UserHasService.as_view(), name='has-service')
 ]

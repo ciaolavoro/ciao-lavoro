@@ -132,3 +132,13 @@ export const getProfessionsList = async (token) => {
     };
     return fetchBackend(`/service/professionsList/`, options);
 }
+
+export const getAllProfessionsList = async (token) => {
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    };
+    return fetchBackend(`/service/allProfessionsList/`, options);
+}
