@@ -38,14 +38,21 @@ export const logoutRequest = async () => {
 };
 
 export const registerRequest = async (username, password, firstName, lastName, email, image, birthdate) => {
+    
+    const formData = new FormData();
+    formData.append('username', username);
+    formData.append('password', password);
+    formData.append('firstName', firstName);
+    formData.append('lastName', lastName);
+    formData.append('email', email);
+    formData.append('image', image);
+    formData.append('birthdate', birthdate);
     const options = {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password, firstName, lastName, email, image, birthdate }),
+        body: formData
     };
     try {
+        console.log(image)
         const response = await fetchBackend(`/user/register/`, options);
         const data = await response.json();
 

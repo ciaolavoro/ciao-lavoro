@@ -14,11 +14,12 @@ export default function RegisterPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [image, setImage] = useState(defaultRegisterImage);
+  const [image, setImage] = useState(defaultRegisterImage); 
   const [birthdate, setBirthdate] = useState('');
   const [passwordType, setPasswordType] = useState('password');
   const [passwordIcon, setPasswordIcon] = useState(EyeSlashIcon);
   const navigate = useNavigate();
+  const [uploadedImage, setUploadedImage] = useState(null)
 
   const handleUsernameChange = (e) => {
     const value = e.target.value;
@@ -55,15 +56,10 @@ export default function RegisterPage() {
     
   };
 
-  const handleImageChange = (e) => {
-    if (e.target.files[0]) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result);
-      };
-      reader.readAsDataURL(e.target.files[0]);
-    }
-  };
+  const handleImageChange = event => {
+    setImage(event.target.files[0]);
+    setUploadedImage(URL.createObjectURL(event.target.files[0]));
+  }
 
   const togglePasswordVisibility = () => {
     setPasswordType(passwordType === 'password' ? 'text' : 'password');
@@ -79,7 +75,7 @@ export default function RegisterPage() {
   return (
     <section className="flex flex-col items-center my-6">
       <div className="mb-4">
-        <img src={image} alt="Imagen seleccionada o predeterminada" className="bg-white border max-w-full max-h-48 object-cover rounded-lg shadow-md" />
+        <img src={uploadedImage ?? defaultRegisterImage} alt="Imagen seleccionada o predeterminada" className="bg-white border max-w-full max-h-48 object-cover rounded-lg shadow-md" />
       </div>
       <div className="bg-white p-8 border rounded-lg shadow-lg w-full max-w-xl">
         <form onSubmit={handleSubmit} className="flex flex-col items-center space-y-4">
