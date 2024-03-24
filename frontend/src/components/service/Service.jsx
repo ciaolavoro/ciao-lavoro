@@ -1,6 +1,9 @@
-import { useLoaderData } from "react-router-dom"
+import { useLoaderData, Link } from "react-router-dom"
 import { useState, useEffect } from "react"
 import { updateServiceRequest, getProfessionsList } from "../../api/Service.api"
+import { useLoaderData,Link } from "react-router-dom"
+import { useState } from "react"
+import { updateServiceRequest } from "../../api/Service.api"
 import ServiceData from "./ServiceData"
 import ServiceButton from "./ServiceButton"
 import PencilIcon from "../icons/PencilIcon"
@@ -225,6 +228,14 @@ export default function ServiceDetails() {
             <div className="flex flex-col gap-y-6 px-10 py-6">
                <Jobs />
                <h2 className="text-3xl font-bold mb-4">Opiniones de otros usuarios:</h2>
+               {loggedUser && 
+               loggedUser.user.username != service.user.username && (
+                  <>
+                    <Link to={`/review?service_id=${service.id}`}>
+                      <button className="bg-slate-300 rounded px-2 py-1 font-semibold flex">Añadir una nueva reseña</button>
+                    </Link>
+                  </>
+               )}
                {service.reviews.length > 0 ? (
                   service.reviews.map(review => (
                      <div key={review.id} className="w-90 border bg-white shadow-md rounded-xl m-8">
@@ -254,6 +265,8 @@ export default function ServiceDetails() {
                ) : (
                   <div className="w-full text-center py-4">Aún no hay opiniones para este servicio.</div>
                )}
+
+   
             </div>
          </div>
       </form>

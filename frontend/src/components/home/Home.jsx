@@ -33,11 +33,11 @@ export default function Home() {
     <div>
       <section>
         <div
-          className="relative h-[350px] overflow-hidden bg-[url('https://www.shutterstock.com/image-photo/professional-office-cleaner-holding-bucket-600nw-588594527.jpg')] bg-cover bg-[50%] bg-no-repeat">
+          className="relative h-[450px] lg:h-[350px] md:h-[350px] overflow-hidden bg-[url('https://www.shutterstock.com/image-photo/professional-office-cleaner-holding-bucket-600nw-588594527.jpg')] bg-cover bg-[50%] bg-no-repeat">
           <div
             className="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-black/60 bg-fixed">
-            <div className="flex h-full items-center justify-center">
-              <div className="px-6 text-center text-white md:px-12">
+            <div className="mx-5 my-5  flex h-full items-center justify-center">
+              <div className="text-center text-white">
                 <h1 className="mb-6 text-5xl font-bold">Bienvenido a CiaoLavoro</h1>
                 <h3 className="mb-8 text-3xl ">Busca lo que necesites con tan solo un click</h3>
                 <Link to="/services">
@@ -55,7 +55,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="flex justify-center gap-4 px-32 py-6">
+      <section className="justify-center grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-4 lg:px-32 lg:py-6 px-5 py-5">
         <DescriptionCard icon={<BriefcaseIcon />} title="Encuentre los mejores trabajadores">
           Descubre una amplia gama de profesionales de diversos campos.
           Nuestra plataforma te conecta con trabajadores cualificados que están listos para aportar su experiencia a tus necesidades.
@@ -75,7 +75,7 @@ export default function Home() {
       <section>
         <h1 className="text-4xl font-bold text-center">Servicios más populares:</h1>
       </section>
-      <section className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
+      <section className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5 px-5">
 
         {services.filter(service => service.is_active).map(service => (
           <ServiceCard key={service.id} service={service} />

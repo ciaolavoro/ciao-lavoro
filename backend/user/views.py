@@ -55,7 +55,6 @@ class register(APIView):
         language = request.data.get('language')
         birth_date = request.data.get('birthdate')
         image = request.FILES.get('image')
-
         if User.objects.filter(username=username).exists():
             return JsonResponse({'status': '0', 'message': 'El nombre de usuario ya está en uso'},status=status.HTTP_400_BAD_REQUEST)
 
@@ -112,7 +111,7 @@ class Profile(APIView):
             user.last_name = last_name
         if email:
             user.email = email
-        if language:
+        if language and language.strip() != '':
             user.language = language
         if birth_date:
             user.birth_date = birth_date

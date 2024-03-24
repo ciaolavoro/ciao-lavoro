@@ -137,7 +137,7 @@ export default function ContractUser() {
             <div className="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 gap 2 lg:divide-x-4 md:divide-x-2 mx-auto px-5">
                 <div>
                     <section>
-                        <h2 className="text-2xl font-semibold text-center my-10">Contratos en los que has trabajado</h2>
+                        <h2 className="text-2xl font-semibold text-center my-10">Contratos como trabajador</h2>
                     </section>
 
                     {workerContracts.length === 0 ? (
@@ -156,7 +156,7 @@ export default function ContractUser() {
 
                 <div>
                     <section>
-                        <h2 className="text-2xl font-semibold text-center my-10">Contratos en los que eres cliente</h2>
+                        <h2 className="text-2xl font-semibold text-center my-10">Contrataciones</h2>
                     </section>
 
                     {clientContracts.length === 0 ? (
