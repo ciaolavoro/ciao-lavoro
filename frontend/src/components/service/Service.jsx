@@ -10,6 +10,9 @@ import { useAuthContext } from "../auth/AuthContextProvider"
 import { checkIfEmpty, checkCityLength, checkExperienceNegative, errorMessages, checkExperienceYears } from "../../utils/validation"
 import Jobs from "./Jobs"
 
+const DEFAULT_USER_IMG =
+   "https://images.unsplash.com/photo-1646753522408-077ef9839300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NjZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
+
 export default function ServiceDetails() {
    const service = useLoaderData()
    const { loggedUser } = useAuthContext()
@@ -18,9 +21,9 @@ export default function ServiceDetails() {
    useEffect(() => {
       const fetchProfessions = async () => {
          try {
-               const response = await getProfessionsList(loggedUser.token)
-               const data = await response.json()
-               setProfessions(data.professions)
+            const response = await getProfessionsList(loggedUser.token)
+            const data = await response.json()
+            setProfessions(data.professions)
          } catch (error) {
             console.error("Failed to fetch professions", error)
          }
@@ -130,10 +133,9 @@ export default function ServiceDetails() {
                <div className="flex flex-col gap-y-6 px-16 py-8 w-65">
                   <h2 className="text-3xl font-bold mb-4">Detalles de servicio:</h2>
                   <img
-                     src={
-                        "https://images.unsplash.com/photo-1646753522408-077ef9839300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NjZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
-                     }
-                     className="mx-auto size-80 object-cover rounded-lg"
+                     src={`${service.user.image}` ?? DEFAULT_USER_IMG}
+                     className="w-72 h-72 object-cover rounded-t-xl"
+                     style={{ maxWidth: "80%", maxHeight: "80%" }}
                   />
                </div>
                <div className="flex flex-col justify-center gap-y-6 px-8 py-3">
@@ -190,22 +192,24 @@ export default function ServiceDetails() {
                   />
 
                   <div className="grid grid-cols-2 gap-x-4 items-center w-full">
-                     <p className="text-2xl font-semibold text-right">
+                     <p className="font-semibold text-right">
                         <strong>¿Activo?:</strong>
                      </p>
-                     <p className="pl-2  w-full">
-                        <input
-                           type="checkbox"
-                           checked={isActive}
-                           onChange={event => {
-                              if (loggedUser.user.username === service.user.username) {
-                                 setIsActive(event.target.checked)
-                              } else {
-                                 console.log("No tiene permisos para cambiar el estado del servicio.")
-                              }
-                           }}
-                           disabled={loggedUser && service.user ? loggedUser.user.username !== service.user.username : false}
-                        />
+                     <p className="pl-2 font-semibold w-full">
+                        <strong>
+                           <input
+                              type="checkbox"
+                              checked={isActive}
+                              onChange={event => {
+                                 if (loggedUser.user.username === service.user.username) {
+                                    setIsActive(event.target.checked)
+                                 } else {
+                                    console.log("No tiene permisos para cambiar el estado del servicio.")
+                                 }
+                              }}
+                              disabled={loggedUser && service.user ? loggedUser.user.username !== service.user.username : false}
+                           />
+                        </strong>
                      </p>
                   </div>
                   {isEditing ? (
@@ -225,12 +229,11 @@ export default function ServiceDetails() {
             <div className="flex flex-col gap-y-6 px-10 py-6">
                <Jobs />
                <h2 className="text-3xl font-bold mb-4">Opiniones de otros usuarios:</h2>
-               {loggedUser && 
-               loggedUser.user.username != service.user.username && (
+               {loggedUser && loggedUser.user.username != service.user.username && (
                   <>
-                    <Link to={`/review?service_id=${service.id}`}>
-                      <button className="bg-slate-300 rounded px-2 py-1 font-semibold flex">Añadir una nueva reseña</button>
-                    </Link>
+                     <Link to={`/review?service_id=${service.id}`}>
+                        <button className="bg-slate-300 rounded px-2 py-1 font-semibold flex">Añadir una nueva reseña</button>
+                     </Link>
                   </>
                )}
                {service.reviews.length > 0 ? (
@@ -262,8 +265,6 @@ export default function ServiceDetails() {
                ) : (
                   <div className="w-full text-center py-4">Aún no hay opiniones para este servicio.</div>
                )}
-
-   
             </div>
          </div>
       </form>
