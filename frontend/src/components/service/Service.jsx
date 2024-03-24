@@ -122,10 +122,6 @@ export default function ServiceDetails() {
       setIsEditing(false)
       resetErrors()
    }
-
-   function getPosicionProfession(profession) {
-      return professions.lastIndexOf(profession)
-   }
   
    return (
       <form className="flex flex-col justify-center items-center gap-y-10 my-10 mx-10 bg-white border rounded-lg" onSubmit={handleEdit}>
