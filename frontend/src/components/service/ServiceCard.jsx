@@ -11,7 +11,7 @@ export default function ServiceCard({ service }) {
             <img src={`${BACKEND_URL}${service.user.image}` ?? DEFAULT_USER_IMG} className="h-80 w-80 object-cover rounded-t-xl" />
             <div className="px-4 py-3 w-72">
                <h2 className="text-2xl font-semibold">
-                  <strong></strong> {service.first_name} {service.user.last_name}
+                  <strong></strong> {service.user.first_name} {service.user.last_name}
                </h2>
                <span className="text-gray-400 mr-3 uppercase text-s">@{service.user.username}</span>
                <br />
