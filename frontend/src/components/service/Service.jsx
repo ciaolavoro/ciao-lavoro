@@ -29,7 +29,7 @@ export default function ServiceDetails() {
       if (loggedUser && loggedUser.token) {
          fetchProfessions()
       }
-   }, [])
+   }, [loggedUser])
 
    const [isEditing, setIsEditing] = useState(false)
    const [city, setCity] = useState(service.city)
