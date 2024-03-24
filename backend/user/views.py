@@ -1,6 +1,4 @@
 import re
-
-from django.forms import ValidationError
 from .models import User
 from django.http import JsonResponse
 from rest_framework import status
