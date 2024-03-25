@@ -1,4 +1,4 @@
-const BACKEND_URL = import.meta.env.VITE_BACKEND_API_URL;
+import { fetchBackend } from "../utils/backendApi";
 
 export async function updateUserRequest(userData, token) {
     const options = {
@@ -8,9 +8,9 @@ export async function updateUserRequest(userData, token) {
         },
         body: userData,
     };
-    
+
     try {
-        const response = await fetch(`${BACKEND_URL}/user/edit/`, options);
+        const response = await fetchBackend(`/user/profile/`, options);
         return response;
     } catch (error) {
         console.error('Update user error:', error);

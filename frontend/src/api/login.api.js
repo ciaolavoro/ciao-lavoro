@@ -1,4 +1,4 @@
-const BACKEND_URL = import.meta.env.VITE_BACKEND_API_URL;
+import { fetchBackend } from "../utils/backendApi";
 
 export const loginRequest = async (username, password) => {
     const options = {
@@ -9,7 +9,7 @@ export const loginRequest = async (username, password) => {
         body: JSON.stringify({ username, password }),
     };
     try {
-        const response = await fetch(`${BACKEND_URL}/user/login/`, options);
+        const response = await fetchBackend(`/user/login/`, options);
         const data = await response.json();
         const token = data.token;
         localStorage.setItem("token", token);
@@ -17,7 +17,7 @@ export const loginRequest = async (username, password) => {
     } catch (error) {
         console.error('Login error:', error);
     }
-  };
+};
 
 
 export const isAuthenticated = async () => {
@@ -30,20 +30,41 @@ export const isAuthenticated = async () => {
             'Authorization': `Token ${token}`,
         },
     };
-    return fetch(`${import.meta.env.VITE_BACKEND_API_URL}/user/authenticated/`, options);
+    return fetchBackend(`/user/authenticated/`, options);
 };
 
 export const logoutRequest = async () => {
     localStorage.removeItem('token');
 };
 
-export const registerRequest = async (username, password,firstName,lastName,email,image,birthdate) => {
+export const registerRequest = async (username, password, firstName, lastName, email, image, birthdate) => {
+    
+    const formData = new FormData();
+    formData.append('username', username);
+    formData.append('password', password);
+    formData.append('firstName', firstName);
+    formData.append('lastName', lastName);
+    formData.append('email', email);
+    formData.append('image', image);
+    formData.append('birthdate', birthdate);
     const options = {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({username, password,firstName,lastName,email,image,birthdate }),
+        body: formData
     };
-    return fetch(`${import.meta.env.VITE_BACKEND_API_URL}/user/register/`, options);
+    try {
+        console.log(image)
+        const response = await fetchBackend(`/user/register/`, options);
+        const data = await response.json();
+
+        if (response.ok) {
+            return data;
+        } else if (response.status === 400 && data.message === 'El nombre de usuario ya está en uso') {
+            throw new Error(data.message);
+        } else {
+            throw new Error('Ha ocurrido un error en el registro');
+        }
+    } catch (error) {
+        console.error('Registro error:', error);
+        throw error;
+    }
 };

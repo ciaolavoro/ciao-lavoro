@@ -202,7 +202,7 @@ GRUPO 6 | SEVILLA, 09 DE MARZO 2024 | ENTREGABLE “SPRINT 2”
 
    En los ejemplos que veremos a continuación la persona que elaboró esta guía (la guía que sigo yo para redactar esta) ha utilizado archivos *.tsx* que consiste en mezclar jsx con typescript. Por ello habrá que dar un poquito de contexto a lo largo de la guía pero para la labor de testing no nos afecta la manera en la que los ejemplos implementan el typescript.
 
-   2. Iniciación + GetByText
+   2. Iniciación
 
    Supongamos que tenemos un archivo *Greet.tsx* que contiene las siguientes líneas:
 
@@ -252,7 +252,7 @@ GRUPO 6 | SEVILLA, 09 DE MARZO 2024 | ENTREGABLE “SPRINT 2”
 
    ![](./Imagenes_testing/GreetTest2.png)
 
-   3. getByRole
+   3. getByRole + toBe
 
    El getByRole hace referencia a los elementos semánticos de HTML que expresan un rol, por ejemplo los botones tienen rol *Button*, los h1-h6 tienen rol *Header* y así con todos los elementos. También podemos indicar nosotros que rol queremos que tenga con el campo *rol ='rolquesea'* 
 
@@ -268,6 +268,13 @@ GRUPO 6 | SEVILLA, 09 DE MARZO 2024 | ENTREGABLE “SPRINT 2”
 
    No vamos a seguir con ejemplos pues la mecánica es siempre la misma, para observar mas ejemplos se ha dejado entre los enlaces el repositorio de donde se saca la información.
 
+   Por desgracia el getByText no funciona con la configuración de Django+React que estamos utilizando. Nosotros tendremos que utilizar como herramienta principal el comando ToBe.
+
+   ![](./Imagenes_testing/ToBe.png)
+   
+   Este ejemplo lo podemos encontrar en la rama "Task-2.45---Testing-de-contratos".
+   Vemos en el ejemplo como hacemos uso de las herramientas comparando lo obtenido en el getByRole con el elemento *textElement*.
+   
    4. getByLabelText y getByPlaceholderText
 
    Los label nos hacen referencia al elemento *label* de un HTML.

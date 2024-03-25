@@ -9,12 +9,15 @@ import CreateService from './components/service/CreateService.jsx'
 import ErrorPage from './components/ErrorPage.jsx'
 import Root from './components/Root.jsx'
 import CreateContract from './components/contract/CreateContract.jsx'
+import CreateJob from './components/service/CreateJob.jsx'
 import Register from './components/register/Register.jsx'
 import UserProfile from './components/user/UserProfile.jsx'
 import Service from './components/service/Service.jsx'
 import { AuthContextProvider } from './components/auth/AuthContextProvider.jsx'
+import Review from './components/service/Review.jsx'
 import ContractUser from './components/contract/ContractUser.jsx'
 import ServiceUser from './components/service/ServiceUser.jsx'
+
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_API_URL;
 
@@ -48,6 +51,13 @@ const router = createBrowserRouter([
         },
       },
       {
+        path: 'services/:serviceId/job/create',
+        element: <CreateJob />,
+        loader: async ({ params }) => {
+          return fetch(`${BACKEND_URL}/service/${params.serviceId}/job/create`);
+        },
+      },
+      {
         path: 'service/create',
         element: <CreateService />,
       },
@@ -69,6 +79,24 @@ const router = createBrowserRouter([
         loader: async ({ params }) => {
           return fetch(`${BACKEND_URL}/user/${params.userId}`);
         },
+      },
+        
+      {
+        path: 'review',
+        element: <Review />,
+        },
+
+      {
+        path: 'users',
+        children: [
+          {
+            path: ':userId',
+            element: <UserProfile />,
+            loader: async ({ params }) => {
+              return fetch(`${BACKEND_URL}/user/${params.userId}`);
+            },
+          },
+        ]
       },
     ]
   }

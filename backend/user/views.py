@@ -1,6 +1,7 @@
 import re
 from .models import User
 from django.http import JsonResponse
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -13,9 +14,12 @@ from rest_framework.decorators import authentication_classes
 from django.shortcuts import get_object_or_404
 from .serializers import UserSerializer
 from django.contrib.auth.password_validation import validate_password
+import os
+from django.conf import settings
+from django.core.files.base import ContentFile
 
 class login_view(APIView):
-    authentication_classes = []
+
     permission_classes = [AllowAny]
 
     @method_decorator(csrf_exempt)
@@ -43,9 +47,8 @@ class authenticated(APIView):
 
 class register(APIView):
     
-    authentication_classes = []
     permission_classes = [AllowAny]
-    
+
     def post(self, request, format_arg=None):
         username = request.data.get('username')
         first_name = request.data.get('firstName')
@@ -55,6 +58,12 @@ class register(APIView):
         language = request.data.get('language')
         birth_date = request.data.get('birthdate')
         image = request.FILES.get('image')
+        if User.objects.filter(username=username).exists():
+            return JsonResponse({'status': '0', 'message': 'El nombre de usuario ya está en uso'},status=status.HTTP_400_BAD_REQUEST)
+        if not image:
+            default_image_path = os.path.join(settings.BASE_DIR, 'users', 'default.png').replace('\\','/')
+            with open(default_image_path, 'rb') as default_image_file:
+                image = ContentFile(default_image_file.read(), 'default.png')
 
         user = User.objects.create(username=username, first_name=first_name, last_name=last_name, email=email
         ,language=language, birth_date=birth_date, image=image)
@@ -62,13 +71,13 @@ class register(APIView):
         user.set_password(password)
         user.save()
         return JsonResponse({'status': '1', 'message': ' The user has been successfully registered'})
-
+    
 class UserList(APIView):
     def get(self, request):
         users = User.objects.all()
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
-
+    
 class UserDetails(APIView):
     def get(self, request, format_arg=None, *args, **kwargs):
         authentication_classes = [SessionAuthentication]
@@ -78,15 +87,15 @@ class UserDetails(APIView):
         serializer = UserSerializer(user)
         return JsonResponse(serializer.data)
 
-class UserUpdate(APIView):
-   
+class Profile(APIView):
     @authentication_classes([TokenAuthentication])
     def get(self, request, format_arg=None):
-        session_id = request.session.session_key
-        user = request.user
+        token_id = request.headers['Authorization']
+        token = get_object_or_404(Token, key=token_id.split()[-1])
+        user = token.user
         serializer = UserSerializer(user)
         return JsonResponse(serializer.data)
-    
+
     @authentication_classes([TokenAuthentication])
     def put(self, request, format_arg=None):
         token_id = request.headers['Authorization']
@@ -108,7 +117,7 @@ class UserUpdate(APIView):
             user.last_name = last_name
         if email:
             user.email = email
-        if language:
+        if language and language.strip() != '':
             user.language = language
         if birth_date:
             user.birth_date = birth_date
