@@ -14,6 +14,9 @@
 - Antonio Barea Jiménez
 - Pablo Mateos Angulo
 
+## CONTRIBUIDORES:
+- Javier Grosso: redacción de las modificaciones del documento en el Sprint 2 y parte de la redacción original en el Sprint 1
+
 ## ISPP GESTIÓN DE LA CONFIGURACIÓN - Grupo-6
 INGENIERÍA DEL SOFTWARE Y PRÁCTICA PROFESIONAL
 GRUPO 6 | SEVILLA, 09 DE MARZO 2024 | ENTREGABLE “SPRINT 2”
@@ -28,6 +31,7 @@ GRUPO 6 | SEVILLA, 09 DE MARZO 2024 | ENTREGABLE “SPRINT 2”
 | 09/03/2024 | 1.2.2   | Inclusion de reglas del tablero github en el apartado 9              |
 | 20/03/2024 | 1.2.2   | Inclusion de las ramas de Hotfix              |
 | 22/03/2024 | 1.3   | Modificacion de los mensajes de commit             |
+| 26/03/2024 | 1.4   | Modificacion de la politica de clockify para las theory pills             |
 
 ### Contenido
 1. Estrategia de ramas:
@@ -225,24 +229,30 @@ Cuando se actualiza el parámetro X, el parámetro Y y el Z se resetean a 0. Cua
 el parámetro Z se resetea a 0.
 
 8. Política de clockify
+
 Seguiremos la siguiente metodología a la hora de trabajar con clockify:
-La descripción de las tareas es la siguiente: Nombre de la Issue en Github: Estatus, donde “Nombre de la
-Issue en Github” será por ejemplo “Task 1 - Despliegue en Google Cloud” seguido de “:” y el “Estatus” que
-sería un indicativo de cómo va la tarea: (In Progress, DONE).
+
+La descripción de las tareas es la siguiente: Nombre de la Issue en Github, donde “Nombre de la
+Issue en Github” será por ejemplo “Task 1 - Despliegue en Google Cloud #32”.
+
 Hay que indicar en el project de la tarea de clockify el sprint y tipo de tarea (desarrollo, documentacion, etc)
+
 La descripción de las clases es la siguiente: Clase ISPP Fecha parte, donde Fecha es la fecha de la clase y parte
 es para indicar si ha sido la primera clase o la segunda. Como ejemplo: “Clase ISPP 27/02/2024 primera
 parte”.
 En el project hay que indicar el tipo de clase que ha sido.
+
 La descripción de las reuniones es la siguiente: Reunión Fecha Sitio Título, donde Fecha es la fecha de la
 reunión, sitio es para indicar en donde ha sido la reunión (Discord, CRAI, etc) y Título el título de la reunión
 (localizado en el acta de reunión). Como ejemplo: “Reunión 22/02/2024 Discord Dividir tareas y
 organización.”
 En el project hay que indicar si hemos asistido a la reunión o si únicamente hemos estado leyendo el acta.
-La descripción de las theory pills es la siguiente: Título de la theory pill, siendo este el título indicado en
-enseñanza virtual para la theory pill. Por ejemplo, “Theory Pill on Conflict Management, Effective Demos and
+
+La descripción de las theory pills es la siguiente: watch_theory_pill_X, siendo x el título indicado en
+enseñanza virtual para la theory pill. Por ejemplo, “watch_theory_pill_Theory Pill on Conflict Management, Effective Demos and
 Feedback Management”.
 En el project se debe indicar que es una theory pill.
+
 Para Cursos de formación tecnológicos únicamente hay que poner “Curso de Formacion - Elemento” de
 descripción, siendo “Elemento” la tecnología de dicho curso escrita en mayúsculas. Por ejemplo, “Curso de
 Formacion - DJANGO”. En el project hay que indicar que es un curso de formacion.
