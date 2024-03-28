@@ -25,7 +25,7 @@
 | 26/03/2024 | 1.4   | Modificacion de la politica de clockify para las theory pills             |
 | 28/03/2024 | 1.5   | Modificacion de la politica de clockify e Issues para documentacion             |
 
-### 1. Estrategia de ramas:
+## 1. Estrategia de ramas:
 El proyecto contendrá dos ramas principales: main y develop.
 La rama main es donde se localiza la versión más reciente del proyecto revisada y lista para su lanzamiento.
 La rama develop es la versión en desarrollo del proyecto, donde se implementan las funcionalidades y se completan las
@@ -47,7 +47,7 @@ El trabajo de las funcionalidades se realizarán en sus ramas de tarea individua
 completada se meterá en la rama de develop, y posteriormente una vez probado que develop funciona se hace merge
 de develop en main.
 
-### 2. Política de pull request:
+## 2. Política de pull request:
 Al completar una funcionalidad en una rama de tareas, los desarrolladores involucrados revisarán que el
 funcionamiento es óptimo y funcional.<br>
 
@@ -69,7 +69,7 @@ Y para los pull requests de ramas arreglo/fix, el patrón correspondiente será:
 donde Y es el sprint, X es el número asignado a la tarea y Z el número de la issue relacionada (# no).
 En caso de Hotfix, el patrón correspondiente será: **Hotfix Y.X - Nombre del arreglo/Z FIXED**, donde Y es el sprint, X es el número asignado a la tarea y Z el número de la issue relacionada (# nº). 
 
-### 3. Política del tablero:
+## 3. Política del tablero:
 A continuación, se explicará la política que se va a seguir durante el desarrollo de la aplicación para el tablero
 de cada sprint del proyecto:
 - **Todo**: Contiene las tareas listas para realizar por los desarrolladores.
@@ -77,8 +77,8 @@ de cada sprint del proyecto:
 - **In Review**: Tareas que se encuentran en revisión o pendientes de revisión.
 - **Done**: Contiene las tareas finalizadas del proyecto.
 
-### 4. Estructura de carpetas y archivos:
-## 4.1. Frontend
+## 4. Estructura de carpetas y archivos:
+### 4.1. Frontend
 La estructura de carpetas que se va a seguir durante el desarrollo del frontend se realizará de forma
 que exista un directorio por cada página (url) que haya en de la aplicación dentro de la carpeta
 “src/components”:
@@ -93,7 +93,7 @@ En el caso de que un recurso o componente tenga un propósito general, se introd
 el directorio base que se mencionó anteriormente. Si se trata de un recurso sería a “src/assets” y si es
 un componente a “src/components”.
 
-## 4.2. Backend
+### 4.2. Backend
 En relación a la estructura de carpetas que se va a seguir durante el desarrollo del backend, hemos
 optado por elegir la estructura que genera automáticamente Django durante su ciclo de vida:
 - Una carpeta principal llamada “backend”, que contiene todos los archivos relacionados con el
@@ -103,7 +103,7 @@ configuración de la base de datos, las urls, el middleware, etc...
 - La carpeta de la API del proyecto llamada “api”, la cual contiene los modelos de base de datos,
 las urls, la lógica de negocio, etc...
 
-### 5. Política de mensajes de commit:
+## 5. Política de mensajes de commit:
 La estructura general de los commits será la siguiente:
 - **Task [No de tarea] - [Nombre de la tarea] #[No de issue]**
 Ejemplo: Tarea 13 - Traducción al castellano. #23
@@ -133,13 +133,13 @@ De forma adicional, se debe  añadir al commit información más detallada si es
 [Info mas detallada]<br>
 Para lograr esto en la tabla de comandos, seria usar “git commit -a” y así podreis escribir mas de una línea.
 
-### 6. Estándar de código:
+## 6. Estándar de código:
 Dentro de este proyecto, se van a seguir diferentes estándares para generar código limpio y eficiente, reduciendo así la
 deuda técnica.
 Para todo el proyecto se programa en Inglés. Aunque la aplicación web se hará en español.
 <br>
 
-## 6.1. Frontend
+### 6.1. Frontend
 Estándares para React:
 ● **PascalCase**: Esta es la convención de nomenclatura más común para los componentes de React Native. Consiste
 en poner en mayúscula la primera letra de cada palabra del nombre.
@@ -158,7 +158,7 @@ Ejemplo: body, standard-body, white-word-color
 en minúscula. Si el nombre es una palabra compuesta, se separa por un guión.
 Ejemplo: color, background-size, background-size-reel
 
-## 6.2. Backend
+### 6.2. Backend
 Estándares para Python :
 <br>
 
@@ -241,7 +241,7 @@ palabras con guiones bajos.
 package,
 pythonpackage
 
-### 7. Política de versionado:
+## 7. Política de versionado:
 Seguiremos una metodología clásica para el versionado. Dividiremos la notación de las versiones con la
 política **X.Y.Z** :
 -X: Indica cambios mayores, implica ruptura de compatibilidad con versiones anteriores. Si la versión se
@@ -253,7 +253,7 @@ internos de corrección.
 Cuando se actualiza el parámetro X, el parámetro Y y el Z se resetean a 0. Cuando se actualiza el parámetro Y,
 el parámetro Z se resetea a 0.
 
-### 8. Política de clockify
+## 8. Política de clockify
 
 Seguiremos la siguiente metodología a la hora de trabajar con clockify:
 <br>
@@ -292,7 +292,7 @@ descripción, siendo “Elemento” la tecnología de dicho curso escrita en may
 Formacion - DJANGO”. En el project hay que indicar que es un curso de formacion.
 <br>
 
-### 9. Política de las Issues
+## 9. Política de las Issues
 Las issues se estructurará de la siguiente manera:
 Para las issues de **tareas**, se seguirá el siguiente formato de nombre: Task X - Nombre, donde X es el número
 de la tarea y Nombre el nombre de la tarea. Por ejemplo, “Task 1 - Despliegue en Google Cloud”.<br>
