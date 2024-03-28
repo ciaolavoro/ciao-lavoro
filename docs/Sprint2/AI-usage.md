@@ -1,20 +1,29 @@
 ﻿# Reporte del uso de IA CiaoLavoro
 
-## MIEMBROS DEL EQUIPO:
-- Alexander | Alicia Sánchez Hossdorf
-- Álvaro Hidalgo Rodríguez
-- Joaquín Arregui Díaz
-- Samuel Albalat Ortiz
-- Adrián García Chavero
-- Pablo Cuenca Pérez
-- Francisco Antonio Campos Campos
-- Javier Grosso
-- José Luis Cobo Ariza
-- Diego González Quintanilla
-- Antonio Barea Jiménez
-- Pablo Mateos Angulo
+## CIAOLAVORO
+**Grupo 6**
+<br>
+**Entregable: Sprint 2**
 
-## ISPP Uso de IA Grupo-6
+## Miembros del equipo y X en quien contribuya añadiendo Prompts
+
+| Nombre y Apellidos | Tipo de Contribución |
+|---------------------|-----------------------|
+| Alexander / Alicia Sánchez Hossdorf |    X      |
+| Álvaro Hidalgo Rodríguez |          |
+| Joaquín Arregui Díaz |          |
+| Samuel Albalat Ortiz |         |
+| Adrián García Chavero |          |
+| Pablo Cuenca Pérez |          |
+| Francisco Antonio Campos Campos |     X     |
+| Javier Grosso |     X     |
+| José Luis Cobo Ariza |          |
+| Diego González Quintanilla |          |
+| Antonio Barea Jiménez |          |
+| Pablo Mateos Angulo |          |
+
+
+---
 
 ### CONTROL DE VERSIONES
 | FECHA      | VERSIÓN | DESCRIPCIÓN                                    |
@@ -24,9 +33,9 @@
 | 03/03/2024 | 1.1     | Añadido casos de uso de IA del Sprint 1.       |
 | 09/03/2024 | 2.0     | Actualizacion del documento para el Sprint 2.  |
 
-## NOMBRE DEL PROYECTO: Ciao Lavoro
+
 - FECHA DE ELABORACIÓN: A 18 de Febrero de 2024
-- ELABORADO POR: Grupo 6
+
 
 ## DP
 ### PENALIZACIONES Y RECOMPENSAS
@@ -532,22 +541,21 @@ function Formulario() {
   className="w-full p-2 mb-4 border border-gray-300 rounded-md"
   />
 
+---
 
 ### CAMBIAR ICONO CONTRASEÑA DINAMICAMENTE:
 - **Persona que ha hecho el prompt:** Javier Grosso
 
 - **IA Usada:** Chat GPT 3.5
 
----
-
 - **Prompt y respuestas:** Descritos en el enlace: [https://chat.openai.com/share/1f633138-8817-4b86-a521-caa2802d0834](https://chat.openai.com/share/1f633138-8817-4b86-a521-caa2802d0834)
+
+---
 
 ### ERROR DE VARIABLE MAP:
 - **Persona que ha hecho el prompt:** Javier Grosso
 
 - **IA Usada:** Chat GPT 3.5
-
----
 
 - **Prompt y respuestas:** Descritos en el enlace: [https://chat.openai.com/share/e33e7f1b-b784-4ff4-9942-9fc9afcd2eea](https://chat.openai.com/share/e33e7f1b-b784-4ff4-9942-9fc9afcd2eea)
 y
@@ -555,29 +563,77 @@ y
 y
 [https://chat.openai.com/share/87a22d9a-8a51-4510-8660-1ed19809432e](https://chat.openai.com/share/87a22d9a-8a51-4510-8660-1ed19809432e)
 
+---
+
 ### CORRECCION ERROR CON EL CORS:
 - **Persona que ha hecho el prompt:** Javier Grosso
 
 - **IA Usada:** Chat GPT 3.5
 
----
-
 - **Prompt y respuestas:** Descritos en el enlace: [https://chat.openai.com/share/acc5dcab-30ac-4a5e-8500-6c18cb15bafe](https://chat.openai.com/share/acc5dcab-30ac-4a5e-8500-6c18cb15bafe)
+
+---
 
 ### VERIFICACION TRABAJADOR ASOCIADO:
 - **Persona que ha hecho el prompt:** Javier Grosso
 
 - **IA Usada:** Chat GPT 3.5
 
----
-
 - **Prompt y respuestas:** Descritos en el enlace: [https://chat.openai.com/share/229e6803-cda7-4e12-aa14-18020ba10c6d](https://chat.openai.com/share/229e6803-cda7-4e12-aa14-18020ba10c6d)
+
+---
 
 ### PEQUEÑA AYUDA VALIDACIONES DE USUARIO:
 - **Persona que ha hecho el prompt:** Javier Grosso
 
 - **IA Usada:** Chat GPT 3.5
 
+- **Prompt y respuestas:** Descritos en el enlace: [https://chat.openai.com/share/8c5d4827-9919-4a62-9489-183a60913007](https://chat.openai.com/share/8c5d4827-9919-4a62-9489-183a60913007)
+
 ---
 
-- **Prompt y respuestas:** Descritos en el enlace: [https://chat.openai.com/share/8c5d4827-9919-4a62-9489-183a60913007](https://chat.openai.com/share/8c5d4827-9919-4a62-9489-183a60913007)
+### Como hacer que aparezca un boton si el estado es "Negocación":
+- **Persona que ha hecho el prompt:** Alexander Sánchez Hossdorf
+
+- **IA Usada:** Phind-34B
+
+- **Prompt y respuestas:** Descritos en el enlace: [https://www.phind.com/agent?cache=clu1ebdac001dld081aibiuz5&source=sidebar](https://www.phind.com/agent?cache=clu1ebdac001dld081aibiuz5&source=sidebar)
+
+---
+
+### No sabia como hacer saltos de lineas en el Answer del Accordion:
+- **Persona que ha hecho el prompt:** Alexander Sánchez Hossdorf
+
+- **IA Usada:** Phind-34B
+
+
+- **Prompt y respuestas:** Descritos en el enlace: [https://www.phind.com/agent?cache=clu2ix0ux0005jv08zob5pjdy&source=sidebar](https://www.phind.com/agent?cache=clu2ix0ux0005jv08zob5pjdy&source=sidebar)
+
+---
+
+### Ayuda para añadir la restriccion a la experiencia:
+- **Persona que ha hecho el prompt:** Alexander Sánchez Hossdorf
+
+- **IA Usada:** Phind-34B
+
+- **Prompt y respuestas:** Descritos en el enlace: [https://www.phind.com/agent?cache=clu431n220001l4087ewshits&source=sidebar](https://www.phind.com/agent?cache=clu431n220001l4087ewshits&source=sidebar)
+
+---
+
+### Como meter un SVG en el dropdown del navbar :
+- **Persona que ha hecho el prompt:** Alexander Sánchez Hossdorf
+
+- **IA Usada:** Phind-34B
+
+- **Prompt y respuestas:** Descritos en el enlace: [https://www.phind.com/agent?cache=clu4fs7a6000sju08x8vt97sj&source=sidebar](https://www.phind.com/agent?cache=clu4fs7a6000sju08x8vt97sj&source=sidebar)
+
+
+---
+
+### Crear plantilla para la portada de los documentos en .md:
+- **Persona que ha hecho el prompt:** Alexander Sánchez Hossdorf
+
+- **IA Usada:** Phind-34B
+
+- **Prompt y respuestas:** Descritos en el enlace: [https://www.phind.com/agent?cache=club5rpfv0003l708skwtgtgr&source=sidebar](https://www.phind.com/agent?cache=club5rpfv0003l708skwtgtgr&source=sidebar)
+
