@@ -347,12 +347,21 @@ Contribución del estudiante
 - Task 2.57: Logica de los botones de contrato.
 - Task 2.52: Revisar
 - Fix 2.5: Revisar
+- Task 2.56: Revisar
 - Fix 2.18: Arreglar restriccion de experiencia 
 - Fix 2.11: Hacer que el Navbar sea responsive
+- Task 2.46,2.47: Revisar
+- Fix 2.27: Revisar
+- Fix 2.24: Revisar
+- Fix 2.25: Revisar
+- Fix 26: Revisar
 - Fix 2.28: Arreglar los botones de detalles de servicio (frontend)
+- Revisar que el despliegue funcionase.
 - Hacer de usuario Piloto del equipo 12. 
 - Hacer de Project Manager cuando Diego no se encontraba disponible.
-- Task 64: Crear PerformanceReport.md
+- Doc: Crear PerformanceReport.md
+- Doc: Actualizar Gestion de la Configuración.
+- 
 
 ## Sprint 3 (#S3)
 
