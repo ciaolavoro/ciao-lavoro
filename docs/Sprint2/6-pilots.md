@@ -10,6 +10,7 @@
 | Nombre y Apellidos | Tipo de Contribución |
 |---------------------|-----------------------|
 | Javier Grosso         | Redacción             |
+| Álvaro Hidalgo         | Revisión             |
 
 
 ### CONTROL DE VERSIONES
