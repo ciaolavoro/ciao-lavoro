@@ -1,25 +1,15 @@
-﻿# Gestión de la Configuración - Ciao Lavoro
+﻿# GESTION DE LA CONFIGURACION
 
-## MIEMBROS DEL EQUIPO:
-- Alexander | Alicia Sánchez Hossdorf
-- Álvaro Hidalgo Rodríguez
-- Joaquín Arregui Díaz
-- Samuel Albalat Ortiz
-- Adrián García Chavero
-- Pablo Cuenca Pérez
-- Francisco Antonio Campos Campos
-- Javier Grosso
-- José Luis Cobo Ariza
-- Diego González Quintanilla
-- Antonio Barea Jiménez
-- Pablo Mateos Angulo
+## CIAOLAVORO
+**Grupo 6**
+<br>
+**Entregable: Sprint 2**
 
-## CONTRIBUIDORES:
-- Javier Grosso: redacción de las modificaciones del documento en el Sprint 2 y parte de la redacción original en el Sprint 1
+## Miembros del equipo y contribuciones
 
-## ISPP GESTIÓN DE LA CONFIGURACIÓN - Grupo-6
-INGENIERÍA DEL SOFTWARE Y PRÁCTICA PROFESIONAL
-GRUPO 6 | SEVILLA, 09 DE MARZO 2024 | ENTREGABLE “SPRINT 2”
+| Nombre y Apellidos | Tipo de Contribución |
+|---------------------|-----------------------|
+| Javier Grosso         | Redacción           |
 
 ### CONTROL DE VERSIONES
 | FECHA      | VERSIÓN | DESCRIPCIÓN                                      |
