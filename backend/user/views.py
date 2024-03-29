@@ -75,9 +75,9 @@ class register(APIView):
             user.save()
             return JsonResponse({'status': '1', 'message': ' The user has been successfully registered'})
         except ValidationError as e:
-            return HttpResponseServerError({'status': '0', 'message': 'Internal Server Error', 'details': str(e)})
+            return JsonResponse({'details': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         except ValueError as e:
-            return HttpResponseServerError({'status': '0', 'message': 'Incorrect date format', 'details': str(e)})
+            return JsonResponse({'details': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class UserList(APIView):
     def get(self, request):
@@ -135,7 +135,7 @@ class Profile(APIView):
             serializer = UserSerializer(user)
             return JsonResponse(serializer.data)
         except ValidationError as e:
-            return HttpResponseServerError({'details': str(e)})
+            return JsonResponse({'details': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         except ValueError as e:
-            return HttpResponseServerError({'details': str(e)})
+            return JsonResponse({'details': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 

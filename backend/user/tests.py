@@ -90,7 +90,7 @@ class RegisterViewTests(TestCase):
             user_data[field] = ''
             response = self.client.post(reverse('user:register'), user_data)
             self.assertNotEqual(response.status_code, status.HTTP_200_OK, f"{field} is empty but registration succeeded")
-    
+
     def test_empty_birthdate(self):
         user_data = self.base_user_data.copy()
         user_data['birthdate'] = ''
@@ -137,7 +137,8 @@ class RegisterViewTests(TestCase):
 
     def test_common_password(self):
         user_data = self.base_user_data.copy()
-        user_data['password'] = 'password'
+        psw = 'password'
+        user_data['password'] = psw
         response = self.client.post(reverse('user:register'), user_data)
         self.assertNotEqual(response.status_code, status.HTTP_200_OK, "Common password validation failed")
 
