@@ -1,3 +1,4 @@
+import os
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 from rest_framework.test import APIClient
@@ -5,7 +6,10 @@ from rest_framework.authtoken.models import Token
 from django.urls import reverse
 from rest_framework import status
 import datetime
+from django.conf import settings
 from django.utils import timezone
+from django.core.files.uploadedfile import SimpleUploadedFile
+
 
 User = get_user_model()
 
@@ -86,12 +90,25 @@ class RegisterViewTests(TestCase):
             user_data[field] = ''
             response = self.client.post(reverse('user:register'), user_data)
             self.assertNotEqual(response.status_code, status.HTTP_200_OK, f"{field} is empty but registration succeeded")
+    
+    def test_empty_birthdate(self):
+        user_data = self.base_user_data.copy()
+        user_data['birthdate'] = ''
+        response = self.client.post(reverse('user:register'), user_data)
+        self.assertNotEqual(response.status_code, status.HTTP_200_OK, f"{'field'} is empty but registration succeeded")
 
     def test_wrong_email(self):
         user_data = self.base_user_data.copy()
         user_data['email'] = 'notanemail'
         response = self.client.post(reverse('user:register'), user_data)
         self.assertEqual(response.status_code, status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def test_future_birth_date(self):
+        user_data = self.base_user_data.copy()
+        tomorrow = (timezone.now().date() + datetime.timedelta(days=1)).strftime('%Y-%m-%d')
+        user_data['birthdate'] = tomorrow
+        response = self.client.post(reverse('user:register'), user_data)
+        self.assertNotEqual(response.status_code, status.HTTP_200_OK, "Age validation for younger than 16 failed")
 
     def test_age_younger_than_16(self):
         user_data = self.base_user_data.copy()
@@ -146,17 +163,45 @@ class UserProfileViewTests(UserTestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json()['username'], self.user.username)
         update_data = {
-            'username': '',
+            'username': 'UpdatedUsername',
             'first_name': 'UpdatedName',
-            'last_name': '',
-            'email': '',
-            'language': '',
-            'birth_date': '',
+            'last_name': 'UpdatedLastName',
+            'email': 'updated@email.com',
+            'language': 'UpdatedLanguage',
+            'birth_date': '1950-12-12',
             }
         response = self.client.put(reverse('user:profile'), update_data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.user.refresh_from_db()
+        self.assertEqual(self.user.username, 'UpdatedUsername')
         self.assertEqual(self.user.first_name, 'UpdatedName')
+        self.assertEqual(self.user.last_name, 'UpdatedLastName')
+        self.assertEqual(self.user.email, 'updated@email.com')
+        self.assertEqual(self.user.language, 'UpdatedLanguage')
+        self.assertEqual(self.user.birth_date, datetime.date(1950, 12, 12))
+
+    def test_update_profile_image(self):
+        default_image_path = os.path.join(settings.BASE_DIR, 'users', 'default.png').replace('\\','/')
+        with open(default_image_path, 'rb') as image:
+            image_data = image.read()
+        image_file = SimpleUploadedFile('new_image.jpg', image_data, content_type='image/jpeg')
+        update_data = {
+            'username': '',
+            'first_name': '',
+            'last_name': '',
+            'email': '',
+            'language': '',
+            'birth_date': '',
+            'image': image_file,
+        }
+        token, _ = Token.objects.get_or_create(user=self.user)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.put(reverse('user:profile'), update_data, format='multipart')
+        self.assertEqual(response.status_code, status.HTTP_200_OK, "Failed to update user profile image")
+        self.user.refresh_from_db()
+        self.assertTrue(self.user.image, "User image was not updated")
+        self.assertIn('new_image', self.user.image.name, "Updated image has incorrect filename")
+
 
 class UserProfileUpdateTests(UserTestCase):
     def setUp(self):
