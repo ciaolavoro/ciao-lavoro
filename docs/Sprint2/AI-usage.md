@@ -7,20 +7,20 @@
 
 ## Miembros del equipo y X en quien contribuya añadiendo Prompts
 
-| Nombre y Apellidos | Tipo de Contribución |
+| Nombre y Apellidos | Ha contribuido |
 |---------------------|-----------------------|
-| Alexander / Alicia Sánchez Hossdorf |    X      |
-| Álvaro Hidalgo Rodríguez |          |
-| Joaquín Arregui Díaz |          |
-| Samuel Albalat Ortiz |         |
-| Adrián García Chavero |          |
-| Pablo Cuenca Pérez |          |
-| Francisco Antonio Campos Campos |     X     |
-| Javier Grosso |     X     |
-| José Luis Cobo Ariza |          |
-| Diego González Quintanilla |          |
-| Antonio Barea Jiménez |          |
-| Pablo Mateos Angulo |          |
+| Alexander / Alicia Sánchez Hossdorf |    X     |
+| Álvaro Hidalgo Rodríguez            |          |
+| Joaquín Arregui Díaz                |          |
+| Samuel Albalat Ortiz                |    X     |
+| Adrián García Chavero               |          |
+| Pablo Cuenca Pérez                  |          |
+| Francisco Antonio Campos Campos     |          |
+| Javier Grosso Gómez de Terreros     |    X     |
+| José Luis Cobo Ariza                |          |
+| Diego González Quintanilla          |          |
+| Antonio Barea Jiménez               |          |
+| Pablo Mateos Angulo                 |          |
 
 
 ---
@@ -544,7 +544,7 @@ function Formulario() {
 ---
 
 ### CAMBIAR ICONO CONTRASEÑA DINAMICAMENTE:
-- **Persona que ha hecho el prompt:** Javier Grosso
+- **Persona que ha hecho el prompt:** Javier Grosso Gómez de Terreros
 
 - **IA Usada:** Chat GPT 3.5
 
@@ -553,7 +553,7 @@ function Formulario() {
 ---
 
 ### ERROR DE VARIABLE MAP:
-- **Persona que ha hecho el prompt:** Javier Grosso
+- **Persona que ha hecho el prompt:** Javier Grosso Gómez de Terreros
 
 - **IA Usada:** Chat GPT 3.5
 
@@ -566,7 +566,7 @@ y
 ---
 
 ### CORRECCION ERROR CON EL CORS:
-- **Persona que ha hecho el prompt:** Javier Grosso
+- **Persona que ha hecho el prompt:** Javier Grosso Gómez de Terreros
 
 - **IA Usada:** Chat GPT 3.5
 
@@ -575,7 +575,7 @@ y
 ---
 
 ### VERIFICACION TRABAJADOR ASOCIADO:
-- **Persona que ha hecho el prompt:** Javier Grosso
+- **Persona que ha hecho el prompt:** Javier Grosso Gómez de Terreros
 
 - **IA Usada:** Chat GPT 3.5
 
@@ -584,7 +584,7 @@ y
 ---
 
 ### PEQUEÑA AYUDA VALIDACIONES DE USUARIO:
-- **Persona que ha hecho el prompt:** Javier Grosso
+- **Persona que ha hecho el prompt:** Javier Grosso Gómez de Terreros
 
 - **IA Usada:** Chat GPT 3.5
 
@@ -636,4 +636,22 @@ y
 - **IA Usada:** Phind-34B
 
 - **Prompt y respuestas:** Descritos en el enlace: [https://www.phind.com/agent?cache=club5rpfv0003l708skwtgtgr&source=sidebar](https://www.phind.com/agent?cache=club5rpfv0003l708skwtgtgr&source=sidebar)
+
+---
+
+### Task 2.11 / #123:
+- **Persona que ha hecho el prompt:** Samuel Albalat Ortiz
+
+- **IA Usada:** ChatGPT 3.5
+
+- **Prompt y respuestas:** Descritos en el enlace: [https://chat.openai.com/share/527976c4-505a-4696-90bf-a9fb84757b90](https://chat.openai.com/share/527976c4-505a-4696-90bf-a9fb84757b90)
+
+---
+
+### Task 2.15 / #127:
+- **Persona que ha hecho el prompt:** Samuel Albalat Ortiz
+
+- **IA Usada:** ChatGPT 3.5
+
+- **Prompt y respuestas:** Descritos en el enlace: [https://chat.openai.com/share/45e7ac97-a5ae-405a-a129-0a298a76082d](https://chat.openai.com/share/45e7ac97-a5ae-405a-a129-0a298a76082d)
 
