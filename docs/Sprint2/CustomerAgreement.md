@@ -22,16 +22,27 @@ Este Acuerdo fue modificado por última vez el 29 de Marzo de 2024.
 Los siguientes términos de servicio rigen su acceso y uso del sitio web de CiaoLavoro, incluido
 cualquier contenido, funcionalidad y servicios ofrecidos en o a través de www.ciaolavoro.com (“Sitio”)
 por CiaoLavoro.
+
 CiaoLavoro se denomina colectivamente como "CiaoLavoro", "nosotros" o "nos " y "usted " o "usuario" significa usted como usuario del Sitio.
+
 Lea atentamente los Términos de servicio antes de comenzar a utilizar el sitio.
+
 Al utilizar el sitio, abrir una cuenta o hacer clic para aceptar o aceptar los Términos de servicio cuando esta opción está disponible para usted, usted acepta, en su nombre o en nombre de su empleador o cualquier otra entidad (si aplica), a estar obligado y cumplir con estos Términos de servicio.
+
 Además, reconoce que ha leído y comprendido nuestra Política de privacidad.
+
 Si no desea aceptar estos Términos de servicio o la Política de privacidad, no debe acceder ni utilizar el Sitio.
+
 Para obtener políticas más detalladas sobre la actividad y el uso del Sitio, acceda a los artículos designados en este documento.
+
 Este sitio se ofrece y está disponible para usuarios que tengan al menos 18 años y sean mayores de edad para celebrar un contrato vinculante. Si tiene menos de 18 años y tiene al menos 13 años, solo se le permite utilizar el Sitio a través de una cuenta propiedad de un padre o tutor legal con su permiso correspondiente.
+
 Si es menor de 13 años, no se le permite utilizar el Sitio ni los servicios de CiaoLavoro.
+
 Al utilizar el Sitio, usted declara y garantiza que cumple con todos los requisitos de elegibilidad anteriores.
+
 Si no cumple con todos estos requisitos, no debe acceder ni utilizar el Sitio.
+
 El idioma original de estos Términos de servicio, así como de todos los demás textos del Sitio, es el español. CiaoLavoro pone esta traducción a disposición únicamente por conveniencia. En caso de conflictos entre la versión original en inglés y cualquier traducción, prevalecerá la versión en español.
 
 ## 1. Términos clave
