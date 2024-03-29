@@ -212,9 +212,15 @@ CiaoLavoro se reserva el derecho de suspender cualquier cuenta o desactivarla pe
 
 ## 10. Contenido generado por el usuario
 El contenido generado por el usuario se refiere al contenido agregado por los usuarios a diferencia del contenido creado por el sitio. Todo el contenido subido a CiaoLavoro por nuestros usuarios (clientes y trabajadores) es contenido generado por el usuario.
-CiaoLavoro no verifica que el contenido subido/creado por el usuario sea apropiado, violaciones de derechos de autor, marcas registradas, otros derechos o violaciones y el usuario que sube/crea dicho contenido será el único responsable de él y de las consecuencias de usarlo, divulgarlo, almacenarlo o transmitirlo. Al cargar o crear contenido en la plataforma CiaoLavoro, usted declara y garantiza que posee o ha obtenido todos los derechos, licencias, consentimientos, permisos, poderes y/o autoridad, necesarios para usar y/o cargar dicho contenido y que dicho el contenido o el uso del mismo en el sitio no infringe ni violará ningún derecho de propiedad intelectual, propiedad o privacidad, protección de datos o publicidad de ningún tercero; violar cualquier ley, reglamento y convención local, estatal, federal e internacional aplicable; y/o violar cualquiera de sus políticas y/o términos de servicio o los de terceros.
+
+CiaoLavoro no verifica que el contenido subido/creado por el usuario sea apropiado, violaciones de derechos de autor, marcas registradas, otros derechos o violaciones y el usuario que sube/crea dicho contenido será el único responsable de él y de las consecuencias de usarlo, divulgarlo, almacenarlo o transmitirlo.
+
+Al cargar o crear contenido en la plataforma CiaoLavoro, usted declara y garantiza que posee o ha obtenido todos los derechos, licencias, consentimientos, permisos, poderes y/o autoridad, necesarios para usar y/o cargar dicho contenido y que dicho el contenido o el uso del mismo en el sitio no infringe ni violará ningún derecho de propiedad intelectual, propiedad o privacidad, protección de datos o publicidad de ningún tercero; violar cualquier ley, reglamento y convención local, estatal, federal e internacional aplicable; y/o violar cualquiera de sus políticas y/o términos de servicio o los de terceros.
+
 Invitamos a todos nuestros usuarios a denunciar las infracciones junto con la prueba de propiedad, según corresponda.
+
 El contenido infractor reportado puede eliminarse o inhabilitarse.
+
 Además, CiaoLavoro no es responsable del contenido, la calidad o el nivel de servicio proporcionado por los trabajadores. No ofrecemos ninguna garantía con respecto a los servicios, o su entrega. Alentamos a los usuarios a aprovechar nuestro sistema de calificación, y el uso de la comunicación en nuestra comunidad al elegir los servicios adecuados.
 
 Al ofrecer un servicio, el trabajador se compromete a tener permisos, derechos y/o licencias suficientes para proporcionar, vender o revender el servicio que se ofrece en CiaoLavoro. Los trabajadores que anuncien en línea su servicio deben cumplir con las leyes y los términos de servicio de la plataforma publicitaria o el sitio web relevante utilizado para anunciar. De no hacerlo, se puede eliminar el servicio, según corresponda, y puede dar lugar a la suspensión de la cuenta del trabajador.
