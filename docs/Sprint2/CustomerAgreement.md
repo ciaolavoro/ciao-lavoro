@@ -6,6 +6,7 @@
 | Adrián García       | Creación/Redacción   |
 | Francisco Campos    | Aprobación            |
 | Samuel Albalat      | Revisión              |
+| Javier Grosso      | Revisión              |
 
 ### CONTROL DE VERSIONES
 | FECHA      | VERSIÓN | DESCRIPCIÓN                                      |
@@ -14,10 +15,11 @@
 | 18/02/2024 | 0.9.5   | Actualización del formato                        |
 | 18/02/2024 | 1.0     | Aprobación del documento                         |
 | 29/03/2024 | 1.1     | Revisión tras Theory Pill                        |
+| 30/03/2024 | 1.1     | Revisión para corregir errores de enlaces                       |
 
 Este Acuerdo fue modificado por última vez el 29 de marzo de 2024.
 
-Los siguientes términos de servicio rigen su acceso y uso del sitio web de CiaoLavoro, incluido cualquier contenido, funcionalidad y servicios ofrecidos en o a través de www.ciaolavoro.com (“Sitio”) por CiaoLavoro.
+Los siguientes términos de servicio rigen su acceso y uso del sitio web de CiaoLavoro, incluido cualquier contenido, funcionalidad y servicios ofrecidos en o a través de [www.ciaolavoro.com](https://ciao-lavoro-2.pages.dev/) (“Sitio”) por CiaoLavoro.
 
 CiaoLavoro se denomina colectivamente como "CiaoLavoro", "nosotros" o "nos "y "usted "o "usuario" significa usted como usuario del Sitio.
 
@@ -120,7 +122,7 @@ Para informar una violación de nuestros Términos de servicio y/o nuestros Est�
 - Venta de cuentas: No puede comprar ni vender cuentas de CiaoLavoro.
 
 ## 8. Términos de Pago
-Los siguientes términos rigen los pagos que usted realiza o recibe a través de www.ciaolavoro.com, operado por CiaoLavoro. CiaoLavoro se denomina colectivamente en el presente documento "CiaoLavoro", "nosotros" o "nos". 
+Los siguientes términos rigen los pagos que usted realiza o recibe a través de [www.ciaolavoro.com](https://ciao-lavoro-2.pages.dev/), operado por CiaoLavoro. CiaoLavoro se denomina colectivamente en el presente documento "CiaoLavoro", "nosotros" o "nos". 
 
 Lea atentamente estos Términos de pago antes de realizar o recibir pagos a través del sitio. Al realizar o recibir pagos a través del sitio, usted acepta y acuerda, en su nombre o en nombre de su empleador o cualquier otra entidad (si corresponde), estar sujeto y cumplir con estos Términos de pago. Estos Términos son complementarios de los Términos de servicio generales de CiaoLavoro.  
 
