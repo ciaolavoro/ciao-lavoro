@@ -14,46 +14,52 @@ export default function RegisterPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [image, setImage] = useState(defaultRegisterImage); 
+  const [image, setImage] = useState(defaultRegisterImage);
   const [birthdate, setBirthdate] = useState('');
   const [passwordType, setPasswordType] = useState('password');
   const [passwordIcon, setPasswordIcon] = useState(EyeSlashIcon);
   const navigate = useNavigate();
   const [uploadedImage, setUploadedImage] = useState(null)
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleUsernameChange = (e) => {
     const value = e.target.value;
 
-    if(value.includes(' ')){
+    if (value.includes(' ')) {
       alert('El nombre de usuario no debe contener espacios en blanco')
-    }else{
+    } else {
       setUsername(value);
     }
-    
+
   }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if ( !firstName.trim()){
-      alert('El nombre no puede estar vacío');
+    if (!termsAccepted) {
+      setErrorMessage("Para poder registrarse debe aceptar los Terminos y Condiciones");
       return;
     }
-    if ( !lastName.trim()){
+    if (!firstName.trim()) {
+      ('El nombre no puede estar vacío');
+      return;
+    }
+    if (!lastName.trim()) {
       alert('El apellido no puede estar vacío');
       return;
     }
     try {
       await registerRequest(username, password, firstName, lastName, email, image, birthdate);
       navigate("/");
-  } catch (error) {
+    } catch (error) {
       console.error('Error registrando usuario:', error);
       if (error.message === 'El nombre de usuario ya está en uso') {
-          alert('El nombre de usuario ya existe. Por favor, elige otro.');
+        alert('El nombre de usuario ya existe. Por favor, elige otro.');
       } else {
-          alert('Ha ocurrido un error. Por favor intentelo de nuevo');
+        alert('Ha ocurrido un error. Por favor intentelo de nuevo');
       }
-  }
-    
+    }
+
   };
 
   const handleImageChange = event => {
@@ -194,6 +200,28 @@ export default function RegisterPage() {
               </label>
             </div>
           </div>
+
+          <div className="flex justify-center mt-8">
+            <input
+              type="checkbox"
+              id="terms-accept"
+              checked={termsAccepted}
+              onChange={(e) => setTermsAccepted(e.target.checked)}
+            />
+            <label htmlFor="terms-accept" className="ml-2">
+              <span>Aceptar Términos de uso y Condiciones. Lea </span>
+            </label>
+            <NavLink
+              to={"https://ciaolavoro.github.io/landingpage/terminosyCondciones.html" }
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ml-2 text-green-500 underline"
+            >
+              Aquí
+            </NavLink>
+          </div>
+          {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+
           <div className="flex justify-center mt-8">
             <button type="submit" className="px-6 py-2 bg-orange-400 text-black font-medium rounded-lg hover:cursor-pointer hover:bg-orange-500 transition">Registrarse</button>
           </div>
