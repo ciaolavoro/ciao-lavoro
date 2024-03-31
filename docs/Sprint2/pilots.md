@@ -28,7 +28,7 @@ En base a eso, la retroalimentación que recibamos será usada para definir futu
 
 ### LISTA DE USUARIOS PILOTO
 | Id     | Nombre | Edad | Motivo para ser usuario piloto                 | Estado en el Sprint 2 | 
-|------------|---------|-------|--------------------------------------------------|
+|------------|---------|-------|--------------------------------------------------||-------|
 | 1 | Alexandra Hossdorf    | 55   | Recientemente fue operada y tiene inmovilizado un brazo. Por ello no puede realizar tareas como limpieza debido a que su marido está trabajando todo el día y sus hijos estudian fuera. Quiere contratar a una persona que se encargue de la limpieza pero quiere que sea puntualmente, que vaya una sola vez durante un par de horas para hacer una limpieza rápida.                      | Respuesta recibida |
 | 2 | Lola Grosso    | 22   | Se acaba de graduar en enfermería y se encuentra todo el día trabajando, no tiene tiempo para limpiar o cocinar entonces le gustaría poder contratar a una persona que limpie su casa de forma puntual.                      | Respuesta Recibida |
 | 3 | Maria Rufo    | 59   | Tiene muchos años de experiencia cuidando niños y cocinando. Le gustaría poder publicar su empleo.                      | Contactado |
