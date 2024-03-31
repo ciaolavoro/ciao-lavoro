@@ -1,8 +1,9 @@
-# Compromiso de Usuarios Piloto
-
 # Compromiso de Usuario Piloto
 
-Yo, [Usuario piloto], me comprometo de manera voluntaria y consciente a cumplir con las siguientes cláusulas y responsabilidades mientras participe como usuario piloto en la página web de Ciao Lavoro:
+## Nombre del Usuario Piloto: [Nombre del Usuario Piloto]
+## Fecha de Evaluación: [Fecha de Evaluación]
+
+Yo, **[Usuario piloto]**, me comprometo de manera voluntaria y consciente a cumplir con las siguientes cláusulas y responsabilidades mientras participe como usuario piloto en la página web de Ciao Lavoro:
 
 1. **Cumplimiento de las fechas:**
    - Me comprometo a revisar la página web de Ciao Lavoro en las fechas específicas que sean comunicadas por el equipo de Ciao Lavoro, con el fin de brindar un feedback preciso y oportuno que contribuya al continuo desarrollo y mejora de la plataforma.
@@ -16,6 +17,6 @@ Yo, [Usuario piloto], me comprometo de manera voluntaria y consciente a cumplir 
 4. **Información relevante:**
    - Me comprometo a brindar al equipo de Ciao Lavoro la información más precisa y relevante con el propósito de ofrecer la ayuda más óptima posible para la mejora de su página web.
 
-Firma del Usuario Piloto: _____________________
-Fecha XX/XX/2024
+### Firma:
+[Nombre del Evaluador]    [Fecha de Evaluación]
 
