@@ -23,8 +23,10 @@
 - Para los usuarios piloto extras, los potenciales consumidores, hemos optado por comunicarnos con ellos a través de la aplicación Whatsapp, por petición de los propios usuarios piloto.
 
 ### PLAN DE GESTIÓN DEL FEEDBACK
-- La idea de ofrecer la aplicación a usuarios piloto, a parte de para poder detectar fallos en la aplicación, es también poder recibir recomendaciones de potenciales consumidores para mejorar nuestro servicio.
-En base a eso, la retroalimentación que recibamos será usada para definir futuras tareas de mejora de nuestro servicio, implementación de funcionalidades y cambios esteticos.
+Para el plan de gestión de usuarios piloto seguiremos el siguiente procedimiento:
+1. Se enviará un mensaje a todos los usuarios piloto por medio de la vía de contacto elegida, el cual incluirá un manual de usuario de la aplicación, un enlace al formulario y un enlace a la aplicación desplegada.
+2. Se permite a los usuarios piloto que usen durante varios dias la aplicación y respondan el formulario.
+3. Se recopila el feedback y se generan issues y tareas en base a la información recibida sobre como mejorar la aplicación.
 
 ### LISTA DE USUARIOS PILOTO
 | Id     | Nombre | Edad | Motivo para ser usuario piloto                 | Estado en el Sprint 2 | 
