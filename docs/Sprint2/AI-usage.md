@@ -11,7 +11,7 @@
 |---------------------|-----------------------|
 | Alexander / Alicia Sánchez Hossdorf |    X     |
 | Álvaro Hidalgo Rodríguez            |          |
-| Joaquín Arregui Díaz                |          |
+| Joaquín Arregui Díaz                |    X     |
 | Samuel Albalat Ortiz                |    X     |
 | Adrián García Chavero               |          |
 | Pablo Cuenca Pérez                  |          |
@@ -664,3 +664,20 @@ y
 
 - **Prompt y respuestas:** Descritos en el enlace: [https://chat.openai.com/share/3f13d1cb-5724-4dd2-bfd4-0b3e63115b90](https://chat.openai.com/share/3f13d1cb-5724-4dd2-bfd4-0b3e63115b90)
 
+---
+
+### Fix 2.29 / #279:
+- **Persona que ha hecho el prompt:** Joaquín Arregui Díaz
+
+- **IA Usada:** ChatGPT 4
+
+- **Prompt y respuestas:** Descritos en el enlace: [https://chat.openai.com/share/4a49182c-5c4a-45e8-a582-477e7f2bfac5](https://chat.openai.com/share/4a49182c-5c4a-45e8-a582-477e7f2bfac5)
+
+---
+
+### Fix 2.29 / #279:
+- **Persona que ha hecho el prompt:** Joaquín Arregui Díaz
+
+- **IA Usada:** ChatGPT 4
+
+- **Prompt y respuestas:** Descritos en el enlace: [https://chat.openai.com/share/9870a859-549f-42f8-bd48-f27dad6caae7](https://chat.openai.com/share/9870a859-549f-42f8-bd48-f27dad6caae7)
