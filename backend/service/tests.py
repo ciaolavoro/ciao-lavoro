@@ -92,7 +92,12 @@ class ServiceViewTest(TestCase):
 class ServiceListTestCase(TestCase):
     def setUp(self):
         self.client = APIClient()
-        self.user = User.objects.create_user(username='testuser', email='test@example.com', password='testpassword', first_name='Test', last_name='User', birth_date= (timezone.now() - datetime.timedelta(days=365*25)).date(), language= 'English' )
+        self.user = User.objects.create_user(username='testuser',
+                                            email='test@example.com',
+                                            password='testpassword', first_name='Test',
+                                            last_name='User',
+                                            birth_date= (timezone.now() - datetime.timedelta(days=365*25)).date(),
+                                            language= 'English' )
         self.token = Token.objects.create(user=self.user)
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
         self.service_data = {
@@ -131,7 +136,13 @@ class ServiceListTestCase(TestCase):
 class AllProfessionListTestCase(TestCase):
     def setUp(self):
         self.client = APIClient()
-        self.user = User.objects.create_user(username='testuser', email='test@example.com', password='testpassword', first_name='Test', last_name='User', birth_date= (timezone.now() - datetime.timedelta(days=365*25)).date(), language= 'English' )
+        self.user = User.objects.create_user(username='testuser',
+                                            email='test@example.com',
+                                            password='testpassword',
+                                            first_name='Test',
+                                            last_name='User',
+                                            birth_date= (timezone.now() - datetime.timedelta(days=365*25)).date(),
+                                            language= 'English' )
         self.token = Token.objects.create(user=self.user)
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
 
@@ -149,7 +160,13 @@ class AllProfessionListTestCase(TestCase):
 class ProfessionListTestCase(TestCase):
     def setUp(self):
         self.client = APIClient()
-        self.user = User.objects.create_user(username='testuser', email='test@example.com', password='testpassword', first_name='Test', last_name='User', birth_date= (timezone.now() - datetime.timedelta(days=365*25)).date(), language= 'English' )
+        self.user = User.objects.create_user(username='testuser',
+                                            email='test@example.com',
+                                            password='testpassword',
+                                            first_name='Test',
+                                            last_name='User',
+                                            birth_date= (timezone.now() - datetime.timedelta(days=365*25)).date(),
+                                            language= 'English' )
         self.token = Token.objects.create(user=self.user)
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
 
