@@ -92,14 +92,14 @@ class ContractEdit(APIView):
             new_cost = float(contract_data['cost'])
         else:
             raise ValidationError("Todo contrato ha de tener un valor de coste aunque no sea definitivo")
-
+        
         if contract_data['accept_worker'] and contract_data['accept_worker'].strip() != '':
             new_accept_worker = contract_data['accept_worker']
             if user != contract.worker and new_accept_worker != str(contract.accept_worker):
                 raise PermissionDenied("No tienes permiso para cambiar la aceptación del trabajador siendo el cliente")
         else:
             ValidationError("El campo de aceptación de trabajador ha de tener un valor")
-
+        
         if contract_data['accept_client'] and contract_data['accept_client'].strip() != '':
             new_accept_client = contract_data['accept_client']
             if user != contract.client and new_accept_client != str(contract.accept_client):
@@ -118,9 +118,10 @@ class ContractEdit(APIView):
             raise ValidationError("La fecha de inicio no puede ser antes que hoy")
         if new_cost <= 0.0:
             raise ValidationError("El precio no puede ser menor o igual que 0")
-
-        contract.accept_worker = new_accept_worker
-        contract.accept_client = new_accept_client
+        if contract_data['accept_worker'] != '':
+            contract.accept_worker = new_accept_worker
+        if contract_data['accept_client'] != '':
+            contract.accept_client = new_accept_client
         contract.description = new_description
         contract.initial_date = new_initial_date
         contract.end_date = new_end_date
@@ -187,9 +188,7 @@ class ContractDetail(generics.ListAPIView):
     serializer_class = ContractSerializer
     @authentication_classes([TokenAuthentication])
     def get(self, request, contract_id):
-        print(contract_id)
         contract = get_object_or_404(Contract, pk = contract_id)
-        print(contract)
         token_id = self.request.headers['Authorization']
         token = get_object_or_404(Token, key = token_id.split()[-1])
         user = token.user

@@ -158,7 +158,7 @@ class ContractDetailViewTests(ContractTestCase):
     def test_contract_details(self):
         token, _ = Token.objects.get_or_create(user=self.user2)
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
-        response = self.client.get(reverse('contracts:user-contract', kwargs={'contract_id': str(self.contract.id)}))
+        response = self.client.get(reverse('contracts:contract-detail', kwargs={'contract_id': str(self.contract.id)}))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json()['description'], self.contract.description)
 
@@ -166,23 +166,23 @@ class ContractUpdateTests(ContractTestCase):
     def test_get_update_contract(self):
         token, _ = Token.objects.get_or_create(user=self.user2)
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
-        response = self.client.get(reverse('contracts:user-contract',kwargs={'contract_id': self.contract.id}))
+        response = self.client.get(reverse('contracts:contract-detail',kwargs={'contract_id': self.contract.id}))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json()['description'], self.contract.description)
         update_data = {
-            'accept_worker':False,
-            'accept_client':True,
+            'accept_worker':'',
+            'accept_client':'True',
             'description':'nuevadescristion',
             'initial_date': '2024-05-7T14:30',
             'end_date': '2024-05-8T14:30',
-            'cost': 5
+            'cost': '5'
         }
-        response = self.client.put(reverse('contracts:user-contract',kwargs={'contract_id': 1}), update_data, format='json')
+        response = self.client.put(reverse('contracts:contract-edit',kwargs={'contract_id': 1}), update_data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.contract.refresh_from_db()
-        self.assertEqual(self.contract.accept_worker, False)
-        self.assertEqual(self.contract.accept_client, False)
-        self.assertEqual(self.contract.initial_date, (timezone.now() + datetime.timedelta(days=5)).date())
-        self.assertEqual(self.contract.end_date, (timezone.now() + datetime.timedelta(days=10)).date())
+        self.assertEqual(self.contract.accept_worker, True)
+        self.assertEqual(self.contract.accept_client, True)
+        self.assertEqual(self.contract.initial_date, datetime.datetime.strptime('2024-05-7T14:30','%Y-%m-%dT%H:%M').replace(tzinfo=datetime.timezone.utc))
+        self.assertEqual(self.contract.end_date,datetime.datetime.strptime('2024-05-8T14:30','%Y-%m-%dT%H:%M').replace(tzinfo=datetime.timezone.utc))
         self.assertEqual(self.contract.description, 'nuevadescristion')
         self.assertEqual(self.contract.cost, 5)
