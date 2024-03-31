@@ -298,7 +298,42 @@ Fecha: 02 / 03 / 2024
 Contribución del estudiante
 
 **Arregui Díaz, Joaquín**
-Contribución del estudiante
+- Asisitir a reuniones.
+- Asisitir a clase.
+- Task 1 - Registro del usuario (Backend).
+- Task 3 - Arreglo de Inicio de Sesión (Backend).
+- Task 5 - Adición de campo multimedia para Usuario (Backend). 
+- Task 14 - Arreglar Creación de Servicio (Backend).
+- Task 27 - Arreglar Creación de Contrato (Backend).
+- Task 35 - Arreglo del inicio de sesión (Backend).
+- Task 37 - Commitment Agreement de usuarios piloto.
+- Task 40 - Testing de Usuarios (Backend).
+- Task 51 - Implementación de Valoración (Backend).
+- Hotfix 1 - Arreglos Generales para Demostración.
+- Hotfix 2 - Arreglo errores relacionados con Usuario.
+- Fix 22 - Solventar error en la manipulación de perfíl.
+- Fix 2.23 -Error 404 al crear contrato.
+- Fix 24 - Añadir profesiones a Servicios.
+- Fix 25 - Botón hacer una reseña.
+- Fix 2.27 - La foto no se guarda al registrarse.
+- Fix 29 - Añadir campo imagen a servicio.
+- Fix 29 - Utilizar foto por defecto en los perfiles sin foto.
+- Hacer de usuario Piloto del equipo 12.
+- Revisar: Task 2.5 - Registro del usuario/112.
+- Revisar: Fix 2.6 - Adición campo Username edición perfil/203.
+- Revisar: Fix 2.7 - Corrección campo Profesión de Trabajo/205.
+- Revisar: Fix 2.8 - Corrección campo Status de Contrato/207.
+- Revisar: Fix 4 - Arreglado los filtros y el serializers /199.
+- Revisar: Task 2.46,2.47 - Realizar el pago de Servicios (Frontend+Backend)/182.
+- Revisar: Task 2.60 - Despliegue del proyecto/260.
+- Revisar: Sprint 2
+- Conexión back-front de valoración.
+- Ayudar a diferentes compañeros con sus tareas.
+- Organizar y revisarel backend conlos diferentes usuarios del equipo de backend.
+- Popular la base de datos.
+- Diseñar junto al jefe de proyecto los criterios de evaluación del rendimiento.
+- Video de la demostración de la aplicación.
+- Coordinar miembros del equipo de backend.
 
 **Barea Jiménez, Antonio**
 Contribución del estudiante
