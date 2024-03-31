@@ -1,5 +1,3 @@
-# Compromiso de Usuarios Piloto
-
 # Compromiso de Usuario Piloto
 
 ## Nombre del Usuario Piloto: [Nombre del Usuario Piloto]
