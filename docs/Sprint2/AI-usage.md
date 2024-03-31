@@ -655,3 +655,12 @@ y
 
 - **Prompt y respuestas:** Descritos en el enlace: [https://chat.openai.com/share/45e7ac97-a5ae-405a-a129-0a298a76082d](https://chat.openai.com/share/45e7ac97-a5ae-405a-a129-0a298a76082d)
 
+---
+
+### Task 2.40 / #299:
+- **Persona que ha hecho el prompt:** Joaquín Arregui Díaz
+
+- **IA Usada:** ChatGPT 4
+
+- **Prompt y respuestas:** Descritos en el enlace: [https://chat.openai.com/share/3f13d1cb-5724-4dd2-bfd4-0b3e63115b90](https://chat.openai.com/share/3f13d1cb-5724-4dd2-bfd4-0b3e63115b90)
+
