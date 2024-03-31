@@ -161,8 +161,12 @@ class ProfessionListTestCase(TestCase):
 class UserServiceListTestCase(TestCase):
     def setUp(self):
         self.client = APIClient()
-        self.user = User.objects.create_user(username='testuser', email='test@example.com', 
-                                             password='testpassword', first_name='Test', last_name='User', birth_date= (timezone.now() - datetime.timedelta(days=365*25)).date(), language= 'English')
+        self.user = User.objects.create_user(username='testuser', email='test@example.com',
+                                            password='testpassword',
+                                            first_name='Test',
+                                            last_name='User',
+                                            birth_date= (timezone.now() - datetime.timedelta(days=365*25)).date(),
+                                            language= 'English')
         self.token = Token.objects.create(user=self.user)
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
         self.another_user = User.objects.create_user(username='anotheruser', email='another@example.com', password='anotherpassword', first_name='Another', last_name='User', birth_date= (timezone.now() - datetime.timedelta(days=365*30)).date(), language= 'English' )
@@ -179,8 +183,11 @@ class UserServiceListTestCase(TestCase):
 class JobViewTestCase(TestCase):
     def setUp(self):
         self.client = APIClient()
-        self.user = get_user_model().objects.create_user(username='testuser', email='test@example.com', 
-                                                         password='testpassword', first_name='Test', last_name='User', birth_date= (timezone.now() - datetime.timedelta(days=365*25)).date(), language= 'English')
+        self.user = get_user_model().objects.create_user(username='testuser', email='test@example.com',
+                                                        password='testpassword',
+                                                        first_name='Test', last_name='User',
+                                                        birth_date= (timezone.now() - datetime.timedelta(days=365*25)).date(),
+                                                        language= 'English')
         self.token = Token.objects.create(user=self.user)
         self.client.credentials(HTTP_AUTHORIZATION=f'Token {self.token.key}')
         self.service = Service.objects.create(user=self.user, profession=6, city='Old City', experience=2)
@@ -211,8 +218,12 @@ class JobViewTestCase(TestCase):
 class ReviewViewTestCase(TestCase):
     def setUp(self):
         self.client = APIClient()
-        self.user = User.objects.create_user(username='testuser', email='test@example.com', 
-                                             password='testpassword', first_name='Test', last_name='User', birth_date= (timezone.now() - datetime.timedelta(days=365*25)).date(), language= 'English')
+        self.user = User.objects.create_user(username='testuser', email='test@example.com',
+                                            password='testpassword',
+                                            first_name='Test',
+                                            last_name='User',
+                                            birth_date= (timezone.now() - datetime.timedelta(days=365*25)).date(),
+                                            language= 'English')
         self.token = Token.objects.create(user=self.user)
         self.service = Service.objects.create(user=self.user, profession=6, city='Old City', experience=2)
         self.review = Review.objects.create(user=self.user, service=self.service, description="Test review", rating=4)
@@ -236,8 +247,11 @@ class ReviewViewTestCase(TestCase):
 class UserHasServiceTestCase(TestCase):
     def setUp(self):
         self.client = APIClient()
-        self.user = User.objects.create_user(username='testuser', email='test@example.com', 
-                                             password='testpassword', first_name='Test', last_name='User', birth_date= (timezone.now() - datetime.timedelta(days=365*25)).date(), language= 'English')
+        self.user = User.objects.create_user(username='testuser', email='test@example.com',
+                                            password='testpassword', first_name='Test',
+                                            last_name='User',
+                                            birth_date= (timezone.now() - datetime.timedelta(days=365*25)).date(),
+                                            language= 'English')
         self.token = Token.objects.create(user=self.user)
         self.service = Service.objects.create(user=self.user, profession=6, city='Old City', experience=2)
 
