@@ -304,7 +304,27 @@ Contribución del estudiante
 Contribución del estudiante
 
 **Campos Campos, Francisco Antonio**
-Contribución del estudiante
+- Asisitir a reuniones.
+- Asisitir a clase. 
+- Verme los videos de TheoryPills.
+- Fix 2.10 - Mejora inicio sesión (Frontend)
+- Fix 9 - Validaciones de registro (Frontend)
+- Task 2 - Registro del usuario (Frontend)
+- Task 4 - Arreglo de Inicio de Sesión (Frontend)
+- Task 6 - Adición de campo multimedia para Usuario (Frontend)
+- Task 28 - Arreglar Creación de Contrato (Frontend)
+- Fix 1 - Eliminar dependencia de react-icons-kit
+- Fix 13 - Mejorar creación de contrato (Frontend)
+- Task 52 - Implementación de Valoración (Frontend)
+- Fix 25 - Botón hacer una reseña
+- Fix 5 - Creacion Contratos a uno mismo
+- Task 39 - Storyboard
+- Pasar algunos documentos a Markdown
+- Hacer de usuario Piloto del equipo 12.
+- Revisar y dar feedback de numerosas Pull Request.
+- Conexión back-front de valoración.
+- Solucionar problemas menores con fallos de restricciones varias.
+  
 
 **Cobo Ariza, José Luis**
 Contribución del estudiante
