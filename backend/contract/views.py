@@ -187,7 +187,9 @@ class ContractDetail(generics.ListAPIView):
     serializer_class = ContractSerializer
     @authentication_classes([TokenAuthentication])
     def get(self, request, contract_id):
+        print(contract_id)
         contract = get_object_or_404(Contract, pk = contract_id)
+        print(contract)
         token_id = self.request.headers['Authorization']
         token = get_object_or_404(Token, key = token_id.split()[-1])
         user = token.user
@@ -195,6 +197,7 @@ class ContractDetail(generics.ListAPIView):
             raise PermissionDenied("No tienes permiso para contemplar un contrato que no te pertenece")
         serializer = self.serializer_class(contract, many = False,
                                             context ={'request': request})
+
         return Response(serializer.data, status=status.HTTP_200_OK)
     
 class ContractPayment(APIView):
