@@ -43,7 +43,13 @@ class ServiceTestCase(TestCase):
 class ServiceViewTest(TestCase):
     def setUp(self):
         self.client = APIClient()
-        self.user = User.objects.create_user(username='testuser', email='test@example.com', password='testpassword', first_name='Test', last_name='User', birth_date= (timezone.now() - datetime.timedelta(days=365*25)).date(), language= 'English' )
+        self.user = User.objects.create_user(username='testuser',
+                                            email='test@example.com',
+                                            password='testpassword',
+                                            first_name='Test',
+                                            last_name='User',
+                                            birth_date= (timezone.now() - datetime.timedelta(days=365*25)).date(),
+                                            language= 'English' )
         self.token = Token.objects.create(user=self.user)
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
 
@@ -169,10 +175,25 @@ class UserServiceListTestCase(TestCase):
                                             language= 'English')
         self.token = Token.objects.create(user=self.user)
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
-        self.another_user = User.objects.create_user(username='anotheruser', email='another@example.com', password='anotherpassword', first_name='Another', last_name='User', birth_date= (timezone.now() - datetime.timedelta(days=365*30)).date(), language= 'English' )
-        self.service1 = Service.objects.create(user=self.user, profession=1, city='Test City 1', experience=5)
-        self.service2 = Service.objects.create(user=self.user, profession=2, city='Test City 2', experience=3)
-        self.service3 = Service.objects.create(user=self.another_user, profession=3, city='Test City 3', experience=4)
+        self.another_user = User.objects.create_user(username='anotheruser',
+                                                    email='another@example.com',
+                                                    password='anotherpassword',
+                                                    first_name='Another',
+                                                    last_name='User',
+                                                    birth_date= (timezone.now() - datetime.timedelta(days=365*30)).date(),
+                                                    language= 'English' )
+        self.service1 = Service.objects.create(user=self.user,
+                                               profession=1,
+                                               city='Test City 1',
+                                               experience=5)
+        self.service2 = Service.objects.create(user=self.user,
+                                               profession=2,
+                                               city='Test City 2',
+                                               experience=3)
+        self.service3 = Service.objects.create(user=self.another_user,
+                                               profession=3,
+                                               city='Test City 3',
+                                               experience=4)
 
     def test_get_user_services(self):
         url = reverse('service:user-service-list', kwargs={'user_id': self.user.id})
@@ -226,7 +247,10 @@ class ReviewViewTestCase(TestCase):
                                             language= 'English')
         self.token = Token.objects.create(user=self.user)
         self.service = Service.objects.create(user=self.user, profession=6, city='Old City', experience=2)
-        self.review = Review.objects.create(user=self.user, service=self.service, description="Test review", rating=4)
+        self.review = Review.objects.create(user=self.user,
+                                            service=self.service,
+                                            description="Test review",
+                                            rating=4)
 
     def test_get_reviews(self):
         url = reverse('service:service-review', kwargs={'service_id': self.service.id})
