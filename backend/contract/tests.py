@@ -33,7 +33,6 @@ class ContractTestCase(TestCase):
             'language': 'English',
         }
         self.user2 = User.objects.create_user(**self.user_data2)
-        
         self.service_data = {
             'user': self.user1,
             'profession': 2,
@@ -162,7 +161,7 @@ class ContractDetailViewTests(ContractTestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json()['description'], self.contract.description)
 
-class ContractUpdateTests(ContractTestCase):  
+class ContractUpdateTests(ContractTestCase):
     def test_get_update_contract(self):
         token, _ = Token.objects.get_or_create(user=self.user2)
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
