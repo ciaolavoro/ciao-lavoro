@@ -29,4 +29,7 @@ Yo, **Pilar Gómez de Terreros**, me comprometo de manera voluntaria y conscient
    - Me comprometo a brindar al equipo de Ciao Lavoro la información más precisa y relevante con el propósito de ofrecer la ayuda más óptima posible para la mejora de su página web.
 
 ### Firma:
+
+![imagen](https://github.com/ciaolavoro/ciao-lavoro/assets/59439742/de43756e-46e2-4e62-b576-7fa9c04b1905)
+
 Pilar Gómez de Terreros    27/03/2024
