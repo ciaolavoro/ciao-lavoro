@@ -1,18 +1,15 @@
 # Compromiso de Usuario Piloto
 
 ## Nombre del Usuario Piloto: Mario Martín
-## Fecha de Evaluación: 20/03/2024
+## Fecha de Evaluación: 25/03/2024
 ### CONTROL DE VERSIONES
 | FECHA      | VERSIÓN | DESCRIPCIÓN                                    |
 |------------|---------|------------------------------------------------|
-| 18/02/2024 | 0.0     | Creación del documento.                        |
-| 02/03/2024 | 1.0     | Actualización del documento para el Sprint 1.  |
-| 03/03/2024 | 1.1     | Añadido casos de uso de IA del Sprint 1.       |
-| 09/03/2024 | 2.0     | Actualizacion del documento para el Sprint 2.  |
+| 22/02/2024 | 0.0     | Creación del documento.                        |
 
 |ESTADO DEL DOCUMENTO|
 |--------------------|
-|Firmado          |
+|Firmado & Cumplido          |
 
 Yo, **Mario Martín**, me comprometo de manera voluntaria y consciente a cumplir con las siguientes cláusulas y responsabilidades mientras participe como usuario piloto en la página web de Ciao Lavoro:
 
