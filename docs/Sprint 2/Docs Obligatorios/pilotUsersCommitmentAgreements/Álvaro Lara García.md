@@ -13,7 +13,7 @@
 
 |ESTADO DEL DOCUMENTO|
 |--------------------|
-|No firmado          |
+|Firmado          |
 
 Yo, **Álvaro Lara García**, me comprometo de manera voluntaria y consciente a cumplir con las siguientes cláusulas y responsabilidades mientras participe como usuario piloto en la página web de Ciao Lavoro:
 
