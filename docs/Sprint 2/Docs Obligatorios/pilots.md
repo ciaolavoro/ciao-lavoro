@@ -11,12 +11,14 @@
 |---------------------|-----------------------|
 | Javier Grosso         | Redacción             |
 | Álvaro Hidalgo         | Revisión             |
+| Alex Sanchez Hossdorf | Actualizar |
 
 
 ### CONTROL DE VERSIONES
 | FECHA      | VERSIÓN | DESCRIPCIÓN                                      |
 |------------|---------|--------------------------------------------------|
 | 28/03/2024 | 1.0     | Creación del documento en su versión Sprint 2    |
+| 28/03/2024 | 1.1     | Cambiar el usuario piloto Ainhoa por Francisco    |
 
 ### MÉTODO DE CONTACTO CON LOS USUARIOS PILOTO
 - Para los usuarios piloto del grupo 12, desde CiaoLavoro hemos optado por comunicarnos de forma oficial usando el correo de nuestra organización.
@@ -34,7 +36,7 @@ Para el plan de gestión de usuarios piloto seguiremos el siguiente procedimient
 | 1 | Alexandra Hossdorf    | 55   | Recientemente fue operada y tiene inmovilizado un brazo. Por ello no puede realizar tareas como limpieza debido a que su marido está trabajando todo el día y sus hijos estudian fuera. Quiere contratar a una persona que se encargue de la limpieza pero quiere que sea puntualmente, que vaya una sola vez durante un par de horas para hacer una limpieza rápida.                      | Respuesta recibida |
 | 2 | Lola Grosso    | 22   | Se acaba de graduar en enfermería y se encuentra todo el día trabajando, no tiene tiempo para limpiar o cocinar entonces le gustaría poder contratar a una persona que limpie su casa de forma puntual.                      | Respuesta Recibida |
 | 3 | Maria Rufo    | 59   | Tiene muchos años de experiencia cuidando niños y cocinando. Le gustaría poder publicar su empleo.                      | Contactado |
-| 4 | Ainhoa Sánchez    | 12   | Está estudiando en el instituto y tiene algunas dificultades con la asignatura de Matemática. No quiere asistir a una academia de clases particulares porque la mayoría de temario lo entiende, pero si en algún momento tiene dificultades con un tema en específico le gustaría contratar a un profesor particular.                      | Contactado |
+| 4 | Francisco Sanchez    | 52  | Es un trabajador que trabaja en una tienda de mecanica de bicicletas, le gustaria ampliar su abanico de oportunidades y entre ellas, poder ofrecer servicio de mecanica a domicilio.                      | Contactado |
 | 5 | Sonia Hidalgo    | 21   | Alumna de cuarto curso de educación primaria, quiere dar clases particulares de las materias necesarias, busca posibles alumnos a los cuales darles clase.                      | Contactado |
 | 6 | Carlos Bermúdez    | 21   | Estudiante de carrera, con experiencia en forja y trato con animales, necesita dinero por lo que quiere ofrecer sus servicios pero le cuesta encontrar clientes.                      |  Contactado |
 | 7 | Carlos Díaz    | 21   | Alumno de cuarto de medicina, no tiene tiempo para hacer las tareas del hogar, como cocinar, busca a alguien que le ayude para llevar a cabo estas tareas.                      |  Contactado |
