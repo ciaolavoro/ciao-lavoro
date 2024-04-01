@@ -5,10 +5,38 @@ on:
     branches:
       - main
       - develop
+  workflow_call:
+      secrets:
+        CODACY_PROJECT_TOKEN:
+          required: true
+        DJANGO_ALLOWED_HOST:
+          required: true
+        DJANGO_DEBUG:
+          required: true
+        DJANGO_SECRET_KEY:
+          required: true
+        FRONTEND_URL:
+          required: true
+        STRIPE_SECRET_KEY:
+          required: true
+        VITE_BACKEND_API_URL:
+          required: true
+        VITE_STRIPE_PUBLIC_KEY:
+          required: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+    env:  
+      CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      DJANGO_ALLOWED_HOST: ${{ secrets.DJANGO_ALLOWED_HOST }}
+      DJANGO_DEBUG: ${{ secrets.DJANGO_DEBUG }}
+      DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+      FRONTEND_URL: ${{ secrets.FRONTEND_URL }}
+      STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+      VITE_BACKEND_API_URL: ${{ secrets.VITE_BACKEND_API_URL }}
+      VITE_STRIPE_PUBLIC_KEY: ${{ secrets.VITE_STRIPE_PUBLIC_KEY }}
+      
     steps:
     - name: Checkout del codigo fuente
       uses: actions/checkout@v2
@@ -47,5 +75,5 @@ jobs:
     - name: Sube reporte de cobertura a Codacy
       uses: codacy/codacy-coverage-reporter-action@v1
       with:
-          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+          project-token: ${{ CODACY_PROJECT_TOKEN }}
           coverage-reports: backend/coverage.xml
