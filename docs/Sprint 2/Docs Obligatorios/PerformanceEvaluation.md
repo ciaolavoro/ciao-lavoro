@@ -356,7 +356,17 @@ Fecha: 02 / 04 / 2024
 - Coordinar miembros del equipo de backend.
 
 **Barea Jiménez, Antonio**
-Contribución del estudiante
+- Asisitir a reuniones.
+- Asisitir a clase.
+- Task 7 - Detalle del perfil de Usuario (Backend)
+- Task 9 - Edición del Perfil de Usuario (Backend)
+- Task 19 - Detalle de Servicio (Backend)
+- Task 21 - Baja/Alta de Servicio (Backend)
+- Task 30 - Adición rápida de Tareas a Contrato (Backend) (No se llego a implementar al final)
+- Task 42 - Testing de Servicios (Backend)
+- Task 53 - Formulario Usuarios Pilotos
+- Hotfix 3 - Arreglo errores relacionados con Servicio
+- Doc - TCO y ROI
 
 **Campos Campos, Francisco Antonio**
 - Asisitir a reuniones.
