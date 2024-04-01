@@ -503,7 +503,18 @@ Fecha: 02 / 04 / 2024
 - Revisar la tarea Doc - TCO y ROI
 
 **Mateos Angulo, Pablo**
-Contribución del estudiante
+- Asisitir a reuniones.
+- Asisitir a clase. 
+- Verme los videos de TheoryPills.
+- Hacer de usuario Piloto del equipo 12.
+- Realizar la tarea Doc - Commitment Agreement S2
+- Realizar la tarea Task 20 - Detalle de Servicio (Frontend)
+- Realizar la tarea Task 22 - Baja/alta de servicio (Frontend)
+- Realizar la tarea Task 29 - Operaciones CRUD de Trabajo (Frontend)
+- Realizar la tarea Fix 18 - Validaciones editar servicio (Frontend)
+- Realizar la tarea Fix 17 - Arreglar creación de servicio (Frontend)
+- Realizar la tarea Fix 16 - Mejora vista detalle Servicio (Frontend)
+- Redactar mi sección en el documento PerformanceEvaluation.md
 
 **Hidalgo Rodríguez, Álvaro**
 - Asisitir a reuniones.

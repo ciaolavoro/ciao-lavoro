@@ -100,7 +100,7 @@ Backend: https://ciao-lavoro-api-2.onrender.com/
 
 Url de la organización: https://github.com/ciaolavoro
 
-Repositorio del pryoecto: https://github.com/ciaolavoro/ciao-lavoro
+Repositorio del proyecto: https://github.com/ciaolavoro/ciao-lavoro
 
 Repositorio de la Landing Page: https://github.com/ciaolavoro/landingpage
 
