@@ -4,6 +4,7 @@
 | Nombre y Apellidos  | Tipo de Contribución  |
 |---------------------|-----------------------|
 | Antonio Barea       | Creación/Redacción   |
+| Javier Grosso      | Revisión  |
 
 
 ### CONTROL DE VERSIONES
