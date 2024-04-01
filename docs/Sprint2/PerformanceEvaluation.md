@@ -382,7 +382,20 @@ Contribución del estudiante
 - Hotfix 2 - Arreglo errores relacionados con Usuario backend
 
 **Cuenca Pérez, Pablo**
-Contribución del estudiante
+- Fix 28 - Detalle Servicio (Frontend)
+- Task 57 - Gestión de estado de contrato (Frontend)
+- Fix 15 - Mejorar listado de contrato (Frontend)
+- Fix 14 - Arreglar listado de servicios (Frontend)
+- Task 38 - Documento de plantilla de testing 
+- Task 26 - Filtrar listado de contrato (Frontend)
+- Task 24 - Listado de conrtatos de usuario (Frontend)
+- Task 18 - Listado de servicios por usuario (Frontend)
+- Task 16 - Listado de servicios filtrado Ciudad/Profesion (Frontend)
+- Fix 26 - Mejora tarjetas contratos (Frontend)
+- Fix 20 - Mejora guía testing
+- Doc - Crear Software Reviewer Guideline
+- Ver TheoryPills 
+- Revisar TimeEffortReport S2
 
 **García Chavero, Adrián**
 Contribución del estudiante
