@@ -10,7 +10,7 @@
 
 |ESTADO DEL DOCUMENTO|
 |--------------------|
-|Firmado/Cumplido         |
+|Firmado & Cumplido         |
 
 Yo, **Alexandra Hossdorf**, me comprometo de manera voluntaria y consciente a cumplir con las siguientes cláusulas y responsabilidades mientras participe como usuario piloto en la página web de Ciao Lavoro:
 
