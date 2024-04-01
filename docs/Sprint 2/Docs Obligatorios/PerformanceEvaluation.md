@@ -382,7 +382,23 @@ Contribución del estudiante
 
 **Cobo Ariza, José Luis**
 - Asisitir a reuniones.
-- Asisitir a clase.
+- Asisitir a clase. 
+- Verme los videos de TheoryPills.
+- Hacer de usuario Piloto del equipo 12.
+- Revisar y dar feedback de numerosas Pull Request.
+- Task 51 - Implementación de Valoración (Backend)
+- Task 50 - Elaboración de Diapositivas
+- Task 37 - Commitment Agreement de usuarios piloto
+- Task 27 - Arreglar Creación de Contrato (Backend)
+- Task 14 - Arreglar Creación de Servicio (Backend)
+- Task 5 - Adición de campo multimedia para Usuario (Backend)
+- Task 3 - Arreglo de Inicio de Sesión (Backend)
+- Task 1 - Registro del usuario (Backend)
+- Task 40 - Testing de Usuarios (Backend)
+- Realización de las presentaciones de los dias 12 y 19 de marzo.
+- Poblar la base de datos.
+- Doc - Usuarios Piloto: CA y PE S2
+- Hotfix 2 - Arreglo errores relacionados con Usuario backend
 
 **Cuenca Pérez, Pablo**
 Contribución del estudiante
