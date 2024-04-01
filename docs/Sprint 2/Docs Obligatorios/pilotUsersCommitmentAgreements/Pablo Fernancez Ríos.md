@@ -12,7 +12,7 @@
 
 |ESTADO DEL DOCUMENTO|
 |--------------------|
-|No firmado          |
+|Firmado          |
 
 Yo, **Pablo Fernancez Ríos**, me comprometo de manera voluntaria y consciente a cumplir con las siguientes cláusulas y responsabilidades mientras participe como usuario piloto en la página web de Ciao Lavoro:
 

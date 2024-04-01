@@ -5,14 +5,12 @@
 ### CONTROL DE VERSIONES
 | FECHA      | VERSIÓN | DESCRIPCIÓN                                    |
 |------------|---------|------------------------------------------------|
-| 18/02/2024 | 0.0     | Creación del documento.                        |
-| 02/03/2024 | 1.0     | Actualización del documento para el Sprint 1.  |
-| 03/03/2024 | 1.1     | Añadido casos de uso de IA del Sprint 1.       |
-| 09/03/2024 | 2.0     | Actualizacion del documento para el Sprint 2.  |
+| 22/03/2024 | 0.0     | Creación del documento.                        |
+
 
 |ESTADO DEL DOCUMENTO|
 |--------------------|
-|No firmado          |
+|Firmado & Cumplido        |
 
 Yo, **Pilar Gómez de Terreros**, me comprometo de manera voluntaria y consciente a cumplir con las siguientes cláusulas y responsabilidades mientras participe como usuario piloto en la página web de Ciao Lavoro:
 
@@ -29,4 +27,7 @@ Yo, **Pilar Gómez de Terreros**, me comprometo de manera voluntaria y conscient
    - Me comprometo a brindar al equipo de Ciao Lavoro la información más precisa y relevante con el propósito de ofrecer la ayuda más óptima posible para la mejora de su página web.
 
 ### Firma:
+
+![imagen](https://github.com/ciaolavoro/ciao-lavoro/assets/59439742/de43756e-46e2-4e62-b576-7fa9c04b1905)
+
 Pilar Gómez de Terreros    27/03/2024
