@@ -22,6 +22,10 @@ on:
       VITE_STRIPE_PUBLIC_KEY:
         required: true
 
+      VERIFICATION_KEY:
+        required: true
+
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -33,6 +37,9 @@ jobs:
       STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
       VITE_BACKEND_API_URL: ${{ secrets.VITE_BACKEND_API_URL }}
       VITE_STRIPE_PUBLIC_KEY: ${{ secrets.VITE_STRIPE_PUBLIC_KEY }}
+
+      VERIFICATION_KEY: ${{ secrets.VERIFICATION_KEY }}
+
       
     steps:
     - name: Checkout del codigo fuente

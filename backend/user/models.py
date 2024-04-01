@@ -3,8 +3,6 @@ from django.db import models
 import datetime
 from django.utils import timezone
 from django.forms import ValidationError
-from django.core.validators import validate_email
-#import requests
 
 class User(AbstractUser):
     birth_date = models.DateField()
@@ -16,13 +14,6 @@ class User(AbstractUser):
 
     def clean(self):
         super().clean()
-        if self.email:
-            validate_email(self.email)
-            #response = requests.get("https://emailvalidation.abstractapi.com/v1/?api_key=ba884829a91f46b8bb4128da6615715c&email="+self.email)
-            #json_data = response.json()
-            #deliverability = json_data['deliverability']
-            #if not deliverability == 'DELIVERABLE':
-            #    raise ValidationError("El email no es valido")
         if self.email.strip() == '':
             raise ValidationError("El email no puede estar vacio")
         if self.username.strip() == '':

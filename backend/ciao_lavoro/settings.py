@@ -33,6 +33,7 @@ DEBUG_PROPAGATE_EXCEPTIONS = True
 
 #Stripe Key
 STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY')
+VERIFICATION_KEY = env('VERIFICATION_KEY')
 
 ALLOWED_HOSTS = [
     env('DJANGO_ALLOWED_HOST'),
@@ -67,9 +68,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    env('FRONTEND_URL'),
-]
+CORS_ALLOW_ALL_ORIGINS = True
 
 
 ROOT_URLCONF = 'ciao_lavoro.urls'

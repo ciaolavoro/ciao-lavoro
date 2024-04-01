@@ -1,4 +1,7 @@
+import random
 import re
+
+from django.forms import ValidationError
 from .models import User
 from django.http import JsonResponse
 from rest_framework import status
@@ -17,6 +20,8 @@ from django.contrib.auth.password_validation import validate_password
 import os
 from django.conf import settings
 from django.core.files.base import ContentFile
+import requests
+from django.core.validators import validate_email
 
 class login_view(APIView):
 
@@ -50,28 +55,42 @@ class register(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request, format_arg=None):
-        username = request.data.get('username')
-        first_name = request.data.get('firstName')
-        last_name  = request.data.get('lastName')
-        email = request.data.get('email')
-        password = request.data.get('password')
-        language = request.data.get('language')
-        birth_date = request.data.get('birthdate')
-        image = request.FILES.get('image')
-        if User.objects.filter(username=username).exists():
-            return JsonResponse({'status': '0', 'message': 'El nombre de usuario ya está en uso'},status=status.HTTP_400_BAD_REQUEST)
-        if not image:
-            default_image_path = os.path.join(settings.BASE_DIR, 'users', 'default.png').replace('\\','/')
-            with open(default_image_path, 'rb') as default_image_file:
-                image = ContentFile(default_image_file.read(), 'default.png')
+        try:
+            username = request.data.get('username')
+            first_name = request.data.get('firstName')
+            last_name  = request.data.get('lastName')
+            email = request.data.get('email')
+            password = request.data.get('password')
+            language = request.data.get('language')
+            birth_date = request.data.get('birthdate')
+            image = request.FILES.get('image')
+            if User.objects.filter(username=username).exists():
+                return JsonResponse({'status': '0', 'message': 'El nombre de usuario ya está en uso'},status=status.HTTP_400_BAD_REQUEST)
+            if not image:
+                default_image_path = os.path.join(settings.BASE_DIR, 'users', 'default.png').replace('\\','/')
+                with open(default_image_path, 'rb') as default_image_file:
+                    image = ContentFile(default_image_file.read(), 'default.png')
+            if email:
+                validate_email(email)
+                keys = settings.VERIFICATION_KEY.split('-')
+                key = random.choice(keys)
+                response = requests.get("https://emailvalidation.abstractapi.com/v1/?api_key=" + key +"&email="+email)
+                json_data = response.json()
+                if 'error' not in json_data.keys():
+                    deliverability = json_data['deliverability']
+                    if not deliverability == 'DELIVERABLE':
+                        return JsonResponse({'details': 'El email no es válido', 'status': '500'})
+            user = User.objects.create(username=username, first_name=first_name, last_name=last_name, email=email
+            ,language=language, birth_date=birth_date, image=image)
+            validate_password(password)
+            user.set_password(password)
+            user.save()
+            return JsonResponse({'status': '1', 'message': ' The user has been successfully registered'})
+        except ValidationError as e:
+            return JsonResponse({'details': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except ValueError as e:
+            return JsonResponse({'details': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-        user = User.objects.create(username=username, first_name=first_name, last_name=last_name, email=email
-        ,language=language, birth_date=birth_date, image=image)
-        validate_password(password)
-        user.set_password(password)
-        user.save()
-        return JsonResponse({'status': '1', 'message': ' The user has been successfully registered'})
-    
 class UserList(APIView):
     def get(self, request):
         users = User.objects.all()
@@ -98,31 +117,46 @@ class Profile(APIView):
 
     @authentication_classes([TokenAuthentication])
     def put(self, request, format_arg=None):
-        token_id = request.headers['Authorization']
-        token = get_object_or_404(Token, key=token_id.split()[-1])
-        user = token.user
-        user_data = request.data
-        username = user_data['username']
-        first_name = user_data['first_name']
-        last_name  = user_data['last_name']
-        email = user_data['email']
-        language = user_data['language']
-        birth_date = user_data['birth_date']
-        image = request.FILES.get('image')
-        if username:
-            user.username = username
-        if first_name:
-            user.first_name = first_name
-        if last_name:
-            user.last_name = last_name
-        if email:
-            user.email = email
-        if language and language.strip() != '':
-            user.language = language
-        if birth_date:
-            user.birth_date = birth_date
-        if image:
-            user.image = image
-        user.save()
-        serializer = UserSerializer(user)
-        return JsonResponse(serializer.data)
+        try:
+            token_id = request.headers['Authorization']
+            token = get_object_or_404(Token, key=token_id.split()[-1])
+            user = token.user
+            user_data = request.data
+            username = user_data['username']
+            first_name = user_data['first_name']
+            last_name  = user_data['last_name']
+            email = user_data['email']
+            language = user_data['language']
+            birth_date = user_data['birth_date']
+            image = request.FILES.get('image')
+            if username:
+                user.username = username
+            if first_name:
+                user.first_name = first_name
+            if last_name:
+                user.last_name = last_name
+            if email:
+                user.email = email
+                validate_email(email)
+                keys = settings.VERIFICATION_KEY.split('-')
+                key = random.choice(keys)
+                response = requests.get("https://emailvalidation.abstractapi.com/v1/?api_key=" + key +"&email="+email)
+                json_data = response.json()
+                if 'error' not in json_data.keys():
+                    deliverability = json_data['deliverability']
+                    if not deliverability == 'DELIVERABLE':
+                        return JsonResponse({'details': 'El email no es válido', 'status': '500'})
+            if language and language.strip() != '':
+                user.language = language
+            if birth_date:
+                user.birth_date = birth_date
+            if image:
+                user.image = image
+            user.save()
+            serializer = UserSerializer(user)
+            return JsonResponse(serializer.data)
+        except ValidationError as e:
+            return JsonResponse({'details': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except ValueError as e:
+            return JsonResponse({'details': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+

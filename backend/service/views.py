@@ -10,6 +10,7 @@ from .models import Service, Job, Review
 from .serializers import ServiceSerializer, JobSerializer, ReviewSerializer
 from rest_framework.authtoken.models import Token
 from datetime import date, datetime
+from django.utils import timezone
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import authentication_classes
 from django.forms import ValidationError
@@ -20,12 +21,10 @@ class ServiceList(generics.ListAPIView):
         services = Service.objects.all()
         search_profession = self.request.query_params.get('search_profession')
         search_city = self.request.query_params.get('search_city')
-
         if search_profession:
             services = services.filter(profession=search_profession)
         if search_city:
             services = services.filter(city__icontains=search_city)
-    
         return services
 
     def get(self, request, *args, **kwargs):
@@ -159,7 +158,7 @@ class ReviewView(APIView):
         else:
             raise ValidationError("Una valoración esta incompleta sin la puntuación")
         
-        date = datetime.now()
+        date = timezone.now()
         if int(rating) > 5 or int(rating) < 0 :
             raise ValidationError('La valoración debe de estar entre 0 y 5')
         if len(description) > 500:
