@@ -15,17 +15,18 @@
 | 18/02/2024 | 0.9.5   | Actualización del formato                        |
 | 18/02/2024 | 1.0     | Aprobación del documento                         |
 | 29/03/2024 | 1.1     | Revisión tras Theory Pill                        |
-| 30/03/2024 | 1.1     | Revisión para corregir errores de enlaces                       |
+| 30/03/2024 | 1.1     | Revisión para corregir errores de enlaces        |
+| 01/04/2024 | 1.1     | Revisión con Claudette                           |
 
-Este Acuerdo fue modificado por última vez el 29 de marzo de 2024.
+Este Acuerdo fue modificado por última vez el 01 de abril de 2024.
 
-Los siguientes términos de servicio rigen su acceso y uso del sitio web de CiaoLavoro, incluido cualquier contenido, funcionalidad y servicios ofrecidos en o a través de [www.ciaolavoro.com](https://ciao-lavoro-2.pages.dev/) (“Sitio”) por CiaoLavoro.
+Los siguientes términos de servicio rigen su acceso y uso del sitio web de CiaoLavoro, incluido cualquier contenido, funcionalidad y servicios ofrecidos en o a través de [ciao-lavoro-2.pages.dev](https://ciao-lavoro-2.pages.dev/) (“Sitio”) por CiaoLavoro.
 
 CiaoLavoro se denomina colectivamente como "CiaoLavoro", "nosotros" o "nos "y "usted "o "usuario" significa usted como usuario del Sitio.
 
 Lea atentamente los Términos de servicio antes de comenzar a utilizar el sitio.
 
-Al utilizar el sitio, abrir una cuenta o hacer clic para aceptar o aceptar los Términos de servicio cuando esta opción está disponible para usted, usted acepta, en su nombre o en nombre de su empleador o cualquier otra entidad (si aplica), a estar obligado y cumplir con estos Términos de servicio.
+Al registrarse en nuestra web (creándose una cuenta) y hacer clic para aceptar los Términos de servicio, usted acepta, en su nombre o en nombre de su empleador o cualquier otra entidad (si aplica), a estar obligado y cumplir con estos Términos de servicio.
 
 Además, reconoce que ha leído y comprendido nuestra Política de privacidad.
 
@@ -102,7 +103,7 @@ Para informar una violación de nuestros Términos de servicio y/o nuestros Est�
 - CiaoLavoro no ofrece ninguna garantía sobre el nivel de servicio ofrecido a los trabajadores.
 - CiaoLavoro no brinda protección a los usuarios que interactúan fuera de la plataforma.
 - Todos los intercambios de información y archivos deben realizarse exclusivamente en la plataforma.
-- No se tolerarán mensajes groseros, abusivos, inapropiados o violentos y pueden resultar en una advertencia de cuenta o la suspensión/eliminación de su cuenta.
+- Enviar mensajes groseros, abusivos, inapropiados o violentos, resultará en una advertencia enviada a la cuenta que los realiza, si tras esto se reiteran sin ningún tipo de explicación o trámite a nuestro soporte técnico desembocará en la suspensión de la cuenta, o su directa eliminación si nuestro equipo de soporte lo considerase apropiado
 - CiaoLavoro está abierto a todos. Te comprometes a no discriminar a ningún otro usuario por motivos de género, raza, edad, afiliación religiosa, orientación sexual o de otro tipo y reconoces que dicha discriminación puede resultar en la suspensión/eliminación de tu cuenta.
 
 
@@ -117,12 +118,12 @@ Para informar una violación de nuestros Términos de servicio y/o nuestros Est�
 - Fraude/Uso ilegal: No puede utilizar CiaoLavoro para fines ilegales ni para realizar actividades ilegales.
 
 ### Abuso y spam
-- Cuentas múltiples: Para evitar fraudes y abusos, los usuarios están limitados a una cuenta CiaoLavoro activa. Cualquier cuenta adicional que se determine creada para eludir las pautas, o promover ventajas competitivas será inhabilitada. La creación masiva de cuentas puede resultar en la desactivación de todas las cuentas relacionadas. Nota: cualquier violación de los Términos de servicio de CiaoLavoro es motivo de suspensión permanente de todas las cuentas.
+- Cuentas múltiples: Para evitar fraudes y abusos, los usuarios están limitados a una cuenta CiaoLavoro activa. Cualquier cuenta adicional que se determine creada para eludir las pautas, o promover ventajas competitivas será inhabilitada. La creación masiva de cuentas puede resultar en la desactivación de todas las cuentas relacionadas. Nota: cualquier violación de los Términos de servicio de CiaoLavoro es motivo de suspensión permanente de todas las cuentas, esto se hará tras una suspensión temporal si no existe ningún tipo de comunicación con nuestro servicio técnico en un trámite de 7 días laborales por parte del titular de la/s cuenta/s y desembocará en base a esta comunicación en una rehabilitación de la cuenta o en una suspensión permanente, a discreción de nuestro servico de atención al cliente
 - Abuso dirigido: No toleramos que los usuarios participen en abuso o acoso dirigido hacia otros usuarios en CiaoLavoro. Esto incluye la creación de nuevas cuentas múltiples para acosar a los miembros a través de nuestro sistema de mensajes.
 - Venta de cuentas: No puede comprar ni vender cuentas de CiaoLavoro.
 
 ## 8. Términos de Pago
-Los siguientes términos rigen los pagos que usted realiza o recibe a través de [www.ciaolavoro.com](https://ciao-lavoro-2.pages.dev/), operado por CiaoLavoro. CiaoLavoro se denomina colectivamente en el presente documento "CiaoLavoro", "nosotros" o "nos". 
+Los siguientes términos rigen los pagos que usted realiza o recibe a través de [ciao-lavoro-2.pages.dev](https://ciao-lavoro-2.pages.dev/), operado por CiaoLavoro. CiaoLavoro se denomina colectivamente en el presente documento "CiaoLavoro", "nosotros" o "nos". 
 
 Lea atentamente estos Términos de pago antes de realizar o recibir pagos a través del sitio. Al realizar o recibir pagos a través del sitio, usted acepta y acuerda, en su nombre o en nombre de su empleador o cualquier otra entidad (si corresponde), estar sujeto y cumplir con estos Términos de pago. Estos Términos son complementarios de los Términos de servicio generales de CiaoLavoro.  
 
@@ -131,7 +132,7 @@ Cada servicio que vendes y completas exitosamente, acredita a tu cuenta con ingr
 
 CiaoLavoro acredita a los trabajadores una vez que se completa un pedido.
 
-Si se cancela un pedido (por cualquier motivo), los fondos pagados se devolverán al comprador.
+Si se cancela un pedido (por cualquier motivo), los fondos pagados se devolverán al cliente.
 
 Los trabajadores son responsables de pagar todos los impuestos directos o indirectos, incluido el GST, el IVA o el impuesto sobre la renta, que puedan aplicarse según su residencia, ubicación o de otro tipo, según las disposiciones de su jurisdicción. Los trabajadores declaran y garantizan que cumplen y cumplirán en todo momento con sus obligaciones según las disposiciones del impuesto sobre la renta en su jurisdicción. El precio que se muestra en la página de Servicios incluye todos los impuestos y cargos que puedan aplicarse a los trabajadores.
 
@@ -144,7 +145,7 @@ En el caso de que CiaoLavoro (a través del Proveedor de servicios de pago) no r
 
 El trabajador acepta que CiaoLavoro puede describir o reflejar de otro modo los términos contenidos en este documento en cualquier término de servicio, recibos, divulgaciones o avisos, incluidos, entre otros, los recibos proporcionados a los clientes que CiaoLavoro considere necesarios o prudentes.
 
-CiaoLavoro se asocia con proveedores de servicios de pago con el fin de cobrar pagos de los compradores, transferir dichos pagos de los clientes a los trabajadores y retener fondos. Todos los servicios de pago relacionados con el retiro de fondos en la plataforma CiaoLavoro son realizados por los proveedores de servicios de pago de CiaoLavoro.
+CiaoLavoro se asocia con proveedores de servicios de pago con el fin de cobrar pagos de los clientes, transferir dichos pagos de los clientes a los trabajadores y retener fondos. Todos los servicios de pago relacionados con el retiro de fondos en la plataforma CiaoLavoro son realizados por los proveedores de servicios de pago de CiaoLavoro.
 
 #### Métodos de retiro 
 - Retiro a su cuenta PayPal: tarifa de 0 €*. Consulte la lista de los servicios de PayPal por país. 
@@ -152,7 +153,7 @@ CiaoLavoro se asocia con proveedores de servicios de pago con el fin de cobrar p
 * Es posible que se apliquen tarifas adicionales según su ubicación y moneda. 
 
 ### Compra 
-Los compradores pagan a CiaoLavoro para crear un pedido desde la página de servicio del trabajador. CiaoLavoro se asocia con proveedores de servicios de pago con el fin de cobrar todos los pagos de los clientes, transferir dichos pagos de los clientes a los trabajadores y retener fondos. Todos los servicios de pago relacionados con el cobro de fondos en la plataforma son realizados por los proveedores de servicios de pago de CiaoLavoro.
+Los clientes pagan a CiaoLavoro para crear un pedido desde la página de servicio del trabajador. CiaoLavoro se asocia con proveedores de servicios de pago con el fin de cobrar todos los pagos de los clientes, transferir dichos pagos de los clientes a los trabajadores y retener fondos. Todos los servicios de pago relacionados con el cobro de fondos en la plataforma son realizados por los proveedores de servicios de pago de CiaoLavoro.
 
 CiaoLavoro actúa como agente de cobro de pagos autorizado limitado del trabajador únicamente con el fin de aceptar pagos (a través de su Proveedor de servicios de pago, si corresponde) del cliente y remitir esos pagos al trabajador. La obligación de pago del cliente al trabajador se cumplirá al recibir el pago por parte de CiaoLavoro (o su Proveedor de servicios de pago, según corresponda), y CiaoLavoro (a través de su Proveedor de servicios de pago, según corresponda) es responsable de remitir los fondos al trabajador en la forma descrita en estas Condiciones de Pago. En el caso de que CiaoLavoro (a través del Proveedor de servicios de pago) no remita dichos montos al trabajador, el trabajador tendrá recurso únicamente contra CiaoLavoro y no directamente contra el cliente.
 

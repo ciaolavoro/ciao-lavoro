@@ -1,8 +1,9 @@
 # Individual Performance Evaluation
 
 ## CIAOLAVORO
+
 **Grupo 6**
-<br>
+
 **Entregable: Sprint 2**
 
 ## Miembros del equipo y contribuciones
@@ -10,28 +11,42 @@
 | Nombre y Apellidos | Tipo de Contribución |
 |---------------------|-----------------------|
 | Alexander / Alicia Sánchez Hossdorf          | Creación (Task 64)           |
-
+| Javier Grosso          | Redacción segmentos de contribución de Javier Grosso           |
 ---
 
 **Versión: 2.0**
-Fecha: 02 / 03 / 2024
+
+Fecha: 02 / 04 / 2024
 
 ### Agreed Individual Performance Evaluation
 
 | Estudiante | #DP1 | #S1 | #S2 | #S3 | #PPL | #WPL | Total | PE |
 |------------|------|-----|-----|-----|------|------|-------|----|
+
 | Albalat Ortiz, Samuel | 10 | 10 | | | | | 20 | 1 |
+
 | Arregui Díaz, Joaquín | 10 | 10 | | | | | 20 | 1 |
+
 | Barea Jiménez, Antonio | 10 | 10 | | | | | 20 | 1 |
+
 | Campos Campos, Francisco Antonio | 10 | 10 | | | | | 20 | 1 |
+
 | Cobo Ariza, José Luis | 10 | 10 | | | | | 20 | 1 |
+
 | Cuenca Pérez, Pablo | 10 | 10 | | | | | 20 | 1 |
+
 | García Chavero, Adrián | 10 | 10 | | | | | 20 | 1 |
+
 | González Quintanilla, Diego | 10 | 10 | | | | | 20 | 1 |
+
 | Grosso de Terreros Goméz, Javier | 10 | 10 | | | | | 20 | 1 |
+
 | Hidalgo Rodríguez, Álvaro | 10 | 10 | | | | | 20 | 1 |
+
 | Mateos Angulo, Pablo | 10 | 10 | | | | | 20 | 1 |
+
 | Sánchez Hossdorf, Alexander / Alicia | 10 | 10 | | | | | 20 | 1 |
+
 | Total | 120 | 120 | | | | | |
 
 ---
@@ -50,7 +65,7 @@ Fecha: 02 / 03 / 2024
 - Análisis de mercado de la empresa: topayuda.
 - Creación de la gamificación.
 - Búsqueda de usuarios piloto.
-- Revisar presentación y guión para ver que se ajustan al feedback dado.
+- Revisar presentación y guion para ver que se ajustan al feedback dado.
 - Documentación PMBOK:
  - Plan de gestión de requisitos
 
@@ -63,13 +78,13 @@ Fecha: 02 / 03 / 2024
 **Campos Campos, Francisco Antonio**
 - Análisis de mercado de cinco empresas relacionadas: vivofacil, doméstico24, servicio doméstico quality, care y interdomicilio.
 - Documentación PMBOK:
- - Acta de constitución
- - Plan de gestión de riesgo
- - Plan de gestión de alcance
- - Análisis de Riesgo
- - Plan de gestión de riesgos
- - Registro de interesados
- - Registro de Riesgos
+    - Acta de constitución
+    - Plan de gestión de riesgo
+    - Plan de gestión de alcance
+    - Análisis de Riesgo
+    - Plan de gestión de riesgos
+    - Registro de interesados
+    - Registro de Riesgos
 - Revisión y puesta a punto de toda la documentación del proyecto
 - Creación de plantilla para los documentos del proyecto
 - Realizar el commitment agreement
@@ -134,7 +149,7 @@ Fecha: 02 / 03 / 2024
 - Documento de Usuarios Piloto
 - Registro de requisitos.
 - Preparar el Individual Performance Evaluation.
-- Tomar notas de los feedback dados en clase tanto para nuestro grupo como para el resto (del 1 al 6).
+- Tomar notas del feedback dados en clase tanto para nuestro grupo como para el resto (del 1 al 6).
 - Recoger los usos de IA y ponerlo en un solo documento.
 - Revisión de todos los documentos para comprobar que cumplen con los requisitos.
 
@@ -174,7 +189,6 @@ Fecha: 02 / 03 / 2024
 - Task 8 - Lógica listado Servicios
 - Task 10 - Vista listado Servicio
 
-
 **Campos Campos, Francisco Antonio**
 - Task 33 - (DOC) Sprint Planning documentación.
 - Task 32 - (DOC) Software Reviewer guideline documentación.
@@ -188,7 +202,6 @@ Fecha: 02 / 03 / 2024
 - Task 31- (DOC) Pilot Performance Evaluation
 - Ayuda en las diapositivas
 
-
 **Cobo Ariza, José Luis**
 - Task 2 - Modelo de usuario.
 - Task 3 -  Logica de usuario Login
@@ -196,13 +209,11 @@ Fecha: 02 / 03 / 2024
 - Task 26 - (DOC) Presentación
 - Aportación de feedback como usuario piloto al grupo 12.
 
-
 **Cuenca Pérez, Pablo**
 - He ayudado en la creación del backend de Contract.
 - He realizado la lógica de crear contrato en el backend.
 - He ayudado en las vistas de listar los contratos.
-- He creado las vistas y conexión con backend de la creación de los contrato
-
+- He creado las vistas y conexión con backend de la creación de los contratos
 
 **García Chavero, Adrián**
 - Gestión de la configuración
@@ -215,7 +226,6 @@ Fecha: 02 / 03 / 2024
 - Task 25 - Conexión Backend-Frontend POST Servicio
 - Ayudar a los miembros del equipo al desarrollo de ciertas tareas.
 
-
 **González Quintanilla, Diego**
 - Task 28 - (DOC) Individual Performance Evaluation
 - Task 1 - Despliegue en Google Cloud
@@ -227,7 +237,6 @@ Fecha: 02 / 03 / 2024
 - En general, estar atento a Discord para ayudar al resto de compañeros cuando me fuese posible. 
 - Integración continua
 - Liderar el equipo
-
 
 **Grosso de Terreros Goméz, Javier**
 - Recopilar feedback en las clases y pasarlo a limpio para las bases de conocimiento.
@@ -258,7 +267,6 @@ Fecha: 02 / 03 / 2024
 - Task 28 - (DOC) Individual Performance Evaluation
 - Task 29 - (DOC) Time Effort
 
-
 **Mateos Angulo, Pablo**
 - Planificar todo el sprint junto a otros compañeros, re-haciendo el UML.
 - Recopilar feedback en clase.
@@ -271,7 +279,6 @@ Fecha: 02 / 03 / 2024
 - Task 25 - Conexión Backend-Frontend POST Servicio
 - Revisión de la documentación para la entrega del Sprint 1.
 
-
 **Sánchez Hossdorf, Alexander | Alicia**
 - Recopilar feedback en clase y ayudar a pasarlo a limpio para que Javier Grosso pueda subirlo a la base de conocimiento común.
 - Tomar acta en todas las reuniones y luego redactarlas.
@@ -281,7 +288,8 @@ Fecha: 02 / 03 / 2024
 - Task 18 - redactar junto a Javier Grosso el manual de usuario.
 - Task 22 - realizar junto a otros compañeros la unión de backend y frontend del listado de contratos. 
 - Task 23 - revisar y aceptar el pull request. 
-- Listar todos los documentos que se debían hacer para el proyecto y organizar la carpeta en Drive. Crear cada documento para que solo se tuviera que rellenar. 
+- Listar todos los documentos que se debían hacer para el proyecto y organizar la carpeta en Drive. 
+- Crear cada documento para que solo se tuviera que rellenar. 
 - Task 33 - Redactar el documento de sprint planning.
 - Task 36 - Redactar el documento de retrospectiva.
 - Enviar a los usuarios pilotos la información para que pudiesen probar la aplicación. 
@@ -290,12 +298,24 @@ Fecha: 02 / 03 / 2024
 - Añadir los prompt de la IA cuando lo he usado. 
 - Ayuda en las diapositivas
 
-
+---
 
 ## Sprint 2 (#S2)
 
 **Albalat Ortiz, Samuel**
-Contribución del estudiante
+- Asisitir a reuniones.
+- Asisitir a clase.
+- Organización de Github Project el 06/03/24 y el 27/03/24
+- Contribución al desarrollo de las Task 11, 15, 17, 48, 50
+- Revisión de las task 5, 25, 51, 58
+- Realización del fix 2.6
+- Revisión del fix 2.19
+- Realización y revisión del Hotfix 4
+- Revisión del documento de contribución a la base de datos y la storyboard 2
+- Creación del documento CustomerAgreement.md
+- Aportación al documento IAUsage.md
+- Creación de diapositivas para las fechas 18/03/24 y 02/04/2024
+- Realización de feedback para el G12
 
 **Arregui Díaz, Joaquín**
 - Asisitir a reuniones.
@@ -311,7 +331,7 @@ Contribución del estudiante
 - Task 51 - Implementación de Valoración (Backend).
 - Hotfix 1 - Arreglos Generales para Demostración.
 - Hotfix 2 - Arreglo errores relacionados con Usuario.
-- Fix 22 - Solventar error en la manipulación de perfíl.
+- Fix 22 - Solventar error en la manipulación de perfil.
 - Fix 2.23 -Error 404 al crear contrato.
 - Fix 24 - Añadir profesiones a Servicios.
 - Fix 25 - Botón hacer una reseña.
@@ -329,14 +349,24 @@ Contribución del estudiante
 - Revisar: Sprint 2
 - Conexión back-front de valoración.
 - Ayudar a diferentes compañeros con sus tareas.
-- Organizar y revisarel backend conlos diferentes usuarios del equipo de backend.
+- Organizar y revisar el backend con los diferentes usuarios del equipo de backend.
 - Popular la base de datos.
 - Diseñar junto al jefe de proyecto los criterios de evaluación del rendimiento.
 - Video de la demostración de la aplicación.
 - Coordinar miembros del equipo de backend.
 
 **Barea Jiménez, Antonio**
-Contribución del estudiante
+- Asisitir a reuniones.
+- Asisitir a clase.
+- Task 7 - Detalle del perfil de Usuario (Backend)
+- Task 9 - Edición del Perfil de Usuario (Backend)
+- Task 19 - Detalle de Servicio (Backend)
+- Task 21 - Baja/Alta de Servicio (Backend)
+- Task 30 - Adición rápida de Tareas a Contrato (Backend) (No se llego a implementar al final)
+- Task 42 - Testing de Servicios (Backend)
+- Task 53 - Formulario Usuarios Pilotos
+- Hotfix 3 - Arreglo errores relacionados con Servicio
+- Doc - TCO y ROI
 
 **Campos Campos, Francisco Antonio**
 - Asisitir a reuniones.
@@ -359,7 +389,6 @@ Contribución del estudiante
 - Revisar y dar feedback de numerosas Pull Request.
 - Conexión back-front de valoración.
 - Solucionar problemas menores con fallos de restricciones varias.
-  
 
 **Cobo Ariza, José Luis**
 - Asisitir a reuniones.
@@ -398,19 +427,101 @@ Contribución del estudiante
 - Revisar TimeEffortReport S2
 
 **García Chavero, Adrián**
-Contribución del estudiante
+- Asisitir a reuniones.
+- Asisitir a clase. 
+- Verme los videos de TheoryPills.
+- Hacer de usuario Piloto del equipo 12.
+- Revisar y dar feedback de numerosas Pull Request.
+- Task 8 - Detalle del perfil de Usuario (Frontend)
+- Task 10 - Edición del Perfil de Usuario (Frontend)
+- Task 20 - Detalle de Servicio (Frontend)
+- Task 22 - Baja/Alta de Servicio (Frontend)
+- Task 34 - Mantener sesión del usuario (Frontend)
+- Fix 2 - Modificar sesión con el token
+- Task 55 - Despliegue Continuo en Github Actions
+- Fix 11 - Mejorar Navbar (Frontend)
+- Task 56 - Configurar el formateador Prettier (Frontend)
+- Fix 18 - Validaciones editar servicio (Frontend)
+- Task 60 - Despliegue del proyecto en Sprint 2
+- Deployed Software review
+- Task 61 - Customer Agreement (Frontend)
 
 **González Quintanilla, Diego**
-Contribución del estudiante
+- Asisitir a reuniones.
+- Asisitir a clase. 
+- Ejercer de Project Manager: liderar reuniones; supervisar tareas, el progreso general del proyecto; comunicarme con el grupo 12 de Usuarios Piloto, etc...
+- Elaborar un Acuerdo de Usuarios Piloto con el grupo 12.
+- Recopilar feedback durante las clases.
+- Ver Theory Pills.
+- Task 7 - Detalle del perfil de Usuario (Backend)
+- Task 9 - Edición del Perfil de Usuario (Backend)
+- Task 19 - Detalle de Servicio (Backend)
+- Task 21 - Baja/Alta de Servicio (Backend)
+- Task 42 - Testing de Servicios (Backend)
+- Task 46 - Realizar el pago de Servicios (Backend)
+- Task 47 - Realizar el pago de Servicios (Frontend)
+- Task 54 - Formulario cálculo Fórmula de Rendimiento
+- Task 58 - Creación de Plantillas de Issues
+- Task 59 - Creación de User Pilot Commitment Agreement con Grupo 12
+- Task 60 - Despliegue del proyecto en Sprint 2
+- Fix 6 - Adición del campo Username a la edición de perfil de Usuario
+- Fix 7 - Corrección del campo Profesión de Trabajo
+- Fix 8 - Corrección del campo Status de Contrato
+- Hotfix 1 - Arreglos Generales para Demostración
+- Hotfix 3 - Arreglo errores relacionados con Servicio
+- Doc - Información de los Usuarios Piloto S2
+- Doc - Rellenar el PerformanceEvaluation S2
+- Deployed Software review
+- FC terms review
 
 **Grosso de Terreros Goméz, Javier**
-Contribución del estudiante
-
-**Hidalgo Rodríguez, Álvaro**
-Contribución del estudiante
+- Asisitir a reuniones.
+- Asisitir a clase. 
+- Verme los videos de TheoryPills.
+- Hacer de usuario piloto de la aplicación Shar3d del grupo 12.
+- Recopilar feedback en las clases y pasarlo a limpio para las bases de conocimiento.
+- Subir la información a las bases de conocimiento.
+- Realizar la tarea Doc - Información de los Usuarios Piloto S2, que consiste en redactar el documento InformationProvidedByPilotUsers.md, recopilando el feedback de los usuarios piloto.
+- Realizar la tarea Doc - Elaboración del manual de usuario, que consiste en redactar el documento ManualUsuario.pdf
+- Realizar la tarea Fix 10 - Mejora inicio sesión (Frontend)
+- Realizar la tarea Fix 9 - Validaciones de registro (Frontend)
+- Realizar la tarea Task 2 - Registro del usuario (Frontend)
+- Realizar la tarea Fix 1 - Eliminar dependencia de react-icons-kit
+- Realizar la tarea Doc - Storyboard de segundo caso de uso, como redactor del Storyboard 2.
+- Realizar la tarea Fix 2 - Modificar inicio de sesion con token
+- Realizar la tarea Task 28 - Arreglar Creacion de Contrato (Frontend)
+- Realizar la tarea Doc - Contribución a la base de datos S2, que incluye redactar el documento report.md
+- Realizar la tarea Fix 5 - Creacion Contratos a uno mismo
+- Revisar la tarea Task 61 - customer agreement frontend
+- Realizar la tarea Task 39 - Storyboard, incluyendo la redacción del storyboard 1.
+- Contribuir en la tarea Doc - Documento uso IA, añadiendo mis casos de uso de IA.
+- Revisar la tarea Doc - Customer Agreement
+- Redactar el documento de la tarea Doc - Gestion de la configuracion Modificacion
+- Revisar la tarea Task 25 - Listado de contrato filtrado
+- Redactar el documento de la tarea Doc - Creado documento "pilots" S2
+- Redactar mi sección en el documento PerformanceEvaluation.md
+- Revisar la tarea Doc - TCO y ROI
 
 **Mateos Angulo, Pablo**
 Contribución del estudiante
+
+**Hidalgo Rodríguez, Álvaro**
+- Asisitir a reuniones.
+- Asisitir a clase. 
+- Verme los videos de TheoryPills.
+- Hacer de usuario piloto de la aplicación Shar3d del grupo 12.
+- Asistir en el documento de IA
+- Revisar el Software Reviewer Guideline
+- Task 2.44 Generar el testing de la propiedad contratos, junto con Samuel
+- Crear el Time Effort Report
+- Task 2.11 - Creacion de modelo de trabajo, junto con Samuel
+- Task 2.13 - Crear operaciones CRUD de trabajo, junto con Samuel
+- Task 2.15 - Listado de servicios filtrado, junto con Samuel
+- Task 2.17 - Listado de servicios por usuario, junto con Samuel
+- Task 2.23 - Listado de contratos de usuario, junto con Samuel
+- Task 2.25 - Filtrar listado de contrato, junto con Samuel
+- Task 2.48 - Filtrar Feedback de usuarios piloto, junto con Samuel
+- Diversos fix y hotfix, junto con Samuel
 
 **Sánchez Hossdorf, Alexander | Alicia**
 - Asisitir a reuniones y tomar acta. Posteriormente redactarla.
@@ -432,21 +543,13 @@ Contribución del estudiante
 - Task 2.57: Logica de los botones de contrato.
 - Task 2.52: Revisar
 - Fix 2.5: Revisar
-- Task 2.56: Revisar
 - Fix 2.18: Arreglar restriccion de experiencia 
 - Fix 2.11: Hacer que el Navbar sea responsive
-- Task 2.46,2.47: Revisar
-- Fix 2.27: Revisar
-- Fix 2.24: Revisar
-- Fix 2.25: Revisar
-- Fix 26: Revisar
 - Fix 2.28: Arreglar los botones de detalles de servicio (frontend)
-- Revisar que el despliegue funcionase.
 - Hacer de usuario Piloto del equipo 12. 
 - Hacer de Project Manager cuando Diego no se encontraba disponible.
-- Doc: Crear PerformanceReport.md
-- Doc: Actualizar Gestion de la Configuración.
-- 
+- Task 64: Crear PerformanceReport.md
+- FC terms review
 
 ## Sprint 3 (#S3)
 
@@ -563,4 +666,3 @@ Contribución del estudiante
 
 **Sánchez Hossdorf, Alexander | Alicia**
 Contribución del estudiante
-
