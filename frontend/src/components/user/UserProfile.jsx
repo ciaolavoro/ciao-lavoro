@@ -38,14 +38,19 @@ export default function UserProfile() {
 
    const updateUser = async (userId, userData) => {
       try {
-         const response = await updateUserRequest(userId, userData, loggedUser.token)
-         if (response.ok) {
-            alert("Perfil actualizado correctamente")
-            setIsEditing(false)
-            logout()
-            navigate("/")
+         const response = await updateUserRequest(userId, userData, loggedUser.token);
+         const response_email =await (response).json()
+         if (response_email.status == '500') {
+            alert('El email no es valido')
          } else {
-            alert("Error al actualizar el perfil. Por favor, intente de nuevo.")
+            if (response.ok) {
+               alert("Perfil actualizado correctamente")
+               setIsEditing(false)
+               logout()
+               navigate("/")
+            } else {
+               alert("Error al actualizar el perfil. Por favor, intente de nuevo.")
+            }
          }
       } catch (error) {
          alert("Error al actualizar el perfil. Por favor, intente de nuevo.")
