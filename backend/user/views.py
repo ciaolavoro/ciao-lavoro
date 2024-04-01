@@ -1,3 +1,4 @@
+import random
 import re
 
 from django.forms import ValidationError
@@ -71,7 +72,9 @@ class register(APIView):
                     image = ContentFile(default_image_file.read(), 'default.png')
             if email:
                 validate_email(email)
-                response = requests.get("https://emailvalidation.abstractapi.com/v1/?api_key=3e43ea5a71fc406ba3702133e44aa6d5&email="+email)
+                keys = settings.VERIFICATION_KEY.split('-')
+                key = random.choice(keys)
+                response = requests.get("https://emailvalidation.abstractapi.com/v1/?api_key=" + key +"&email="+email)
                 json_data = response.json()
                 if 'error' not in json_data.keys():
                     deliverability = json_data['deliverability']
@@ -135,7 +138,9 @@ class Profile(APIView):
             if email:
                 user.email = email
                 validate_email(email)
-                response = requests.get("https://emailvalidation.abstractapi.com/v1/?api_key=3e43ea5a71fc406ba3702133e44aa6d5&email="+email)
+                keys = settings.VERIFICATION_KEY.split('-')
+                key = random.choice(keys)
+                response = requests.get("https://emailvalidation.abstractapi.com/v1/?api_key=" + key +"&email="+email)
                 json_data = response.json()
                 if 'error' not in json_data.keys():
                     deliverability = json_data['deliverability']
