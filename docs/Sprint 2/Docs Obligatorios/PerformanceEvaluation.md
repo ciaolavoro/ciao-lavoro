@@ -381,9 +381,49 @@ Contribución del estudiante
 - Solucionar problemas menores con fallos de restricciones varias.
 
 **Cobo Ariza, José Luis**
-
 - Asisitir a reuniones.
 - Asisitir a clase.
+
+**Cuenca Pérez, Pablo**
+Contribución del estudiante
+
+**García Chavero, Adrián**
+Contribución del estudiante
+
+**González Quintanilla, Diego**
+- Asisitir a reuniones.
+- Asisitir a clase. 
+- Ejercer de Project Manager: liderar reuniones; supervisar tareas, el progreso general del proyecto; comunicarme con el grupo 12 de Usuarios Piloto, etc...
+- Elaborar un Acuerdo de Usuarios Piloto con el grupo 12.
+- Recopilar feedback durante las clases.
+- Ver Theory Pills.
+- Task 7 - Detalle del perfil de Usuario (Backend)
+- Task 9 - Edición del Perfil de Usuario (Backend)
+- Task 19 - Detalle de Servicio (Backend)
+- Task 21 - Baja/Alta de Servicio (Backend)
+- Task 42 - Testing de Servicios (Backend)
+- Task 46 - Realizar el pago de Servicios (Backend)
+- Task 47 - Realizar el pago de Servicios (Frontend)
+- Task 54 - Formulario cálculo Fórmula de Rendimiento
+- Task 58 - Creación de Plantillas de Issues
+- Task 59 - Creación de User Pilot Commitment Agreement con Grupo 12
+- Task 60 - Despliegue del proyecto en Sprint 2
+- Fix 6 - Adición del campo Username a la edición de perfil de Usuario
+- Fix 7 - Corrección del campo Profesión de Trabajo
+- Fix 8 - Corrección del campo Status de Contrato
+- Hotfix 1 - Arreglos Generales para Demostración
+- Hotfix 3 - Arreglo errores relacionados con Servicio
+- Doc - Información de los Usuarios Piloto S2
+- Doc - Rellenar el PerformanceEvaluation S2
+- Deployed Software review
+- FC terms review
+
+**Hidalgo Rodríguez, Álvaro**
+Contribución del estudiante
+
+**Sánchez Hossdorf, Alexander | Alicia**
+Contribución del estudiante
+
 
 **Grosso de Terreros Goméz, Javier**
 - Asisitir a reuniones.
