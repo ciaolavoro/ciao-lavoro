@@ -75,5 +75,5 @@ jobs:
     - name: Sube reporte de cobertura a Codacy
       uses: codacy/codacy-coverage-reporter-action@v1
       with:
-          project-token: ${{ CODACY_PROJECT_TOKEN }}
+          project-token: CODACY_PROJECT_TOKEN
           coverage-reports: backend/coverage.xml
