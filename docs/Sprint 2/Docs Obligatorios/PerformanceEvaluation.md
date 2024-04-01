@@ -10,8 +10,18 @@
 
 | Nombre y Apellidos | Tipo de Contribución |
 |---------------------|-----------------------|
-| Alexander / Alicia Sánchez Hossdorf          | Creación (Task 64)           |
-| Javier Grosso          | Redacción segmentos de contribución de Javier Grosso           |
+| Alexander / Alicia Sánchez Hossdorf          | Creación (Task 64)  y Redacción segmentos de contribución de Alexander / Alicia Sánchez Hossdorf        |
+| Javier Grosso Gómez de Terreros        | Redacción segmentos de contribución de Javier Grosso y subida de las notas de individual performance evaluation   |
+| Samuel Albalat Ortiz           | Redacción segmentos de contribución de Samuel Albalat Ortiz           |
+| Joaquín Arregui Díaz          | Redacción segmentos de contribución de Joaquín Arregui Díaz          |
+| Antonio Barea Jiménez         | Redacción segmentos de contribución de Antonio Barea Jiménez           |
+| Francisco Antonio Campos Campos         | Redacción segmentos de contribución de Francisco Antonio Campos Campos          |
+| José Luis Cobo Ariza         | Redacción segmentos de contribución de José Luis Cobo Ariza           |
+| Pablo Cuenca Pérez          | Redacción segmentos de contribución de Pablo Cuenca Pérez         |
+| Adrián García Chavero         | Redacción segmentos de contribución de Adrián García Chavero         |
+| Diego González Quintanilla          | Redacción segmentos de contribución de Diego González Quintanilla           |
+| Álvaro Hidalgo Rodríguez     | Redacción segmentos de contribución de Álvaro Hidalgo Rodríguez           |
+| Pablo Mateos Angulo         | Redacción segmentos de contribución de Pablo Mateos Angulo          |
 ---
 
 **Versión: 2.0**
