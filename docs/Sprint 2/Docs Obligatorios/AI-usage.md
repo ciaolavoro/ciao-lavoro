@@ -5,7 +5,7 @@
 <br>
 **Entregable: Sprint 2**
 
-## Miembros del equipo y X en quien contribuya añadiendo Prompts
+## Miembros del equipo y contribución
 
 | Nombre y Apellidos | Tipo de Contribución |
 |---------------------|-----------------------|
