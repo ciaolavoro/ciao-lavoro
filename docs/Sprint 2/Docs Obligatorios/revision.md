@@ -29,65 +29,26 @@ https://ciaolavoro.github.io/landingpage/index.html
 
 # CREDENCIALES
 
-Administrador:
-Nombre de usuario: CiaoLavoroAdmin
-Contraseña: Admin_S2
+| Rol de usuario | Nombre de Usuario | Contraseña | Trabajos |
+|---------------------|-----------------------|-----------------------|-----------------------|
+| Administrador        | CiaoLavoroAdmin             | Admin_S2             |              |
+| Usuario        | ElenaTechSol             | Torres_S2             |   Mecanico, Electricista           |
+| Usuario        | JRobCarpentry             | Robertson_S2             |   Carpintero           |
+| Usuario        | CuidadorCarlos             | Martinez_S2             |   Celador, Lavandero, Profesor particular           |
+| Usuario        | ArtistryBySimone             | Clarke_S2             |   Pintor           |
+| Usuario        | NkosiForgeAndLocks             | Nkosi_S2             |   Herrero, cerrajero           |
+| Usuario        | ZhouChauffeurServices             | Zhou_S2             |   Conductor           |
+| Usuario        | RuizConstrucciones             | Ruiz_S2             |   Albañil, Carpintero           |
+| Usuario        | ProfeSofiaEducación             | Gomez_S2             |   Profesor particular          |
+| Usuario        | SastreriaClara             | Rodriguez_S2             |   Sastre          |
+| Usuario        | ProfLuisTutor             | Moreno_S2             |   Profesor particular          |
 
-Usuario 1:
-Nombre de usuario: ElenaTechSol
-Contraseña: Torres_S2
-Trabajos: Mecanico, Electricista
-
-Usuario 2:
-Nombre de usuario: JRobCarpentry
-Contraseña: Robertson_S2
-Trabajos: Carpintero
-
-Usuario 3:
-Nombre de usuario: CuidadorCarlos
-Contraseña: Martinez_S2
-Trabajos: Celador, Lavandero, Profesor particular
-
-Usuario 4:
-Nombre de usuario: ArtistryBySimone
-Contraseña: Clarke_S2
-Trabajos: Pintor
-
-Usuario 5:
-Nombre de usuario: NkosiForgeAndLocks
-Contraseña: Nkosi_S2
-Trabajos: Herrero+, cerrajero
-
-Usuario 6:
-Nombre de usuario: ZhouChauffeurServices
-Contraseña: Zhou_S2
-Trabajos: Conductor
-
-Usuario 7:
-Nombre de usuario: RuizConstrucciones
-Contraseña: Ruiz_S2
-Trabajos: Albañil, Carpintero
-
-Usuario 8:
-Nombre de usuario: ProfeSofiaEducación
-Contraseña: Gomez_S2
-Trabajos: Profesor particular
-
-Usuario 9:
-Nombre de usuario: SastreriaClara
-Contraseña: Rodriguez_S2
-Trabajos: Sastre
-
-Usuario 10:
-Nombre de usuario: ProfLuisTutor
-Contraseña: Contraseña: Moreno_S2
-Trabajos: Profesor particular
-
-Credenciales governify: 
-Nombre de usuario: user
-Contraseña: bluejay
+Credenciales governify:
+- Nombre de usuario: user
+- Contraseña: bluejay
 
 Tarjeta Pruebas Stripe: 4242 4242 4242 4242
+
 El resto de datos pueden ser inventados.
 
 # URL DEL DESPLIEGUE EN LA PLATAFORMA CORRESPONDIENTE:
