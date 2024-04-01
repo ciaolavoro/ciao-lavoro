@@ -18,7 +18,7 @@
 | 30/03/2024 | 1.1     | Revisión para corregir errores de enlaces        |
 | 01/04/2024 | 1.1     | Revisión con Claudette                           |
 
-Este Acuerdo fue modificado por última vez el 29 de marzo de 2024.
+Este Acuerdo fue modificado por última vez el 01 de abril de 2024.
 
 Los siguientes términos de servicio rigen su acceso y uso del sitio web de CiaoLavoro, incluido cualquier contenido, funcionalidad y servicios ofrecidos en o a través de [ciao-lavoro-2.pages.dev](https://ciao-lavoro-2.pages.dev/) (“Sitio”) por CiaoLavoro.
 
