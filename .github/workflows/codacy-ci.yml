@@ -7,8 +7,6 @@ on:
       - develop
   workflow_call:
     secrets:
-      CODACY_PROJECT_TOKEN:
-        required: true
       DJANGO_ALLOWED_HOST:
         required: true
       DJANGO_DEBUG:
@@ -28,7 +26,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:  
-      CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
       DJANGO_ALLOWED_HOST: ${{ secrets.DJANGO_ALLOWED_HOST }}
       DJANGO_DEBUG: ${{ secrets.DJANGO_DEBUG }}
       DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
@@ -75,5 +72,5 @@ jobs:
     - name: Sube reporte de cobertura a Codacy
       uses: codacy/codacy-coverage-reporter-action@v1
       with:
-          project-token: CODACY_PROJECT_TOKEN
+          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
           coverage-reports: backend/coverage.xml
