@@ -414,7 +414,24 @@ Fecha: 02 / 04 / 2024
 Contribución del estudiante
 
 **García Chavero, Adrián**
-Contribución del estudiante
+- Asisitir a reuniones.
+- Asisitir a clase. 
+- Verme los videos de TheoryPills.
+- Hacer de usuario Piloto del equipo 12.
+- Revisar y dar feedback de numerosas Pull Request.
+- Task 8 - Detalle del perfil de Usuario (Frontend)
+- Task 10 - Edición del Perfil de Usuario (Frontend)
+- Task 20 - Detalle de Servicio (Frontend)
+- Task 22 - Baja/Alta de Servicio (Frontend)
+- Task 34 - Mantener sesión del usuario (Frontend)
+- Fix 2 - Modificar sesión con el token
+- Task 55 - Despliegue Continuo en Github Actions
+- Fix 11 - Mejorar Navbar (Frontend)
+- Task 56 - Configurar el formateador Prettier (Frontend)
+- Fix 18 - Validaciones editar servicio (Frontend)
+- Task 60 - Despliegue del proyecto en Sprint 2
+- Deployed Software review
+- Task 61 - Customer Agreement (Frontend)
 
 **González Quintanilla, Diego**
 - Asisitir a reuniones.
