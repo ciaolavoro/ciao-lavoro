@@ -1,5 +1,4 @@
 # Evaluación de Desempeño de Usuarios Piloto
-## Fecha de Evaluación: 20/03/2024
 
 Pilot Users Performance Evaluation 
 
