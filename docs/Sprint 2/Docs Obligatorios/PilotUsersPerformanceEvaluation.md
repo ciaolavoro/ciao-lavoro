@@ -1,11 +1,25 @@
 # Evaluación de Desempeño de Usuarios Piloto
-
 Pilot Users Performance Evaluation 
+## CIAOLAVORO
+**Grupo 6**
+<br>
+**Entregable: Sprint 2**
+
+## Miembros del equipo y contribuciones
+
+| Nombre y Apellidos | Tipo de Contribución |
+|---------------------|-----------------------|
+| Álvaro Hidalgo        | Redacción             |
+| Pablo Cuenca         | Revisión              |
+
+
+### CONTROL DE VERSIONES
+| FECHA      | VERSIÓN | DESCRIPCIÓN                                      |
+|------------|---------|--------------------------------------------------|
+| 01/04/2024 | 1.0     | Creación del documento en su versión Sprint 2    |
+| 01/04/2024 | 1.1     | Revision del documento en su versión Sprint 2    |
 
 **PILOT USER ISSP GROUP NUMBER: 12** 
-
-
-
 |**Factor** |**#S1** |**#S2** |**#S3** |**#PPL** |**#WPL** |
 | - | - | - | - | - | - |
 |**Punctuality** |**10** |**10**||||
