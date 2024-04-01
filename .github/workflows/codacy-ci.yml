@@ -6,23 +6,23 @@ on:
       - main
       - develop
   workflow_call:
-      secrets:
-        CODACY_PROJECT_TOKEN:
-          required: true
-        DJANGO_ALLOWED_HOST:
-          required: true
-        DJANGO_DEBUG:
-          required: true
-        DJANGO_SECRET_KEY:
-          required: true
-        FRONTEND_URL:
-          required: true
-        STRIPE_SECRET_KEY:
-          required: true
-        VITE_BACKEND_API_URL:
-          required: true
-        VITE_STRIPE_PUBLIC_KEY:
-          required: true
+    secrets:
+      CODACY_PROJECT_TOKEN:
+        required: true
+      DJANGO_ALLOWED_HOST:
+        required: true
+      DJANGO_DEBUG:
+        required: true
+      DJANGO_SECRET_KEY:
+        required: true
+      FRONTEND_URL:
+        required: true
+      STRIPE_SECRET_KEY:
+        required: true
+      VITE_BACKEND_API_URL:
+        required: true
+      VITE_STRIPE_PUBLIC_KEY:
+        required: true
 
 jobs:
   build:
