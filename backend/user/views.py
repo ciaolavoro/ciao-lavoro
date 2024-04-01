@@ -79,7 +79,7 @@ class register(APIView):
                 if 'error' not in json_data.keys():
                     deliverability = json_data['deliverability']
                     if not deliverability == 'DELIVERABLE':
-                        raise ValidationError("El email no es valido")
+                        return JsonResponse({'details': 'El email no es válido', 'status': '500'})
             user = User.objects.create(username=username, first_name=first_name, last_name=last_name, email=email
             ,language=language, birth_date=birth_date, image=image)
             validate_password(password)
@@ -145,7 +145,7 @@ class Profile(APIView):
                 if 'error' not in json_data.keys():
                     deliverability = json_data['deliverability']
                     if not deliverability == 'DELIVERABLE':
-                        raise ValidationError("El email no es valido")
+                        return JsonResponse({'details': 'El email no es válido', 'status': '500'})
             if language and language.strip() != '':
                 user.language = language
             if birth_date:
