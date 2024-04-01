@@ -1,7 +1,7 @@
 # Compromiso de Usuario Piloto
 
 ## Nombre del Usuario Piloto: Alexandra Hossdorf
-
+## Fecha de realización: 28/03/2024
 ### CONTROL DE VERSIONES
 | FECHA      | VERSIÓN | DESCRIPCIÓN                                    |
 |------------|---------|------------------------------------------------|
