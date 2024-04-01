@@ -12,7 +12,7 @@
 
 |ESTADO DEL DOCUMENTO|
 |--------------------|
-|Firmado          |
+|No firmado          |
 
 Yo, **Francisco Sanchez Burgos**, me comprometo de manera voluntaria y consciente a cumplir con las siguientes cláusulas y responsabilidades mientras participe como usuario piloto en la página web de Ciao Lavoro:
 
@@ -28,5 +28,3 @@ Yo, **Francisco Sanchez Burgos**, me comprometo de manera voluntaria y conscient
 4. **Información relevante:**
    - Me comprometo a brindar al equipo de Ciao Lavoro la información más precisa y relevante con el propósito de ofrecer la ayuda más óptima posible para la mejora de su página web.
 
-### Firma:
-Francisco Sanchez Burgos    20/03/2024
