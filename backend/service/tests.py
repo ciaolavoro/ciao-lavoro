@@ -14,7 +14,7 @@ class ServiceTestCase(TestCase):
     def setUp(self):
         self.user_data = {
             'username': 'testuser',
-            'email': 'test@example.com',
+            'email': 'joaquin.arregui2002@gmail.com',
             'password': 'testpassword',
             'first_name': 'Test',
             'last_name': 'User',
@@ -44,7 +44,7 @@ class ServiceViewTest(TestCase):
     def setUp(self):
         self.client = APIClient()
         self.user = User.objects.create_user(username='testuser',
-                                            email='test@example.com',
+                                            email='joaquin.arregui2002@gmail.com',
                                             password='testpassword',
                                             first_name='Test',
                                             last_name='User',
@@ -93,7 +93,7 @@ class ServiceListTestCase(TestCase):
     def setUp(self):
         self.client = APIClient()
         self.user = User.objects.create_user(username='testuser',
-                                            email='test@example.com',
+                                            email='joaquin.arregui2002@gmail.com',
                                             password='testpassword', first_name='Test',
                                             last_name='User',
                                             birth_date= (timezone.now() - datetime.timedelta(days=365*25)).date(),
@@ -137,7 +137,7 @@ class AllProfessionListTestCase(TestCase):
     def setUp(self):
         self.client = APIClient()
         self.user = User.objects.create_user(username='testuser',
-                                            email='test@example.com',
+                                            email='joaquin.arregui2002@gmail.com',
                                             password='testpassword',
                                             first_name='Test',
                                             last_name='User',
@@ -161,7 +161,7 @@ class ProfessionListTestCase(TestCase):
     def setUp(self):
         self.client = APIClient()
         self.user = User.objects.create_user(username='testuser',
-                                            email='test@example.com',
+                                            email='joaquin.arregui2002@gmail.com',
                                             password='testpassword',
                                             first_name='Test',
                                             last_name='User',
@@ -184,7 +184,7 @@ class ProfessionListTestCase(TestCase):
 class UserServiceListTestCase(TestCase):
     def setUp(self):
         self.client = APIClient()
-        self.user = User.objects.create_user(username='testuser', email='test@example.com',
+        self.user = User.objects.create_user(username='testuser', email='joaquin.arregui2002@gmail.com',
                                             password='testpassword',
                                             first_name='Test',
                                             last_name='User',
@@ -193,7 +193,7 @@ class UserServiceListTestCase(TestCase):
         self.token = Token.objects.create(user=self.user)
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
         self.another_user = User.objects.create_user(username='anotheruser',
-                                                    email='another@example.com',
+                                                    email='joseluiscoboariza@gmail.com',
                                                     password='anotherpassword',
                                                     first_name='Another',
                                                     last_name='User',
@@ -221,7 +221,7 @@ class UserServiceListTestCase(TestCase):
 class JobViewTestCase(TestCase):
     def setUp(self):
         self.client = APIClient()
-        self.user = get_user_model().objects.create_user(username='testuser', email='test@example.com',
+        self.user = get_user_model().objects.create_user(username='testuser', email='joaquin.arregui2002@gmail.com',
                                                         password='testpassword',
                                                         first_name='Test', last_name='User',
                                                         birth_date= (timezone.now() - datetime.timedelta(days=365*25)).date(),
@@ -256,7 +256,7 @@ class JobViewTestCase(TestCase):
 class ReviewViewTestCase(TestCase):
     def setUp(self):
         self.client = APIClient()
-        self.user = User.objects.create_user(username='testuser', email='test@example.com',
+        self.user = User.objects.create_user(username='testuser', email='joaquin.arregui2002@gmail.com',
                                             password='testpassword',
                                             first_name='Test',
                                             last_name='User',
@@ -288,7 +288,7 @@ class ReviewViewTestCase(TestCase):
 class UserHasServiceTestCase(TestCase):
     def setUp(self):
         self.client = APIClient()
-        self.user = User.objects.create_user(username='testuser', email='test@example.com',
+        self.user = User.objects.create_user(username='testuser', email='joaquin.arregui2002@gmail.com',
                                             password='testpassword', first_name='Test',
                                             last_name='User',
                                             birth_date= (timezone.now() - datetime.timedelta(days=365*25)).date(),

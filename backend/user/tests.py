@@ -1,4 +1,5 @@
 import os
+import time
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 from rest_framework.test import APIClient
@@ -9,6 +10,10 @@ import datetime
 from django.conf import settings
 from django.utils import timezone
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.contrib.admin.sites import AdminSite
+from django.test import RequestFactory
+from .admin import UserAdmin
+from .models import User
 
 
 User = get_user_model()
@@ -17,7 +22,7 @@ class UserTestCase(TestCase):
     def setUp(self):
         self.user_data = {
             'username': 'testuser',
-            'email': 'test@example.com',
+            'email': 'joaquin.arregui2002@gmail.com',
             'password': 'testpassword',
             'first_name': 'Test',
             'last_name': 'User',
@@ -74,7 +79,7 @@ class RegisterViewTests(TestCase):
             'username': 'newuser',
             'firstName': 'New',
             'lastName': 'User',
-            'email': 'newuser@example.com',
+            'email': 'joseluiscoboariza@gmail.com',
             'password': 'NewPass2024#',
             'birthdate': '1990-01-01',
             'language': 'English',
@@ -100,6 +105,13 @@ class RegisterViewTests(TestCase):
     def test_wrong_email(self):
         user_data = self.base_user_data.copy()
         user_data['email'] = 'notanemail'
+        response = self.client.post(reverse('user:register'), user_data)
+        self.assertEqual(response.status_code, status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def test_inexistent_email(self):
+        user_data = self.base_user_data.copy()
+        user_data['email'] = 'inexistent@email.com'
+        time.sleep(2)
         response = self.client.post(reverse('user:register'), user_data)
         self.assertEqual(response.status_code, status.HTTP_500_INTERNAL_SERVER_ERROR)
 
@@ -167,7 +179,7 @@ class UserProfileViewTests(UserTestCase):
             'username': 'UpdatedUsername',
             'first_name': 'UpdatedName',
             'last_name': 'UpdatedLastName',
-            'email': 'updated@email.com',
+            'email': 'fran.antonio2801@gmail.com',
             'language': 'UpdatedLanguage',
             'birth_date': '1950-12-12',
             }
@@ -177,7 +189,7 @@ class UserProfileViewTests(UserTestCase):
         self.assertEqual(self.user.username, 'UpdatedUsername')
         self.assertEqual(self.user.first_name, 'UpdatedName')
         self.assertEqual(self.user.last_name, 'UpdatedLastName')
-        self.assertEqual(self.user.email, 'updated@email.com')
+        self.assertEqual(self.user.email, 'fran.antonio2801@gmail.com')
         self.assertEqual(self.user.language, 'UpdatedLanguage')
         self.assertEqual(self.user.birth_date, datetime.date(1950, 12, 12))
 
@@ -246,6 +258,18 @@ class UserProfileUpdateTests(UserTestCase):
         response = self.client.put(reverse('user:profile'), update_data, format='json')
         self.assertNotEqual(response.status_code, status.HTTP_200_OK, "Email format validation failed")
 
+    def test_update_inexistent_email(self):
+        update_data = {
+            'username': '',
+            'first_name': '',
+            'last_name': '',
+            'email': 'inexistent@email.com',
+            'language': '',
+            'birth_date': '',
+        }
+        response = self.client.put(reverse('user:profile'), update_data, format='json')
+        self.assertNotEqual(response.status_code, status.HTTP_200_OK, "Email format validation failed")
+
     def test_update_age_out_of_bounds(self):
         update_data = {
             'username': '',
@@ -272,3 +296,17 @@ class UserProfileUpdateTests(UserTestCase):
         }
         response = self.client.put(reverse('user:profile'), update_data, format='json')
         self.assertNotEqual(response.status_code, status.HTTP_200_OK, "Birthdate format validation failed")
+
+class UserAdminTest(TestCase):
+    def setUp(self):
+        self.site = AdminSite()
+        self.request_factory = RequestFactory()
+        self.user_admin = UserAdmin(model=User, admin_site=self.site)
+
+    def test_user_password_hashing_on_save(self):
+        user = User.objects.create(username='testuser2', first_name='test', last_name='user', email='test2@example.com', password='testpassword', birth_date='1950-12-12')
+        self.assertFalse(user.password.startswith('pbkdf2_sha256$'))
+        request = self.request_factory.get('/admin/auth/user/')
+        self.user_admin.save_model(request, user, None, None)
+        user = User.objects.get(username='testuser2')
+        self.assertTrue(user.password.startswith('pbkdf2_sha256$'))
