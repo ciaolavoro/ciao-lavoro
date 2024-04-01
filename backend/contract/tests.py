@@ -186,3 +186,13 @@ class ContractUpdateTests(ContractTestCase):
         self.assertEqual(self.contract.end_date,datetime.datetime.strptime('2024-05-8T14:30','%Y-%m-%dT%H:%M').replace(tzinfo=datetime.timezone.utc))
         self.assertEqual(self.contract.description, 'nuevadescristion')
         self.assertEqual(self.contract.cost, 5)
+
+class ContractDeleteTests(ContractTestCase):
+    def test_delete_contract(self):
+        token, _ = Token.objects.get_or_create(user=self.user2)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.delete(reverse('contracts:contract-delete',kwargs={'contract_id': self.contract.id}))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        response = self.client.get(reverse('contracts:contract-detail',kwargs={'contract_id': self.contract.id}))
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
