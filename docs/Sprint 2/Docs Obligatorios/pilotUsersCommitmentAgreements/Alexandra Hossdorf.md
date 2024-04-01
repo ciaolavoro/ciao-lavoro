@@ -29,4 +29,6 @@ Yo, **Alexandra Hossdorf**, me comprometo de manera voluntaria y consciente a cu
    - Me comprometo a brindar al equipo de Ciao Lavoro la información más precisa y relevante con el propósito de ofrecer la ayuda más óptima posible para la mejora de su página web.
 
 ### Firma:
+![imagen](https://github.com/ciaolavoro/ciao-lavoro/assets/59439742/61d7d248-caf2-4a35-9e5f-1274d5549d77)
+
 Alexandra Hossdorf    20/03/2024
