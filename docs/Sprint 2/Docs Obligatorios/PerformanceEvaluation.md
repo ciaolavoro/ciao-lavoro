@@ -11,7 +11,7 @@
 | Nombre y Apellidos | Tipo de Contribución |
 |---------------------|-----------------------|
 | Alexander / Alicia Sánchez Hossdorf          | Creación (Task 64)           |
-
+| Javier Grosso          | Redacción segmentos de contribución de Javier Grosso           |
 ---
 
 **Versión: 2.0**
@@ -384,3 +384,30 @@ Contribución del estudiante
 
 - Asisitir a reuniones.
 - Asisitir a clase.
+
+**Grosso de Terreros Goméz, Javier**
+- Asisitir a reuniones.
+- Asisitir a clase. 
+- Verme los videos de TheoryPills.
+- Hacer de usuario piloto de la aplicación Shar3d del grupo 12.
+- Recopilar feedback en las clases y pasarlo a limpio para las bases de conocimiento.
+- Subir la información a las bases de conocimiento.
+- Realizar la tarea Doc - Información de los Usuarios Piloto S2, que consiste en redactar el documento InformationProvidedByPilotUsers.md, recopilando el feedback de los usuarios piloto.
+- Realizar la tarea Doc - Elaboración del manual de usuario, que consiste en redactar el documento ManualUsuario.pdf
+- Realizar la tarea Fix 10 - Mejora inicio sesión (Frontend)
+- Realizar la tarea Fix 9 - Validaciones de registro (Frontend)
+- Realizar la tarea Task 2 - Registro del usuario (Frontend)
+- Realizar la tarea Fix 1 - Eliminar dependencia de react-icons-kit
+- Realizar la tarea Doc - Storyboard de segundo caso de uso, como redactor del Storyboard 2.
+- Realizar la tarea Fix 2 - Modificar inicio de sesion con token
+- Realizar la tarea Task 28 - Arreglar Creacion de Contrato (Frontend)
+- Realizar la tarea Doc - Contribución a la base de datos S2, que incluye redactar el documento report.md
+- Realizar la tarea Fix 5 - Creacion Contratos a uno mismo
+- Revisar la tarea Task 61 - customer agreement frontend
+- Realizar la tarea Task 39 - Storyboard, incluyendo la redacción del storyboard 1.
+- Contribuir en la tarea Doc - Documento uso IA, añadiendo mis casos de uso de IA.
+- Revisar la tarea Doc - Customer Agreement
+- Redactar el documento de la tarea Doc - Gestion de la configuracion Modificacion
+- Revisar la tarea Task 25 - Listado de contrato filtrado
+- Redactar el documento de la tarea Doc - Creado documento "pilots" S2
+- Redactar mi sección en el documento PerformanceEvaluation.md
