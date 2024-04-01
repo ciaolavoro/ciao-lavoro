@@ -5,7 +5,7 @@
 ### CONTROL DE VERSIONES
 | FECHA      | VERSIÓN | DESCRIPCIÓN                                    |
 |------------|---------|------------------------------------------------|
-| 01/04/2024 | 0.1     | Creación del documento.                        |
+| 27/03/2024 | 0.1     | Creación del documento.                        |
 
 
 |ESTADO DEL DOCUMENTO|
