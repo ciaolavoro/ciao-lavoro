@@ -476,7 +476,22 @@ Contribución del estudiante
 Contribución del estudiante
 
 **Hidalgo Rodríguez, Álvaro**
-Contribución del estudiante
+- Asisitir a reuniones.
+- Asisitir a clase. 
+- Verme los videos de TheoryPills.
+- Hacer de usuario piloto de la aplicación Shar3d del grupo 12.
+- Asistir en el documento de IA
+- Revisar el Software Reviewer Guideline
+- Task 2.44 Generar el testing de la propiedad contratos, junto con Samuel
+- Crear el Time Effort Report
+- Task 2.11 - Creacion de modelo de trabajo, junto con Samuel
+- Task 2.13 - Crear operaciones CRUD de trabajo, junto con Samuel
+- Task 2.15 - Listado de servicios filtrado, junto con Samuel
+- Task 2.17 - Listado de servicios por usuario, junto con Samuel
+- Task 2.23 - Listado de contratos de usuario, junto con Samuel
+- Task 2.25 - Filtrar listado de contrato, junto con Samuel
+- Task 2.48 - Filtrar Feedback de usuarios piloto, junto con Samuel
+- Diversos fix y hotfix, junto con Samuel
 
 **Sánchez Hossdorf, Alexander | Alicia**
 - Asisitir a reuniones y tomar acta. Posteriormente redactarla.
