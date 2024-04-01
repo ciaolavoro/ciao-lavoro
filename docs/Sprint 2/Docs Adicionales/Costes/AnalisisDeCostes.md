@@ -16,7 +16,7 @@
 
 1. Introducción:
 
-    En este documento se realizará un analisis del Coste Total de Propiedad (TCO) del Proyecto CiaoLavoro, además, se realizará un analisis optimista, realista y pesimista del Retorno de Inversión (ROI) del proyecto en 24 meses.
+    En este documento se realizará un analisis del Coste Total de Propiedad (TCO) del Proyecto CiaoLavoro, además, se realizará un análisis optimista, realista y pesimista del Retorno de Inversión (ROI) del proyecto en 24 meses.
 
 
 2. TCO
@@ -39,13 +39,13 @@
 
     ![Coste de las licencias](./Imagenes_Costes/CosteLicencias.png)
 
-    En la imagen anterior podemos ver los 3 licencias que se usaran en el desarrollo. Cabe destacar el uso de la licencia de GitHub Team para poder uso de la herramienta GitHub Actions sin preocuparse por las limitaciones.
+    En la imagen anterior podemos ver los 3 licencias que se usaran en el desarrollo. Cabe destacar el uso de la licencia de GitHub Team para poder utilizar la herramienta GitHub Actions sin preocuparse por las limitaciones.
 
     ![Coste de las licencias](./Imagenes_Costes/OpEx.png)
 
-    Este seria un resumen final del gasto mensual de operacion de la aplicación.
+    Este sería un resumen final del gasto mensual de operación de la aplicación.
 
-    Finalmente, el TCO quedaria de la siguiente manera:
+    Finalmente, el TCO quedaría de la siguiente manera:
 
     ![Coste Final](./Imagenes_Costes/Final.png)
 
