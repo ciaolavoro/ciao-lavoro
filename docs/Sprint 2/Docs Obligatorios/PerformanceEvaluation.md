@@ -418,13 +418,6 @@ Contribución del estudiante
 - Deployed Software review
 - FC terms review
 
-**Hidalgo Rodríguez, Álvaro**
-Contribución del estudiante
-
-**Sánchez Hossdorf, Alexander | Alicia**
-Contribución del estudiante
-
-
 **Grosso de Terreros Goméz, Javier**
 - Asisitir a reuniones.
 - Asisitir a clase. 
@@ -452,3 +445,153 @@ Contribución del estudiante
 - Redactar el documento de la tarea Doc - Creado documento "pilots" S2
 - Redactar mi sección en el documento PerformanceEvaluation.md
 - Revisar la tarea Doc - TCO y ROI
+
+**Mateos Angulo, Pablo**
+Contribución del estudiante
+
+**Hidalgo Rodríguez, Álvaro**
+Contribución del estudiante
+
+**Sánchez Hossdorf, Alexander | Alicia**
+- Asisitir a reuniones y tomar acta. Posteriormente redactarla.
+- Asisitir a clase y tomar feedback. 
+- Verme los videos de TheoryPills
+- Task 2.16: Listado de servicios filtrado (frontend)
+- Task 2.18: Listado de servicios por usuario (frontend)
+- Task 2.24: Lisado de servicio del Usuario (frontend)
+- Crear calendario NikoNiko
+- Task 2.50: Ayudar con las diapositivas.
+- Task 2.26: Revisar PR
+- Task 2.10: Revisar PR
+- Task 2.26: Arreglarla
+- Task 2.22: Revisar PR
+- Hacer una revision general con el coordinador de frontend para ver que cosas debiamos arreglar.
+- Fix 2.15: Mejorar el listado de contrato.
+- Fix 2.12: Mejogar pagina de inicio
+- Fix 2.14: Revisar PR
+- Task 2.57: Logica de los botones de contrato.
+- Task 2.52: Revisar
+- Fix 2.5: Revisar
+- Fix 2.18: Arreglar restriccion de experiencia 
+- Fix 2.11: Hacer que el Navbar sea responsive
+- Fix 2.28: Arreglar los botones de detalles de servicio (frontend)
+- Hacer de usuario Piloto del equipo 12. 
+- Hacer de Project Manager cuando Diego no se encontraba disponible.
+- Task 64: Crear PerformanceReport.md
+- FC terms review
+
+## Sprint 3 (#S3)
+
+**Albalat Ortiz, Samuel**
+Contribución del estudiante
+
+**Arregui Díaz, Joaquín**
+Contribución del estudiante
+
+**Barea Jiménez, Antonio**
+Contribución del estudiante
+
+**Campos Campos, Francisco Antonio**
+Contribución del estudiante
+
+**Cobo Ariza, José Luis**
+Contribución del estudiante
+
+**Cuenca Pérez, Pablo**
+Contribución del estudiante
+
+**García Chavero, Adrián**
+Contribución del estudiante
+
+**González Quintanilla, Diego**
+Contribución del estudiante
+
+**Grosso de Terreros Goméz, Javier**
+Contribución del estudiante
+
+**Hidalgo Rodríguez, Álvaro**
+Contribución del estudiante
+
+**Mateos Angulo, Pablo**
+Contribución del estudiante
+
+**Sánchez Hossdorf, Alexander | Alicia**
+Contribución del estudiante
+
+
+## Preparing Project Launch (#PPL)
+
+**Albalat Ortiz, Samuel**
+Contribución del estudiante
+
+**Arregui Díaz, Joaquín**
+Contribución del estudiante
+
+**Barea Jiménez, Antonio**
+Contribución del estudiante
+
+**Campos Campos, Francisco Antonio**
+Contribución del estudiante
+
+**Cobo Ariza, José Luis**
+Contribución del estudiante
+
+**Cuenca Pérez, Pablo**
+Contribución del estudiante
+
+**García Chavero, Adrián**
+Contribución del estudiante
+
+**González Quintanilla, Diego**
+Contribución del estudiante
+
+**Grosso de Terreros Goméz, Javier**
+Contribución del estudiante
+
+**Hidalgo Rodríguez, Álvaro**
+Contribución del estudiante
+
+**Mateos Angulo, Pablo**
+Contribución del estudiante
+
+**Sánchez Hossdorf, Alexander | Alicia**
+Contribución del estudiante
+
+
+## World Project Launch (#WPL)
+
+**Albalat Ortiz, Samuel**
+Contribución del estudiante
+
+**Arregui Díaz, Joaquín**
+Contribución del estudiante
+
+**Barea Jiménez, Antonio**
+Contribución del estudiante
+
+**Campos Campos, Francisco Antonio**
+Contribución del estudiante
+
+**Cobo Ariza, José Luis**
+Contribución del estudiante
+
+**Cuenca Pérez, Pablo**
+Contribución del estudiante
+
+**García Chavero, Adrián**
+Contribución del estudiante
+
+**González Quintanilla, Diego**
+Contribución del estudiante
+
+**Grosso de Terreros Goméz, Javier**
+Contribución del estudiante
+
+**Hidalgo Rodríguez, Álvaro**
+Contribución del estudiante
+
+**Mateos Angulo, Pablo**
+Contribución del estudiante
+
+**Sánchez Hossdorf, Alexander | Alicia**
+Contribución del estudiante
