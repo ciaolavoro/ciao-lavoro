@@ -49,8 +49,12 @@ export default function RegisterPage() {
       return;
     }
     try {
-      await registerRequest(username, password, firstName, lastName, email, image, birthdate);
-      navigate("/");
+      const response = await registerRequest(username, password, firstName, lastName, email, image, birthdate);
+      if (response.status == 500) {
+        alert('El email no es valido')
+      } else {
+        navigate("/");
+      }
     } catch (error) {
       console.error('Error registrando usuario:', error);
       if (error.message === 'El nombre de usuario ya está en uso') {

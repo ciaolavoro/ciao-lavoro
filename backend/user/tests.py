@@ -113,7 +113,7 @@ class RegisterViewTests(TestCase):
         user_data['email'] = 'inexistent@email.com'
         time.sleep(2)
         response = self.client.post(reverse('user:register'), user_data)
-        self.assertEqual(response.status_code, status.HTTP_500_INTERNAL_SERVER_ERROR)
+        self.assertEqual(response.json()['status'], '500')
 
     def test_future_birth_date(self):
         user_data = self.base_user_data.copy()
@@ -268,7 +268,7 @@ class UserProfileUpdateTests(UserTestCase):
             'birth_date': '',
         }
         response = self.client.put(reverse('user:profile'), update_data, format='json')
-        self.assertNotEqual(response.status_code, status.HTTP_200_OK, "Email format validation failed")
+        self.assertEqual(response.json()['status'], '500')
 
     def test_update_age_out_of_bounds(self):
         update_data = {
