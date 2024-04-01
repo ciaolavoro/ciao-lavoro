@@ -451,3 +451,4 @@ Contribución del estudiante
 - Revisar la tarea Task 25 - Listado de contrato filtrado
 - Redactar el documento de la tarea Doc - Creado documento "pilots" S2
 - Redactar mi sección en el documento PerformanceEvaluation.md
+- Revisar la tarea Doc - TCO y ROI
