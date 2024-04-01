@@ -29,4 +29,6 @@ Yo, **Mario Martín**, me comprometo de manera voluntaria y consciente a cumplir
    - Me comprometo a brindar al equipo de Ciao Lavoro la información más precisa y relevante con el propósito de ofrecer la ayuda más óptima posible para la mejora de su página web.
 
 ### Firma:
+![imagen](https://github.com/ciaolavoro/ciao-lavoro/assets/59439742/3f5161e8-d50e-449b-b076-232bb9f2d0e8)
+
 Mario Martín     20/03/2024
