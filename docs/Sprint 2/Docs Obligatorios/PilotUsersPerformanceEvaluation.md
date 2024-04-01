@@ -1,16 +1,25 @@
 # Evaluación de Desempeño de Usuarios Piloto
+## Fecha de Evaluación: 20/03/2024
 
-## Nombre del Usuario Piloto: [Nombre del Usuario Piloto]
-## Fecha de Evaluación: [Fecha de Evaluación]
+Pilot Users Performance Evaluation 
 
-### Desempeño General:
-[Inserta aquí una evaluación general del desempeño del usuario piloto durante el programa. Incluye comentarios sobre su participación, colaboración y contribuciones al éxito del programa piloto.]
+**PILOT USER ISSP GROUP NUMBER: 12** 
 
-### Mejoras posibles:
-[Inserta aquí las posibles mejoras en la pagina web de CiaLavoro como usuario piloto.]
 
-### Cumplimiento de Compromisos:
-[Inserta aquí una evaluación del cumplimiento de los compromisos establecidos en el acuerdo de compromiso de usuarios piloto.]
 
-### Firma:
-[Nombre del Evaluador]    [Fecha de Evaluación]
+|**Factor** |**#S1** |**#S2** |**#S3** |**#PPL** |**#WPL** |
+| - | - | - | - | - | - |
+|**Punctuality** |**10** |**10**||||
+|**Feedback validity** |**8’5** |**9**||||
+|**Feedback amount** |**9** |**10**||||
+|**Add any other factor you consider** |**\*Considerations** |||||
+
+**Please, score from 1 to 10 each factor in each development cycle of your product \*Considerations:** 
+
+*Considerations:
+
+El feedback de los Usuarios Pilotos en el momento de redactar este documento es inferior al 50%, lo que nos deja
+con una cantidad insuficiente de información para evaluar adecuadamente si nuestra aplicación cumple con las
+expectativas. Esta falta de feedback se atribuye a problemas de última hora y una acumulación de trabajo, lo que
+resultó en retrasos en algunas tareas. Estos problemas han sido abordados y el envío a los Usuarios Pilotos se realizó
+con un día de retraso, junto con una extensión del plazo para recibir comentarios.
