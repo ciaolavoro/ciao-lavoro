@@ -7,20 +7,14 @@
 
 ## Miembros del equipo y X en quien contribuya añadiendo Prompts
 
-| Nombre y Apellidos | Ha contribuido |
+| Nombre y Apellidos | Tipo de Contribución |
 |---------------------|-----------------------|
-| Alexander / Alicia Sánchez Hossdorf |    X     |
-| Álvaro Hidalgo Rodríguez            |          |
-| Joaquín Arregui Díaz                |    X     |
-| Samuel Albalat Ortiz                |    X     |
-| Adrián García Chavero               |          |
-| Pablo Cuenca Pérez                  |          |
-| Francisco Antonio Campos Campos     |          |
-| Javier Grosso Gómez de Terreros     |    X     |
-| José Luis Cobo Ariza                |          |
-| Diego González Quintanilla          |          |
-| Antonio Barea Jiménez               |          |
-| Pablo Mateos Angulo                 |          |
+| Alexander / Alicia Sánchez Hossdorf |    Creación/Redacción    |
+| Joaquín Arregui Díaz                |    Redacción     |
+| Samuel Albalat Ortiz                |    Redacción     |
+| Javier Grosso Gómez de Terreros     |    Redacción     |
+| Francisco Antonio Campos            |    Redacción     |
+| Diego González Quintanilla          |    Redacción     |
 
 
 ---
