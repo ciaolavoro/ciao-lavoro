@@ -1,7 +1,7 @@
 ---
 name: Plantilla Task (Documentación)
 about: Issue relacionada con el desarrollo de documentación
-title: Task [Nº de Task] - [Nombre de Task]
+title: Doc - [Nombre de Task]
 labels: documentación
 assignees: ''
 
