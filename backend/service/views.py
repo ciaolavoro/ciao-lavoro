@@ -9,7 +9,7 @@ from rest_framework.exceptions import PermissionDenied
 from .models import Service, Job, Review
 from .serializers import ServiceSerializer, JobSerializer, ReviewSerializer
 from rest_framework.authtoken.models import Token
-from datetime import date, datetime
+from datetime import date, timedelta
 from django.utils import timezone
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import authentication_classes
@@ -276,3 +276,23 @@ class UserHasService(APIView):
         data = {'user_state': state}
         return JsonResponse(data)
     
+class ServicePromotion(APIView):
+    def put(self, request,service_id):
+        service = Service.objects.get(pk=service_id)
+        token_id = request.headers["Authorization"]
+        token = get_object_or_404(Token, key = token_id.split()[-1])
+        user = token.user
+        if user != service.user:
+            raise PermissionDenied('No eres el propietario de este servicio')
+        service.is_promoted=date.today()
+        service.save()
+        serializer = ServiceSerializer(service, many=False)
+        return Response(serializer.data)
+        
+class AllServiceInPromotion(APIView):
+    serializer_class = ServiceSerializer
+    def get(self, request):
+        month = date.today() - timedelta(days=30)
+        promotedService = Service.objects.filter(is_promoted__gte=month)
+        serializer = self.serializer_class(promotedService, many=True, context ={'request': request})
+        return Response(serializer.data, status=status.HTTP_200_OK)
