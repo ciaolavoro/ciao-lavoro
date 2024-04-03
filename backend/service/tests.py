@@ -28,7 +28,6 @@ class ServiceTestCase(TestCase):
             'city': 'Test City',
             'experience': 5,
             'is_active': True,
-            'is_promoted': False,
         }
         self.service = Service.objects.create(**self.service_data)
 
@@ -82,6 +81,26 @@ class ServiceViewTest(TestCase):
         self.assertEqual(service.city, 'New City')
         self.assertFalse(service.is_active)
 
+    def test_service_promotion(self):
+        service = Service.objects.create(user=self.user, profession=6, city='Old City', experience=2)
+        url = reverse('service:service-promotion', kwargs={'service_id': service.id})
+        response = self.client.put(url)
+        self.assertEqual(response.status_code, 200)
+        service.refresh_from_db()
+        self.assertEqual(service.is_promoted,datetime.date.today())
+
+    def test_service_promotion_negative(self):
+        user = User.objects.create(username='anuser', email='anuser@gmail.com',
+                                   password='123rt56kl', first_name='Usuario', 
+                                   last_name ='De prueba', birth_date = (timezone.now() - 
+                                   datetime.timedelta(days=365*25)).date(), language= 'Russian')
+        service = Service.objects.create(user=user, profession=6, city='Old City', experience=2)
+        url = reverse('service:service-promotion', kwargs={'service_id': service.id})
+        response = self.client.put(url)
+        self.assertEqual(response.status_code, 403)
+        service.refresh_from_db()
+        self.assertNotEqual(service.is_promoted,datetime.date.today())
+
     def test_user_has_service(self):
         service = Service.objects.create(user=self.user, profession=6, city='Test City', experience=5)
         url = reverse('service:has-service', kwargs={'service_id': service.id})
@@ -106,7 +125,6 @@ class ServiceListTestCase(TestCase):
             'city': 'Test City',
             'experience': 5,
             'is_active': True,
-            'is_promoted': False,
         }
         self.service = Service.objects.create(**self.service_data)
 
@@ -157,6 +175,69 @@ class AllProfessionListTestCase(TestCase):
             self.assertTrue('id' in profession)
             self.assertTrue('name' in profession)
 
+class AllPromotedListTestCase(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+        self.user = User.objects.create_user(username='testuser',
+                                            email='joaquin.arregui2002@gmail.com',
+                                            password='testpassword',
+                                            first_name='Test',
+                                            last_name='User',
+                                            birth_date= (timezone.now() - datetime.timedelta(days=365*25)).date(),
+                                            language= 'English' )
+        self.token = Token.objects.create(user=self.user)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
+        self.service1 = Service.objects.create(user=self.user,
+                                               profession=1,
+                                               city='Test City 1',
+                                               experience=5,
+                                               is_promoted = '2024-04-01')
+        self.review1 = Review.objects.create(user=self.user,
+                                            service=self.service1,
+                                            description="Test review1",
+                                            rating=5)
+        self.service2 = Service.objects.create(user=self.user,
+                                               profession=2,
+                                               city='Test City 2',
+                                               experience=3,
+                                               is_promoted= '2024-03-09')
+        self.review2 = Review.objects.create(user=self.user,
+                                            service=self.service2,
+                                            description="Test review21",
+                                            rating=3)
+        self.review2 = Review.objects.create(user=self.user,
+                                            service=self.service2,
+                                            description="Test review22",
+                                            rating=5)
+        self.service3 = Service.objects.create(user=self.user,
+                                               profession=3,
+                                               city='Test City 3',
+                                               experience=4,
+                                               is_promoted= '2024-04-02')
+        self.review3 = Review.objects.create(user=self.user,
+                                            service=self.service3,
+                                            description="Test review3",
+                                            rating=3)
+        self.service4 = Service.objects.create(user=self.user,
+                                               profession=3,
+                                               city='Test City 3',
+                                               experience=4,
+                                               is_promoted= '2024-02-02')
+        self.review4 = Review.objects.create(user=self.user,
+                                            service=self.service4,
+                                            description="Test review4",
+                                            rating=5)
+
+    def test_get_all_promoted(self):
+        url = reverse('service:service-all-promotion')
+        response = self.client.get(url)
+        self.assertTrue('promotedServices' in response.json())
+        services = response.json()['promotedServices']
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(services), 3)
+        self.assertEqual(services[0]['city'],'Test City 1')
+        self.assertEqual(services[2]['city'], 'Test City 3')
+
 class ProfessionListTestCase(TestCase):
     def setUp(self):
         self.client = APIClient()
@@ -175,6 +256,7 @@ class ProfessionListTestCase(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertTrue('professions' in response.json())
+        professions = response.json()['professions']
         professions = response.json()['professions']
         self.assertTrue(isinstance(professions, list))
         for profession in professions:

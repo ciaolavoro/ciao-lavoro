@@ -48,7 +48,7 @@ class Service(models.Model):
     #Aquí se estipulan si está ofertando trabajo con este servicio
     is_active = models.BooleanField(blank = False,default=True)
     #Aquí se estipula si está promocionado este servicio
-    is_promoted = models.DateField(default='2000-02-02', null=False, blank=False)
+    is_promoted = models.DateField(null = True)
     def rating(self):
         #La siguiente linea fue creada a partir de la IA Phind
         return self.review_set.all().aggregate(Avg('rating'))['rating__avg'] or 0

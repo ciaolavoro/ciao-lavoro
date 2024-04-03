@@ -16,5 +16,5 @@ urlpatterns = [
     path('allProfessionsList/', AllProfessionList.as_view(), name='service-all-professions'),
     path('<int:service_id>/userProperty/', UserHasService.as_view(), name='has-service'),
     path('promotion/<int:service_id>/', ServicePromotion.as_view(), name= 'service-promotion'),
-    path('promoted/', AllServiceInPromotion.as_view(), name= 'all-service-promotion')
+    path('promoted/', AllServiceInPromotion.as_view(), name= 'service-all-promotion')
 ]
