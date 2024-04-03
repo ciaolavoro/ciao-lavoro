@@ -294,7 +294,7 @@ class AllServiceInPromotion(APIView):
     def get(self, request):
         month = date.today() - timedelta(days=30)
         promotedService = Service.objects.filter(is_promoted__gte=month)
-        promotedService = sorted(promotedService, key=lambda serv: Service.rating(serv), reverse=True)
+        promotedService = sorted(promotedService, key = Service.rating, reverse=True)
         serializer = self.serializer_class(promotedService, many=True, context ={'request': request})
         response_data = {"promotedServices": serializer.data}
         return Response(response_data, status=status.HTTP_200_OK)

@@ -91,8 +91,8 @@ class ServiceViewTest(TestCase):
 
     def test_service_promotion_negative(self):
         user = User.objects.create(username='anuser', email='anuser@gmail.com',
-                                   password='123rt56kl', first_name='Usuario', 
-                                   last_name ='De prueba', birth_date = (timezone.now() - 
+                                   password='123rt56kl', first_name='Usuario',
+                                   last_name ='De prueba', birth_date = (timezone.now() -
                                    datetime.timedelta(days=365*25)).date(), language= 'Russian')
         service = Service.objects.create(user=user, profession=6, city='Old City', experience=2)
         url = reverse('service:service-promotion', kwargs={'service_id': service.id})
