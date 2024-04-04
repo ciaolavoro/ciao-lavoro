@@ -46,7 +46,7 @@ class ContractCreation(APIView):
         End = datetime.strptime(end_date, '%Y-%m-%dT%H:%M')
 
         if len(description) > 500:
-            raise ValidationError("La descripción no puede superar los 500 caracteres")
+            return JsonResponse({'details': 'La descripción no puede superar los 500 caracteres', 'status': '500'})
         if End < Init:
             raise ValidationError("La fecha de finalizacion no puede ser antes que la inicial")
         if Init < today:
@@ -113,7 +113,7 @@ class ContractEdit(APIView):
         Init =  datetime.strptime(new_initial_date, '%Y-%m-%dT%H:%M')
         End = datetime.strptime(new_end_date, '%Y-%m-%dT%H:%M')
         if len(new_description) > 500:
-            raise ValidationError("La descripción no puede superar los 500 caracteres")
+             return JsonResponse({'details': 'La descripción no puede superar los 500 caracteres', 'status': '500'})
         if End < Init:
             raise ValidationError("La fecha de finalizacion no puede ser antes que la inicial")
         if Init < today:
@@ -250,17 +250,15 @@ class ContractCancelation(APIView):
             raise PermissionDenied("No tienes permiso para cancelar un contrato que no te pertenece")
         new_description = contract_data['description']
         if len(new_description) > 500:
-            raise ValidationError("La descripción no puede superar los 500 caracteres")
+            return JsonResponse({'details': 'La descripción no puede superar los 500 caracteres', 'status': '500'})
         if new_description.strip() == '':
-            raise ValidationError("La descripción no puede estar vacía")
+            return JsonResponse({'details': 'La descripción no puede estar vacía', 'status': '500'})
         contact = get_object_or_404(Contract, pk=contract_id)
         if contract.status != 1 and contract.status != 2 and contract.status != 6:
-            raise ValidationError("Solo se puede cancelar un contrato que ya este en marcha o finalizado")
+            return JsonResponse({'details': 'Solo se puede cancelar un contrato que ya este en marcha o finalizado', 'status': '500'})
         refund = '0'
         if contract.initial_date < (timezone.now() + datetime2.timedelta(days=3)) and contract.service.user == user:
             refund = '1'
-        print(contract.initial_date)
-        print(timezone.now() + datetime2.timedelta(days=3))
         if contract.initial_date > (timezone.now() + datetime2.timedelta(days=3)):
             refund = '1'
         contract.description_cancelation = new_description
