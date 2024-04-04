@@ -113,7 +113,7 @@ class ContractEdit(APIView):
         Init =  datetime.strptime(new_initial_date, '%Y-%m-%dT%H:%M')
         End = datetime.strptime(new_end_date, '%Y-%m-%dT%H:%M')
         if len(new_description) > 500:
-             return JsonResponse({'details': 'La descripción no puede superar los 500 caracteres', 'status': '500'})
+            return JsonResponse({'details': 'La descripción no puede superar los 500 caracteres', 'status': '500'})
         if End < Init:
             raise ValidationError("La fecha de finalizacion no puede ser antes que la inicial")
         if Init < today:
@@ -253,7 +253,6 @@ class ContractCancelation(APIView):
             return JsonResponse({'details': 'La descripción no puede superar los 500 caracteres', 'status': '500'})
         if new_description.strip() == '':
             return JsonResponse({'details': 'La descripción no puede estar vacía', 'status': '500'})
-        contact = get_object_or_404(Contract, pk=contract_id)
         if contract.status != 1 and contract.status != 2 and contract.status != 6:
             return JsonResponse({'details': 'Solo se puede cancelar un contrato que ya este en marcha o finalizado', 'status': '500'})
         refund = '0'
