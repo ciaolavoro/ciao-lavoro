@@ -1,4 +1,3 @@
-
 from django.conf import settings
 from django.http import JsonResponse
 from .models import Contract
@@ -131,6 +130,7 @@ class ContractEdit(APIView):
         contract.save()
         serializer = ContractSerializer(contract, many=False,context ={'request': request})
         return Response(serializer.data)
+
 class ContractStatusEdit(APIView):
     @authentication_classes([TokenAuthentication])
     def put(self, request, status_num, contract_id):
@@ -145,6 +145,7 @@ class ContractStatusEdit(APIView):
         contract.save()
         serializer = ContractSerializer(contract, many=False,context ={'request': request})
         return Response(serializer.data)
+
 class ContractDelete(APIView):
     @authentication_classes([TokenAuthentication])
     def delete(self, request, contract_id):
@@ -157,6 +158,7 @@ class ContractDelete(APIView):
             raise PermissionDenied("No tienes permiso para eliminar un contrato que no te pertenece")
         Contract.delete(contract)
         return Response(serializer.data)
+
 class ContractList(generics.ListAPIView):
     serializer_class = ContractSerializer
     def get_queryset(self):
@@ -171,6 +173,7 @@ class ContractList(generics.ListAPIView):
         if end_date:
             contracts = contracts.filter(end_date=end_date)
         return contracts
+
     @authentication_classes([TokenAuthentication])
     def get(self, request,cow_id):
         token_id = self.request.headers['Authorization']
@@ -198,19 +201,31 @@ class ContractDetail(generics.ListAPIView):
             raise PermissionDenied("No tienes permiso para contemplar un contrato que no te pertenece")
         serializer = self.serializer_class(contract, many = False,
                                             context ={'request': request})
-
         return Response(serializer.data, status=status.HTTP_200_OK)
-    
+
 class ContractPayment(APIView):
     @authentication_classes([TokenAuthentication])
     def post(self, request, contract_id):
         contract = get_object_or_404(Contract, pk = contract_id)
         token_id = self.request.headers['Authorization']
         returnURL = request.data.get('returnURL')
+        points = request.data.get('points')
         token = get_object_or_404(Token, key = token_id.split()[-1])
         user = token.user
+        if not points:
+            points = 0
+        else:
+            points = int(points)
+        if user.points < points:
+            return Response('No se pueden gastar más puntos de los disponibles', status=status.HTTP_400_BAD_REQUEST)
+        user.points = user.points - points
+        user.save()
         if user != contract.client:
             raise PermissionDenied("No puedes proceder al pago de un contrato que no te pertenece")
+        if contract.cost < points/100:
+            return Response('El precio del contrato es menor al valor de los puntos utilizados', status=status.HTTP_400_BAD_REQUEST)
+        if contract.cost == points/100:
+            return Response('El contrato se ha pagado sin necesidad de proceder al pago')
         try:
             stripe.api_key = settings.STRIPE_SECRET_KEY
             contractReceipt = stripe.Product.create(
@@ -218,7 +233,7 @@ class ContractPayment(APIView):
                 description = contract.description
             )
             price = stripe.Price.create(
-                unit_amount = int(contract.cost * 100),
+                unit_amount = int(contract.cost * 100)-int(points),
                 currency = 'eur',
                 product = contractReceipt.id,
             )
