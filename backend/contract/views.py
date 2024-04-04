@@ -15,6 +15,8 @@ from rest_framework.exceptions import PermissionDenied
 from rest_framework.response import Response
 from rest_framework.views import APIView
 import stripe
+from django.utils import timezone
+import datetime as datetime2
 
 class ContractCreation(APIView):
     @authentication_classes([TokenAuthentication])
@@ -235,3 +237,37 @@ class ContractPayment(APIView):
         except stripe.error.StripeError as e:
             error_msg = str(e)
             return Response({'Error al completar el pago': error_msg}, status=status.HTTP_400_BAD_REQUEST)
+
+class ContractCancelation(APIView):
+    @authentication_classes([TokenAuthentication])
+    def put(self, request, contract_id):
+        contract_data = request.data
+        contract = get_object_or_404(Contract, pk = contract_id)
+        token_id = request.headers['Authorization']
+        token = get_object_or_404(Token, key=token_id.split()[-1])
+        user = token.user
+        if contract.service.user != user and contract.client != user:
+            raise PermissionDenied("No tienes permiso para cancelar un contrato que no te pertenece")
+        new_description = contract_data['description']
+        if len(new_description) > 500:
+            raise ValidationError("La descripción no puede superar los 500 caracteres")
+        if new_description.strip() == '':
+            raise ValidationError("La descripción no puede estar vacía")
+        contact = get_object_or_404(Contract, pk=contract_id)
+        if contract.status != 1 and contract.status != 2 and contract.status != 6:
+            raise ValidationError("Solo se puede cancelar un contrato que ya este en marcha o finalizado")
+        refund = '0'
+        if contract.initial_date < (timezone.now() + datetime2.timedelta(days=3)) and contract.service.user == user:
+            refund = '1'
+        print(contract.initial_date)
+        print(timezone.now() + datetime2.timedelta(days=3))
+        if contract.initial_date > (timezone.now() + datetime2.timedelta(days=3)):
+            refund = '1'
+        contract.description_cancelation = new_description
+        contract.status = 5
+        contract.save()
+        serializer = ContractSerializer(contract, many=False,context ={'request': request})
+        data = serializer.data
+        data['refund'] = refund
+        return Response(data)
+        

@@ -38,8 +38,7 @@ class ContractTestCase(TestCase):
             'profession': 2,
             'city': 'Sevilla',
             'experience': 3,
-            'is_active': True,
-            'is_promoted': True
+            'is_active': True
         }
         self.service = Service.objects.create(**self.service_data)
         self.service2_data = {
@@ -47,8 +46,7 @@ class ContractTestCase(TestCase):
             'profession': 1,
             'city': 'Sevilla',
             'experience': 3,
-            'is_active': True,
-            'is_promoted': True
+            'is_active': True
         }
         self.service = Service.objects.create(**self.service2_data)
         self.service3_data = {
@@ -56,8 +54,7 @@ class ContractTestCase(TestCase):
             'profession': 3,
             'city': 'Sevilla',
             'experience': 3,
-            'is_active': True,
-            'is_promoted': True
+            'is_active': True
         }
         self.service = Service.objects.create(**self.service3_data)
         self.contract_data={
@@ -66,10 +63,11 @@ class ContractTestCase(TestCase):
             'accept_worker':True,
             'accept_client':False,
             'description':'descristion',
+            'description_cancelation':'',
             'initial_date': '2024-05-4T14:30',
             'end_date': '2024-05-6T14:30',
             'cost': 4,
-            'status': 3,
+            'status': 1,
             'service': self.service
         }
         self.contract = Contract.objects.create(**self.contract_data)
@@ -108,8 +106,7 @@ class CreateViewTests(TestCase):
             'profession': 2,
             'city': 'Sevilla',
             'experience': 3,
-            'is_active': True,
-            'is_promoted': True
+            'is_active': True
         }
         self.service = Service.objects.create(**self.service_data)
         self.service2_data = {
@@ -117,8 +114,7 @@ class CreateViewTests(TestCase):
             'profession': 1,
             'city': 'Sevilla',
             'experience': 3,
-            'is_active': True,
-            'is_promoted': True
+            'is_active': True
         }
         self.service2 = Service.objects.create(**self.service2_data)
         self.service3_data = {
@@ -126,8 +122,7 @@ class CreateViewTests(TestCase):
             'profession': 3,
             'city': 'Sevilla',
             'experience': 3,
-            'is_active': True,
-            'is_promoted': True
+            'is_active': True
         }
         self.service3 = Service.objects.create(**self.service3_data)
         self.client = APIClient()
@@ -194,4 +189,19 @@ class ContractDeleteTests(ContractTestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         response = self.client.get(reverse('contracts:contract-detail',kwargs={'contract_id': self.contract.id}))
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+class ContractCancelTests(ContractTestCase):
+    def test_get_cancel_contract(self):
+        token, _ = Token.objects.get_or_create(user=self.user2)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        self.assertEqual(self.contract.description_cancelation, '')
+        cancelation_data = {
+            'description':'test description',
+        }
+        response = self.client.put(reverse('contracts:contract-cancel',kwargs={'contract_id': 1}), cancelation_data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.contract.refresh_from_db()
+        self.assertEqual(self.contract.description_cancelation, 'test description')
+        self.assertEqual(response.json()["refund"], "1")
+
 
