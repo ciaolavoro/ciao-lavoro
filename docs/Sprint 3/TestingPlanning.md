@@ -15,6 +15,7 @@
 | FECHA      | VERSIÓN | DESCRIPCIÓN                                      |
 |------------|---------|--------------------------------------------------|
 | 04/04/2024 | 1.0     | Creación del documento                           |
+| 04/04/2024 | 1.1     | Arreglo del documento                           |
 
 ## 1. Introducción.
 
@@ -38,7 +39,9 @@ No debemos instalar ninguna dependencia externa a lo que ya disponemos en el pro
 
 Como hemos mencionado anteriormente, el objetivo principal de las pruebas que realizamos es asegurarnos que cada módulo funciona como se espera a nivel básico.
 
-Dberemos probar los casos de prueba positivos y los casos negativos básicos, no necesitamos hacer cientos de líneas de código. El objetivo es que sea básico, sencillo y que cumpla su función principal.
+Deberemos testear los casos de prueba positivos y los casos negativos básicos, no necesitamos hacer cientos de líneas de código. El objetivo es que sea básico, sencillo y que cumpla su función principal.
+
+Dados los motivos anteriores centraremos nuestro testing en los tests unitarios. Con esto pretendemos probar cada elemento que forma el conjunto de operaciones que se pueden hacer en la aplicación para asegurarnos de que cada elemento funciona en sí mismo aislado del resto y que no ha sido afectado por alguna otra modificación.
 
 ## 6. Herramientas y técnicas de prueba
 
