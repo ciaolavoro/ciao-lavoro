@@ -15,6 +15,8 @@ from rest_framework.exceptions import PermissionDenied
 from rest_framework.response import Response
 from rest_framework.views import APIView
 import stripe
+from django.utils import timezone
+import datetime as datetime2
 
 class ContractCreation(APIView):
     @authentication_classes([TokenAuthentication])
@@ -44,7 +46,7 @@ class ContractCreation(APIView):
         End = datetime.strptime(end_date, '%Y-%m-%dT%H:%M')
 
         if len(description) > 500:
-            raise ValidationError("La descripción no puede superar los 500 caracteres")
+            return JsonResponse({'details': 'La descripción no puede superar los 500 caracteres', 'status': '500'})
         if End < Init:
             raise ValidationError("La fecha de finalizacion no puede ser antes que la inicial")
         if Init < today:
@@ -111,7 +113,7 @@ class ContractEdit(APIView):
         Init =  datetime.strptime(new_initial_date, '%Y-%m-%dT%H:%M')
         End = datetime.strptime(new_end_date, '%Y-%m-%dT%H:%M')
         if len(new_description) > 500:
-            raise ValidationError("La descripción no puede superar los 500 caracteres")
+            return JsonResponse({'details': 'La descripción no puede superar los 500 caracteres', 'status': '500'})
         if End < Init:
             raise ValidationError("La fecha de finalizacion no puede ser antes que la inicial")
         if Init < today:
@@ -235,3 +237,34 @@ class ContractPayment(APIView):
         except stripe.error.StripeError as e:
             error_msg = str(e)
             return Response({'Error al completar el pago': error_msg}, status=status.HTTP_400_BAD_REQUEST)
+
+class ContractCancelation(APIView):
+    @authentication_classes([TokenAuthentication])
+    def put(self, request, contract_id):
+        contract_data = request.data
+        contract = get_object_or_404(Contract, pk = contract_id)
+        token_id = request.headers['Authorization']
+        token = get_object_or_404(Token, key=token_id.split()[-1])
+        user = token.user
+        if contract.service.user != user and contract.client != user:
+            raise PermissionDenied("No tienes permiso para cancelar un contrato que no te pertenece")
+        new_description = contract_data['description']
+        if len(new_description) > 500:
+            return JsonResponse({'details': 'La descripción no puede superar los 500 caracteres', 'status': '500'})
+        if new_description.strip() == '':
+            return JsonResponse({'details': 'La descripción no puede estar vacía', 'status': '500'})
+        if contract.status != 1 and contract.status != 2 and contract.status != 6:
+            return JsonResponse({'details': 'Solo se puede cancelar un contrato que ya este en marcha o finalizado', 'status': '500'})
+        refund = '0'
+        if contract.initial_date < (timezone.now() + datetime2.timedelta(days=3)) and contract.service.user == user:
+            refund = '1'
+        if contract.initial_date > (timezone.now() + datetime2.timedelta(days=3)):
+            refund = '1'
+        contract.description_cancelation = new_description
+        contract.status = 5
+        contract.save()
+        serializer = ContractSerializer(contract, many=False,context ={'request': request})
+        data = serializer.data
+        data['refund'] = refund
+        return Response(data)
+        

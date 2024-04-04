@@ -16,6 +16,7 @@ class Contract(models.Model):
     accept_worker = models.BooleanField(default = False)
     accept_client = models.BooleanField(default = False)
     description = models.TextField(blank=False, max_length=500)
+    description_cancelation = models.TextField(null=True, blank=True, max_length=500)
     initial_date = models.DateTimeField(blank=False,null=False)
     end_date = models.DateTimeField(blank=False,null=False)
     cost = models.DecimalField(blank=False,null=False,max_digits=10, decimal_places=2)
