@@ -85,8 +85,8 @@ export default function CreateContract() {
           maxLength="500"
         />
         <span>{charCount}/500</span>
-        <div className="flex justify-between">
-          <div className="flex flex-col gap-y-4 mr-2">
+        <div className="grid grid-cols-1 gap-y-4 sm:grid-cols-2">
+          <div className="flex flex-col gap-y-4">
             <label>Fecha y hora de inicio:</label>
             <input
               type="datetime-local"
@@ -98,7 +98,7 @@ export default function CreateContract() {
               required
             />
           </div>
-          <div className="flex flex-col gap-y-4 ml-2">
+          <div className="flex flex-col gap-y-4">
             <label>Fecha y hora de finalización:</label>
             <input
               type="datetime-local"
