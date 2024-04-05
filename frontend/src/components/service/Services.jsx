@@ -67,7 +67,7 @@ export default function Services() {
             </section>
             <section className="px-5 lg:px-80 md:px-30 sm:px-20 py-6 ">
                 
-                <form className="flex flex-col sm:flex-row justify-center gap-2 my-4">
+                <form onSubmit={(e) => e.preventDefault()} className="flex flex-col sm:flex-row justify-center gap-2 my-4">
                 
                     <input type="text" placeholder="Ciudad" className="border rounded px-2 py-1 font-semibold" value={city} onChange={(e) => setCity(e.target.value)} />
                     <select name="status" value={profession} onChange={(e) => setProfession(e.target.value)} className="px-2 py-1 border rounded bg-orange-200 font-semibold">
