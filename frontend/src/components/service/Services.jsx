@@ -58,15 +58,19 @@ export default function Services() {
         return () => clearTimeout(timeoutId);
     }, [city, profession]);
 
+    
+
     return (
         <div>
             <section>
                 <h1 className="text-4xl font-semibold text-center my-10">Encuentra el servicio que necesitas</h1>
             </section>
-            <section className="px-5">
-                <form className="flex justify-center gap-2 my-4">
-                    <input type="text" placeholder="Ciudad" className="w-96 pl-2 border rounded-lg py-2 font-semibold" value={city} onChange={(e) => setCity(e.target.value)} />
-                    <select name="status" value={profession} onChange={(e) => setProfession(e.target.value)} className="w-96 pl-2 border rounded-lg py-2 bg-orange-200 font-semibold">
+            <section className="px-5 lg:px-80 md:px-30 sm:px-20 py-6 ">
+                
+                <form className="flex flex-col sm:flex-row justify-center gap-2 my-4">
+                
+                    <input type="text" placeholder="Ciudad" className="border rounded px-2 py-1 font-semibold" value={city} onChange={(e) => setCity(e.target.value)} />
+                    <select name="status" value={profession} onChange={(e) => setProfession(e.target.value)} className="px-2 py-1 border rounded bg-orange-200 font-semibold">
                         <option value=""> Profesion </option>
                         {professions.map((prof, index) => (
                             <option key={index} value={prof.id}>{prof.name}</option>
