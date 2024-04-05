@@ -195,10 +195,10 @@ export default function RegisterPage() {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                     minLength={8}
-                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&_]+$"
+                    pattern="^(?=.*[a-zñ])(?=.*[A-ZÑ])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&_ñÑ]+$"
                     placeholder='Contraseña'
                     className="w-full p-2 mb-4 border border-gray-300 rounded-md"
-                    title="La contraseña debe tener mínimo una mayúscula, una minúscula, un número y un caracter especial"
+                    title="La contraseña debe tener mínimo una mayúscula, una minúscula, un número y un caracter especial(?=.*[@$!%*?&_)"
                  />
                  <span className="absolute right-0 top-2 pr-2 cursor-pointer" onClick={togglePasswordVisibility}>
                     {passwordIcon}
