@@ -34,7 +34,6 @@ export default function CreateService() {
          try {
             const response = await getProfessionsList(loggedUser.token);
             const data = await response.json();
-            console.log(data.professions);
             setProfessions(data.professions);
          } catch (error) {
             console.error("Failed to fetch professions", error);

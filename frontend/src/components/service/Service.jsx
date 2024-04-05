@@ -211,25 +211,18 @@ export default function ServiceDetails() {
                         />
 
                         <div className="grid grid-cols-2 gap-x-4 items-center w-full">
-                           <p className="font-semibold text-right">
-                              <strong>¿Activo?:</strong>
-                           </p>
-                           <p className="pl-2 font-semibold w-full">
-                              <strong>
+                           {loggedUser && loggedUser.user.username === service.user.username && (
+                              <p className="font-semibold text-right">
+                                 <strong>¿Activo?:   </strong>
                                  <input
                                     type="checkbox"
                                     checked={isActive}
-                                    onChange={event => {
-                                       if (loggedUser.user.username === service.user.username) {
-                                          setIsActive(event.target.checked)
-                                       } else {
-                                          console.log("No tiene permisos para cambiar el estado del servicio.")
-                                       }
-                                    }}
-                                    disabled={loggedUser && service.user ? loggedUser.user.username !== service.user.username : false}
+                                    onChange={event => { setIsActive(event.target.checked) }}
+                                    disabled={!isEditing}
                                  />
-                              </strong>
-                           </p>
+                              </p>
+                           )}
+
                         </div>
                         {isEditing ? (
                            <div className="flex justify-center gap-x-4">
@@ -246,14 +239,18 @@ export default function ServiceDetails() {
                      </div>
                   </div>
                </form>
+
+
+            </section>
+         </div>
+         <div>
+         <section>
                {/*Datos*/}
                <div className="border bg-white shadow-md rounded-xl lg:m-8 md:m-4 m-1">
                   <Jobs />
                </div>
 
             </section>
-
-
          </div>
          <div>
             <section>

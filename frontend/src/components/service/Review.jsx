@@ -33,7 +33,6 @@ const Review = () => {
         alert('Error al crear la valoración. Por favor, inténtelo de nuevo.');
       }
     } catch (error) {
-      console.log(`Error al crear valoración: ${error}`);
       alert('Error al crear la valoración. Por favor, inténtelo de nuevo.');
     }
   };
