@@ -168,7 +168,7 @@ class AddPoints(APIView):
         token = get_object_or_404(Token, key=token_id.split()[-1])
         user = token.user
         contract = get_object_or_404(Contract, pk=contractId)
-        user.points = user.points + contract.cost*10
+        user.points = int(user.points + contract.cost*10)
         user.save()
         return JsonResponse({'total_points': user.points})
 
