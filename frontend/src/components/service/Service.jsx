@@ -20,6 +20,7 @@ export default function ServiceDetails() {
    const { loggedUser } = useAuthContext()
    const [professions, setProfessions] = useState([])
    const [contract, setContract] = useState([])
+   console.log("sale : "+ service.reviews.some(review => review.user.username === loggedUser.user.username))
 
    useEffect(() => {
       const fetchProfessions = async () => {
@@ -273,13 +274,12 @@ export default function ServiceDetails() {
             <section>
                {/*Comentarios */}
                <div className="flex flex-col gap-y-6 px-10 py-6">
-                  <h2 className="text-3xl font-bold mb-4">Opiniones de otros usuarios:</h2>
+                  <h2 className="text-3xl font-bold mb-4">Opiniones:</h2>
                   {loggedUser && loggedUser.user.username !== service.user.username && (
                      <>
                         {/* Verificar si el usuario actual ya ha dejado una reseña */}
-                        {service.reviews.some(review => review.user.username === loggedUser.user.username) ? (
-                           <p className="text-gray-500">Ya has dejado una reseña para este servicio.</p>
-                        ) : (
+                        {!service.reviews.some(review => review.user.username === loggedUser.user.username) && (
+                            
                            <>
                               {/* Verificar si el contrato asociado al servicio está finalizado */}
                               {contract.estatus  === "Finalizado" ? (
@@ -287,7 +287,8 @@ export default function ServiceDetails() {
                                     <button className="bg-slate-300 rounded px-2 py-1 font-semibold flex">Añadir una nueva reseña</button>
                                  </Link>
                               ) : (
-                                 <p className="text-gray-500">Solo puedes dejar una reseña después de que el contrato esté finalizado.</p>
+                                 // Si no hay contrato o no está finalizado, no mostrar el botón de reseña
+                                 null
                               )}
                            </>
                         )}
