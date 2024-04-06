@@ -61,6 +61,7 @@ export default function ServiceDetails() {
          if (response.ok) {
             alert("Servicio actualizado correctamente")
             setIsEditing(false)
+            window.location.reload();
          } else {
             alert("Error al actualizar el servicio. Por favor, intente de nuevo.")
             resetServiceData()
@@ -135,116 +136,127 @@ export default function ServiceDetails() {
             {/* Imagen */}
             <section>
                <div className="lg:px-8 lg:py-8 md:px-8 md:py-4 p-1 w-65 flex flex-col items-center">
-
                   <img
                      src={`${service.user.image}` ?? DEFAULT_USER_IMG}
                      className="w-72 h-72 lg:w-96 lg:h-96 object-cover rounded-xl"
                   />
-                  <div className="mt-4">
-                     {loggedUser && loggedUser.user.username !== service.user.username && (
-                        <LinkButtonContract url={`/contracts/create?service_id=${service.id}`} title="Crear un contrato" />
-                     )}
-
-
-                  </div>
-
                </div>
             </section>
 
-
             <section>
                {/*Datos*/}
-               <form onSubmit={handleEdit}>
-                  <div className="border bg-white shadow-md rounded-xl lg:m-8 md:m-4 m-1">
+               {isEditing ? (
+                  <form onSubmit={handleEdit}>
+                     <div className="border bg-white shadow-md rounded-xl lg:m-8 md:m-4 m-1">
 
-                     <div className="flex flex-col justify-center gap-y-6 px-8 py-3">
-                        <ServiceData
-                           type={"text"}
-                           formName={"username"}
-                           labelText={"Usuario:"}
-                           inputValue={service.user.username ?? "Pablo"}
-                           isReadOnly={true}
-                        />
+                        <div className="flex flex-col justify-center gap-y-6 px-8 py-3">
+                           <ServiceData
+                              type={"text"}
+                              formName={"username"}
+                              labelText={"Usuario:"}
+                              inputValue={service.user.username ?? "Pablo"}
+                              isReadOnly={true}
+                           />
 
-                        <div>
-                           <label htmlFor="profession" className="flex flex-col gap-x-4 text-1.7xl font-semibold">
-                              Profesión:{" "}
-                           </label>
-                           <select
-                              id="profession"
-                              name="profession"
-                              value={profession}
-                              disabled={!isEditing}
-                              onChange={event => setProfession(event.target.value)}
-                              className="pl-2 border rounded w-full md:w-94">
-                              <option>{profession}</option>
-                              {professions.map((prof, index) => (
-                                 <option key={index} value={prof.name}>
-                                    {prof.name}
-                                 </option>
-                              ))}
-                           </select>
-                        </div>
-                        <ServiceData
-                           type={"text"}
-                           formName={"city"}
-                           labelText={"Ciudad:"}
-                           inputValue={city}
-                           isReadOnly={!isEditing}
-                           onChange={event => setCity(event.target.value)}
-                           isError={isRequiredCityError || isCityError}
-                           errorMessage={(isRequiredCityError && errorMessages.required) || (isCityError && errorMessages.cityLength)}
-                        />
-                        <ServiceData
-                           type={"number"}
-                           formName={"experience"}
-                           labelText={"Experiencia:"}
-                           inputValue={experience}
-                           isError={isRequiredExperienceError || isExperienceError || isBigExperienceError}
-                           errorMessage={
-                              (isRequiredExperienceError && errorMessages.required) ||
-                              (isExperienceError && errorMessages.experienceNotValid) ||
-                              (isBigExperienceError && errorMessages.tooMuchExperience)
-                           }
-                           isReadOnly={!isEditing}
-                           onChange={event => setExperience(event.target.value)}
-                        />
+                           <div>
+                              <label htmlFor="profession" className="flex flex-col gap-x-4 text-1.7xl font-semibold">
+                                 Profesión:{" "}
+                              </label>
+                              <select
+                                 id="profession"
+                                 name="profession"
+                                 value={profession}
+                                 disabled={!isEditing}
+                                 onChange={event => setProfession(event.target.value)}
+                                 className="pl-2 border rounded w-full md:w-94">
+                                 <option>{profession}</option>
+                                 {professions.map((prof, index) => (
+                                    <option key={index} value={prof.name}>
+                                       {prof.name}
+                                    </option>
+                                 ))}
+                              </select>
+                           </div>
+                           <ServiceData
+                              type={"text"}
+                              formName={"city"}
+                              labelText={"Ciudad:"}
+                              inputValue={city}
+                              isReadOnly={!isEditing}
+                              onChange={event => setCity(event.target.value)}
+                              isError={isRequiredCityError || isCityError}
+                              errorMessage={(isRequiredCityError && errorMessages.required) || (isCityError && errorMessages.cityLength)}
+                           />
+                           <ServiceData
+                              type={"number"}
+                              formName={"experience"}
+                              labelText={"Experiencia:"}
+                              inputValue={experience}
+                              isError={isRequiredExperienceError || isExperienceError || isBigExperienceError}
+                              errorMessage={
+                                 (isRequiredExperienceError && errorMessages.required) ||
+                                 (isExperienceError && errorMessages.experienceNotValid) ||
+                                 (isBigExperienceError && errorMessages.tooMuchExperience)
+                              }
+                              isReadOnly={!isEditing}
+                              onChange={event => setExperience(event.target.value)}
+                           />
 
-                        <div className="grid grid-cols-2 gap-x-4 items-center w-full">
-                           {loggedUser && loggedUser.user.username === service.user.username && (
-                              <p className="font-semibold text-right">
-                                 <strong>¿Activo?:   </strong>
-                                 <input
-                                    type="checkbox"
-                                    checked={isActive}
-                                    onChange={event => { setIsActive(event.target.checked) }}
-                                    disabled={!isEditing}
-                                 />
-                              </p>
-                           )}
+                           <div className="grid grid-cols-2 gap-x-4 items-center w-full">
+                              {loggedUser && loggedUser.user.username === service.user.username && (
+                                 <p className="font-semibold text-right">
+                                    <strong>¿Activo?:   </strong>
+                                    <input
+                                       type="checkbox"
+                                       checked={isActive}
+                                       onChange={event => { setIsActive(event.target.checked) }}
+                                       disabled={!isEditing}
+                                    />
+                                 </p>
+                              )}
 
-                        </div>
-                        {isEditing ? (
+                           </div>
+
                            <div className="flex justify-center gap-x-4">
                               <ServiceButton type={"submit"} text={"Guardar cambios"} icon={<CheckIcon />} />
                               <ServiceButton type={"button"} text={"Cancelar"} icon={<CrossIcon />} onClick={handleCancel} />
                            </div>
-                        ) : (
-                           loggedUser &&
-                           loggedUser.user &&
-                           loggedUser.user.username === service.user.username && (
-                              <ServiceButton type={"button"} text={"Editar servicio"} icon={<PencilIcon />} onClick={() => setIsEditing(true)} />
-                           )
+
+                        </div>
+                     </div>
+                  </form>
+
+               ) : (
+
+                  <div className="border bg-white shadow-md rounded-xl lg:m-8 md:m-4 m-1">
+                     <div className="flex flex-col justify-center gap-y-3 px-8 py-3">
+                        <h2 className="text-4xl font-bold mb-5">Datos del servicio</h2>
+                        <h3 className="text-2xl"><strong>Usuario:</strong> {service.user.username}</h3>
+                        <h3 className="text-2xl"><strong>Profesión:</strong> {service.profession}</h3>
+                        <h3 className="text-2xl"><strong>Ciudad:</strong> {service.city}</h3>
+                        <h3 className="text-2xl"><strong>Experiencia:</strong> {service.experience} años</h3>
+                        {loggedUser && loggedUser.user.username === service.user.username && (
+                           <div>
+                              <h3 className="text-2xl">¿Activo?: {service.is_active ? "Sí" : "No"}</h3>
+                           </div>
                         )}
+                        <div className="flex justify-center gap-x-4">
+                           {loggedUser && loggedUser.user && loggedUser.user.username === service.user.username && (
+                              <ServiceButton type={"button"} text={"Editar servicio"} icon={<PencilIcon />} onClick={() => setIsEditing(true)} />
+                           )}
+
+                           {loggedUser && loggedUser.user.username !== service.user.username && (
+                              <LinkButtonContract url={`/contracts/create?service_id=${service.id}`} title="Contratar" />
+                           )}
+                        </div>
                      </div>
                   </div>
-               </form>
 
-
+               )}
             </section>
          </div>
          <div>
-         <section>
+            <section>
                {/*Datos*/}
                <div className="border bg-white shadow-md rounded-xl lg:m-8 md:m-4 m-1">
                   <Jobs />
@@ -255,48 +267,50 @@ export default function ServiceDetails() {
          <div>
             <section>
                {/*Comentarios */}
-               <div className="flex flex-col gap-y-6 px-10 py-6">
-                  <h2 className="text-3xl font-bold mb-4">Opiniones de otros usuarios:</h2>
-                  {loggedUser && loggedUser.user.username != service.user.username && (
-                     <>
-                        <Link to={`/review?service_id=${service.id}`}>
-                           <button className="bg-slate-300 rounded px-2 py-1 font-semibold flex">Añadir una nueva reseña</button>
-                        </Link>
-                     </>
-                  )}
-                  {service.reviews.length > 0 ? (
-                     service.reviews.map(review => (
-                        <div key={review.id} className="w-90 border bg-white shadow-md rounded-xl m-8">
-                           <div className="px-10 py-6">
-                              <div className="flex justify-between items-start mb-6">
-                                 <div className="flex flex-col">
-                                    <label className="block text-lg font-medium mb-1">Nombre de usuario:</label>
-                                    <div className="border p-2 rounded-md mb-4">{review.user.username}</div>
-                                 </div>
-                                 <div className="flex flex-col items-end">
-                                    <div className="flex">
-                                       {[1, 2, 3, 4, 5].map(value => (
-                                          <span key={value} className={`text-4xl ${review.rating >= value ? "text-yellow-500" : "text-gray-300"}`}>
-                                             ★
-                                          </span>
-                                       ))}
+               <div className="border bg-white shadow-md rounded-xl lg:m-8 md:m-4 m-1">
+                  <div className="flex flex-col gap-y-2 px-10 py-6">
+                     <h2 className="text-3xl font-bold mb-4">Opiniones de otros usuarios:</h2>
+                     {loggedUser && loggedUser.user.username != service.user.username && (
+                        <>
+                           <Link to={`/review?service_id=${service.id}`}>
+                              <button className="bg-slate-300 rounded px-2 py-1 font-semibold flex">Añadir una nueva reseña</button>
+                           </Link>
+                        </>
+                     )}
+                     <div className="grid grid-cols-1 lg:grid-cols-2">
+                        {service.reviews.length > 0 ? (
+                           service.reviews.map(review => (
+                              <div key={review.id} className="w-90 border bg-white shadow-md rounded-xl m-8">
+                                 <div className="px-10 py-6">
+                                    <div className="flex justify-between items-start mb-6">
+                                       <div className="flex flex-col">
+                                          <label className="block text-lg font-medium mb-1">Nombre de usuario:</label>
+                                          <div className="border p-2 rounded-md mb-4">{review.user.username}</div>
+                                       </div>
+                                       <div className="flex flex-col items-end">
+                                          <div className="flex">
+                                             {[1, 2, 3, 4, 5].map(value => (
+                                                <span key={value} className={`text-4xl ${review.rating >= value ? "text-yellow-500" : "text-gray-300"}`}>
+                                                   ★
+                                                </span>
+                                             ))}
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div className="flex flex-col w-full">
+                                       <label className="block text-lg font-medium mb-1">Descripción:</label>
+                                       <div className="border p-2 rounded-md">{review.description}</div>
                                     </div>
                                  </div>
                               </div>
-                              <div className="flex flex-col w-full">
-                                 <label className="block text-lg font-medium mb-1">Descripción:</label>
-                                 <div className="border p-2 rounded-md">{review.description}</div>
-                              </div>
-                           </div>
-                        </div>
-                     ))
-                  ) : (
-                     <div className="w-full text-center py-4">Aún no hay opiniones para este servicio.</div>
-                  )}
+                           ))
+                        ) : (
+                           <div className="w-full text-center py-4">Aún no hay opiniones para este servicio.</div>
+                        )}
+                     </div>
+                  </div>
                </div>
-
             </section>
-
          </div>
       </div>
    )
