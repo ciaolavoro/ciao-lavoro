@@ -9,6 +9,7 @@ class User(AbstractUser):
     language = models.CharField(max_length=50, blank=True, null=True)
     is_active = models.BooleanField(blank=False, default=True)
     image = models.ImageField(null=True, blank=False)
+    points = models.PositiveIntegerField(null=False, default=0)
 
     REQUIRED_FIELDS = ['first_name', 'last_name', 'birth_date']
 
@@ -24,7 +25,6 @@ class User(AbstractUser):
             raise ValidationError("Los apellidos no pueden estar vacios")
         if self.birth_date == '':
             raise ValidationError("La fecha de nacimiento no puede estar vacia")
-
         if not isinstance(self.birth_date, datetime.date):
             birth_date = datetime.datetime.strptime(self.birth_date, "%Y-%m-%d").date()
         else:

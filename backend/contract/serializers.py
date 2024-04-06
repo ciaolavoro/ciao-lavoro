@@ -14,6 +14,10 @@ class ContractSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Contract
-        fields = ['id', 'worker', 'client', 'estatus', 'accept_worker', 'accept_client', 'description', 'initial_date','end_date','cost','service']
+        fields = [
+            'id', 'worker', 'client', 'estatus', 'accept_worker', 'accept_client', 'description', 
+            'initial_date', 'end_date', 'cost', 'service', 'description_cancelation'
+        ]
+
     def get_status(self, obj):
         return dict(Contract.STATUS_CHOICES).get(obj.status, "Desconocido")

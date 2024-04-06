@@ -12,6 +12,9 @@ from django.utils import timezone
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.contrib.admin.sites import AdminSite
 from django.test import RequestFactory
+
+from contract.models import Contract
+from service.models import Service
 from .admin import UserAdmin
 from .models import User
 
@@ -310,3 +313,45 @@ class UserAdminTest(TestCase):
         self.user_admin.save_model(request, user, None, None)
         user = User.objects.get(username='testuser2')
         self.assertTrue(user.password.startswith('pbkdf2_sha256$'))
+
+class GetPointsTest(UserTestCase):
+    def test_get_points(self):
+        self.token, _ = Token.objects.get_or_create(user=self.user)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
+        self.user.points = 130
+        self.user.save()
+        response = self.client.get(reverse('user:user-points'))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEquals(response.json()['total_points'], 130)
+
+class AddPointsTest(UserTestCase):
+    def test_add_points(self):
+        self.token, _ = Token.objects.get_or_create(user=self.user)
+        user2 = User.objects.create(username='testuser2', first_name='test', last_name='user',
+        email='test2@example.com', password='testpassword', birth_date='1950-12-12')
+        service_data = {
+            'user': user2,
+            'profession': 1,
+            'city': 'Sevilla',
+            'experience': 3,
+            'is_active': True
+        }
+        service = Service.objects.create(**service_data)
+        contract_data={
+            'worker': user2,
+            'client': self.user,
+            'accept_worker':True,
+            'accept_client':False,
+            'description':'descristion',
+            'description_cancelation':'',
+            'initial_date': '2024-05-4T14:30',
+            'end_date': '2024-05-6T14:30',
+            'cost': 4,
+            'status': 1,
+            'service': service
+        }
+        contract = Contract.objects.create(**contract_data)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
+        response = self.client.put(reverse('user:user-add-points',kwargs={'contractId': contract.id}))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEquals(response.json()['total_points'], 40)
