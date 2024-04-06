@@ -6,8 +6,12 @@ import ServiceButton from "./ServiceButton"
 import PencilIcon from "../icons/PencilIcon"
 import CheckIcon from "../icons/CheckIcon"
 import LinkButtonContract from "./LinkButtonContract"
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "../ui/command"
+import ChevronUpDownIcon from "../icons/ChevronUpDownIcon"
 import CrossIcon from "../icons/CrossIcon"
 import { useAuthContext } from "../auth/AuthContextProvider"
+import { cities } from "@/utils/constants"
 import { checkIfEmpty, checkCityLength, checkExperienceNegative, errorMessages, checkExperienceYears } from "../../utils/validation"
 import Jobs from "./Jobs"
 
@@ -46,6 +50,7 @@ export default function ServiceDetails() {
    const [isBigExperienceError, setIsBigExperienceError] = useState(false)
    const [isCityError, setIsCityError] = useState(false)
    const [isExperienceError, setIsExperienceError] = useState(false)
+   const [openCitySelector, setOpenCitySelector] = useState(false)
 
    const resetServiceData = () => {
       setCity(service.city)
@@ -61,7 +66,7 @@ export default function ServiceDetails() {
          if (response.ok) {
             alert("Servicio actualizado correctamente")
             setIsEditing(false)
-            window.location.reload();
+            window.location.reload()
          } else {
             alert("Error al actualizar el servicio. Por favor, intente de nuevo.")
             resetServiceData()
@@ -130,16 +135,11 @@ export default function ServiceDetails() {
 
    return (
       <div className="my-10 lg:mx-40 md:mx-10 mx-1">
-
          <div className="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 justify-center items-center gap-y-10 my-10 lg:mx-10 md:mx-10 mx-1 bg-white border rounded-lg">
-
             {/* Imagen */}
             <section>
                <div className="lg:px-8 lg:py-8 md:px-8 md:py-4 p-1 w-65 flex flex-col items-center">
-                  <img
-                     src={`${service.user.image}` ?? DEFAULT_USER_IMG}
-                     className="w-72 h-72 lg:w-96 lg:h-96 object-cover rounded-xl"
-                  />
+                  <img src={`${service.user.image}` ?? DEFAULT_USER_IMG} className="w-72 h-72 lg:w-96 lg:h-96 object-cover rounded-xl" />
                </div>
             </section>
 
@@ -148,7 +148,6 @@ export default function ServiceDetails() {
                {isEditing ? (
                   <form onSubmit={handleEdit}>
                      <div className="border bg-white shadow-md rounded-xl lg:m-8 md:m-4 m-1">
-
                         <div className="flex flex-col justify-center gap-y-6 px-8 py-3">
                            <ServiceData
                               type={"text"}
@@ -177,7 +176,45 @@ export default function ServiceDetails() {
                                  ))}
                               </select>
                            </div>
-                           <ServiceData
+
+                           <div className="flex-col w-full">
+                              <label>Ciudad:</label>
+                              <Popover open={isEditing && openCitySelector} onOpenChange={isEditing && setOpenCitySelector}>
+                                 <PopoverTrigger asChild>
+                                    <button className="flex items-center justify-between px-2 border rounded w-full">
+                                       {city !== "" ? city : "Selecciona una ciudad"}
+                                       {isEditing && <ChevronUpDownIcon />}
+                                    </button>
+                                 </PopoverTrigger>
+                                 <PopoverContent>
+                                    <Command>
+                                       <CommandInput placeholder="Buscar ciudad..." />
+                                       <CommandList>
+                                          <CommandEmpty>No se ha encontrado la ciudad.</CommandEmpty>
+                                          <CommandGroup>
+                                             {cities.map((lang, index) => (
+                                                <CommandItem
+                                                   key={index}
+                                                   value={lang}
+                                                   onSelect={currentLang => {
+                                                      setCity(currentLang === city ? "" : currentLang)
+                                                      setOpenCitySelector(false)
+                                                   }}
+                                                   isError={isRequiredCityError || isCityError}
+                                                   errorMessage={(isRequiredCityError && errorMessages.required) || (isCityError && errorMessages.cityLength)}
+                                                   >
+                                                   {lang}
+                                                </CommandItem>
+                                             ))}
+                                          </CommandGroup>
+                                       </CommandList>
+                                    </Command>
+                                 </PopoverContent>
+                              </Popover>
+                              
+                           </div>
+
+                           {/* <ServiceData
                               type={"text"}
                               formName={"city"}
                               labelText={"Ciudad:"}
@@ -186,7 +223,8 @@ export default function ServiceDetails() {
                               onChange={event => setCity(event.target.value)}
                               isError={isRequiredCityError || isCityError}
                               errorMessage={(isRequiredCityError && errorMessages.required) || (isCityError && errorMessages.cityLength)}
-                           />
+                           /> */}
+
                            <ServiceData
                               type={"number"}
                               formName={"experience"}
@@ -205,36 +243,42 @@ export default function ServiceDetails() {
                            <div className="grid grid-cols-2 gap-x-4 items-center w-full">
                               {loggedUser && loggedUser.user.username === service.user.username && (
                                  <p className="font-semibold text-right">
-                                    <strong>¿Activo?:   </strong>
+                                    <strong>¿Activo?: </strong>
                                     <input
                                        type="checkbox"
                                        checked={isActive}
-                                       onChange={event => { setIsActive(event.target.checked) }}
+                                       onChange={event => {
+                                          setIsActive(event.target.checked)
+                                       }}
                                        disabled={!isEditing}
                                     />
                                  </p>
                               )}
-
                            </div>
 
                            <div className="flex justify-center gap-x-4">
                               <ServiceButton type={"submit"} text={"Guardar cambios"} icon={<CheckIcon />} />
                               <ServiceButton type={"button"} text={"Cancelar"} icon={<CrossIcon />} onClick={handleCancel} />
                            </div>
-
                         </div>
                      </div>
                   </form>
-
                ) : (
-
                   <div className="border bg-white shadow-md rounded-xl lg:m-8 md:m-4 m-1">
                      <div className="flex flex-col justify-center gap-y-3 px-8 py-3">
                         <h2 className="text-4xl font-bold mb-5">Datos del servicio</h2>
-                        <h3 className="text-2xl"><strong>Usuario:</strong> {service.user.username}</h3>
-                        <h3 className="text-2xl"><strong>Profesión:</strong> {service.profession}</h3>
-                        <h3 className="text-2xl"><strong>Ciudad:</strong> {service.city}</h3>
-                        <h3 className="text-2xl"><strong>Experiencia:</strong> {service.experience} años</h3>
+                        <h3 className="text-2xl">
+                           <strong>Usuario:</strong> {service.user.username}
+                        </h3>
+                        <h3 className="text-2xl">
+                           <strong>Profesión:</strong> {service.profession}
+                        </h3>
+                        <h3 className="text-2xl">
+                           <strong>Ciudad:</strong> {service.city}
+                        </h3>
+                        <h3 className="text-2xl">
+                           <strong>Experiencia:</strong> {service.experience} años
+                        </h3>
                         {loggedUser && loggedUser.user.username === service.user.username && (
                            <div>
                               <h3 className="text-2xl">¿Activo?: {service.is_active ? "Sí" : "No"}</h3>
@@ -251,7 +295,6 @@ export default function ServiceDetails() {
                         </div>
                      </div>
                   </div>
-
                )}
             </section>
          </div>
@@ -261,7 +304,6 @@ export default function ServiceDetails() {
                <div className="border bg-white shadow-md rounded-xl lg:m-8 md:m-4 m-1">
                   <Jobs />
                </div>
-
             </section>
          </div>
          <div>
@@ -290,7 +332,9 @@ export default function ServiceDetails() {
                                        <div className="flex flex-col items-end">
                                           <div className="flex">
                                              {[1, 2, 3, 4, 5].map(value => (
-                                                <span key={value} className={`text-4xl ${review.rating >= value ? "text-yellow-500" : "text-gray-300"}`}>
+                                                <span
+                                                   key={value}
+                                                   className={`text-4xl ${review.rating >= value ? "text-yellow-500" : "text-gray-300"}`}>
                                                    ★
                                                 </span>
                                              ))}
