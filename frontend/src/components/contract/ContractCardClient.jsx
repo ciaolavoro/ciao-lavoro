@@ -1,5 +1,5 @@
 import { handleContractPayment} from "../../api/Contract.api";
-import { updateContractStatus } from "../../api/Contract.api";
+import { updateContractStatus,cancelContractStatus } from "../../api/Contract.api";
 import { useAuthContext } from "../auth/AuthContextProvider";
 
 export function ContractCardClient({ contract }) {
@@ -58,6 +58,25 @@ export function ContractCardClient({ contract }) {
             alert('Error al procesar la operación. Por favor, inténtelo de nuevo.');
         }
     };
+    const cancelContract = async (contractId, cancelationDescription, token) => {
+        try {
+            const response = await cancelContractStatus(contractId, cancelationDescription, token);
+            if (response.ok) {
+                alert('Estado actualizado correctamente');
+                const refund = (await response.json()).refund
+                if (refund==="1"){
+                    alert('Se reembolsará el importe pagado (Si no se había realizado el pago, no se devolverá nada)')
+                }else{
+                    alert('No se reembolsará el importe pagado')
+                }
+                window.location.reload();
+            } else {
+                alert('Error al actualizar el estado. Por favor, intente de nuevo.');
+            }
+        } catch (error) {
+            alert('Error al actualizar el estado. Por favor, intente de nuevo.');
+        }
+    };
 
     // Recordatorio de los estados con su NUM:
     // (1, "Negociacion"),
@@ -77,6 +96,11 @@ export function ContractCardClient({ contract }) {
                 <p className={"mb-2"}><strong>Estado:</strong> {contract.estatus}</p>
                 <p className="mb-2"><strong>Remuneración a recibir:</strong> {contract.cost}€</p>
                 <p className="mb-2"><strong>Descripción del contrato:</strong> {contract.description}</p>
+                {
+                contract.estatus === 'Cancelado' && (
+                    <p className="mb-2"><strong>Motivo de cancelación:</strong> {contract.description_cancelation}</p>
+                )
+                }
 
                 <div className="flex justify-center">
                     {contract.estatus === "Aceptado" && (
@@ -87,12 +111,23 @@ export function ContractCardClient({ contract }) {
                     )}
                 </div>
                 <div className="flex justify-center items-center">
-                    {contract.estatus === "En proceso" && (
-                        <button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mt-4"
-                            onClick={() => updateStatus(contract.id, 4, loggedUser.token)}>
-                            Finalizar
-                        </button>
-                    )}
+                    {(contract.estatus === "Negociacion" || contract.estatus === "Aceptado" || contract.estatus === "Pagado") && (
+                    <button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mt-4"
+                        onClick={() => {
+                            let cancelationDescription = prompt('Por favor, introduzca un motivo para la cancelación: (Obligatorio)');
+                            while (cancelationDescription !== null && (!cancelationDescription.trim())) {
+                                cancelationDescription = prompt('La descripción de la cancelación es obligatoria y no puede estar vacía. Por favor, introduzca un motivo para la cancelación:');
+                            }
+                            if (cancelationDescription !== null) {
+                                cancelContract(contract.id, cancelationDescription, loggedUser.token);
+                            } else {
+                                return
+                            }
+                        }}>
+                    Cancelar Trabajo
+                </button>
+            )}
+
                 </div>
             </div>
         </a>
