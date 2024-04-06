@@ -1,15 +1,17 @@
-import { Outlet } from "react-router-dom";
-import Background from "./Background";
-import Navbar from "./Navbar";
+import { Outlet } from "react-router-dom"
+import Background from "./Background"
+import Navbar from "./Navbar"
+import { Toaster } from "./ui/toaster"
 
 export default function Root() {
-    return (
-        <div className="relative font-sans">
-            <Navbar />
-            <Background />
-            <main className="min-h-screen">
-                <Outlet />
-            </main>
-        </div>
-    )
+   return (
+      <div className="relative font-sans">
+         <Navbar />
+         <Background />
+         <main className="min-h-screen">
+            <Outlet />
+         </main>
+         <Toaster />
+      </div>
+   )
 }
