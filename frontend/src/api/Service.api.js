@@ -112,20 +112,24 @@ export async function updateServiceRequest(serviceId, serviceData, token) {
     }
 }
 
-export async function promoteService(serviceId, token) {
+export async function promoteService(serviceId, token, returnURL) {
     const options = {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Token ${token}`,
         },
+        body: JSON.stringify({ returnURL })
     };
 
     try {
         const response = await fetchBackend(`/service/promotion/${serviceId}/`, options);
-        return response;
+        const data = await response.json();
+        if (response.ok) {
+            return data; 
+        }
     } catch (error) {
-        console.error('Promotion in service error:', error);
+        console.error('Service Promotion error:', error);
     }
 }
 

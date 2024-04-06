@@ -304,8 +304,7 @@ class   PromotionPayment(APIView):
         try:
             stripe.api_key = settings.STRIPE_SECRET_KEY
             promotionReceipt = stripe.Product.create(
-                name = 'Promoción de Prueba',
-                description = service.description
+                name = 'Promoción de su servicio',
             )
             price = stripe.Price.create(
                 unit_amount = int(4.99 * 100)-int(points),

@@ -12,7 +12,6 @@ import { checkIfEmpty, checkCityLength, checkExperienceNegative, errorMessages, 
 import Jobs from "./Jobs"
 import PromotionButton from "./PromotionButton"
 import MegaphoneIcon from "../icons/MegaphoneIcon"
-import { useToast } from "../ui/use-toast"
 
 const DEFAULT_USER_IMG =
    "https://images.unsplash.com/photo-1646753522408-077ef9839300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NjZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
@@ -21,7 +20,6 @@ export default function ServiceDetails() {
    const service = useLoaderData()
    const { loggedUser } = useAuthContext()
    const [professions, setProfessions] = useState([])
-   const { toast } = useToast()
 
    useEffect(() => {
       const fetchProfessions = async () => {
@@ -131,19 +129,19 @@ export default function ServiceDetails() {
       resetErrors()
    }
    const handlePayment = async (servideId, token) => {
-      const returnURL = window.location.href;
+      const returnURL = window.location.href
       try {
-          const responseData = await promoteService(servideId, token, returnURL);
-          const sessionUrl = responseData.sessionUrl;
-          if (sessionUrl) {
-              window.open(sessionUrl, '_self');
-          } else {
-              alert('Error al obtener la URL de pago. Por favor, inténtelo de nuevo.');
-          }
+         const responseData = await promoteService(servideId, token, returnURL)
+         const sessionUrl = responseData.sessionUrl
+         if (sessionUrl) {
+            window.open(sessionUrl, "_self")
+         } else {
+            alert("Error al obtener la URL de pago. Por favor, inténtelo de nuevo.")
+         }
       } catch (error) {
-          alert('Error al procesar la operación. Por favor, inténtelo de nuevo.');
+         alert("Error al procesar la operación. Por favor, inténtelo de nuevo.")
       }
-  };
+   }
 
    return (
       <div className="my-10 lg:mx-40 md:mx-10 mx-1">
@@ -256,6 +254,7 @@ export default function ServiceDetails() {
                                        onClick={() => setIsEditing(true)}
                                     />
                                  </div>
+                                 {!isPromoted && (
                                  <div className="pt-4">
                                     <PromotionButton
                                        type={"button"}
@@ -263,13 +262,10 @@ export default function ServiceDetails() {
                                        icon={<MegaphoneIcon />}
                                        onClick={() => {
                                           handlePayment(service.id, loggedUser.token)
-                                          toast({
-                                             title: "Su servicio ahora se encuentra en promocion",
-                                             description: "Ahora tendrá ventajas frente a otros servicios",
-                                          })
                                        }}
                                     />
                                  </div>
+                                 )}
                               </div>
                            )
                         )}
