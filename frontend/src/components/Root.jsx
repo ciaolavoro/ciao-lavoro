@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Background from "./Background";
 import Navbar from "./Navbar";
+import { Toaster } from "./ui/toaster";
 
 export default function Root() {
     return (
@@ -10,6 +11,7 @@ export default function Root() {
             <main className="min-h-screen">
                 <Outlet />
             </main>
+            <Toaster />
         </div>
     )
 }

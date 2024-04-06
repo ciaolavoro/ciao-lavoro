@@ -69,6 +69,19 @@ export const getAllServices = async () => {
     return fetchBackend(`/service`, options);
 }
 
+export const getAllServicesPromoted = async () => {
+
+
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    };
+
+    return fetchBackend(`/service/promoted`, options);
+}
+
 export const createServiceRequest = async (email, profession, city, experience, token) => {
     const options = {
         method: 'POST',
@@ -96,6 +109,23 @@ export async function updateServiceRequest(serviceId, serviceData, token) {
         return response;
     } catch (error) {
         console.error('Update service error:', error);
+    }
+}
+
+export async function promoteService(serviceId, token) {
+    const options = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
+        },
+    };
+
+    try {
+        const response = await fetchBackend(`/service/promotion/${serviceId}/`, options);
+        return response;
+    } catch (error) {
+        console.error('Promotion in service error:', error);
     }
 }
 

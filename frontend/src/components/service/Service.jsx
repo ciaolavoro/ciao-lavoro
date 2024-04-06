@@ -1,6 +1,6 @@
 import { useLoaderData, Link } from "react-router-dom"
 import { useState, useEffect } from "react"
-import { updateServiceRequest, getProfessionsList } from "../../api/Service.api"
+import { updateServiceRequest, getProfessionsList, promoteService } from "../../api/Service.api"
 import ServiceData from "./ServiceData"
 import ServiceButton from "./ServiceButton"
 import PencilIcon from "../icons/PencilIcon"
@@ -10,6 +10,9 @@ import CrossIcon from "../icons/CrossIcon"
 import { useAuthContext } from "../auth/AuthContextProvider"
 import { checkIfEmpty, checkCityLength, checkExperienceNegative, errorMessages, checkExperienceYears } from "../../utils/validation"
 import Jobs from "./Jobs"
+import PromotionButton from "./PromotionButton"
+import MegaphoneIcon from "../icons/MegaphoneIcon"
+import { useToast } from "../ui/use-toast"
 
 const DEFAULT_USER_IMG =
    "https://images.unsplash.com/photo-1646753522408-077ef9839300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NjZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
@@ -18,6 +21,7 @@ export default function ServiceDetails() {
    const service = useLoaderData()
    const { loggedUser } = useAuthContext()
    const [professions, setProfessions] = useState([])
+   const { toast } = useToast()
 
    useEffect(() => {
       const fetchProfessions = async () => {
@@ -126,37 +130,40 @@ export default function ServiceDetails() {
       setIsEditing(false)
       resetErrors()
    }
+   const handlePayment = async (servideId, token) => {
+      const returnURL = window.location.href;
+      try {
+          const responseData = await promoteService(servideId, token, returnURL);
+          const sessionUrl = responseData.sessionUrl;
+          if (sessionUrl) {
+              window.open(sessionUrl, '_self');
+          } else {
+              alert('Error al obtener la URL de pago. Por favor, inténtelo de nuevo.');
+          }
+      } catch (error) {
+          alert('Error al procesar la operación. Por favor, inténtelo de nuevo.');
+      }
+  };
 
    return (
       <div className="my-10 lg:mx-40 md:mx-10 mx-1">
-
          <div className="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 justify-center items-center gap-y-10 my-10 lg:mx-10 md:mx-10 mx-1 bg-white border rounded-lg">
-
             {/* Imagen */}
             <section>
                <div className="lg:px-8 lg:py-8 md:px-8 md:py-4 p-1 w-65 flex flex-col items-center">
-
-                  <img
-                     src={`${service.user.image}` ?? DEFAULT_USER_IMG}
-                     className="w-72 h-72 lg:w-96 lg:h-96 object-cover rounded-xl"
-                  />
+                  <img src={`${service.user.image}` ?? DEFAULT_USER_IMG} className="w-72 h-72 lg:w-96 lg:h-96 object-cover rounded-xl" />
                   <div className="mt-4">
                      {loggedUser && loggedUser.user.username !== service.user.username && (
                         <LinkButtonContract url={`/contracts/create?service_id=${service.id}`} title="Crear un contrato" />
                      )}
-
-
                   </div>
-
                </div>
             </section>
-
 
             <section>
                {/*Datos*/}
                <form onSubmit={handleEdit}>
                   <div className="border bg-white shadow-md rounded-xl lg:m-8 md:m-4 m-1">
-
                      <div className="flex flex-col justify-center gap-y-6 px-8 py-3">
                         <ServiceData
                            type={"text"}
@@ -240,7 +247,30 @@ export default function ServiceDetails() {
                            loggedUser &&
                            loggedUser.user &&
                            loggedUser.user.username === service.user.username && (
-                              <ServiceButton type={"button"} text={"Editar servicio"} icon={<PencilIcon />} onClick={() => setIsEditing(true)} />
+                              <div>
+                                 <div>
+                                    <ServiceButton
+                                       type={"button"}
+                                       text={"Editar servicio"}
+                                       icon={<PencilIcon />}
+                                       onClick={() => setIsEditing(true)}
+                                    />
+                                 </div>
+                                 <div className="pt-4">
+                                    <PromotionButton
+                                       type={"button"}
+                                       text={"Promocionar Servicio"}
+                                       icon={<MegaphoneIcon />}
+                                       onClick={() => {
+                                          handlePayment(service.id, loggedUser.token)
+                                          toast({
+                                             title: "Su servicio ahora se encuentra en promocion",
+                                             description: "Ahora tendrá ventajas frente a otros servicios",
+                                          })
+                                       }}
+                                    />
+                                 </div>
+                              </div>
                            )
                         )}
                      </div>
@@ -250,10 +280,7 @@ export default function ServiceDetails() {
                <div className="border bg-white shadow-md rounded-xl lg:m-8 md:m-4 m-1">
                   <Jobs />
                </div>
-
             </section>
-
-
          </div>
          <div>
             <section>
@@ -297,9 +324,7 @@ export default function ServiceDetails() {
                      <div className="w-full text-center py-4">Aún no hay opiniones para este servicio.</div>
                   )}
                </div>
-
             </section>
-
          </div>
       </div>
    )

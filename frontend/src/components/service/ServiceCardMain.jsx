@@ -4,7 +4,7 @@ import { BACKEND_URL } from "@/utils/backendApi"
 const DEFAULT_USER_IMG =
    "https://images.unsplash.com/photo-1646753522408-077ef9839300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NjZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
 
-export default function ServiceCard({ service }) {
+export default function ServiceCardMain({ service }) {
    return (
       <div className="w-80 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl relative">
          <Link to={`/services/${service.id}`}>
@@ -26,11 +26,6 @@ export default function ServiceCard({ service }) {
                <p className="mb-2">
                   <strong>Idioma:</strong> {service.user && service.user.language ? service.user.language : "Sin idioma"}
                </p>
-               {service.is_promoted && (
-                  <div className="text-red-600 text-base absolute top-0 right-0 font-bold mt-2 mr-2 rounded">
-                     <strong>PROMOCIONADO</strong>
-                  </div>
-               )}
             </div>
          </Link>
       </div>
