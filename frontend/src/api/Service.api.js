@@ -39,11 +39,12 @@ export const getServiceByUser = async (id) => {
     return fetchBackend(`/service/user/${id}`, options);
 }
 
-export const getServiceByCityAndProfession = async (city, profession) => {
+export const getServiceByCityAndProfession = async (city, profession, username) => {
 
     const queryParams = new URLSearchParams({
         search_city: city,
-        search_profession: profession
+        search_profession: profession,
+        search_username: username
     });
 
     const options = {
