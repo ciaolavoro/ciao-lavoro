@@ -170,17 +170,17 @@ export default function RegisterPage() {
                     className="w-full p-2 mb-4 border border-gray-300 rounded-md"
                   >
                     <option value="">Seleccione un idioma</option>
-                    <option value="es">Español</option>
-                    <option value="en">Inglés</option>
-                    <option value="de">Alemán</option>
-                    <option value="fr">Francés</option>
-                    <option value="it">Italiano</option>
-                    <option value="ru">Ruso</option>
-                    <option value="tr">Turco</option>
-                    <option value="pl">Polaco</option>
-                    <option value="ro">Rumano</option>
-                    <option value="nl">Holandés</option>
-                    <option value="pt">Portugués</option>
+                    <option value="Español">Español</option>
+                    <option value="Inglés">Inglés</option>
+                    <option value="Alemán">Alemán</option>
+                    <option value="Francés">Francés</option>
+                    <option value="Italiano">Italiano</option>
+                    <option value="Ruso">Ruso</option>
+                    <option value="Turco">Turco</option>
+                    <option value="Polaco">Polaco</option>
+                    <option value="Rumano">Rumano</option>
+                    <option value="Holandés">Holandés</option>
+                    <option value="Portugués">Portugués</option>
 
                   </select>
                 </label>  
