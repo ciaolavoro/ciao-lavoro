@@ -327,7 +327,8 @@ class GetPointsTest(UserTestCase):
 class AddPointsTest(UserTestCase):
     def test_add_points(self):
         self.token, _ = Token.objects.get_or_create(user=self.user)
-        user2 = User.objects.create(username='testuser2', first_name='test', last_name='user', email='test2@example.com', password='testpassword', birth_date='1950-12-12')
+        user2 = User.objects.create(username='testuser2', first_name='test', last_name='user',
+        email='test2@example.com', password='testpassword', birth_date='1950-12-12')
         service_data = {
             'user': user2,
             'profession': 1,
