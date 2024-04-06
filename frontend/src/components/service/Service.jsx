@@ -20,7 +20,6 @@ export default function ServiceDetails() {
    const { loggedUser } = useAuthContext()
    const [professions, setProfessions] = useState([])
    const [contract, setContract] = useState([])
-   console.log("sale : "+ service.reviews.some(review => review.user.username === loggedUser.user.username))
 
    useEffect(() => {
       const fetchProfessions = async () => {
