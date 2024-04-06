@@ -43,6 +43,14 @@ export default function CreateService() {
          setErrorMessage("El precio debe ser positivo.")
          return
       }
+      if (Number(estimated_price) >= 100000) {
+         setErrorMessage("El precio no debe superar los 100000.")
+         return
+      }
+      if (nameJob.length >= 100) {
+         setErrorMessage("El nombre del trabajo no puede tener mas de 100 caracteres.")
+         return
+      }
       createJob(nameJob, Number(estimated_price), serviceId, loggedUser.token)
       setErrorMessage("")
    }

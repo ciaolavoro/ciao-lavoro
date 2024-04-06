@@ -212,7 +212,7 @@ export default function ServiceDetails() {
                         <ServiceData
                            type={"number"}
                            formName={"experience"}
-                           labelText={"Experiencia:"}
+                           labelText={"Experiencia(años):"}
                            inputValue={experience}
                            isError={isRequiredExperienceError || isExperienceError || isBigExperienceError}
                            errorMessage={
