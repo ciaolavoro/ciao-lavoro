@@ -131,3 +131,21 @@ export const checkWorkerAssociation = async (serviceId) => {
         return true;
     }
 }
+
+export async function cancelContractStatus(contractId, description, token) {
+    const options = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
+        },
+        body: JSON.stringify({ description })
+    };
+
+    try {
+        const response = await fetchBackend(`/contracts/cancel/${contractId}/`, options);
+        return response;
+    } catch (error) {
+        console.error('Update Contract Status error:', error);
+    }
+}

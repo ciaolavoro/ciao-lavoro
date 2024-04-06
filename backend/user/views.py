@@ -2,6 +2,8 @@ import random
 import re
 
 from django.forms import ValidationError
+
+from contract.models import Contract
 from .models import User
 from django.http import JsonResponse
 from rest_framework import status
@@ -160,3 +162,19 @@ class Profile(APIView):
         except ValueError as e:
             return JsonResponse({'details': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+class AddPoints(APIView):
+    def put(self,request, contractId):
+        token_id = request.headers['Authorization']
+        token = get_object_or_404(Token, key=token_id.split()[-1])
+        user = token.user
+        contract = get_object_or_404(Contract, pk=contractId)
+        user.points = int(user.points + contract.cost*10)
+        user.save()
+        return JsonResponse({'total_points': user.points})
+
+class GetPoints(APIView):
+    def get(self,request):
+        token_id = request.headers['Authorization']
+        token = get_object_or_404(Token, key=token_id.split()[-1])
+        user = token.user
+        return JsonResponse({'total_points': user.points})

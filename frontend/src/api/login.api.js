@@ -37,7 +37,7 @@ export const logoutRequest = async () => {
     localStorage.removeItem('token');
 };
 
-export const registerRequest = async (username, password, firstName, lastName, email, image, birthdate) => {
+export const registerRequest = async (username, password, firstName, lastName, email, image, birthdate, language) => {
     
     const formData = new FormData();
     formData.append('username', username);
@@ -47,6 +47,7 @@ export const registerRequest = async (username, password, firstName, lastName, e
     formData.append('email', email);
     formData.append('image', image);
     formData.append('birthdate', birthdate);
+    formData.append('language', language);
     const options = {
         method: 'POST',
         body: formData
