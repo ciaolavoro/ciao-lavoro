@@ -21,10 +21,14 @@ class ServiceList(generics.ListAPIView):
         services = Service.objects.all()
         search_profession = self.request.query_params.get('search_profession')
         search_city = self.request.query_params.get('search_city')
+        search_username = self.request.query_params.get('search_username')
         if search_profession:
             services = services.filter(profession=search_profession)
         if search_city:
             services = services.filter(city__icontains=search_city)
+        if search_username:
+            users = User.objects.filter(username__icontains=search_username)
+            services = services.filter(user__in = users)
         return services
 
     def get(self, request, *args, **kwargs):
