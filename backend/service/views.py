@@ -149,6 +149,12 @@ class ReviewView(APIView):
         token_id = request.headers["Authorization"]
         token = get_object_or_404(Token, key = token_id.split()[-1])
         user = token.user
+
+        existing_review = Review.objects.filter(user=user, service = service)
+        if existing_review.exists():
+            return Response("Ya has dejado una reseña para este servicio", status=status.HTTP_400_BAD_REQUEST)
+        
+
         if review_data['description'] and review_data['description'].strip() != '':
             description = review_data['description'].strip()
         else:
