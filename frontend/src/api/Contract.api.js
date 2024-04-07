@@ -158,3 +158,19 @@ export async function cancelContractStatus(contractId, description, token) {
         console.error('Update Contract Status error:', error);
     }
 }
+
+export const addPoints = async (contractId, token) => {
+    const options = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
+        },
+    };
+    try{
+        const response = await fetchBackend(`/user/addPoints/${contractId}/`, options);
+        return response;
+    }catch(error){
+        console.error('Error add points: ', error);
+    }
+}
