@@ -112,14 +112,14 @@ export async function updateServiceRequest(serviceId, serviceData, token) {
     }
 }
 
-export async function promoteService(serviceId, token, returnURL) {
+export async function promoteService(serviceId, token, returnURL, points) {
     const options = {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Token ${token}`,
         },
-        body: JSON.stringify({ returnURL })
+        body: JSON.stringify({ returnURL, points })
     };
 
     try {

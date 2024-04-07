@@ -12,6 +12,10 @@ import { checkIfEmpty, checkCityLength, checkExperienceNegative, errorMessages, 
 import Jobs from "./Jobs"
 import PromotionButton from "./PromotionButton"
 import MegaphoneIcon from "../icons/MegaphoneIcon"
+import WalletIcon from "../icons/WalletIcon"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 
 const DEFAULT_USER_IMG =
    "https://images.unsplash.com/photo-1646753522408-077ef9839300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NjZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
@@ -20,6 +24,7 @@ export default function ServiceDetails() {
    const service = useLoaderData()
    const { loggedUser } = useAuthContext()
    const [professions, setProfessions] = useState([])
+   const [points, setPoints] = useState(0)
 
    useEffect(() => {
       const fetchProfessions = async () => {
@@ -48,6 +53,8 @@ export default function ServiceDetails() {
    const [isBigExperienceError, setIsBigExperienceError] = useState(false)
    const [isCityError, setIsCityError] = useState(false)
    const [isExperienceError, setIsExperienceError] = useState(false)
+   const [tooManyPoints, setTooManyPoints] = useState(false)
+   const [positivePoints, setPositivePoints] = useState(false)
 
    const resetServiceData = () => {
       setCity(service.city)
@@ -79,6 +86,11 @@ export default function ServiceDetails() {
       setIsCityError(false)
       setIsExperienceError(false)
       setIsBigExperienceError(false)
+   }
+
+   const resetPaymentErrors = () => {
+      setPositivePoints(false)
+      setTooManyPoints(false)
    }
 
    const handleEdit = async event => {
@@ -128,10 +140,21 @@ export default function ServiceDetails() {
       setIsEditing(false)
       resetErrors()
    }
-   const handlePayment = async (servideId, token) => {
+
+   const handlePayment = async (serviceId, token, points1) => {
       const returnURL = window.location.href
+      if (loggedUser.user.points < points1) {
+         setTooManyPoints(true)
+         return
+      } else if (points1 < 0) {
+         resetPaymentErrors()
+         setPositivePoints(true)
+         return
+      }
+      resetPaymentErrors()
+
       try {
-         const responseData = await promoteService(servideId, token, returnURL)
+         const responseData = await promoteService(serviceId, token, returnURL, points1)
          const sessionUrl = responseData.sessionUrl
          if (sessionUrl) {
             window.open(sessionUrl, "_self")
@@ -255,16 +278,55 @@ export default function ServiceDetails() {
                                     />
                                  </div>
                                  {!isPromoted && (
-                                 <div className="pt-4">
-                                    <PromotionButton
-                                       type={"button"}
-                                       text={"Promocionar Servicio"}
-                                       icon={<MegaphoneIcon />}
-                                       onClick={() => {
-                                          handlePayment(service.id, loggedUser.token)
-                                       }}
-                                    />
-                                 </div>
+                                    <div className="pt-4">
+                                       <Dialog>
+                                          <DialogTrigger asChild>
+                                             <PromotionButton type={"button"} text={"Promocionar Servicio"} icon={<MegaphoneIcon />} />
+                                          </DialogTrigger>
+                                          <DialogContent className="sm:max-w-[425px]">
+                                             <DialogHeader>
+                                                <DialogTitle>¿Cuantos puntos quieres usar para la promoción?</DialogTitle>
+                                                <DialogDescription>Los puntos descontarán dinero del precio final.</DialogDescription>
+                                                <DialogDescription>
+                                                   {" "}
+                                                   <strong>Tus puntos:</strong> {loggedUser.user.points}
+                                                </DialogDescription>
+                                             </DialogHeader>
+                                             <div className="grid gap-4 py-4">
+                                                <div className="grid grid-cols-4 items-center gap-4">
+                                                   <Label htmlFor="name" className="text-right">
+                                                      Puntos
+                                                   </Label>
+                                                   <Input
+                                                      id="points"
+                                                      value={points}
+                                                      onChange={e => setPoints(e.target.value)}
+                                                      className="col-span-3"
+                                                   />
+                                                   <DialogDescription>
+                                                      {(tooManyPoints || positivePoints) && (
+                                                      <div className="text-red-500">
+                                                         {(tooManyPoints && errorMessages.tooManyPoints) ||
+                                                            (positivePoints && errorMessages.positivePoints)}
+                                                      </div>
+                                                   )}
+                                                   </DialogDescription>
+                                                   
+                                                </div>
+                                                <DialogFooter>
+                                                   <PromotionButton
+                                                      type={"submit"}
+                                                      text={"Pagar promocion"}
+                                                      icon={<WalletIcon />}
+                                                      onClick={() => {
+                                                         handlePayment(service.id, loggedUser.token, points)
+                                                      }}
+                                                   />
+                                                </DialogFooter>
+                                             </div>
+                                          </DialogContent>
+                                       </Dialog>
+                                    </div>
                                  )}
                               </div>
                            )

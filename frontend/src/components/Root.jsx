@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom"
 import Background from "./Background"
 import Navbar from "./Navbar"
 import { Toaster } from "./ui/toaster"
+import { Dialog } from "./ui/dialog"
 
 export default function Root() {
    return (
@@ -12,6 +13,8 @@ export default function Root() {
             <Outlet />
          </main>
          <Toaster />
+         <Dialog />
+         
       </div>
    )
 }
