@@ -138,10 +138,16 @@ class ContractStatusEdit(APIView):
         token_id = request.headers['Authorization']
         token = get_object_or_404(Token, key=token_id.split()[-1])
         user = token.user
-        if contract.client != user and contract.service.user != user and not user.is_staff:
+        if contract.client != user and (status_num != 6 and status_num != 4):
             raise PermissionDenied("No tienes permiso para editar un contrato que no te pertenece")
-        new_status = status_num
-        contract.status = new_status
+        if contract.service.worker != user and (status_num != 2 and status_num != 3):
+            raise PermissionDenied("No tienes permiso para editar un contrato que no te pertenece")
+        if (not user.is_staff) and (status_num != 1 and status_num != 5):
+            raise PermissionDenied("No tienes permiso para editar un contrato que no te pertenece")
+        if status_num == 6:
+            user.points = user.points + int(5*contract.cost)
+            user.save()
+        contract.status = status_num
         contract.save()
         serializer = ContractSerializer(contract, many=False,context ={'request': request})
         return Response(serializer.data)
@@ -265,17 +271,26 @@ class ContractCancelation(APIView):
             raise PermissionDenied("No tienes permiso para cancelar un contrato que no te pertenece")
         new_description = contract_data['description']
         if len(new_description) > 500:
-            return JsonResponse({'details': 'La descripción no puede superar los 500 caracteres', 'status': '500'})
+            return Response('La descripción no puede superar los 500 caracteres', status=status.HTTP_400_BAD_REQUEST)
         if new_description.strip() == '':
-            return JsonResponse({'details': 'La descripción no puede estar vacía', 'status': '500'})
+            return Response('La descripción no puede estar vacía', status=status.HTTP_400_BAD_REQUEST)
         if contract.status != 1 and contract.status != 2 and contract.status != 6:
-            return JsonResponse({'details': 'Solo se puede cancelar un contrato que ya este en marcha o finalizado', 'status': '500'})
-        refund = '0'
-        if contract.initial_date < (timezone.now() + datetime2.timedelta(days=3)) and contract.service.user == user:
-            refund = '1'
-        if contract.initial_date > (timezone.now() + datetime2.timedelta(days=3)):
-            refund = '1'
+            return Response('Solo se puede cancelar un contrato que ya este en marcha o finalizado', status=status.HTTP_400_BAD_REQUEST)
         contract.description_cancelation = new_description
+        refund = '0'
+        if contract.status == 6:
+            if (contract.initial_date < (timezone.now() + datetime2.timedelta(days=3)) and contract.service.user == user
+                ) or contract.initial_date > (timezone.now() + datetime2.timedelta(days=3)):
+                client = contract.client
+                if contract.cost*5 > client.points:
+                    amount_to_refund = 100*contract.cost + (client.points - contract.cost*5)
+                    refund = str(amount_to_refund/100)
+                    client.points = 0
+                    client.save()
+                else:
+                    refund = str(contract.cost)
+                    client.points = client.points - int(5*contract.cost)
+                    client.save()
         contract.status = 5
         contract.save()
         serializer = ContractSerializer(contract, many=False,context ={'request': request})
