@@ -1,32 +1,15 @@
-import { addPoints, handleContractPayment} from "../../api/Contract.api";
+import { handleContractPayment} from "../../api/Contract.api";
 import { updateContractStatus,cancelContractStatus } from "../../api/Contract.api";
 import { useAuthContext } from "../auth/AuthContextProvider";
-import { useState} from 'react';
 
 export function ContractCardClient({ contract }) {
 
     const { loggedUser } = useAuthContext();
-    const [pointsAdd,setPointsAdd] = useState(false);
 
 
     const formatDate = (dateString) => {
         const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false };
         return new Date(dateString).toLocaleDateString(undefined, options);
-    };
-
-    const handleAddPoints = async (contractId,token) => {
-        // Aqui hay que implementar también que el contrato pase de "Pagado" a "Pagado y canjeado puntos"
-        try{
-            const response = await addPoints(contractId,token);
-            if (response.ok){
-                setPointsAdd(true);
-                alert('Se han agregado puntos');
-            }else{
-                alert('Error al agregar puntos 1. Intentalo más tarde');
-            }
-        }catch (error){
-            alert('Error al agregar puntos 2. Intentalo más tarde');
-        }
     };
 
     function getStatusColor(estatus) {
@@ -148,14 +131,7 @@ export function ContractCardClient({ contract }) {
             )}
 
                 </div>
-                <div className="flex justify-center">
-                {contract.estatus === "Pagado" && !pointsAdd && (
-                    <button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mt-4"
-                        onClick={() => handleAddPoints(contract.id, loggedUser.token)}>
-                        Agregar Puntos
-                    </button>
-                )}
-            </div>
+                
             </div>
         </a>
 
