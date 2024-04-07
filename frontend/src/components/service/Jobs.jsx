@@ -15,6 +15,8 @@ export default function Jobs() {
 
    const [jobs, setJobs] = useState(service.jobs)
    const [editingJobId, setEditingJobId] = useState(false)
+   const [errorNameMessage, setErrorNameMessage] = useState("")
+   const [errorPriceMessage, setErrorPriceMessage] = useState("")
 
    const updateJob = async (jobData, token) => {
       try {
@@ -71,16 +73,31 @@ export default function Jobs() {
    const handleSaveJob = async (jobId, index) => {
       event.preventDefault()
       setJobs(service.jobs)
-
       const { name, estimated_price } = jobs[jobId]
-
       if (!name.trim()) {
-         alert("El nombre no puede estar vacío.")
+         setErrorNameMessage("El nombre es obligatorio.")
          return
-      } else if (!estimated_price || estimated_price < 0) {
-         alert("El precio estimado no puede estar vacío ni ser negativo.")
+      }if (/^\d+$/.test(name)) {
+         setErrorNameMessage("El nombre del trabajo no puede tener solo numeros.")
+         return
+      }if(!estimated_price){
+         setErrorPriceMessage("El precio es obligatorio.")
          return
       }
+      if (Number(estimated_price) <= 0) {
+         setErrorPriceMessage("El precio debe ser positivo.")
+         return
+      }
+      if (Number(estimated_price) >= 100000) {
+         setErrorPriceMessage("El precio debe ser menor que 100000.")
+         return
+      }
+      if (name.length >= 100) {
+         setErrorNameMessage("El nombre del trabajo no puede tener mas de 100 caracteres.")
+         return
+      }
+      setErrorNameMessage("")
+      setErrorPriceMessage("")
 
       const JobData = {
          id: index,
@@ -99,46 +116,44 @@ export default function Jobs() {
          <div className="flex flex-col lg:flex-row md:flex-row gap-5">
             <h2 className="text-3xl font-bold">Trabajos:</h2>
             {loggedUser && loggedUser.user.username === service.user.username && (
-               <LinkButtonJob url={`/services/${service.id}/job/create`} title="Crear una trabajo" />
+               <LinkButtonJob url={`/services/${service.id}/job/create`} title="Crear un trabajo" />
             )}
          </div>
-         <div className="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2">
-            {jobs.map((job, index) => (
-               <div key={index} className="w-90 border bg-white shadow-md rounded-xl m-1 pb-4">
-                  <div className="flex flex-col gap-y-6 px-10 py-6">
-                     <JobData
-                        type={"text"}
-                        formName={`nameJob-${index}`}
-                        labelText={"Nombre:"}
-                        inputValue={job.name}
-                        isReadOnly={index !== editingJobId}
-                        onChange={event => handleJobInputChangeName(event.target.value, index)}
-                     />
-                     <JobData
-                        type={"number"}
-                        formName={`estimatedJobPrice-${index}`}
-                        labelText={"Precio estimado:"}
-                        inputValue={job.estimated_price}
-                        isReadOnly={index !== editingJobId}
-                        onChange={event => handleJobInputChangeEstimatedPrice(event.target.value, index)}
-                     />
-                  </div>
-                  {editingJobId === index ? (
-                     <div className="flex justify-center gap-x-4">
-                        <ServiceButton type={"button"} text={"Guardar cambios"} icon={<CheckIcon />} onClick={() => handleSaveJob(index, job.id)} />
-                        <ServiceButton type={"button"} text={"Cancelar"} icon={<CrossIcon />} onClick={() => handleCancelJob()} />
-                     </div>
-                  ) : (
-                     loggedUser && loggedUser.user.username === service.user.username && (
-                        <ServiceButton type={"button"} text={"Editar Trabajo"} icon={<PencilIcon />} onClick={() => setEditingJobId(index)} />
-                     )
-                  )}
+         {jobs.map((job, index) => (
+            <div key={index} className="w-90 border bg-white shadow-md rounded-xl m-8 pb-4">
+               <div className="flex flex-col gap-y-6 px-10 py-6">
+                  <JobData
+                     type={"text"}
+                     formName={`nameJob-${index}`}
+                     labelText={"Nombre:"}
+                     inputValue={job.name}
+                     isReadOnly={index !== editingJobId}
+                     onChange={event => handleJobInputChangeName(event.target.value, index)}
+                  />
+                  {index === editingJobId && errorNameMessage && <p className="text-red-500">{errorNameMessage}</p>}
+                  <JobData
+                     type={"number"}
+                     formName={`estimatedJobPrice-${index}`}
+                     labelText={"Precio estimado:"}
+                     inputValue={job.estimated_price}
+                     isReadOnly={index !== editingJobId}
+                     onChange={event => handleJobInputChangeEstimatedPrice(event.target.value, index)}
+                  />
+                  {index === editingJobId && errorPriceMessage && <p className="text-red-500">{errorPriceMessage}</p>}
+
                </div>
-            ))}
-         </div>
-
-
-
+               {editingJobId === index ? (
+                  <div className="flex justify-center gap-x-4">
+                     <ServiceButton type={"button"} text={"Guardar cambios"} icon={<CheckIcon />} onClick={() => handleSaveJob(index, job.id)} />
+                     <ServiceButton type={"button"} text={"Cancelar"} icon={<CrossIcon />} onClick={() => handleCancelJob()} />
+                  </div>
+               ) : (
+                  loggedUser && loggedUser.user.username === service.user.username && (
+                  <ServiceButton type={"button"} text={"Editar Trabajo"} icon={<PencilIcon />} onClick={() => setEditingJobId(index)} />
+               )
+               )}
+            </div>
+         ))}
       </div>
    )
 }
