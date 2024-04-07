@@ -1,6 +1,7 @@
 import { useLoaderData, Link } from "react-router-dom"
 import { useState, useEffect } from "react"
 import { updateServiceRequest, getProfessionsList } from "../../api/Service.api"
+import { getContractByService } from "../../api/Contract.api"
 import ServiceData from "./ServiceData"
 import ServiceButton from "./ServiceButton"
 import PencilIcon from "../icons/PencilIcon"
@@ -25,6 +26,7 @@ export default function ServiceDetails() {
    const service = useLoaderData()
    const { loggedUser } = useAuthContext()
    const [professions, setProfessions] = useState([])
+   const [contract, setContract] = useState([])
 
    useEffect(() => {
       const fetchProfessions = async () => {
@@ -40,7 +42,19 @@ export default function ServiceDetails() {
       if (loggedUser && loggedUser.token) {
          fetchProfessions()
       }
-   }, [loggedUser])
+      const fetchContracts = async () => {
+         try {
+            const res = await getContractByService(service.id)
+            if (res.status === 200) {
+               const data = await res.json()
+               setContract(data)
+            }
+         } catch (error) {
+            console.error("Failed to fetch contract", error)
+         }
+      }
+      fetchContracts()
+   }, [loggedUser, service.id])
 
    const [isEditing, setIsEditing] = useState(false)
    const [city, setCity] = useState(service.city)
@@ -287,11 +301,17 @@ export default function ServiceDetails() {
                <div className="border bg-white shadow-md rounded-xl lg:m-8 md:m-4 m-1">
                   <div className="flex flex-col gap-y-2 px-10 py-6">
                      <h2 className="text-3xl font-bold mb-4">Opiniones de otros usuarios:</h2>
-                     {loggedUser && loggedUser.user.username != service.user.username && (
+                     {loggedUser && loggedUser.user.username !== service.user.username && (
                         <>
-                           <Link to={`/review?service_id=${service.id}`}>
-                              <button className="bg-slate-300 rounded px-2 py-1 font-semibold flex">Añadir una nueva reseña</button>
-                           </Link>
+                           {!service.reviews.some(review => review.user.username === loggedUser.user.username) && (
+                              <>
+                                 {contract.estatus === "Finalizado" ? (
+                                    <Link to={`/review?service_id=${service.id}`}>
+                                       <button className="bg-slate-300 rounded px-2 py-1 font-semibold flex">Añadir una nueva reseña</button>
+                                    </Link>
+                                 ) : null}
+                              </>
+                           )}
                         </>
                      )}
                      <div className="grid grid-cols-1 lg:grid-cols-2">
