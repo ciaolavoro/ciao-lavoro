@@ -1,6 +1,6 @@
 import { useLoaderData, Link } from "react-router-dom"
 import { useState, useEffect } from "react"
-import { updateServiceRequest, getProfessionsList } from "../../api/Service.api"
+import { updateServiceRequest, getProfessionsList, promoteService } from "../../api/Service.api"
 import { getContractByService } from "../../api/Contract.api"
 import ServiceData from "./ServiceData"
 import ServiceButton from "./ServiceButton"
@@ -18,6 +18,12 @@ import {
    checkOnlyCharactersInText,
 } from "../../utils/validation"
 import Jobs from "./Jobs"
+import PromotionButton from "./PromotionButton"
+import MegaphoneIcon from "../icons/MegaphoneIcon"
+import WalletIcon from "../icons/WalletIcon"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 
 const DEFAULT_USER_IMG =
    "https://images.unsplash.com/photo-1646753522408-077ef9839300?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwcm9maWxlLXBhZ2V8NjZ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60"
@@ -26,6 +32,7 @@ export default function ServiceDetails() {
    const service = useLoaderData()
    const { loggedUser } = useAuthContext()
    const [professions, setProfessions] = useState([])
+   const [points, setPoints] = useState(0)
    const [contract, setContract] = useState([])
 
    useEffect(() => {
@@ -68,6 +75,8 @@ export default function ServiceDetails() {
    const [isCityError, setIsCityError] = useState(false)
    const [isOnlyCharacters, setIsOnlyCharacters] = useState(false)
    const [isExperienceError, setIsExperienceError] = useState(false)
+   const [tooManyPoints, setTooManyPoints] = useState(false)
+   const [positivePoints, setPositivePoints] = useState(false)
 
    const resetServiceData = () => {
       setCity(service.city)
@@ -103,6 +112,11 @@ export default function ServiceDetails() {
       setIsOnlyCharacters(false)
    }
 
+   const resetPaymentErrors = () => {
+      setPositivePoints(false)
+      setTooManyPoints(false)
+   }
+   
    const handleEdit = async event => {
       event.preventDefault()
 
@@ -155,6 +169,30 @@ export default function ServiceDetails() {
       resetErrors()
    }
 
+   const handlePayment = async (serviceId, token, points1) => {
+      const returnURL = window.location.href
+      if (service.user.points < points1) {
+         setTooManyPoints(true)
+         return
+      } else if (points1 < 0) {
+         resetPaymentErrors()
+         setPositivePoints(true)
+         return
+      }
+      resetPaymentErrors()
+
+      try {
+         const responseData = await promoteService(serviceId, token, returnURL, points1)
+         const sessionUrl = responseData.sessionUrl
+         if (sessionUrl) {
+            window.open(sessionUrl, "_self")
+         } else {
+            alert("Error al obtener la URL de pago. Por favor, inténtelo de nuevo.")
+         }
+      } catch (error) {
+         alert("Error al procesar la operación. Por favor, inténtelo de nuevo.")
+      }
+   }
    return (
       <div className="my-10 lg:mx-40 md:mx-10 mx-1">
          <div className="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 justify-center items-center gap-y-10 my-10 lg:mx-10 md:mx-10 mx-1 bg-white border rounded-lg">
@@ -178,7 +216,6 @@ export default function ServiceDetails() {
                               inputValue={service.user.username ?? "Pablo"}
                               isReadOnly={true}
                            />
-
                            <div>
                               <label htmlFor="profession" className="flex flex-col gap-x-4 text-1.7xl font-semibold">
                                  Profesión:{" "}
@@ -198,7 +235,6 @@ export default function ServiceDetails() {
                                  ))}
                               </select>
                            </div>
-
                            <ServiceData
                               type={"text"}
                               formName={"city"}
@@ -274,8 +310,56 @@ export default function ServiceDetails() {
                            </div>
                         )}
                         <div className="flex justify-center gap-x-4">
+                           <div className="pt-4">
                            {loggedUser && loggedUser.user && loggedUser.user.username === service.user.username && (
                               <ServiceButton type={"button"} text={"Editar servicio"} icon={<PencilIcon />} onClick={() => setIsEditing(true)} />
+                           )}
+                           </div>
+
+                           {!isPromoted && (
+                              <div className="pt-4">
+                                 <Dialog>
+                                    <DialogTrigger asChild>
+                                       <PromotionButton type={"button"} text={"Promocionar Servicio"} icon={<MegaphoneIcon />} />
+                                    </DialogTrigger>
+                                    <DialogContent className="sm:max-w-[425px]">
+                                       <DialogHeader>
+                                          <DialogTitle>¿Cuantos puntos quieres usar para la promoción?</DialogTitle>
+                                          <DialogDescription>Los puntos descontarán dinero del precio final.</DialogDescription>
+                                          <DialogDescription>
+                                             {" "}
+                                             <strong>Tus puntos:</strong> {service.user.points}
+                                          </DialogDescription>
+                                       </DialogHeader>
+                                       <div className="grid gap-4 py-4">
+                                          <div className="grid grid-col-1 lg:grid-cols-2 md:grid-cols-2 gap-4">
+                                             <Label htmlFor="name" className="text-left">
+                                                Puntos
+                                             </Label>
+                                             <Input id="points" value={points} onChange={e => setPoints(e.target.value)} className="col-span-3" />
+                                          </div>
+                                          <DialogDescription>
+                                             {(tooManyPoints || positivePoints) && (
+                                                <div className="text-red-500">
+                                                   {(tooManyPoints && errorMessages.tooManyPoints) ||
+                                                      (positivePoints && errorMessages.positivePoints)}
+                                                </div>
+                                             )}
+                                          </DialogDescription>
+                                          <DialogFooter>
+                                             <PromotionButton
+                                                type={"submit"}
+                                                text={"Pagar promocion"}
+                                                icon={<WalletIcon />}
+                                                onClick={() => {
+                                                   handlePayment(service.id, loggedUser.token, points)
+                                                }}
+                                             />
+                                          </DialogFooter>
+                                       </div>
+                                    </DialogContent>
+                                 </Dialog>
+                              </div>
                            )}
 
                            {loggedUser && loggedUser.user.username !== service.user.username && (

@@ -4,12 +4,13 @@ import EuroIcon from "../icons/EuroIcon";
 import BankNotesIcon from "../icons/BankNotesIcon";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import ServiceCard from "../service/ServiceCard";
+import ServiceCard2 from "../service/ServiceCardMain";
 import { getAllServices } from "../../api/Service.api";
 
 export default function Home() {
 
   const [services, setServices] = useState([]);
+  const [servicesProm, setServicesProm] = useState([])
 
   useEffect(() => {
     const getServices = async () => {
@@ -18,8 +19,9 @@ export default function Home() {
         if (res.status === 200) {
           const data = await res.json();
           const promotedServices = data.filter(service => service.is_promoted);
-          const servicesToShow = promotedServices.length <= 4 ? promotedServices : promotedServices.slice(0, 4);
-          setServices(servicesToShow);
+          const popularService = promotedServices.length <= 4 ? promotedServices : promotedServices.slice(0, 4);
+          setServices(popularService);
+          setServicesProm(promotedServices);
         } else {
           alert('Error al cargar los servicios');
         }
@@ -78,7 +80,18 @@ export default function Home() {
       <section className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5 px-5">
 
         {services.filter(service => service.is_active).map(service => (
-          <ServiceCard key={service.id} service={service} />
+          <ServiceCard2 key={service.id} service={service} />
+
+        ))}
+      </section>
+
+      <section>
+        <h1 className="text-4xl font-bold text-center">Servicios promocionados:</h1>
+      </section>
+      <section className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5 px-5">
+
+        {servicesProm.filter(service => service.is_active).map(service => (
+          <ServiceCard2 key={service.id} service={service} />
 
         ))}
       </section>
