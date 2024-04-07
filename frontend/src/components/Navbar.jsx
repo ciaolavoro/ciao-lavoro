@@ -16,22 +16,18 @@ const navItemsStyle = "px-2 py-1 font-semibold rounded hover:bg-gray-300 transit
 export default function Navbar() {
    const { logout, loggedUser } = useAuthContext()
    const navigate = useNavigate()
-   const [userPoints, setUserPoints] = useState(0);
-   const [loading, setLoading] = useState(false);
+   const [userPoints, setUserPoints] = useState(null);
 
    const userPointsOnNavbar = async () => {
       try{
-         setLoading(true);
          const points = await getUserPoints(loggedUser.token);
          setUserPoints(points);
-         setLoading(false);
       }catch(error){
          console.error('Error al mostrar los puntos: ',error)
-         setLoading(false);
       }
    }
 
-   if(loggedUser && !loading && userPoints ===0){
+   if(loggedUser && !userPoints){
       userPointsOnNavbar();
    }
 
