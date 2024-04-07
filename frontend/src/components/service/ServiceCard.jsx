@@ -6,7 +6,7 @@ const DEFAULT_USER_IMG =
 
 export default function ServiceCard({ service }) {
    return (
-      <div className="w-80 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
+      <div className="w-80 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl relative">
          <Link to={`/services/${service.id}`}>
             <img src={`${BACKEND_URL}${service.user.image}` ?? DEFAULT_USER_IMG} className="h-80 w-80 object-cover rounded-t-xl" />
             <div className="px-4 py-3 w-72">
@@ -16,6 +16,7 @@ export default function ServiceCard({ service }) {
                <span className="text-gray-400 mr-3 uppercase text-s">@{service.user.username}</span>
                <br />
                <span className="text-gray-500 mr-3 uppercase text-m font-semibold">{service.profession}</span>
+
                <p className="mb-2 mt-4">
                   <strong>Ciudad:</strong> {service.city}
                </p>
@@ -25,6 +26,11 @@ export default function ServiceCard({ service }) {
                <p className="mb-2">
                   <strong>Idioma:</strong> {service.user && service.user.language ? service.user.language : "Sin idioma"}
                </p>
+               {service.is_promoted && (
+                  <div className="text-red-600 text-base absolute top-0 right-0 font-bold mt-2 mr-2 rounded">
+                     <strong>PROMOCIONADO</strong>
+                  </div>
+               )}
             </div>
          </Link>
       </div>

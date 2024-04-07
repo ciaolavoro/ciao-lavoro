@@ -344,9 +344,16 @@ class ReviewViewTestCase(TestCase):
                                             last_name='User',
                                             birth_date= (timezone.now() - datetime.timedelta(days=365*25)).date(),
                                             language= 'English')
+        self.another_user = User.objects.create_user(username='anotheruser',
+                                                    email='joseluiscoboariza@gmail.com',
+                                                    password='anotherpassword',
+                                                    first_name='Another',
+                                                    last_name='User',
+                                                    birth_date= (timezone.now() - datetime.timedelta(days=365*30)).date(),
+                                                    language= 'English' )
         self.token = Token.objects.create(user=self.user)
         self.service = Service.objects.create(user=self.user, profession=6, city='Old City', experience=2)
-        self.review = Review.objects.create(user=self.user,
+        self.review = Review.objects.create(user=self.another_user,
                                             service=self.service,
                                             description="Test review",
                                             rating=4)
@@ -366,6 +373,12 @@ class ReviewViewTestCase(TestCase):
         response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(Review.objects.count(), 2)
+
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.data, "Ya has dejado una reseña para este servicio")
+        self.assertEqual(Review.objects.count(), 2)
+
 
 class UserHasServiceTestCase(TestCase):
     def setUp(self):

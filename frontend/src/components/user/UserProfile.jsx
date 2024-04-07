@@ -8,16 +8,25 @@ import CheckIcon from "../icons/CheckIcon"
 import CrossIcon from "../icons/CrossIcon"
 import { useState } from "react"
 import { updateUserRequest } from "../../api/user.api"
-import { checkIfEmpty, checkIfUsernameExists, checkLanguageLength, errorMessages } from "../../utils/validation"
+import { checkIfBirthDateValid, checkIfDateInFuture, checkIfEmpty, checkIfImage, checkIfUsernameExists, errorMessages } from "../../utils/validation"
 import { BACKEND_URL } from "../../utils/backendApi"
-
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
+import ChevronUpDownIcon from "../icons/ChevronUpDownIcon"
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "../ui/command"
+import { languages } from "@/utils/constants"
+import { useToast } from "../ui/use-toast"
+import CustomAlertDialog from "../CustomAlertDialog"
 
 export default function UserProfile() {
    const [isEditing, setIsEditing] = useState(false)
+   const [openLanguageSelector, setOpenLanguageSelector] = useState(false)
+   const [openConfirmDialog, setOpenConfirmDialog] = useState(false)
+   const [userData, setUserData] = useState(null)
    const { logout, loggedUser } = useAuthContext()
    const user = useLoaderData()
    const userId = user.id
    const navigate = useNavigate()
+   const { toast } = useToast()
 
    const [username, setUsername] = useState(user.username)
    const [firstName, setFirstName] = useState(user.first_name)
@@ -30,27 +39,26 @@ export default function UserProfile() {
    const [isRequiredError, setIsRequiredError] = useState(false)
    const [isUsernameError, setIsUsernameError] = useState(false)
    const [isImageError, setIsImageError] = useState(false)
-   const [isLanguageError, setIsLanguageError] = useState(false)
+   const [isDateError, setIsDateError] = useState(false)
+   const [isDateNotValid, setIsDateNotValid] = useState(false)
 
    if (!loggedUser || !userId) {
       return <Navigate to="/" />
    }
 
-   const updateUser = async (userId, userData) => {
+   const updateUser = async userData => {
       try {
-         const response = await updateUserRequest(userId, userData, loggedUser.token);
-         const response_email =await (response).json()
-         if (response_email.status == '500') {
-            alert('El email no es valido')
+         const response = await updateUserRequest(userData, loggedUser.token)
+         if (response.ok) {
+            toast({
+               title: "Perfil actualizado.",
+               description: "Se ha actualizado su perfil correctamente, vuelva a iniciar sesión.",
+            })
+            setIsEditing(false)
+            logout()
+            navigate("/login")
          } else {
-            if (response.ok) {
-               alert("Perfil actualizado correctamente")
-               setIsEditing(false)
-               logout()
-               navigate("/")
-            } else {
-               alert("Error al actualizar el perfil. Por favor, intente de nuevo.")
-            }
+            alert("Error al actualizar el perfil. Por favor, intente de nuevo.")
          }
       } catch (error) {
          alert("Error al actualizar el perfil. Por favor, intente de nuevo.")
@@ -72,7 +80,8 @@ export default function UserProfile() {
       setIsRequiredError(false)
       setIsUsernameError(false)
       setIsImageError(false)
-      setIsLanguageError(false)
+      setIsDateError(false)
+      setIsDateNotValid(false)
    }
 
    const handleEdit = async event => {
@@ -85,29 +94,32 @@ export default function UserProfile() {
          resetErrors()
          setIsUsernameError(true)
          return
-      } else if (checkLanguageLength(language)) {
-         resetErrors()
-         setIsLanguageError(true)
-         return
       } else if (!image) {
          resetErrors()
          setIsImageError(true)
          return
+      } else if (checkIfDateInFuture(birthDate)) {
+         resetErrors()
+         setIsDateError(true)
+         return
+      } else if (checkIfBirthDateValid(birthDate)) {
+         resetErrors()
+         setIsDateNotValid(true)
+         return
       }
       resetErrors()
 
-      const userData = new FormData()
-      userData.append("username", username)
-      userData.append("first_name", firstName)
-      userData.append("last_name", lastName)
-      userData.append("language", language)
-      userData.append("birth_date", birthDate)
-      userData.append("email", email)
-      userData.append("image", image)
+      const formData = new FormData()
+      formData.append("username", username)
+      formData.append("first_name", firstName)
+      formData.append("last_name", lastName)
+      formData.append("language", language)
+      formData.append("birth_date", birthDate)
+      formData.append("email", email)
+      formData.append("image", image)
+      setUserData(formData)
 
-      if (window.confirm("¿Está seguro de guardar los cambios? Se cerrará la sesión si decide continuar.")) {
-         updateUser(userData, loggedUser.token)
-      }
+      setOpenConfirmDialog(true)
    }
 
    const handleCancel = () => {
@@ -117,14 +129,23 @@ export default function UserProfile() {
    }
 
    const handleImageUpload = event => {
-      setImage(event.target.files[0])
-      setUploadedImage(URL.createObjectURL(event.target.files[0]))
+      const image = event.target.files[0]
+      if (checkIfImage(image)) {
+         event.target.value = null
+         setIsImageError(true)
+         return
+      }
+      setIsImageError(false)
+      setImage(image)
+      setUploadedImage(URL.createObjectURL(image))
    }
 
    return (
-      <form className="flex flex-col justify-center items-center gap-y-10 mt-10 mx-44 py-14 bg-white border rounded-lg" onSubmit={handleEdit}>
-         <div className="flex gap-x-20">
-            <div className="flex flex-col gap-y-6">
+      <form
+         className="flex flex-col justify-center items-center gap-y-10 mt-10 mx-2 md:mx-auto px-2 w-full md:w-fit py-14 bg-white border rounded-lg"
+         onSubmit={handleEdit}>
+         <div className="flex flex-col justify-center items-center gap-y-6 w-full px-4 md:px-16 md:flex-row md:gap-x-20">
+            <section className="flex flex-col items-center gap-y-6 w-full">
                <img
                   src={uploadedImage ?? image ?? defaultUserImage}
                   alt={`Foto de perfil del usuario ${username}`}
@@ -133,11 +154,11 @@ export default function UserProfile() {
                {isEditing && (
                   <div className="flex flex-col">
                      <input type="file" name="image" accept="image/*" onChange={handleImageUpload} className="block w-60 text-sm file:font-sans" />
-                     {isImageError && <p className="mx-auto text-red-500 text-xs">{errorMessages.imageNotUploaded}</p>}
+                     {isImageError && <p className="mx-auto text-red-500 text-xs">{errorMessages.imageNotValid}</p>}
                   </div>
                )}
-            </div>
-            <div className="flex flex-col gap-y-6">
+            </section>
+            <section className="flex flex-col gap-y-2 w-full md:gap-y-6">
                <UserProfileData
                   type={"text"}
                   formName={"username"}
@@ -148,7 +169,7 @@ export default function UserProfile() {
                   isError={isRequiredError || isUsernameError}
                   errorMessage={(isRequiredError && errorMessages.required) || (isUsernameError && errorMessages.usernameExists)}
                />
-               <div className="flex gap-x-4">
+               <section className="flex flex-col gap-y-2 md:flex-row md:gap-x-4">
                   <UserProfileData
                      type={"text"}
                      formName={"firstName"}
@@ -169,18 +190,40 @@ export default function UserProfile() {
                      isError={isRequiredError}
                      errorMessage={errorMessages.required}
                   />
-               </div>
-               <div className="flex gap-x-4">
-                  <UserProfileData
-                     type={"text"}
-                     formName={"language"}
-                     labelText={"Idioma:"}
-                     inputValue={language}
-                     isReadOnly={!isEditing}
-                     onChange={event => setLanguage(event.target.value)}
-                     isError={isLanguageError}
-                     errorMessage={errorMessages.languageLength}
-                  />
+               </section>
+               <section className="flex flex-col gap-y-2 md:flex-row md:gap-x-4">
+                  <div className="flex-col w-full">
+                     <label>Idioma:</label>
+                     <Popover open={isEditing && openLanguageSelector} onOpenChange={isEditing && setOpenLanguageSelector}>
+                        <PopoverTrigger asChild>
+                           <button className="flex items-center justify-between px-2 h-8 border rounded w-full">
+                              {language !== "" ? language : "Selecciona un idioma"}
+                              {isEditing && <ChevronUpDownIcon />}
+                           </button>
+                        </PopoverTrigger>
+                        <PopoverContent>
+                           <Command>
+                              <CommandInput placeholder="Buscar idioma..." />
+                              <CommandList>
+                                 <CommandEmpty>No se ha encontrado el idioma.</CommandEmpty>
+                                 <CommandGroup>
+                                    {languages.map((lang, index) => (
+                                       <CommandItem
+                                          key={index}
+                                          value={lang}
+                                          onSelect={currentLang => {
+                                             setLanguage(currentLang === language ? "" : currentLang)
+                                             setOpenLanguageSelector(false)
+                                          }}>
+                                          {lang}
+                                       </CommandItem>
+                                    ))}
+                                 </CommandGroup>
+                              </CommandList>
+                           </Command>
+                        </PopoverContent>
+                     </Popover>
+                  </div>
                   <UserProfileData
                      type={"date"}
                      formName={"birthDate"}
@@ -188,10 +231,14 @@ export default function UserProfile() {
                      inputValue={birthDate}
                      isReadOnly={!isEditing}
                      onChange={event => setBirthDate(event.target.value)}
-                     isError={isRequiredError}
-                     errorMessage={errorMessages.required}
+                     isError={isRequiredError || isDateError || isDateNotValid}
+                     errorMessage={
+                        (isRequiredError && errorMessages.required) ||
+                        (isDateError && errorMessages.dateInFuture) ||
+                        (isDateNotValid && errorMessages.birthDateNotValid)
+                     }
                   />
-               </div>
+               </section>
                <UserProfileData
                   type={"email"}
                   formName={"email"}
@@ -202,12 +249,22 @@ export default function UserProfile() {
                   isError={isRequiredError}
                   errorMessage={isRequiredError && errorMessages.required}
                />
-            </div>
+            </section>
          </div>
          {isEditing ? (
             <div className="flex gap-x-4">
                <UserProfileButton type={"submit"} text={"Guardar cambios"} icon={<CheckIcon />} />
                <UserProfileButton type={"button"} text={"Cancelar"} icon={<CrossIcon />} onClick={handleCancel} />
+               <CustomAlertDialog
+                  open={openConfirmDialog}
+                  setOpen={setOpenConfirmDialog}
+                  title={"¿Está seguro de guardar los cambios?"}
+                  handleAction={() => {
+                     updateUser(userData)
+                     setOpenConfirmDialog(false)
+                  }}>
+                  Le recordamos que si decide continuar se procedera a <span className="font-bold">cerrar la sesión</span>.
+               </CustomAlertDialog>
             </div>
          ) : (
             loggedUser.user.id === userId && (
