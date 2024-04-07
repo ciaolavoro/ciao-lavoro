@@ -86,7 +86,8 @@ export default function CreateService() {
             alert("Error al crear servicio. Por favor, intente de nuevo.")
          }
       } catch (error) {
-         alert(`Error al crear servicio: ${error}`)
+         alert("Ya tienes un servicio con la misma profesión. Por favor, intente de nuevo.")
+         // alert(`Error al crear servicio: ${error}`)
       }
    }
 
