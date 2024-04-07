@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"
 import { useAuthContext } from "./AuthContextProvider"
 import EyeIcon from "../icons/EyeIcon.jsx"
 import EyeSlashIcon from "../icons/EyeSlashIcon.jsx"
-
+import { useToast } from "../ui/use-toast"
 
 export default function LoginPage() {
    const [username, setUsername] = useState("")
@@ -14,6 +14,7 @@ export default function LoginPage() {
    const [passwordType, setPasswordType] = useState("password")
    const [passwordIcon, setPasswordIcon] = useState(<EyeSlashIcon />)
    const navigate = useNavigate()
+   const { toast } = useToast()
 
    if (loggedUser) {
       return <Navigate to="/" />
@@ -22,10 +23,13 @@ export default function LoginPage() {
    const loginUser = async (username, password) => {
       try {
          const res = await loginRequest(username, password)
-         console.log(res.status)
          if (res.status === "1") {
             login({ user: res.user, token: res.token })
             navigate("/")
+            toast({
+               title: "Inicio de sesión exitoso",
+               description: "El inicio de sesión se realizó correctamente. Bienvenido a CiaoLavoro.",
+            })
          } else {
             alert("Error en el inicio de sesión. Por favor, verifique su usuario y contraseña.")
          }
@@ -37,7 +41,6 @@ export default function LoginPage() {
    const handleSubmit = event => {
       event.preventDefault()
       loginUser(username, password)
-      
    }
 
    const togglePasswordVisibility = () => {
@@ -78,12 +81,9 @@ export default function LoginPage() {
                   </span>
                </div>
             </div>
-            <div>
-               <button type="submit" className="p-2 bg-orange-400 text-black rounded cursor-pointer font-inherit border-none">
-                  Iniciar sesión
-               </button>
-            </div>
-
+            <button type="submit" className="p-2 bg-orange-400 text-black rounded cursor-pointer font-inherit border-none">
+               Iniciar sesión
+            </button>
             <div className="flex flex-col items-center">
                <h3>¿Aún no estás registrado?</h3>
                <Link to="/register" className="text-orange-400 underline">
