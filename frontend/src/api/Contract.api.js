@@ -69,9 +69,8 @@ export async function handleContractPayment(contractId, token, returnURL) {
     try {
         const response = await fetchBackend(`/contracts/${contractId}/payment/`, options);
         const data = await response.json();
-        console.log(data)
         if (response.ok) {
-            return data; 
+            return data;
         }
     } catch (error) {
         console.error('Contract Payment error:', error);

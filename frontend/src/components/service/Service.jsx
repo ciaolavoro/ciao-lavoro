@@ -1,7 +1,7 @@
 import { useLoaderData, Link } from "react-router-dom"
 import { useState, useEffect } from "react"
 import { updateServiceRequest, getProfessionsList } from "../../api/Service.api"
-import { getContractByService } from "../../api/Contract.api";
+import { getContractByService } from "../../api/Contract.api"
 import ServiceData from "./ServiceData"
 import ServiceButton from "./ServiceButton"
 import PencilIcon from "../icons/PencilIcon"
@@ -37,16 +37,16 @@ export default function ServiceDetails() {
       }
       const fetchContracts = async () => {
          try {
-         const res = await getContractByService(service.id)
+            const res = await getContractByService(service.id)
             if (res.status === 200) {
-            const data = await res.json()
-            setContract(data)
+               const data = await res.json()
+               setContract(data)
             }
          } catch (error) {
             console.error("Failed to fetch contract", error)
          }
-         }
-         fetchContracts()
+      }
+      fetchContracts()
    }, [loggedUser, service.id])
 
    const [isEditing, setIsEditing] = useState(false)
@@ -143,34 +143,23 @@ export default function ServiceDetails() {
 
    return (
       <div className="my-10 lg:mx-40 md:mx-10 mx-1">
-
          <div className="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 justify-center items-center gap-y-10 my-10 lg:mx-10 md:mx-10 mx-1 bg-white border rounded-lg">
-
             {/* Imagen */}
             <section>
                <div className="lg:px-8 lg:py-8 md:px-8 md:py-4 p-1 w-65 flex flex-col items-center">
-
-                  <img
-                     src={`${service.user.image}` ?? DEFAULT_USER_IMG}
-                     className="w-72 h-72 lg:w-96 lg:h-96 object-cover rounded-xl"
-                  />
+                  <img src={`${service.user.image}` ?? DEFAULT_USER_IMG} className="w-72 h-72 lg:w-96 lg:h-96 object-cover rounded-xl" />
                   <div className="mt-4">
                      {loggedUser && loggedUser.user.username !== service.user.username && (
                         <LinkButtonContract url={`/contracts/create?service_id=${service.id}`} title="Crear un contrato" />
                      )}
-
-
                   </div>
-
                </div>
             </section>
-
 
             <section>
                {/*Datos*/}
                <form onSubmit={handleEdit}>
                   <div className="border bg-white shadow-md rounded-xl lg:m-8 md:m-4 m-1">
-
                      <div className="flex flex-col justify-center gap-y-6 px-8 py-3">
                         <ServiceData
                            type={"text"}
@@ -236,8 +225,6 @@ export default function ServiceDetails() {
                                     onChange={event => {
                                        if (loggedUser.user.username === service.user.username) {
                                           setIsActive(event.target.checked)
-                                       } else {
-                                          console.log("No tiene permisos para cambiar el estado del servicio.")
                                        }
                                     }}
                                     disabled={loggedUser && service.user ? loggedUser.user.username !== service.user.username : false}
@@ -264,10 +251,7 @@ export default function ServiceDetails() {
                <div className="border bg-white shadow-md rounded-xl lg:m-8 md:m-4 m-1">
                   <Jobs />
                </div>
-
             </section>
-
-
          </div>
          <div>
             <section>
@@ -278,17 +262,14 @@ export default function ServiceDetails() {
                      <>
                         {/* Verificar si el usuario actual ya ha dejado una reseña */}
                         {!service.reviews.some(review => review.user.username === loggedUser.user.username) && (
-                            
                            <>
                               {/* Verificar si el contrato asociado al servicio está finalizado */}
-                              {contract.estatus  === "Finalizado" ? (
+                              {contract.estatus === "Finalizado" ? (
                                  <Link to={`/review?service_id=${service.id}`}>
                                     <button className="bg-slate-300 rounded px-2 py-1 font-semibold flex">Añadir una nueva reseña</button>
                                  </Link>
-                              ) : (
-                                 // Si no hay contrato o no está finalizado, no mostrar el botón de reseña
-                                 null
-                              )}
+                              ) : // Si no hay contrato o no está finalizado, no mostrar el botón de reseña
+                              null}
                            </>
                         )}
                      </>
@@ -323,9 +304,7 @@ export default function ServiceDetails() {
                      <div className="w-full text-center py-4">Aún no hay opiniones para este servicio.</div>
                   )}
                </div>
-
             </section>
-
          </div>
       </div>
    )
