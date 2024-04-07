@@ -293,8 +293,8 @@ export default function ServiceDetails() {
                                                 </DialogDescription>
                                              </DialogHeader>
                                              <div className="grid gap-4 py-4">
-                                                <div className="grid grid-cols-4 items-center gap-4">
-                                                   <Label htmlFor="name" className="text-right">
+                                                <div className="grid grid-col-1 lg:grid-cols-2 md:grid-cols-2 gap-4">
+                                                   <Label htmlFor="name" className="text-left">
                                                       Puntos
                                                    </Label>
                                                    <Input
@@ -302,8 +302,9 @@ export default function ServiceDetails() {
                                                       value={points}
                                                       onChange={e => setPoints(e.target.value)}
                                                       className="col-span-3"
-                                                   />
-                                                   <DialogDescription>
+                                                   />                                                   
+                                                </div>
+                                                <DialogDescription>
                                                       {(tooManyPoints || positivePoints) && (
                                                       <div className="text-red-500">
                                                          {(tooManyPoints && errorMessages.tooManyPoints) ||
@@ -311,8 +312,6 @@ export default function ServiceDetails() {
                                                       </div>
                                                    )}
                                                    </DialogDescription>
-                                                   
-                                                </div>
                                                 <DialogFooter>
                                                    <PromotionButton
                                                       type={"submit"}
