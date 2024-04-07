@@ -6,13 +6,16 @@ import ServiceButton from "./ServiceButton"
 import PencilIcon from "../icons/PencilIcon"
 import CheckIcon from "../icons/CheckIcon"
 import LinkButtonContract from "./LinkButtonContract"
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "../ui/command"
-import ChevronUpDownIcon from "../icons/ChevronUpDownIcon"
 import CrossIcon from "../icons/CrossIcon"
 import { useAuthContext } from "../auth/AuthContextProvider"
-import { cities } from "@/utils/constants"
-import { checkIfEmpty, checkCityLength, checkExperienceNegative, errorMessages, checkExperienceYears } from "../../utils/validation"
+import {
+   checkIfEmpty,
+   checkCityLength,
+   checkExperienceNegative,
+   errorMessages,
+   checkExperienceYears,
+   checkOnlyCharactersInText,
+} from "../../utils/validation"
 import Jobs from "./Jobs"
 
 const DEFAULT_USER_IMG =
@@ -49,8 +52,8 @@ export default function ServiceDetails() {
    const [isRequiredExperienceError, setIsRequiredExperienceError] = useState(false)
    const [isBigExperienceError, setIsBigExperienceError] = useState(false)
    const [isCityError, setIsCityError] = useState(false)
+   const [isOnlyCharacters, setIsOnlyCharacters] = useState(false)
    const [isExperienceError, setIsExperienceError] = useState(false)
-   const [openCitySelector, setOpenCitySelector] = useState(false)
 
    const resetServiceData = () => {
       setCity(service.city)
@@ -83,6 +86,7 @@ export default function ServiceDetails() {
       setIsCityError(false)
       setIsExperienceError(false)
       setIsBigExperienceError(false)
+      setIsOnlyCharacters(false)
    }
 
    const handleEdit = async event => {
@@ -90,6 +94,10 @@ export default function ServiceDetails() {
 
       if (checkIfEmpty(city)) {
          setIsRequiredCityError(true)
+         return
+      } else if (checkOnlyCharactersInText(city)) {
+         resetErrors()
+         setIsOnlyCharacters(true)
          return
       } else if (checkIfEmpty(experience.toString())) {
          resetErrors()
@@ -177,53 +185,20 @@ export default function ServiceDetails() {
                               </select>
                            </div>
 
-                           <div className="flex-col w-full">
-                              <label>Ciudad:</label>
-                              <Popover open={isEditing && openCitySelector} onOpenChange={isEditing && setOpenCitySelector}>
-                                 <PopoverTrigger asChild>
-                                    <button className="flex items-center justify-between px-2 border rounded w-full">
-                                       {city !== "" ? city : "Selecciona una ciudad"}
-                                       {isEditing && <ChevronUpDownIcon />}
-                                    </button>
-                                 </PopoverTrigger>
-                                 <PopoverContent>
-                                    <Command>
-                                       <CommandInput placeholder="Buscar ciudad..." />
-                                       <CommandList>
-                                          <CommandEmpty>No se ha encontrado la ciudad.</CommandEmpty>
-                                          <CommandGroup>
-                                             {cities.map((lang, index) => (
-                                                <CommandItem
-                                                   key={index}
-                                                   value={lang}
-                                                   onSelect={currentLang => {
-                                                      setCity(currentLang === city ? "" : currentLang)
-                                                      setOpenCitySelector(false)
-                                                   }}
-                                                   isError={isRequiredCityError || isCityError}
-                                                   errorMessage={(isRequiredCityError && errorMessages.required) || (isCityError && errorMessages.cityLength)}
-                                                   >
-                                                   {lang}
-                                                </CommandItem>
-                                             ))}
-                                          </CommandGroup>
-                                       </CommandList>
-                                    </Command>
-                                 </PopoverContent>
-                              </Popover>
-                              
-                           </div>
-
-                           {/* <ServiceData
+                           <ServiceData
                               type={"text"}
                               formName={"city"}
                               labelText={"Ciudad:"}
                               inputValue={city}
                               isReadOnly={!isEditing}
                               onChange={event => setCity(event.target.value)}
-                              isError={isRequiredCityError || isCityError}
-                              errorMessage={(isRequiredCityError && errorMessages.required) || (isCityError && errorMessages.cityLength)}
-                           /> */}
+                              isError={isRequiredCityError || isCityError || isOnlyCharacters}
+                              errorMessage={
+                                 (isRequiredCityError && errorMessages.required) ||
+                                 (isCityError && errorMessages.cityLength) ||
+                                 (isOnlyCharacters && errorMessages.onlyCharacters)
+                              }
+                           />
 
                            <ServiceData
                               type={"number"}
