@@ -95,43 +95,50 @@ export default function Jobs() {
 
    return (
       <div className="flex flex-col gap-y-6 px-10 py-6">
-         <h2 className="text-3xl font-bold mb-4">Trabajos:</h2>
-         <div className="flex gap-20 ml-20">
-            
+
+         <div className="flex flex-col lg:flex-row md:flex-row gap-5">
+            <h2 className="text-3xl font-bold">Trabajos:</h2>
             {loggedUser && loggedUser.user.username === service.user.username && (
                <LinkButtonJob url={`/services/${service.id}/job/create`} title="Crear una trabajo" />
             )}
          </div>
-         {jobs.map((job, index) => (
-            <div key={index} className="w-90 border bg-white shadow-md rounded-xl m-8 pb-4">
-               <div className="flex flex-col gap-y-6 px-10 py-6">
-                  <JobData
-                     type={"text"}
-                     formName={`nameJob-${index}`}
-                     labelText={"Nombre:"}
-                     inputValue={job.name}
-                     isReadOnly={index !== editingJobId}
-                     onChange={event => handleJobInputChangeName(event.target.value, index)}
-                  />
-                  <JobData
-                     type={"number"}
-                     formName={`estimatedJobPrice-${index}`}
-                     labelText={"Precio estimado:"}
-                     inputValue={job.estimated_price}
-                     isReadOnly={index !== editingJobId}
-                     onChange={event => handleJobInputChangeEstimatedPrice(event.target.value, index)}
-                  />
-               </div>
-               {editingJobId === index ? (
-                  <div className="flex justify-center gap-x-4">
-                     <ServiceButton type={"button"} text={"Guardar cambios"} icon={<CheckIcon />} onClick={() => handleSaveJob(index, job.id)} />
-                     <ServiceButton type={"button"} text={"Cancelar"} icon={<CrossIcon />} onClick={() => handleCancelJob()} />
+         <div className="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2">
+            {jobs.map((job, index) => (
+               <div key={index} className="w-90 border bg-white shadow-md rounded-xl m-1 pb-4">
+                  <div className="flex flex-col gap-y-6 px-10 py-6">
+                     <JobData
+                        type={"text"}
+                        formName={`nameJob-${index}`}
+                        labelText={"Nombre:"}
+                        inputValue={job.name}
+                        isReadOnly={index !== editingJobId}
+                        onChange={event => handleJobInputChangeName(event.target.value, index)}
+                     />
+                     <JobData
+                        type={"number"}
+                        formName={`estimatedJobPrice-${index}`}
+                        labelText={"Precio estimado:"}
+                        inputValue={job.estimated_price}
+                        isReadOnly={index !== editingJobId}
+                        onChange={event => handleJobInputChangeEstimatedPrice(event.target.value, index)}
+                     />
                   </div>
-               ) : (
-                  <ServiceButton type={"button"} text={"Editar Trabajo"} icon={<PencilIcon />} onClick={() => setEditingJobId(index)} />
-               )}
-            </div>
-         ))}
+                  {editingJobId === index ? (
+                     <div className="flex justify-center gap-x-4">
+                        <ServiceButton type={"button"} text={"Guardar cambios"} icon={<CheckIcon />} onClick={() => handleSaveJob(index, job.id)} />
+                        <ServiceButton type={"button"} text={"Cancelar"} icon={<CrossIcon />} onClick={() => handleCancelJob()} />
+                     </div>
+                  ) : (
+                     loggedUser && loggedUser.user.username === service.user.username && (
+                        <ServiceButton type={"button"} text={"Editar Trabajo"} icon={<PencilIcon />} onClick={() => setEditingJobId(index)} />
+                     )
+                  )}
+               </div>
+            ))}
+         </div>
+
+
+
       </div>
    )
 }
