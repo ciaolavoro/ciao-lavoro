@@ -116,7 +116,7 @@ export default function ServiceDetails() {
       setPositivePoints(false)
       setTooManyPoints(false)
    }
-
+   
    const handleEdit = async event => {
       event.preventDefault()
 
@@ -171,7 +171,7 @@ export default function ServiceDetails() {
 
    const handlePayment = async (serviceId, token, points1) => {
       const returnURL = window.location.href
-      if (loggedUser.user.points < points1) {
+      if (service.user.points < points1) {
          setTooManyPoints(true)
          return
       } else if (points1 < 0) {
@@ -193,7 +193,6 @@ export default function ServiceDetails() {
          alert("Error al procesar la operación. Por favor, inténtelo de nuevo.")
       }
    }
-
    return (
       <div className="my-10 lg:mx-40 md:mx-10 mx-1">
          <div className="grid grid-cols-1 lg:grid-cols-2 md:grid-cols-2 justify-center items-center gap-y-10 my-10 lg:mx-10 md:mx-10 mx-1 bg-white border rounded-lg">
@@ -329,7 +328,7 @@ export default function ServiceDetails() {
                                           <DialogDescription>Los puntos descontarán dinero del precio final.</DialogDescription>
                                           <DialogDescription>
                                              {" "}
-                                             <strong>Tus puntos:</strong> {loggedUser.user.points}
+                                             <strong>Tus puntos:</strong> {service.user.points}
                                           </DialogDescription>
                                        </DialogHeader>
                                        <div className="grid gap-4 py-4">
