@@ -10,7 +10,7 @@ export function checkIfEmpty(text) {
 }
 
 export function checkOnlyCharactersInText(text) {
-    const onlyCharactersRegex = /^[a-zA-Z]+$/;
+    const onlyCharactersRegex = /^[a-zA-ZñÑáéíóúÁÉÍÓÚüÜç '`´]+$/;
     return !onlyCharactersRegex.test(text);
 }
 

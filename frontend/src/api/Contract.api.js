@@ -131,6 +131,15 @@ export const checkWorkerAssociation = async (serviceId) => {
         return true;
     }
 }
+export const getContractByService = async (id) => {
+    const options = {
+        method: 'Get',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    };
+    return fetchBackend(`/contracts/${id}/`, options);
+}
 
 export async function cancelContractStatus(contractId, description, token) {
     const options = {

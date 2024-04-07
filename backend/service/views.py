@@ -23,10 +23,14 @@ class ServiceList(generics.ListAPIView):
         services = Service.objects.all()
         search_profession = self.request.query_params.get('search_profession')
         search_city = self.request.query_params.get('search_city')
+        search_username = self.request.query_params.get('search_username')
         if search_profession:
             services = services.filter(profession=search_profession)
         if search_city:
             services = services.filter(city__icontains=search_city)
+        if search_username:
+            users = User.objects.filter(username__icontains=search_username)
+            services = services.filter(user__in = users)
         return services
 
     def get(self, request, *args, **kwargs):
@@ -151,6 +155,12 @@ class ReviewView(APIView):
         token_id = request.headers["Authorization"]
         token = get_object_or_404(Token, key = token_id.split()[-1])
         user = token.user
+
+        existing_review = Review.objects.filter(user=user, service = service)
+        if existing_review.exists():
+            return Response("Ya has dejado una reseña para este servicio", status=status.HTTP_400_BAD_REQUEST)
+        
+
         if review_data['description'] and review_data['description'].strip() != '':
             description = review_data['description'].strip()
         else:
