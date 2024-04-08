@@ -138,11 +138,8 @@ class ContractStatusEdit(APIView):
         token_id = request.headers['Authorization']
         token = get_object_or_404(Token, key=token_id.split()[-1])
         user = token.user
-        if contract.client != user and (status_num != 6 and status_num != 4):
-            raise PermissionDenied("No tienes permiso para editar un contrato que no te pertenece")
-        if contract.service.worker != user and (status_num != 2 and status_num != 3):
-            raise PermissionDenied("No tienes permiso para editar un contrato que no te pertenece")
-        if (not user.is_staff) and (status_num != 1 and status_num != 5):
+        if not ((contract.client == user and (status_num == 6 or status_num == 4)
+                 ) or (contract.service.user == user and (status_num == 2 or status_num == 3))):
             raise PermissionDenied("No tienes permiso para editar un contrato que no te pertenece")
         if status_num == 6:
             user.points = user.points + int(5*contract.cost)
