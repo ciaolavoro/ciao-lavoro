@@ -41,33 +41,33 @@ export function ContractCardWorker({ contract }) {
          alert("Error al actualizar el estado. Por favor, intente de nuevo.")
       }
    }
-
    const cancelContract = async (contractId, cancelationDescription, token) => {
       try {
-         const response = await cancelContractStatus(contractId, cancelationDescription, token)
-         if (response.ok) {
-            alert("Estado actualizado correctamente")
-            const refund = (await response.json()).refund
-            if (refund === "1") {
-               alert("Se devolverá el importe pagado")
-            } else {
-               alert("No se devolvera el importe")
-            }
-            window.location.reload()
-         } else {
-            alert("Error al actualizar el estado. Por favor, intente de nuevo.")
-         }
+          const response = await cancelContractStatus(contractId, cancelationDescription, token);
+          if (response.ok) {
+              alert('Estado actualizado correctamente');
+              const refund = (await response.json()).refund
+              if (refund==="0"){
+                  alert('No se devolvera el importe')
+              }else{
+                  alert("Se devolvera "+refund+ "€")
+              }
+              window.location.reload();
+          } else {
+              alert('Error al actualizar el estado. Por favor, intente de nuevo.');
+          }
       } catch (error) {
-         alert("Error al actualizar el estado. Por favor, intente de nuevo.")
+          alert('Error al actualizar el estado. Por favor, intente de nuevo.');
       }
-   }
-   // Recordatorio de los estados con su NUM:
-   // (1, "Negociacion"),
-   // (2, "Aceptado"),
-   // (3, "En proceso"),
-   // (4, "Finalizado"),
-   // (5, "Cancelado"),
-   // (6, "Pagado")
+  };
+      // Recordatorio de los estados con su NUM:
+  // (1, "Negociacion"),
+  // (2, "Aceptado"),
+  // (3, "En proceso"),
+  // (4, "Finalizado"),
+  // (5, "Cancelado"),
+  // (6, "Pagado")
+
 
    return (
       <div className={`max-w-md mx-auto my-2 border rounded-lg overflow-hidden p-6 ${getStatusColor(contract.estatus)}`}>
