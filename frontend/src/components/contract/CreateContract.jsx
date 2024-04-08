@@ -57,20 +57,29 @@ export default function CreateContract() {
             alert("El coste no puede ser negativo.")
             return
          }
+         if (cost > 100000) {
+            alert("El coste tiene que ser menor que 100000.")
+            return
+         }
+         if (/^\d+$/.test(description)) {
+            alert("La descripcion no puede contener solo numeros.")
+            return
+         }
          if (!isValidDateTimeFormat(startDate)) {
             alert("La fecha y hora de inicio tiene un formato incorrecto.")
             return
-         }if (!isValidDateTimeFormat(endDate)) {
-          alert("La fecha y hora de fin tiene un formato incorrecto.")
-          return 
          }
-         const startDateMin = startDate.getTime();
-         const endDateMin = endDate.getTime();
-         const timeDifferenceMin = endDateMin - startDateMin;
-         const timeDifferenceHours = timeDifferenceMin / (1000 * 60 );
-         if(timeDifferenceHours <= 60){
-          alert("La duracion del contrato tiene que ser mayor que 1 hora.")
-          return
+         if (!isValidDateTimeFormat(endDate)) {
+            alert("La fecha y hora de fin tiene un formato incorrecto.")
+            return
+         }
+         const startDateMin = startDate.getTime()
+         const endDateMin = endDate.getTime()
+         const timeDifferenceMin = endDateMin - startDateMin
+         const timeDifferenceHours = timeDifferenceMin / (1000 * 60)
+         if (timeDifferenceHours <= 60) {
+            alert("La duracion del contrato tiene que ser mayor que 1 hora.")
+            return
          }
 
          await createContract(token)
@@ -91,9 +100,9 @@ export default function CreateContract() {
 
    return (
       <form
-         className="flex flex-col justify-center items-center gap-y-4 mt-10 mx-auto w-3/4 md:w-1/2 lg:w-1/3 py-10 bg-white border rounded-lg"
+         className="flex flex-col gap-y-4 mt-10 mx-auto w-11/12 sm:w-3/4 lg:w-1/2 xl:w-1/3 py-10 px-6 bg-white border rounded-lg"
          onSubmit={handleSubmit}>
-         <h1 className="text-3xl font-bold">Creación del Contrato</h1>
+         <h1 className="text-3xl font-bold text-center mb-4">Creación del Contrato</h1>
          <div className="flex flex-col gap-y-4 w-full px-4">
             <label>Descripción:</label>
             <textarea
