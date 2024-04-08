@@ -13,3 +13,5 @@ tzdata==2023.4
 Pillow==10.2.0
 stripe==8.8.0
 requests==2.31.0
+psycopg2-binary==2.9.9
+dj-database-url==2.1.0
