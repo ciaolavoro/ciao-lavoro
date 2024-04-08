@@ -6,6 +6,7 @@ import EyeIcon from "../icons/EyeIcon.jsx"
 import EyeSlashIcon from "../icons/EyeSlashIcon.jsx"
 import { languages } from "@/utils/constants"
 import { checkIfImage } from "@/utils/validation"
+import { useToast } from "../ui/use-toast"
 
 export default function RegisterPage() {
    const [username, setUsername] = useState("")
@@ -20,11 +21,12 @@ export default function RegisterPage() {
    const [confirmPasswordType, setConfirmPasswordType] = useState("password")
    const [passwordIcon, setPasswordIcon] = useState(EyeSlashIcon)
    const [confirmPasswordIcon, setConfirmPasswordIcon] = useState(EyeSlashIcon)
-   const navigate = useNavigate()
    const [uploadedImage, setUploadedImage] = useState(null)
    const [termsAccepted, setTermsAccepted] = useState(false)
    const [errorMessage, setErrorMessage] = useState("")
    const [language, setLanguage] = useState("")
+   const navigate = useNavigate()
+   const { toast } = useToast()
 
    const handleUsernameChange = e => {
       const value = e.target.value
@@ -59,11 +61,19 @@ export default function RegisterPage() {
          alert("El apellido no puede estar vacío")
          return
       }
+      if (password !== confirmPassword) {
+         alert("Las contraseñas no coinciden")
+         return
+      }
       try {
          const response = await registerRequest(username, password, firstName, lastName, email, image, birthdate, language)
          if (response.status == 500) {
             alert("El email no es valido")
          } else {
+            toast({
+               title: "Registro de usuario exitoso",
+               description: "Te has registrado correctamente. Bienvenido a CiaoLavoro.",
+            })
             navigate("/")
          }
       } catch (error) {
@@ -109,154 +119,158 @@ export default function RegisterPage() {
                className="bg-white border max-w-full max-h-48 object-cover rounded-lg shadow-md"
             />
          </div>
-         <div className="bg-white p-8 border rounded-lg shadow-lg w-full max-w-xl">
+         <div className="bg-white px-8 py-6 border rounded-lg shadow-lg w-full max-w-xl">
             <form onSubmit={handleSubmit} className="flex flex-col items-center space-y-4">
-               <div className="flex flex-wrap justify-between w-full">
-                  <div className="w-full flex justify-center">
+               <section className="flex flex-col items-center md:justify-between w-full">
+                  <section className="w-full flex justify-center">
                      <label htmlFor="image-upload" className="block">
-                        <div className="flex items-center w-[150px] h-[60px] text-[16px] bg-green-500 text-black px-4 py-2 mb-2 rounded-lg hover:cursor-pointer hover:bg-green-600 transition">
+                        <div className="flex items-center w-[150px] h-[60px] text-[16px] bg-green-500 text-black px-4 py-2 mb-2 rounded-lg shadow hover:cursor-pointer hover:bg-green-600 transition">
                            Selecciona tu foto de perfil
                            <input type="file" id="image-upload" accept="image/" onChange={handleImageChange} style={{ display: "none" }} />
                         </div>
                      </label>
-                  </div>
-                  <div className="w-1/2 pr-4">
-                     <label className="block">
-                        Nombre de usuario:
-                        <input
-                           type="text"
-                           value={username}
-                           onChange={handleUsernameChange}
-                           required
-                           minLength={3}
-                           maxLength={30}
-                           placeholder="Nombre de usuario"
-                           className="w-full p-2 mb-4 border border-gray-300 rounded-md"
-                        />
-                     </label>
-                     <label className="block">
-                        Nombre:
-                        <input
-                           type="text"
-                           value={firstName}
-                           onChange={e => setName(e.target.value)}
-                           required
-                           minLength={3}
-                           maxLength={30}
-                           placeholder="Nombre"
-                           className="w-full p-2 mb-4 border border-gray-300 rounded-md"
-                        />
-                     </label>
-                     <label className="block">
-                        Apellido:
-                        <input
-                           type="text"
-                           value={lastName}
-                           onChange={e => setLastName(e.target.value)}
-                           required
-                           minLength={3}
-                           maxLength={60}
-                           placeholder="Apellido"
-                           className="w-full p-2 mb-4 border border-gray-300 rounded-md"
-                        />
-                     </label>
-                     <label className="block">
-                        Idioma:
-                        <select
-                           value={language}
-                           onChange={e => setLanguage(e.target.value)}
-                           required
-                           className="w-full p-2 mb-4 border border-gray-300 rounded-md">
-                           {languages.map((lang, index) => (
-                              <option key={index}>{lang}</option>
-                           ))}
-                        </select>
-                     </label>
-                  </div>
-                  <div className="w-1/2 pr-4">
-                     <label className="block">
-                        Contraseña:
-                        <div className="relative">
+                  </section>
+                  <section className="flex flex-col md:flex-row">
+                     <section className="w-full md:w-1/2 md:pr-4">
+                        <label className="block">
+                           Nombre de usuario:
                            <input
-                              type={passwordType}
-                              value={password}
-                              onChange={e => setPassword(e.target.value)}
+                              type="text"
+                              value={username}
+                              onChange={handleUsernameChange}
                               required
-                              minLength={8}
-                              pattern="^(?=.*[a-zñ])(?=.*[A-ZÑ])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&_ñÑ]+$"
-                              placeholder="Contraseña"
+                              minLength={3}
+                              maxLength={30}
+                              placeholder="Nombre de usuario"
                               className="w-full p-2 mb-4 border border-gray-300 rounded-md"
-                              title="La contraseña debe tener mínimo una mayúscula, una minúscula, un número y un caracter especial(?=.*[@$!%*?&_)"
                            />
-                           <span className="absolute right-0 top-2 pr-2 cursor-pointer" onClick={togglePasswordVisibility}>
-                              {passwordIcon}
-                           </span>
-                        </div>
-                     </label>
-                     <label className="block">
-                        Confirmar Contraseña:
-                        <div className="relative">
+                        </label>
+                        <label className="block">
+                           Nombre:
                            <input
-                              type={confirmPasswordType}
-                              value={confirmPassword}
-                              onChange={e => setConfirmPassword(e.target.value)}
+                              type="text"
+                              value={firstName}
+                              onChange={e => setName(e.target.value)}
                               required
-                              minLength={8}
-                              pattern={password}
-                              placeholder="Confirmar Contraseña"
+                              minLength={3}
+                              maxLength={30}
+                              placeholder="Nombre"
                               className="w-full p-2 mb-4 border border-gray-300 rounded-md"
-                              title="Debe coincidir con la contraseña"
                            />
-                           <span className="absolute right-0 top-2 pr-2 cursor-pointer" onClick={toggleConfirmPasswordVisibility}>
-                              {confirmPasswordIcon}
-                           </span>
-                        </div>
-                     </label>
-                     <label className="block">
-                        Email:
-                        <input
-                           type="email"
-                           value={email}
-                           onChange={e => setEmail(e.target.value)}
-                           required
-                           placeholder="Email"
-                           className="w-full p-2 mb-4 border border-gray-300 rounded-md"
-                        />
-                     </label>
-                     <label className="block">
-                        Fecha de nacimiento:
-                        <input
-                           type="date"
-                           value={birthdate}
-                           onChange={e => setBirthdate(e.target.value)}
-                           required
-                           max={maxDate.toISOString().split("T")[0]}
-                           min={minDate.toISOString().split("T")[0]}
-                           placeholder="Fecha de nacimiento"
-                           className="w-full p-2 mb-4 border border-gray-300 rounded-md"
-                        />
-                     </label>
-                  </div>
-               </div>
+                        </label>
+                        <label className="block">
+                           Apellido:
+                           <input
+                              type="text"
+                              value={lastName}
+                              onChange={e => setLastName(e.target.value)}
+                              required
+                              minLength={3}
+                              maxLength={60}
+                              placeholder="Apellido"
+                              className="w-full p-2 mb-4 border border-gray-300 rounded-md"
+                           />
+                        </label>
+                        <label className="block">
+                           Idioma:
+                           <select
+                              value={language}
+                              onChange={e => setLanguage(e.target.value)}
+                              required
+                              className="w-full p-2 mb-4 border border-gray-300 rounded-md">
+                              {languages.map((lang, index) => (
+                                 <option key={index}>{lang}</option>
+                              ))}
+                           </select>
+                        </label>
+                     </section>
+                     <section className="w-full md:w-1/2 md:pr-4">
+                        <label className="block">
+                           Contraseña:
+                           <div className="relative">
+                              <input
+                                 type={passwordType}
+                                 value={password}
+                                 onChange={e => setPassword(e.target.value)}
+                                 required
+                                 minLength={8}
+                                 pattern="^(?=.*[a-zñ])(?=.*[A-ZÑ])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&_ñÑ]+$"
+                                 placeholder="Contraseña"
+                                 className="w-full p-2 mb-4 border border-gray-300 rounded-md"
+                                 title="La contraseña debe tener mínimo una mayúscula, una minúscula, un número y un caracter especial(?=.*[@$!%*?&_)"
+                              />
+                              <span className="absolute right-0 top-2 pr-2 cursor-pointer" onClick={togglePasswordVisibility}>
+                                 {passwordIcon}
+                              </span>
+                           </div>
+                        </label>
+                        <label className="block">
+                           Confirmar Contraseña:
+                           <div className="relative">
+                              <input
+                                 type={confirmPasswordType}
+                                 value={confirmPassword}
+                                 onChange={e => setConfirmPassword(e.target.value)}
+                                 required
+                                 minLength={8}
+                                 placeholder="Confirmar Contraseña"
+                                 className="w-full p-2 mb-4 border border-gray-300 rounded-md"
+                                 title="Debe coincidir con la contraseña"
+                              />
+                              <span className="absolute right-0 top-2 pr-2 cursor-pointer" onClick={toggleConfirmPasswordVisibility}>
+                                 {confirmPasswordIcon}
+                              </span>
+                           </div>
+                        </label>
+                        <label className="block">
+                           Email:
+                           <input
+                              type="email"
+                              value={email}
+                              onChange={e => setEmail(e.target.value)}
+                              required
+                              placeholder="Email"
+                              className="w-full p-2 mb-4 border border-gray-300 rounded-md"
+                           />
+                        </label>
+                        <label className="block">
+                           Fecha de nacimiento:
+                           <input
+                              type="date"
+                              value={birthdate}
+                              onChange={e => setBirthdate(e.target.value)}
+                              required
+                              max={maxDate.toISOString().split("T")[0]}
+                              min={minDate.toISOString().split("T")[0]}
+                              placeholder="Fecha de nacimiento"
+                              className="w-full p-2 mb-4 border border-gray-300 rounded-md"
+                           />
+                        </label>
+                     </section>
+                  </section>
+               </section>
                <div className="flex justify-center mt-8">
                   <input type="checkbox" id="terms-accept" checked={termsAccepted} onChange={e => setTermsAccepted(e.target.checked)} />
                   <label htmlFor="terms-accept" className="ml-2">
-                     Aceptar Términos de uso y Condiciones. Lea
+                     Aceptar
+                     <span>
+                        <Link
+                           to={"https://ciaolavoro.github.io/landingpage/terminosyCondciones.html"}
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           className="ml-2 text-green-500 underline">
+                           Términos de uso y Condiciones
+                        </Link>
+                     </span>
+                     .
                   </label>
-                  <Link
-                     to={"https://ciaolavoro.github.io/landingpage/terminosyCondciones.html"}
-                     target="_blank"
-                     rel="noopener noreferrer"
-                     className="ml-2 text-green-500 underline">
-                     Aquí
-                  </Link>
                </div>
                {errorMessage && <p className="text-red-500">{errorMessage}</p>}
 
                <div className="flex justify-center mt-8">
                   <button
                      type="submit"
-                     className="px-6 py-2 bg-orange-400 text-black font-medium rounded-lg hover:cursor-pointer hover:bg-orange-500 transition">
+                     className="px-6 py-2 bg-orange-400 text-black font-medium rounded-lg shadow hover:cursor-pointer hover:bg-orange-500 transition">
                      Registrarse
                   </button>
                </div>
