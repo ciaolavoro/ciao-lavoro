@@ -6,6 +6,7 @@ export function ContractCardClient({ contract }) {
 
     const { loggedUser } = useAuthContext();
 
+
     const formatDate = (dateString) => {
         const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false };
         return new Date(dateString).toLocaleDateString(undefined, options);
@@ -85,6 +86,7 @@ export function ContractCardClient({ contract }) {
     // (4, "Finalizado"),
     // (5, "Cancelado"),
     // (6, "Pagado")
+    // (7, "Pagado y canjeado puntos")  debe implementarse este estado por parte de back
 
     return (
         <a>
@@ -129,6 +131,7 @@ export function ContractCardClient({ contract }) {
             )}
 
                 </div>
+                
             </div>
         </a>
 

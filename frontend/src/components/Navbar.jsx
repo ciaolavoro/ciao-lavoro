@@ -8,6 +8,8 @@ import UserProfileIcon from "./icons/UserProfileIcon"
 import BriefcaseIcon from "./icons/BriefcaseIcon"
 import DocumentIcon from "./icons/DocumentIcon"
 import LogoutIcon from "./icons/LogoutIcon"
+import { getUserPoints } from "../api/user.api";
+import  { useState } from 'react';
 import SearchIcon from "./icons/SearchIcon"
 import InfoIcon from "./icons/InfoIcon"
 import LoginIcon from "./icons/LoginIcon"
@@ -18,6 +20,20 @@ const navItemsStyle = "px-2 py-1 font-semibold rounded hover:bg-gray-300 transit
 export default function Navbar() {
    const { logout, loggedUser } = useAuthContext()
    const navigate = useNavigate()
+   const [userPoints, setUserPoints] = useState(null);
+
+   const userPointsOnNavbar = async () => {
+      try{
+         const points = await getUserPoints(loggedUser.token);
+         setUserPoints(points);
+      }catch(error){
+         console.error('Error al mostrar los puntos: ',error)
+      }
+   }
+
+   if(loggedUser && !userPoints){
+      userPointsOnNavbar();
+   }
 
    const navItems = [
       {
@@ -72,6 +88,7 @@ export default function Navbar() {
                   <img src={ciaoLavoroLogo} alt="Logo de CiaoLavoro" className="w-8 object-cover rounded" />
                </NavLink>
             </section>
+            
 
             <section className="hidden md:flex">
                {" "}
@@ -85,6 +102,11 @@ export default function Navbar() {
                         <li className={navItemsStyle}>{item.title}</li>
                      </NavLink>
                   ))}
+                  {loggedUser && (
+                     <li className="flex items-center">
+                        <span className="mr-1">Puntos: {userPoints}</span>
+                     </li>
+                  )}
                   <NavbarMenu navItemsUser={navItemsUser} handleLogout={handleLogout} />
                </ul>
             </section>
