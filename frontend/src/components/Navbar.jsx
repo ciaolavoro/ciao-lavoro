@@ -10,6 +10,10 @@ import DocumentIcon from "./icons/DocumentIcon"
 import LogoutIcon from "./icons/LogoutIcon"
 import { getUserPoints } from "../api/user.api";
 import  { useState } from 'react';
+import SearchIcon from "./icons/SearchIcon"
+import InfoIcon from "./icons/InfoIcon"
+import LoginIcon from "./icons/LoginIcon"
+import MenuIcon from "./icons/MenuIcon"
 
 const navItemsStyle = "px-2 py-1 font-semibold rounded hover:bg-gray-300 transition"
 
@@ -36,12 +40,14 @@ export default function Navbar() {
          id: 1,
          title: "Buscar Servicios",
          out: false,
+         icon: <SearchIcon />,
          path: "/services",
       },
       {
          id: 2,
          title: "Sobre nosotros",
          out: true,
+         icon: <InfoIcon />,
          path: "https://ciaolavoro.github.io/landingpage",
       },
    ]
@@ -74,111 +80,6 @@ export default function Navbar() {
       }
    }
 
-   const renderNabarResponsive = () => {
-      if (loggedUser) {
-         return (
-            <DropdownMenu>
-               <DropdownMenuTrigger>
-                  <li className="rounded-full hover:shadow-lg transition">
-                     <img
-                        src={`${BACKEND_URL}${loggedUser.user.image}` || defaultUserImage}
-                        alt="Imagen de perfil"
-                        className="w-8 h-8 object-cover rounded-full"
-                     />
-                  </li>
-               </DropdownMenuTrigger>
-               <DropdownMenuContent>
-                  {navItems.map(item => (
-                     <Link key={item.id} to={item.path}>
-                        <DropdownMenuItem>
-                           <span className="ml-1">{item.title}</span>
-                        </DropdownMenuItem>
-                     </Link>
-                  ))}
-
-                  {navItemsUser.map(item => (
-                     <Link key={item.id} to={item.path}>
-                        <DropdownMenuItem>
-                           {item.icon}
-                           <span className="ml-1">{item.title}</span>
-                        </DropdownMenuItem>
-                     </Link>
-                  ))}
-                  <DropdownMenuItem onClick={handleLogout}>
-                     <LogoutIcon />
-                     <span className="ml-1">Cerrar sesión</span>
-                  </DropdownMenuItem>
-               </DropdownMenuContent>
-            </DropdownMenu>
-         )
-      } else {
-         return (
-            <DropdownMenu>
-               <DropdownMenuTrigger>
-                  <li className="flex items-center px-3 py-2 border rounded text-gray-500 border-gray-300 hover:text-gray-700 hover:border-gray-700 focus:outline-none focus:text-gray-700 focus:border-gray-700">
-                     <svg className="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <title>Menu</title>
-                        <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
-                     </svg>
-                  </li>
-               </DropdownMenuTrigger>
-               <DropdownMenuContent>
-                  {navItems.map(item => (
-                     <Link key={item.id} to={item.path}>
-                        <DropdownMenuItem>
-                           <span className="ml-1">{item.title}</span>
-                        </DropdownMenuItem>
-                     </Link>
-                  ))}
-                  <Link to="/login">
-                     <DropdownMenuItem>
-                        <span className="ml-1">Iniciar Sesión</span>
-                     </DropdownMenuItem>
-                  </Link>
-               </DropdownMenuContent>
-            </DropdownMenu>
-         )
-      }
-   }
-
-   const renderLoginOrLogout = () => {
-      if (loggedUser) {
-         return (
-            <DropdownMenu>
-               <DropdownMenuTrigger>
-                  <li className="rounded-full hover:shadow-lg transition">
-                     <img
-                        src={`${BACKEND_URL}${loggedUser.user.image}` || defaultUserImage}
-                        alt="Imagen de perfil"
-                        className="w-8 h-8 object-cover rounded-full"
-                     />
-                  </li>
-               </DropdownMenuTrigger>
-               <DropdownMenuContent>
-                  {navItemsUser.map(item => (
-                     <Link key={item.id} to={item.path}>
-                        <DropdownMenuItem>
-                           {item.icon}
-                           <span className="ml-1">{item.title}</span>
-                        </DropdownMenuItem>
-                     </Link>
-                  ))}
-                  <DropdownMenuItem onClick={handleLogout}>
-                     <LogoutIcon />
-                     <span className="ml-1">Cerrar sesión</span>
-                  </DropdownMenuItem>
-               </DropdownMenuContent>
-            </DropdownMenu>
-         )
-      } else {
-         return (
-            <NavLink to="/login" className={({ isActive }) => (isActive ? "bg-gray-300 rounded" : "")}>
-               <li className={navItemsStyle}>Iniciar sesión</li>
-            </NavLink>
-         )
-      }
-   }
-
    return (
       <header>
          <nav className="flex justify-between items-center sticky w-full h-16 px-6 bg-white border border-gray-300 z-10">
@@ -201,20 +102,129 @@ export default function Navbar() {
                         <li className={navItemsStyle}>{item.title}</li>
                      </NavLink>
                   ))}
-                  {renderLoginOrLogout()}
                   {loggedUser && (
                      <li className="flex items-center">
                         <span className="mr-1">Puntos: {userPoints}</span>
                      </li>
                   )}
+                  <NavbarMenu navItemsUser={navItemsUser} handleLogout={handleLogout} />
                </ul>
             </section>
 
             <section className="md:hidden">
-               {" "}
-               <ul>{renderNabarResponsive()}</ul>
+               <ul>
+                  <ResponsiveNavbarMenu navItemsUser={navItemsUser} navItems={navItems} handleLogout={handleLogout} />
+               </ul>
             </section>
          </nav>
       </header>
+   )
+}
+
+function ResponsiveNavbarMenu({ navItemsUser, navItems, handleLogout }) {
+   const { loggedUser } = useAuthContext()
+
+   return (
+      <>
+         {loggedUser ? (
+            <DropdownMenu>
+               <DropdownMenuTrigger>
+                  <li className="rounded-full hover:shadow-lg transition">
+                     <img
+                        src={`${BACKEND_URL}${loggedUser.user.image}` || defaultUserImage}
+                        alt="Imagen de perfil"
+                        className="w-8 h-8 object-cover rounded-full"
+                     />
+                  </li>
+               </DropdownMenuTrigger>
+               <DropdownMenuContent>
+                  {navItemsUser.map(item => (
+                     <Link key={item.id} to={item.path}>
+                        <DropdownMenuItem>
+                           {item.icon}
+                           <span className="ml-1">{item.title}</span>
+                        </DropdownMenuItem>
+                     </Link>
+                  ))}
+                  {navItems.map(item => (
+                     <Link key={item.id} to={item.path} target={item.out ? "_blank" : ""}>
+                        <DropdownMenuItem>
+                           {item.icon}
+                           <span className="ml-1">{item.title}</span>
+                        </DropdownMenuItem>
+                     </Link>
+                  ))}
+                  <DropdownMenuItem onClick={handleLogout}>
+                     <LogoutIcon />
+                     <span className="ml-1">Cerrar sesión</span>
+                  </DropdownMenuItem>
+               </DropdownMenuContent>
+            </DropdownMenu>
+         ) : (
+            <DropdownMenu>
+               <DropdownMenuTrigger>
+                  <li className="flex items-center px-3 py-2 border rounded text-gray-500 border-gray-300 hover:text-gray-700 hover:border-gray-700 focus:outline-none focus:text-gray-700 focus:border-gray-700">
+                     <MenuIcon />
+                  </li>
+               </DropdownMenuTrigger>
+               <DropdownMenuContent>
+                  <Link to="/login">
+                     <DropdownMenuItem>
+                        <LoginIcon />
+                        <span className="ml-1">Iniciar Sesión</span>
+                     </DropdownMenuItem>
+                  </Link>
+                  {navItems.map(item => (
+                     <Link key={item.id} to={item.path} target={item.out ? "_blank" : ""}>
+                        <DropdownMenuItem>
+                           {item.icon}
+                           <span className="ml-1">{item.title}</span>
+                        </DropdownMenuItem>
+                     </Link>
+                  ))}
+               </DropdownMenuContent>
+            </DropdownMenu>
+         )}
+      </>
+   )
+}
+
+function NavbarMenu({ navItemsUser, handleLogout }) {
+   const { loggedUser } = useAuthContext()
+
+   return (
+      <>
+         {loggedUser ? (
+            <DropdownMenu>
+               <DropdownMenuTrigger>
+                  <li className="rounded-full hover:shadow-lg transition">
+                     <img
+                        src={`${BACKEND_URL}${loggedUser.user.image}` || defaultUserImage}
+                        alt="Imagen de perfil"
+                        className="w-8 h-8 object-cover rounded-full"
+                     />
+                  </li>
+               </DropdownMenuTrigger>
+               <DropdownMenuContent>
+                  {navItemsUser.map(item => (
+                     <Link key={item.id} to={item.path}>
+                        <DropdownMenuItem>
+                           {item.icon}
+                           <span className="ml-1">{item.title}</span>
+                        </DropdownMenuItem>
+                     </Link>
+                  ))}
+                  <DropdownMenuItem onClick={handleLogout}>
+                     <LogoutIcon />
+                     <span className="ml-1">Cerrar sesión</span>
+                  </DropdownMenuItem>
+               </DropdownMenuContent>
+            </DropdownMenu>
+         ) : (
+            <NavLink to="/login" className={({ isActive }) => (isActive ? "bg-gray-300 rounded" : "")}>
+               <li className={navItemsStyle}>Iniciar sesión</li>
+            </NavLink>
+         )}
+      </>
    )
 }

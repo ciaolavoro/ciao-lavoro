@@ -141,9 +141,11 @@ export default function UserProfile() {
    }
 
    return (
-      <form className="flex flex-col justify-center items-center gap-y-10 mt-10 mx-44 py-14 bg-white border rounded-lg" onSubmit={handleEdit}>
-         <div className="flex gap-x-20">
-            <section className="flex flex-col gap-y-6">
+      <form
+         className="flex flex-col justify-center items-center gap-y-10 mt-10 mx-2 md:mx-auto px-2 w-full md:w-fit py-14 bg-white border rounded-lg"
+         onSubmit={handleEdit}>
+         <div className="flex flex-col justify-center items-center gap-y-6 w-full px-4 md:px-16 md:flex-row md:gap-x-20">
+            <section className="flex flex-col items-center gap-y-6 w-full">
                <img
                   src={uploadedImage ?? image ?? defaultUserImage}
                   alt={`Foto de perfil del usuario ${username}`}
@@ -156,7 +158,7 @@ export default function UserProfile() {
                   </div>
                )}
             </section>
-            <div className="flex flex-col gap-y-6">
+            <section className="flex flex-col gap-y-2 w-full md:gap-y-6">
                <UserProfileData
                   type={"text"}
                   formName={"username"}
@@ -167,7 +169,7 @@ export default function UserProfile() {
                   isError={isRequiredError || isUsernameError}
                   errorMessage={(isRequiredError && errorMessages.required) || (isUsernameError && errorMessages.usernameExists)}
                />
-               <section className="flex gap-x-4">
+               <section className="flex flex-col gap-y-2 md:flex-row md:gap-x-4">
                   <UserProfileData
                      type={"text"}
                      formName={"firstName"}
@@ -189,12 +191,12 @@ export default function UserProfile() {
                      errorMessage={errorMessages.required}
                   />
                </section>
-               <section className="flex gap-x-4">
+               <section className="flex flex-col gap-y-2 md:flex-row md:gap-x-4">
                   <div className="flex-col w-full">
                      <label>Idioma:</label>
                      <Popover open={isEditing && openLanguageSelector} onOpenChange={isEditing && setOpenLanguageSelector}>
                         <PopoverTrigger asChild>
-                           <button className="flex items-center justify-between px-2 border rounded w-full">
+                           <button className="flex items-center justify-between px-2 h-8 border rounded w-full">
                               {language !== "" ? language : "Selecciona un idioma"}
                               {isEditing && <ChevronUpDownIcon />}
                            </button>
@@ -247,7 +249,7 @@ export default function UserProfile() {
                   isError={isRequiredError}
                   errorMessage={isRequiredError && errorMessages.required}
                />
-            </div>
+            </section>
          </div>
          {isEditing ? (
             <div className="flex gap-x-4">

@@ -24,6 +24,7 @@
 | 26/03/2024 | 1.4   | Modificacion de la politica de clockify para las theory pills             |
 | 28/03/2024 | 1.5   | Modificacion de la politica de clockify e Issues para documentacion             |
 | 04/04/2024 | 2.0   | Versión Sprint 3, añadido el caso de tareas de asignación grupal y la política de comunicación           |
+| 07/04/2024 | 2.1   | Actualización con la nueva politica para ramas de docs y los mensajes de fix         |
 
 ## 1. Estrategia de ramas:
 El proyecto contendrá dos ramas principales: main y develop.
@@ -47,6 +48,12 @@ El trabajo de las funcionalidades se realizarán en sus ramas de tarea individua
 completada se meterá en la rama de develop, y posteriormente una vez probado que develop funciona se hace merge
 de develop en main.
 
+- Rama Doc: Para la creación de ramas Doc, el patrón correspondiente será: **Doc - Nombre del documento o modificación/Z**, donde Z es el número de la issue de Github relacionada (sin el hashtag). El nombre del documento debe ser breve y conciso si es posible. 
+
+El trabajo de las funcionalidades se realizarán en sus ramas de tarea individuales, una vez que una feature esté
+completada se meterá en la rama de develop, y posteriormente una vez probado que develop funciona se hace merge
+de develop en main.
+
 ## 2. Política de pull request:
 Al completar una funcionalidad en una rama de tareas, los desarrolladores involucrados revisarán que el
 funcionamiento es óptimo y funcional.<br>
@@ -65,9 +72,12 @@ El título de las Pull request debe seguir la siguiente estructura:
 **Task Y.X - Nombre de la tarea/Z DONE**, donde Y es el sprint, X es el número asignado a la tarea y Z es el número de la
 issue relacionada (# no).<br>
 
-Y para los pull requests de ramas arreglo/fix, el patrón correspondiente será: **Fix Y.X - Nombre del arreglo/Z FIXED**,
+Y para los pull requests de ramas arreglo/fix, el patrón correspondiente será: **Fix Y.X - Nombre del arreglo/Z DONE**,
 donde Y es el sprint, X es el número asignado a la tarea y Z el número de la issue relacionada (# no).
 En caso de Hotfix, el patrón correspondiente será: **Hotfix Y.X - Nombre del arreglo/Z FIXED**, donde Y es el sprint, X es el número asignado a la tarea y Z el número de la issue relacionada (# nº). 
+
+Para los pull requests de las ramas docs, el patrón es:  **Doc - Nombre del documento o modificacion/Z DONE**,
+donde Z es el número de la issue relacionada (# no).
 
 ## 3. Política del tablero:
 A continuación, se explicará la política que se va a seguir durante el desarrollo de la aplicación para el tablero
@@ -119,6 +129,10 @@ En caso de que el cambio arregle una funcionalidad ya existente y sea un hotfix,
 Ejemplo: Hotfix 14 - Arreglada sincronización usuario. #27
 <br>
 
+En caso de ser una tarea relacionada con un documento:
+- **Doc - [Nombre del documento o modificacion] #[No de issue]**
+Ejemplo: Doc - Guia de usuario actualización Sprint 2. #23
+<br>
 Es importante tener en cuenta que cuando se arregle una funcionalidad también será necesario crear su rama
 y tarea correspondiente, para más información sobre la ramificación puede consultar el apartado de
 Estrategia de ramas. Los commits solo se realizarán en las ramas correspondientes a las tareas o
@@ -303,7 +317,7 @@ documentacion, fix, despliegue, desarrollo, etc). <br>
 Con las issues de fix/arreglos y las de hotfix la estructura y procedimiento es igual, pero en lugar de poner Task se pone Fix o Hotfix.
 <br>
 
-Si la issue es para un **documento** no se debe hacer uso del formato Task, para ello seguiremos el siguiente formato: "Doc - Nombre del documento".
+Si la issue es para un **documento** no se debe hacer uso del formato Task, para ello seguiremos el siguiente formato: "Doc - Nombre del documento o modificación".
 
 Además, las Issues se gestionarán de la siguiente forma en el tablero de GitHub:
 <br>

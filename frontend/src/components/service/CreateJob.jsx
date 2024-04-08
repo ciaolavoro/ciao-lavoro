@@ -7,7 +7,8 @@ export default function CreateService() {
    const [nameJob, setNameJob] = useState("")
    const [estimated_price, setEstimated_price] = useState("")
    const [serviceId, setServiceId] = useState(null)
-   const [errorMessage, setErrorMessage] = useState("")
+   const [errorNameMessage, setErrorNameMessage] = useState("")
+   const [errorPriceMessage, setErrorPriceMessage] = useState("")
    const { loggedUser } = useAuthContext()
    const navigate = useNavigate()
 
@@ -35,16 +36,31 @@ export default function CreateService() {
 
    const handleSubmit = event => {
       event.preventDefault()
-      if (!nameJob.trim() || !estimated_price) {
-         setErrorMessage("Todos los campos son obligatorios y el precio no puede estar en blanco.")
+      if (!nameJob.trim()) {
+         setErrorNameMessage("El nombre es obligatorio.")
+         return
+      }if (/^\d+$/.test(nameJob)) {
+         setErrorNameMessage("El nombre del trabajo no puede tener solo numeros.")
+         return
+      }if(!estimated_price){
+         setErrorPriceMessage("El precio es obligatorio.")
          return
       }
       if (Number(estimated_price) <= 0) {
-         setErrorMessage("El precio debe ser positivo.")
+         setErrorPriceMessage("El precio debe ser positivo.")
+         return
+      }
+      if (Number(estimated_price) >= 100000) {
+         setErrorPriceMessage("El precio debe ser menor que 100000.")
+         return
+      }
+      if (nameJob.length >= 100) {
+         setErrorNameMessage("El nombre del trabajo no puede tener mas de 100 caracteres.")
          return
       }
       createJob(nameJob, Number(estimated_price), serviceId, loggedUser.token)
-      setErrorMessage("")
+      setErrorNameMessage("")
+      setErrorPriceMessage("")
    }
 
    return (
@@ -56,6 +72,7 @@ export default function CreateService() {
                   <label>Nombre:</label>
                   <input type="text" name="nameJob" value={nameJob} onChange={e => setNameJob(e.target.value)} className="px-2 py-1 border rounded" />
                </div>
+               {errorNameMessage && <p className="text-red-500">{errorNameMessage}</p>}
                <div className="flex flex-col gap-2">
                   <label>Precio estimado:</label>
                   <input
@@ -66,7 +83,7 @@ export default function CreateService() {
                      className="px-2 py-1 border rounded"
                   />
                </div>
-               {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+               {errorPriceMessage && <p className="text-red-500">{errorPriceMessage}</p>}
                <button type="submit" className="bg-orange-300 rounded px-3 py-1 font-semibold">
                   Crear Trabajo
                </button>

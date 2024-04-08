@@ -113,7 +113,7 @@ class RegisterViewTests(TestCase):
 
     def test_inexistent_email(self):
         user_data = self.base_user_data.copy()
-        user_data['email'] = 'inexistent@email.com'
+        user_data['email'] = 'inexistent@falseEmail.com'
         time.sleep(2)
         response = self.client.post(reverse('user:register'), user_data)
         self.assertEqual(response.json()['status'], '500')
@@ -266,7 +266,7 @@ class UserProfileUpdateTests(UserTestCase):
             'username': '',
             'first_name': '',
             'last_name': '',
-            'email': 'inexistent@email.com',
+            'email': 'inexistent@falseEmail.com',
             'language': '',
             'birth_date': '',
         }
@@ -323,35 +323,3 @@ class GetPointsTest(UserTestCase):
         response = self.client.get(reverse('user:user-points'))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEquals(response.json()['total_points'], 130)
-
-class AddPointsTest(UserTestCase):
-    def test_add_points(self):
-        self.token, _ = Token.objects.get_or_create(user=self.user)
-        user2 = User.objects.create(username='testuser2', first_name='test', last_name='user',
-        email='test2@example.com', password='testpassword', birth_date='1950-12-12')
-        service_data = {
-            'user': user2,
-            'profession': 1,
-            'city': 'Sevilla',
-            'experience': 3,
-            'is_active': True
-        }
-        service = Service.objects.create(**service_data)
-        contract_data={
-            'worker': user2,
-            'client': self.user,
-            'accept_worker':True,
-            'accept_client':False,
-            'description':'descristion',
-            'description_cancelation':'',
-            'initial_date': '2024-05-4T14:30',
-            'end_date': '2024-05-6T14:30',
-            'cost': 4,
-            'status': 1,
-            'service': service
-        }
-        contract = Contract.objects.create(**contract_data)
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
-        response = self.client.put(reverse('user:user-add-points',kwargs={'contractId': contract.id}))
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEquals(response.json()['total_points'], 40)

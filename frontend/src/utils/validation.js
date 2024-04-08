@@ -10,7 +10,7 @@ export function checkIfEmpty(text) {
 }
 
 export function checkOnlyCharactersInText(text) {
-    const onlyCharactersRegex = /^[a-zA-Z]+$/;
+    const onlyCharactersRegex = /^[a-zA-ZñÑáéíóúÁÉÍÓÚüÜç '`´]+$/;
     return !onlyCharactersRegex.test(text);
 }
 
@@ -57,6 +57,8 @@ export const errorMessages = {
     onlyCharacters: "Este campo solo puede contener letras.",
     dateInFuture: "La fecha no puede estar en el futuro.",
     birthDateNotValid: "Debes tener más de 16 años y menos de 80 años.",
+    tooManyPoints: "Por favor, introduzca una cantidad de puntos que tengas disponibles.",
+    positivePoints: "Por favor, introduzca un número de puntos positivos.",
 }
 
 function getAge(date) {

@@ -65,10 +65,10 @@ export function ContractCardClient({ contract }) {
             if (response.ok) {
                 alert('Estado actualizado correctamente');
                 const refund = (await response.json()).refund
-                if (refund==="1"){
-                    alert('Se reembolsará el importe pagado (Si no se había realizado el pago, no se devolverá nada)')
-                }else{
+                if (refund==="0"){
                     alert('No se reembolsará el importe pagado')
+                }else{
+                    alert("Se devolvera "+refund+ "€")
                 }
                 window.location.reload();
             } else {
