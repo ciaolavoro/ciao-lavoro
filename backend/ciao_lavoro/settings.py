@@ -95,12 +95,29 @@ WSGI_APPLICATION = 'ciao_lavoro.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+DATABASE_PASSWORD = env('DATABASE_PASSWORD')
+
+
+if DEBUG:
+    #Configuración Base de Datos Local (SQLite)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    #Configuración Base de Datos Render (PostgreSQL)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'ciaolavoro_database',
+            'USER': 'ciaolavoro_database_user',
+            'PASSWORD': DATABASE_PASSWORD,
+            'HOST': 'dpg-co9r2d4f7o1s739dgafg-a',
+            'PORT': '5432',
+        }
+    }
 
 
 # Password validation
