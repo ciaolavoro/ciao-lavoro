@@ -106,7 +106,8 @@ if DEBUG:
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
-else:
+
+if not DEBUG:
     #Configuración Base de Datos Render (PostgreSQL)
     DATABASES = {
         'default': {
