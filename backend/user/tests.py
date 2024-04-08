@@ -113,7 +113,7 @@ class RegisterViewTests(TestCase):
 
     def test_inexistent_email(self):
         user_data = self.base_user_data.copy()
-        user_data['email'] = 'inexistent@email.com'
+        user_data['email'] = 'inexistent@falseEmail.com'
         time.sleep(2)
         response = self.client.post(reverse('user:register'), user_data)
         self.assertEqual(response.json()['status'], '500')
@@ -266,7 +266,7 @@ class UserProfileUpdateTests(UserTestCase):
             'username': '',
             'first_name': '',
             'last_name': '',
-            'email': 'inexistent@email.com',
+            'email': 'inexistent@falseEmail.com',
             'language': '',
             'birth_date': '',
         }
