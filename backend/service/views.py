@@ -89,7 +89,7 @@ class JobView(APIView):
         estimated_price = job_data['estimated_price']
         if estimated_price == '':
             estimated_price = 10
-        if not isinstance(estimated_price, int):
+        if not isinstance(estimated_price, float):
             raise ValidationError('El precio estimado debe ser un número')
         job = Job.objects.create(service=service, name=name, estimated_price=estimated_price)
         serializer = JobSerializer(job, many=False)
@@ -115,7 +115,7 @@ class JobView(APIView):
         new_estimated_price = job_data['estimated_price']
         if new_estimated_price == '':
             new_estimated_price = 10
-        if not isinstance(new_estimated_price, int):
+        if not isinstance(new_estimated_price, float):
             raise ValidationError('El precio estimado debe ser un número')
         job.name = new_name
         job.estimated_price = new_estimated_price
