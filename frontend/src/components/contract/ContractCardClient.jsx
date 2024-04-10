@@ -3,10 +3,8 @@ import { updateContractStatus, cancelContractStatus } from "../../api/Contract.a
 import { useAuthContext } from "../auth/AuthContextProvider"
 import { useState } from "react"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
-import WalletIcon from "../icons/WalletIcon"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import PromotionButton from "../service/PromotionButton"
 import { errorMessages } from "@/utils/validation"
 
 export function ContractCardClient({ contract }) {
@@ -144,7 +142,12 @@ export function ContractCardClient({ contract }) {
                   <div className="pt-4">
                      <Dialog>
                         <DialogTrigger asChild>
-                           <PromotionButton type={"button"} text={"Pagar Servicio"} icon={<WalletIcon />} />
+                           <button
+                                    className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mt-4"
+                                    onClick={() => handlePayment(contract.id, loggedUser.token, points)}>
+                                    Pagar Contrato
+                           </button>
+                     
                         </DialogTrigger>
                         <DialogContent className="sm:max-w-[425px]">
                            <DialogHeader>
@@ -185,7 +188,7 @@ export function ContractCardClient({ contract }) {
             <div className="flex justify-center items-center">
                {(contract.estatus === "Negociacion" || contract.estatus === "Aceptado" || contract.estatus === "Pagado") && (
                   <button
-                     className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mt-4"
+                     className="bg-rose-500 hover:bg-rose-700 text-white font-bold py-2 px-4 rounded mt-4"
                      onClick={() => {
                         let cancelationDescription = prompt("Por favor, introduzca un motivo para la cancelación: (Obligatorio)")
                         while (cancelationDescription !== null && !cancelationDescription.trim()) {

@@ -106,7 +106,7 @@ export function ContractCardWorker({ contract }) {
 
          {(contract.estatus === "Negociacion" || contract.estatus === "Aceptado" || contract.estatus === "Pagado") && (
             <button
-               className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mt-4 mr-3"
+               className="bg-rose-500 hover:bg-rose-700 text-white font-bold py-2 px-4 rounded mt-4 mr-3"
                onClick={() => {
                   let cancelationDescription = prompt("Por favor, introduzca un motivo para la cancelación: (Obligatorio)")
                   while (cancelationDescription !== null && !cancelationDescription.trim()) {
