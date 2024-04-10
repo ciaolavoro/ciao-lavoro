@@ -70,6 +70,7 @@ export const getAllServices = async () => {
     return fetchBackend(`/service`, options);
 }
 
+
 export const getAllServicesPromoted = async () => {
 
 
@@ -81,6 +82,19 @@ export const getAllServicesPromoted = async () => {
     };
 
     return fetchBackend(`/service/promoted`, options);
+}
+
+export const getAllServicesPopular = async () => {
+
+
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    };
+
+    return fetchBackend(`/service/rated`, options);
 }
 
 export const createServiceRequest = async (email, profession, city, experience, token) => {
