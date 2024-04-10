@@ -46,7 +46,6 @@ export function ContractCardClient({ contract }) {
       try {
          const response = await updateContractStatus(contractId, statusNum, token)
          if (response.ok) {
-            alert("Estado actualizado correctamente")
             window.location.reload()
          } else {
             alert("Error al actualizar el estado. Por favor, intente de nuevo.")
@@ -85,7 +84,6 @@ export function ContractCardClient({ contract }) {
       try {
          const response = await cancelContractStatus(contractId, cancelationDescription, token)
          if (response.ok) {
-            alert("Estado actualizado correctamente")
             const refund = (await response.json()).refund
             if (refund === "0") {
                alert("No se reembolsará el importe pagado")
@@ -147,6 +145,7 @@ export function ContractCardClient({ contract }) {
                   </button>
                )}
             </div>
+
             <div className="flex justify-center">
                {contract.estatus === "Aceptado" && (
                   <div className="pt-4">

@@ -32,7 +32,6 @@ export function ContractCardWorker({ contract }) {
       try {
          const response = await updateContractStatus(contractId, statusNum, token)
          if (response.ok) {
-            alert("Estado actualizado correctamente")
             window.location.reload()
          } else {
             alert("Error al actualizar el estado. Por favor, intente de nuevo.")
@@ -45,7 +44,6 @@ export function ContractCardWorker({ contract }) {
       try {
           const response = await cancelContractStatus(contractId, cancelationDescription, token);
           if (response.ok) {
-              alert('Estado actualizado correctamente');
               const refund = (await response.json()).refund
               if (refund==="0"){
                   alert('No se devolvera el importe')
