@@ -5,7 +5,7 @@ from .models import Contract
 class UserServiceSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ['username', 'image']
+        fields = ['username', 'image', 'points']
 
 class ContractSerializer(serializers.HyperlinkedModelSerializer):
     client = UserServiceSerializer()

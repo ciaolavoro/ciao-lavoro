@@ -56,14 +56,14 @@ export async function updateContractStatus(contractId, statusNum, token) {
     }
 }
 
-export async function handleContractPayment(contractId, token, returnURL) {
+export async function handleContractPayment(contractId, token, returnURL, points) {
     const options = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Token ${token}`,
         },
-        body: JSON.stringify({ returnURL }),
+        body: JSON.stringify({ returnURL, points }),
     };
 
     try {
