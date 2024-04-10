@@ -288,9 +288,9 @@ class UserHasService(APIView):
         data = {'user_state': state}
         return JsonResponse(data)
     
-class   PromotionPayment(APIView):
+class PromotionPayment(APIView):
     @authentication_classes([TokenAuthentication])
-    def put(self, request, service_id):
+    def post(self, request, service_id):
         service = get_object_or_404(Service, pk = service_id)
         token_id = self.request.headers['Authorization']
         returnURL = request.data.get('returnURL')
@@ -330,14 +330,32 @@ class   PromotionPayment(APIView):
                     }],
                 mode = 'payment',
                 customer_email = user.email,
-                success_url = returnURL,
+                success_url = returnURL + '?session_id={CHECKOUT_SESSION_ID}',
+                cancel_url = returnURL,
             )
-            service.is_promoted=date.today()
-            service.save()
             return JsonResponse({'sessionUrl': session.url, 'price': price.unit_amount})
         except stripe.error.StripeError as e:
             error_msg = str(e)
             return Response({'Error al completar el pago': error_msg}, status=status.HTTP_400_BAD_REQUEST)
+        
+class PromoteService(APIView):
+    def put(self, request, service_id):
+        service = get_object_or_404(Service, pk = service_id)
+        session_id = request.data.get('session_id', None)
+        if not session_id:
+            return Response('session_id is required for completing the payment', status=status.HTTP_400_BAD_REQUEST)
+        try:
+            stripe.api_key = settings.STRIPE_SECRET_KEY
+            session = stripe.checkout.Session.retrieve(session_id)
+        except stripe.error.StripeError as e:
+            error_msg = str(e)
+            return Response({'StripeError': error_msg}, status=status.HTTP_400_BAD_REQUEST)
+        if session.payment_status != 'paid':
+            return Response('Payment for the session is not completed', status=status.HTTP_400_BAD_REQUEST)
+        service.is_promoted=date.today()
+        service.save()
+        serializer = ServiceSerializer(service, many=False,context ={'request': request})
+        return Response(serializer.data)
         
 class AllServiceInPromotion(APIView):
     serializer_class = ServiceSerializer
@@ -357,4 +375,3 @@ class MostRatedServices(APIView):
         serializer = self.serializer_class(ratedService, many=True, context ={'request': request})
         response_data = {"ratedServices": serializer.data}
         return Response(response_data, status=status.HTTP_200_OK)
-
