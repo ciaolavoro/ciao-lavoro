@@ -47,6 +47,7 @@ export function ContractCardClient({ contract }) {
          const response = await updateContractStatus(contractId, statusNum, token)
          if (response.ok) {
             alert("Estado actualizado correctamente")
+            window.location.reload()
          } else {
             alert("Error al actualizar el estado. Por favor, intente de nuevo.")
          }
@@ -137,17 +138,25 @@ export function ContractCardClient({ contract }) {
                </p>
             )}
 
+            <div className="flex justify-center items-center">
+               {contract.estatus === "En proceso" && (
+                  <button
+                     className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mt-4 self-center"
+                     onClick={() => updateStatus(contract.id, 4, loggedUser.token)}>
+                     Trabajo terminado
+                  </button>
+               )}
+            </div>
             <div className="flex justify-center">
                {contract.estatus === "Aceptado" && (
                   <div className="pt-4">
                      <Dialog>
                         <DialogTrigger asChild>
                            <button
-                                    className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mt-4"
-                                    onClick={() => handlePayment(contract.id, loggedUser.token, points)}>
-                                    Pagar Contrato
+                              className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mt-4"
+                              onClick={() => handlePayment(contract.id, loggedUser.token, points)}>
+                              Pagar Contrato
                            </button>
-                     
                         </DialogTrigger>
                         <DialogContent className="sm:max-w-[425px]">
                            <DialogHeader>
