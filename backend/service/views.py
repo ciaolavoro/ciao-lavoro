@@ -348,3 +348,13 @@ class AllServiceInPromotion(APIView):
         serializer = self.serializer_class(promotedService, many=True, context ={'request': request})
         response_data = {"promotedServices": serializer.data}
         return Response(response_data, status=status.HTTP_200_OK)
+    
+class MostRatedServices(APIView):
+    serializer_class = ServiceSerializer
+    def get(self, request):
+        allService = Service.objects.all()
+        ratedService = sorted(allService, key = Service.rating, reverse=True)
+        serializer = self.serializer_class(ratedService, many=True, context ={'request': request})
+        response_data = {"ratedServices": serializer.data}
+        return Response(response_data, status=status.HTTP_200_OK)
+
