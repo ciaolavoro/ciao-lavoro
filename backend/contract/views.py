@@ -142,19 +142,6 @@ class ContractStatusEdit(APIView):
                  ) or (contract.service.user == user and (status_num == 2 or status_num == 3))):
             raise PermissionDenied("No tienes permiso para editar un contrato que no te pertenece")
         if status_num == 6:
-            
-            session_id = request.data.get('session_id', None)
-            if not session_id:
-                return Response('session_id is required for completing the payment', status=status.HTTP_400_BAD_REQUEST)
-            try:
-                stripe.api_key = settings.STRIPE_SECRET_KEY
-                session = stripe.checkout.Session.retrieve(session_id)
-            except stripe.error.StripeError as e:
-                error_msg = str(e)
-                return Response({'StripeError': error_msg}, status=status.HTTP_400_BAD_REQUEST)
-            if session.payment_status != 'paid':
-                return Response('Payment for the session is not completed', status=status.HTTP_400_BAD_REQUEST)
-
             user.points = user.points + int(5*contract.cost)
             user.save()
         contract.status = status_num
@@ -262,8 +249,7 @@ class ContractPayment(APIView):
                     }],
                 mode = 'payment',
                 customer_email = user.email,
-                success_url = returnURL + '?session_id={CHECKOUT_SESSION_ID}',
-                cancel_url = returnURL,
+                success_url = returnURL,
             )
             return JsonResponse({'sessionUrl': session.url, 'price': price.unit_amount})
         except stripe.error.StripeError as e:
