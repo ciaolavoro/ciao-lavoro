@@ -39,10 +39,12 @@ export default function CreateService() {
       if (!nameJob.trim()) {
          setErrorNameMessage("El nombre es obligatorio.")
          return
-      }if (/^\d+$/.test(nameJob)) {
+      }
+      if (/^\d+$/.test(nameJob)) {
          setErrorNameMessage("El nombre del trabajo no puede tener solo numeros.")
          return
-      }if(!estimated_price){
+      }
+      if (!estimated_price) {
          setErrorPriceMessage("El precio es obligatorio.")
          return
       }
@@ -56,6 +58,10 @@ export default function CreateService() {
       }
       if (nameJob.length >= 100) {
          setErrorNameMessage("El nombre del trabajo no puede tener mas de 100 caracteres.")
+         return
+      }
+      if(Number.isInteger(Number(estimated_price))){
+         setErrorPriceMessage("El precio debe ser un numero con decimales.")
          return
       }
       createJob(nameJob, Number(estimated_price), serviceId, loggedUser.token)
