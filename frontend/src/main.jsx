@@ -18,6 +18,7 @@ import Review from "./components/service/Review.jsx"
 import ContractUser from "./components/contract/ContractUser.jsx"
 import ServiceUser from "./components/service/ServiceUser.jsx"
 import { fetchBackend } from "./utils/backendApi.js"
+import ServiceRoot from "./components/service/ServiceRoot.jsx"
 
 const router = createBrowserRouter([
    {
@@ -35,8 +36,12 @@ const router = createBrowserRouter([
          },
          {
             path: "services",
-            element: <Services />,
+            element: <ServiceRoot />,
             children: [
+               {
+                  index: true,
+                  element: <Services />,
+               },
                {
                   path: "user",
                   element: <ServiceUser />,
