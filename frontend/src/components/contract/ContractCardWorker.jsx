@@ -32,7 +32,6 @@ export function ContractCardWorker({ contract }) {
       try {
          const response = await updateContractStatus(contractId, statusNum, token)
          if (response.ok) {
-            alert("Estado actualizado correctamente")
             window.location.reload()
          } else {
             alert("Error al actualizar el estado. Por favor, intente de nuevo.")
@@ -45,7 +44,6 @@ export function ContractCardWorker({ contract }) {
       try {
           const response = await cancelContractStatus(contractId, cancelationDescription, token);
           if (response.ok) {
-              alert('Estado actualizado correctamente');
               const refund = (await response.json()).refund
               if (refund==="0"){
                   alert('No se devolvera el importe')
@@ -132,15 +130,6 @@ export function ContractCardWorker({ contract }) {
             </button>
          )}
 
-         <div className="flex justify-center items-center">
-            {contract.estatus === "En proceso" && (
-               <button
-                  className="bg-green-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mt-4 self-center"
-                  onClick={() => updateStatus(contract.id, 4, loggedUser.token)}>
-                  Trabajo terminado
-               </button>
-            )}
-         </div>
       </div>
    )
 }
