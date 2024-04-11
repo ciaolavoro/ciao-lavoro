@@ -60,10 +60,6 @@ export default function CreateService() {
          setErrorNameMessage("El nombre del trabajo no puede tener mas de 100 caracteres.")
          return
       }
-      if(Number.isInteger(Number(estimated_price))){
-         setErrorPriceMessage("El precio debe ser un numero con decimales.")
-         return
-      }
       createJob(nameJob, Number(estimated_price), serviceId, loggedUser.token)
       setErrorNameMessage("")
       setErrorPriceMessage("")

@@ -89,6 +89,8 @@ class JobView(APIView):
         estimated_price = job_data['estimated_price']
         if estimated_price == '':
             estimated_price = 10
+        if isinstance(estimated_price, int):
+            estimated_price = estimated_price + 0.001
         if not isinstance(estimated_price, float):
             raise ValidationError('El precio estimado debe ser un número')
         job = Job.objects.create(service=service, name=name, estimated_price=estimated_price)
@@ -115,10 +117,8 @@ class JobView(APIView):
         new_estimated_price = job_data['estimated_price']
         if new_estimated_price == '':
             new_estimated_price = 10
-        print('Precio estimado DDDDDDDDD: ', new_estimated_price)
         if isinstance(new_estimated_price, int):
             new_estimated_price = new_estimated_price + 0.001
-        print('Precio estimado FFFFFFFFFF: ', new_estimated_price)
         if not isinstance(new_estimated_price, float):
             raise ValidationError('El precio estimado debe ser un número')
         job.name = new_name
