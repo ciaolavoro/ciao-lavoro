@@ -37,7 +37,7 @@ El objetivo de este documento es presentar las contribuciones aportadas por nues
 
 
 ## CONTRIBUCIONES REALIZADAS
-Se han realizado las siguientes contribuciones a la base de conocimiento común durante el Sprint 2:
+Se han realizado las siguientes contribuciones a la base de conocimiento común durante el Sprint 3:
 - Feedback e información general para todos los grupos de mañana de la semana 7 de trabajo.
 - Feedback e información general para todos los grupos de mañana de la semana 8 de trabajo.
 - Feedback e información general para todos los grupos de mañana de la semana 9 de trabajo.
