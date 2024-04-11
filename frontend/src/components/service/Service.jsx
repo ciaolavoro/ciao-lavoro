@@ -345,7 +345,7 @@ export default function ServiceDetails() {
                            )}
                            </div>
 
-                           {!isPromoted && (
+                           {loggedUser && loggedUser.user.username == service.user.username && !isPromoted && (
                               <div className="pt-4">
                                  <Dialog>
                                     <DialogTrigger asChild>
