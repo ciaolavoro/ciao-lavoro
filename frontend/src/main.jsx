@@ -36,36 +36,43 @@ const router = createBrowserRouter([
          {
             path: "services",
             element: <Services />,
+            children: [
+               {
+                  path: "user",
+                  element: <ServiceUser />,
+               },
+               {
+                  path: ":serviceId",
+                  element: <Service />,
+                  loader: async ({ params }) => {
+                     return fetchBackend(`/service/${params.serviceId}`)
+                  },
+               },
+               {
+                  path: "create",
+                  element: <CreateService />,
+               },
+               {
+                  path: ":serviceId/job/create",
+                  element: <CreateJob />,
+                  loader: async ({ params }) => {
+                     return fetchBackend(`/service/${params.serviceId}/job/create`)
+                  },
+               },
+            ],
          },
          {
-            path: "/services/user",
-            element: <ServiceUser />,
-         },
-         {
-            path: "services/:serviceId",
-            element: <Service />,
-            loader: async ({ params }) => {
-               return fetchBackend(`/service/${params.serviceId}`)
-            },
-         },
-         {
-            path: "services/:serviceId/job/create",
-            element: <CreateJob />,
-            loader: async ({ params }) => {
-               return fetchBackend(`/service/${params.serviceId}/job/create`)
-            },
-         },
-         {
-            path: "service/create",
-            element: <CreateService />,
-         },
-         {
-            path: "contracts/create",
-            element: <CreateContract />,
-         },
-         {
-            path: "contracts/mylist",
-            element: <ContractUser />,
+            path: "contracts",
+            children: [
+               {
+                  path: "create",
+                  element: <CreateContract />,
+               },
+               {
+                  path: "mylist",
+                  element: <ContractUser />,
+               },
+            ],
          },
          {
             path: "register",

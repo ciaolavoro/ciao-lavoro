@@ -3,82 +3,52 @@ import BriefcaseIcon from "../icons/BriefcaseIcon"
 import EuroIcon from "../icons/EuroIcon"
 import BankNotesIcon from "../icons/BankNotesIcon"
 import { Link } from "react-router-dom"
-import { useEffect, useState } from "react"
-import ServiceCard2 from "../service/ServiceCardMain"
-import { getAllServicesPromoted, getAllServicesPopular } from "../../api/Service.api"
 import { useAuthContext } from "../auth/AuthContextProvider"
+import useGet from "@/hooks/useGet"
+import { BACKEND_URL } from "@/utils/backendApi"
+import ServiceCardSkeleton from "../service/ServiceCardSkeleton"
+import ServiceCard from "../service/ServiceCard"
+import SearchServices from "./SearchServices"
 
 export default function Home() {
-   const [servicesPop, setServicesPop] = useState([])
-   const [servicesProm, setServicesProm] = useState([])
-
-   useEffect(() => {
-      const getServicesPromoted = async () => {
-         try {
-            const res1 = await getAllServicesPromoted()
-            if (res1.status === 200) {
-               const data = await res1.json()
-               const list = data.promotedServices
-               const promotedServices = list.length <= 4 ? list : list.slice(0, 4)
-               setServicesProm(promotedServices)
-               
-            } else {
-               alert("Error al cargar los servicios")
-            }
-         } catch (error) {
-            alert("Error al cargar los servicios")
-         }
-      }
-  
-      const getPopularServices = async () => {
-          try {
-              const res2 = await getAllServicesPopular()
-              if (res2.status === 200) {
-                const data = await res2.json()
-                const list = data.ratedServices
-                const popularServices = list.length <= 4 ? list : list.slice(0, 4)
-                setServicesPop(popularServices)
-              } else {
-                alert("Error al cargar los servicios")
-              }
-          } catch (error) {
-              alert("Error al cargar los servicios")
-          }
-        }
-        getPopularServices()
-        getServicesPromoted()
-   }, [])
-
    const { loggedUser } = useAuthContext()
+   const { data: promotedServices, loading: loadingPromotingServices } = useGet(`${BACKEND_URL}/service/promoted`)
+   const { data: popularServices, loading: loadingPopularServices } = useGet(`${BACKEND_URL}/service/rated`)
+
    return (
-      <div>
+      <>
          {loggedUser ? (
             <>
-              <h1 className="text-4xl font-bold text-center mt-4 mb-4 lg:mt-10 lg:mb-10"> ¡Bienvenido {loggedUser.user.first_name} {loggedUser.user.last_name}! </h1>
-               
+               <h1 className="text-4xl font-bold text-center mt-4 mb-4 lg:mt-10 lg:mb-10">
+                  ¡Bienvenido {loggedUser.user.first_name} {loggedUser.user.last_name}!
+               </h1>
+
+               <SearchServices />
+
                <section>
-                  <h2 className="text-3xl font-bold text-center">Servicios promocionados:</h2>
+                  <h2 className="text-3xl font-bold text-center mt-4">Servicios promocionados:</h2>
                </section>
                <section className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5 px-5">
-                  {servicesProm
-                     .filter(service => service.is_active)
-                     .map(service => (
-                        <ServiceCard2 key={service.id} service={service} />
-                     ))}
+                  {loadingPromotingServices
+                     ? [...Array(4)].map((_, index) => <ServiceCardSkeleton key={index} />)
+                     : promotedServices.promotedServices
+                          .slice(0, 4)
+                          .filter(service => service.is_active)
+                          .map(service => <ServiceCard key={service.id} service={service} />)}
                </section>
 
                <section>
                   <h2 className="text-3xl font-bold text-center">Servicios más populares:</h2>
                </section>
-               <section className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5 px-5">
-                  {servicesPop
-                     .filter(service => service.is_active)
-                     .map(service => (
-                        <ServiceCard2 key={service.id} service={service} />
-                     ))}
+               <section className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 pb-8 px-5">
+                  {loadingPopularServices
+                     ? [...Array(4)].map((_, index) => <ServiceCardSkeleton key={index} />)
+                     : popularServices.ratedServices
+                          .slice(0, 4)
+                          .filter(service => service.is_active)
+                          .map(service => <ServiceCard key={service.id} service={service} />)}
                </section>
-               
-            </> 
+            </>
          ) : (
             <>
                <section>
@@ -95,7 +65,7 @@ export default function Home() {
                                     className="inline-block rounded border-2 border-neutral-50 px-6 pb-[6px] pt-2 text-s font-medium uppercase leading-normal text-neutral-50 transition duration-150 ease-in-out hover:border-neutral-300 hover:text-neutral-200 focus:border-neutral-300 focus:text-neutral-200 focus:outline-none focus:ring-0 active:border-neutral-300 active:text-neutral-200 dark:hover:bg-neutral-600 dark:focus:bg-neutral-600"
                                     data-twe-ripple-init
                                     data-twe-ripple-color="light">
-                                    Registrate!
+                                    ¡Registrese!
                                  </button>
                               </Link>
                            </div>
@@ -119,6 +89,6 @@ export default function Home() {
                </section>
             </>
          )}
-      </div>
+      </>
    )
 }
