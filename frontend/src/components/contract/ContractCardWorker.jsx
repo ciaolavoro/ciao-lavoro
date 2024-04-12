@@ -34,7 +34,6 @@ export function ContractCardWorker({ contract }) {
       try {
          const response = await updateContractStatus(contractId, statusNum, sessionId, token)
          if (response.ok) {
-            alert("Estado actualizado correctamente")
             window.location.reload()
          } else {
             alert("Error al actualizar el estado. Por favor, intente de nuevo.")
