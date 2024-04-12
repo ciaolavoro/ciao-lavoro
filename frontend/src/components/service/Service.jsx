@@ -16,6 +16,9 @@ import {
    errorMessages,
    checkExperienceYears,
    checkOnlyCharactersInText,
+   checkIfPointsPositive,
+   checkIfToManyPoints,
+   checkIfPointsMoreThanMoney,
 } from "../../utils/validation"
 import Jobs from "./Jobs"
 import PromotionButton from "./PromotionButton"
@@ -34,6 +37,15 @@ export default function ServiceDetails() {
    const [professions, setProfessions] = useState([])
    const [points, setPoints] = useState(0)
    const [contract, setContract] = useState([])
+   const [isPromoted, setIsPromoted] = useState(false)
+
+   //Hecho con Copilot
+   const hasPassedAMonth = (promotionDate) => {
+      const currentDate = new Date();
+      const promotionDateObj = new Date(promotionDate);
+      const oneMonth = 1000 * 60 * 60 * 24 * 30;
+      return currentDate - promotionDateObj > oneMonth;
+   }
 
    useEffect(() => {
       const fetchProfessions = async () => {
@@ -61,14 +73,20 @@ export default function ServiceDetails() {
          }
       }
       fetchContracts()
-   }, [loggedUser, service.id])
+
+      if (service.is_promoted) {
+         const hasPassed = hasPassedAMonth(service.is_promoted);
+         setIsPromoted(!hasPassed);
+      }else {
+         setIsPromoted(false);
+      }
+   }, [loggedUser, service.id, service.is_promoted])
 
    const [isEditing, setIsEditing] = useState(false)
    const [city, setCity] = useState(service.city)
    const [profession, setProfession] = useState(service.profession)
    const [experience, setExperience] = useState(service.experience)
    const [isActive, setIsActive] = useState(service.is_active)
-   const [isPromoted, setIsPromoted] = useState(service.is_promoted)
    const [isRequiredCityError, setIsRequiredCityError] = useState(false)
    const [isRequiredExperienceError, setIsRequiredExperienceError] = useState(false)
    const [isBigExperienceError, setIsBigExperienceError] = useState(false)
@@ -84,7 +102,12 @@ export default function ServiceDetails() {
       setProfession(service.profession)
       setExperience(service.experience)
       setIsActive(service.is_active)
-      setIsPromoted(service.is_promoted)
+      if (service.is_promoted) {
+         const hasPassed = hasPassedAMonth(service.is_promoted);
+         setIsPromoted(!hasPassed);
+      }else {
+         setIsPromoted(false);
+      }
    }
 
    const updateService = async (serviceId, serviceData, token) => {
@@ -173,15 +196,15 @@ export default function ServiceDetails() {
 
    const handlePayment = async (serviceId, token, points1) => {
       const returnURL = window.location.href
-      if (service.user.points < points1) {
+      const money = 4.99
+      if (checkIfToManyPoints(service.user.points, points1)) {
          setTooManyPoints(true)
          return
-      } else if (points1 < 0) {
+      } else if (checkIfPointsPositive(points1)) {
          resetPaymentErrors()
          setPositivePoints(true)
          return
-      // como maximo se puede descontar 449 puntos, es decir 4,49€. Porque hay un minimo de 0,50€ en Stripe
-      }else if (points1 > 449) { 
+      }else if (checkIfPointsMoreThanMoney(points1, money)) { 
          resetPaymentErrors()
          setNoMorePointsMoney(true)
          return
