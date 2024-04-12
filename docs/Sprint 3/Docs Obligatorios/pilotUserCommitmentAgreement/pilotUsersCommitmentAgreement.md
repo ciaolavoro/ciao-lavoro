@@ -6,7 +6,7 @@
 | FECHA      | VERSIÓN | DESCRIPCIÓN                                    |
 |------------|---------|------------------------------------------------|
 | 22/03/2024 | 0.0     | Creación del documento.                        |
-| 12/03/2024 | 1.0     | Actualización del documento/Recompensas        |
+| 12/04/2024 | 1.0     | Actualización del documento/Recompensas        |
 
 |ESTADO DEL DOCUMENTO|
 |--------------------|
