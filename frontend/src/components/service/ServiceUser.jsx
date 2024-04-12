@@ -35,7 +35,7 @@ export default function ServiceUser() {
          </section>
          <section>
             <div className="flex justify-center gap-x-8 my-4">
-               <LinkButton url="/service/create" title="Crear servicio" />
+               <LinkButton url="/services/create" title="Crear servicio" />
             </div>
          </section>
          <section className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">

@@ -89,7 +89,9 @@ class JobView(APIView):
         estimated_price = job_data['estimated_price']
         if estimated_price == '':
             estimated_price = 10
-        if not isinstance(estimated_price, int):
+        if isinstance(estimated_price, int):
+            estimated_price = estimated_price + 0.001
+        if not isinstance(estimated_price, float):
             raise ValidationError('El precio estimado debe ser un número')
         job = Job.objects.create(service=service, name=name, estimated_price=estimated_price)
         serializer = JobSerializer(job, many=False)
@@ -115,7 +117,9 @@ class JobView(APIView):
         new_estimated_price = job_data['estimated_price']
         if new_estimated_price == '':
             new_estimated_price = 10
-        if not isinstance(new_estimated_price, int):
+        if isinstance(new_estimated_price, int):
+            new_estimated_price = new_estimated_price + 0.001
+        if not isinstance(new_estimated_price, float):
             raise ValidationError('El precio estimado debe ser un número')
         job.name = new_name
         job.estimated_price = new_estimated_price
@@ -348,3 +352,13 @@ class AllServiceInPromotion(APIView):
         serializer = self.serializer_class(promotedService, many=True, context ={'request': request})
         response_data = {"promotedServices": serializer.data}
         return Response(response_data, status=status.HTTP_200_OK)
+    
+class MostRatedServices(APIView):
+    serializer_class = ServiceSerializer
+    def get(self, request):
+        allService = Service.objects.all()
+        ratedService = sorted(allService, key = Service.rating, reverse=True)
+        serializer = self.serializer_class(ratedService, many=True, context ={'request': request})
+        response_data = {"ratedServices": serializer.data}
+        return Response(response_data, status=status.HTTP_200_OK)
+

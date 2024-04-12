@@ -249,21 +249,20 @@ export default function ServiceDetails() {
                                  (isOnlyCharacters && errorMessages.onlyCharacters)
                               }
                            />
-
-                           <ServiceData
-                              type={"number"}
-                              formName={"experience"}
-                              labelText={"Experiencia:"}
-                              inputValue={experience}
-                              isError={isRequiredExperienceError || isExperienceError || isBigExperienceError}
-                              errorMessage={
-                                 (isRequiredExperienceError && errorMessages.required) ||
-                                 (isExperienceError && errorMessages.experienceNotValid) ||
-                                 (isBigExperienceError && errorMessages.tooMuchExperience)
-                              }
-                              isReadOnly={!isEditing}
-                              onChange={event => setExperience(event.target.value)}
-                           />
+                        <ServiceData
+                           type={"number"}
+                           formName={"experience"}
+                           labelText={"Experiencia(años):"}
+                           inputValue={experience}
+                           isError={isRequiredExperienceError || isExperienceError || isBigExperienceError}
+                           errorMessage={
+                              (isRequiredExperienceError && errorMessages.required) ||
+                              (isExperienceError && errorMessages.experienceNotValid) ||
+                              (isBigExperienceError && errorMessages.tooMuchExperience)
+                           }
+                           isReadOnly={!isEditing}
+                           onChange={event => setExperience(event.target.value)}
+                        />
 
                            <div className="grid grid-cols-2 gap-x-4 items-center w-full">
                               {loggedUser && loggedUser.user.username === service.user.username && (
@@ -316,7 +315,7 @@ export default function ServiceDetails() {
                            )}
                            </div>
 
-                           {!isPromoted && (
+                           {loggedUser && loggedUser.user.username == service.user.username && !isPromoted && (
                               <div className="pt-4">
                                  <Dialog>
                                     <DialogTrigger asChild>

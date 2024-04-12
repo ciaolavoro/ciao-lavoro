@@ -56,14 +56,14 @@ export async function updateContractStatus(contractId, statusNum, token) {
     }
 }
 
-export async function handleContractPayment(contractId, token, returnURL) {
+export async function handleContractPayment(contractId, token, returnURL, points) {
     const options = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Token ${token}`,
         },
-        body: JSON.stringify({ returnURL }),
+        body: JSON.stringify({ returnURL, points }),
     };
 
     try {
@@ -155,5 +155,21 @@ export async function cancelContractStatus(contractId, description, token) {
         return response;
     } catch (error) {
         console.error('Update Contract Status error:', error);
+    }
+}
+
+export const addPoints = async (contractId, token) => {
+    const options = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
+        },
+    };
+    try{
+        const response = await fetchBackend(`/user/addPoints/${contractId}/`, options);
+        return response;
+    }catch(error){
+        console.error('Error add points: ', error);
     }
 }
