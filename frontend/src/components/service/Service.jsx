@@ -249,36 +249,6 @@ export default function ServiceDetails() {
                                  (isOnlyCharacters && errorMessages.onlyCharacters)
                               }
                            />
-
-                        <div>
-                           <label htmlFor="profession" className="flex flex-col gap-x-4 text-1.7xl font-semibold">
-                              Profesión:{" "}
-                           </label>
-                           <select
-                              id="profession"
-                              name="profession"
-                              value={profession}
-                              disabled={!isEditing}
-                              onChange={event => setProfession(event.target.value)}
-                              className="pl-2 border rounded w-full md:w-94">
-                              <option>{profession}</option>
-                              {professions.map((prof, index) => (
-                                 <option key={index} value={prof.name}>
-                                    {prof.name}
-                                 </option>
-                              ))}
-                           </select>
-                        </div>
-                        <ServiceData
-                           type={"text"}
-                           formName={"city"}
-                           labelText={"Ciudad:"}
-                           inputValue={city}
-                           isReadOnly={!isEditing}
-                           onChange={event => setCity(event.target.value)}
-                           isError={isRequiredCityError || isCityError}
-                           errorMessage={(isRequiredCityError && errorMessages.required) || (isCityError && errorMessages.cityLength)}
-                        />
                         <ServiceData
                            type={"number"}
                            formName={"experience"}
