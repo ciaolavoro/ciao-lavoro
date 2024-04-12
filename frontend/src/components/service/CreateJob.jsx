@@ -39,10 +39,12 @@ export default function CreateService() {
       if (!nameJob.trim()) {
          setErrorNameMessage("El nombre es obligatorio.")
          return
-      }if (/^\d+$/.test(nameJob)) {
+      }
+      if (/^\d+$/.test(nameJob)) {
          setErrorNameMessage("El nombre del trabajo no puede tener solo numeros.")
          return
-      }if(!estimated_price){
+      }
+      if (!estimated_price) {
          setErrorPriceMessage("El precio es obligatorio.")
          return
       }
@@ -82,6 +84,8 @@ export default function CreateService() {
                      onChange={e => setEstimated_price(e.target.value)}
                      className="px-2 py-1 border rounded"
                   />
+                  <p className="text-gray-500 text-sm">El precio se tiene que escribir con , o .</p>
+                  <p className="text-gray-500 text-sm">Por ejemplo: 2,7 o 2.7</p>
                </div>
                {errorPriceMessage && <p className="text-red-500">{errorPriceMessage}</p>}
                <button type="submit" className="bg-orange-300 rounded px-3 py-1 font-semibold">
