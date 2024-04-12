@@ -15,8 +15,8 @@ class User(AbstractUser):
 
     def clean(self):
         super().clean()
-        if self.email.strip() == '':
-            raise ValidationError("El email no puede estar vacio")
+        # if self.email.strip() == '':
+        #     raise ValidationError("El email no puede estar vacio")
         if self.username.strip() == '':
             raise ValidationError("El usuario no puede estar vacio")
         if self.first_name.strip() == '':
