@@ -16,6 +16,9 @@ import {
    errorMessages,
    checkExperienceYears,
    checkOnlyCharactersInText,
+   checkIfPointsPositive,
+   checkIfToManyPoints,
+   checkIfPointsMoreThanMoney,
 } from "../../utils/validation"
 import Jobs from "./Jobs"
 import PromotionButton from "./PromotionButton"
@@ -34,6 +37,15 @@ export default function ServiceDetails() {
    const [professions, setProfessions] = useState([])
    const [points, setPoints] = useState(0)
    const [contract, setContract] = useState([])
+   const [isPromoted, setIsPromoted] = useState(false)
+
+   //Hecho con Copilot
+   const hasPassedAMonth = (promotionDate) => {
+      const currentDate = new Date();
+      const promotionDateObj = new Date(promotionDate);
+      const oneMonth = 1000 * 60 * 60 * 24 * 30;
+      return currentDate - promotionDateObj > oneMonth;
+   }
 
    useEffect(() => {
       const fetchProfessions = async () => {
@@ -61,14 +73,20 @@ export default function ServiceDetails() {
          }
       }
       fetchContracts()
-   }, [loggedUser, service.id])
+
+      if (service.is_promoted) {
+         const hasPassed = hasPassedAMonth(service.is_promoted);
+         setIsPromoted(!hasPassed);
+      }else {
+         setIsPromoted(false);
+      }
+   }, [loggedUser, service.id, service.is_promoted])
 
    const [isEditing, setIsEditing] = useState(false)
    const [city, setCity] = useState(service.city)
    const [profession, setProfession] = useState(service.profession)
    const [experience, setExperience] = useState(service.experience)
    const [isActive, setIsActive] = useState(service.is_active)
-   const [isPromoted, setIsPromoted] = useState(service.is_promoted)
    const [isRequiredCityError, setIsRequiredCityError] = useState(false)
    const [isRequiredExperienceError, setIsRequiredExperienceError] = useState(false)
    const [isBigExperienceError, setIsBigExperienceError] = useState(false)
@@ -77,13 +95,19 @@ export default function ServiceDetails() {
    const [isExperienceError, setIsExperienceError] = useState(false)
    const [tooManyPoints, setTooManyPoints] = useState(false)
    const [positivePoints, setPositivePoints] = useState(false)
+   const [noMorePointsMoney, setNoMorePointsMoney] = useState(false)
 
    const resetServiceData = () => {
       setCity(service.city)
       setProfession(service.profession)
       setExperience(service.experience)
       setIsActive(service.is_active)
-      setIsPromoted(service.is_promoted)
+      if (service.is_promoted) {
+         const hasPassed = hasPassedAMonth(service.is_promoted);
+         setIsPromoted(!hasPassed);
+      }else {
+         setIsPromoted(false);
+      }
    }
 
    const updateService = async (serviceId, serviceData, token) => {
@@ -115,6 +139,7 @@ export default function ServiceDetails() {
    const resetPaymentErrors = () => {
       setPositivePoints(false)
       setTooManyPoints(false)
+      setNoMorePointsMoney(false)
    }
    
    const handleEdit = async event => {
@@ -171,12 +196,17 @@ export default function ServiceDetails() {
 
    const handlePayment = async (serviceId, token, points1) => {
       const returnURL = window.location.href
-      if (service.user.points < points1) {
+      const money = 4.99
+      if (checkIfToManyPoints(service.user.points, points1)) {
          setTooManyPoints(true)
          return
-      } else if (points1 < 0) {
+      } else if (checkIfPointsPositive(points1)) {
          resetPaymentErrors()
          setPositivePoints(true)
+         return
+      }else if (checkIfPointsMoreThanMoney(points1, money)) { 
+         resetPaymentErrors()
+         setNoMorePointsMoney(true)
          return
       }
       resetPaymentErrors()
@@ -323,7 +353,9 @@ export default function ServiceDetails() {
                                     </DialogTrigger>
                                     <DialogContent className="sm:max-w-[425px]">
                                        <DialogHeader>
-                                          <DialogTitle>¿Cuantos puntos quieres usar para la promoción?</DialogTitle>
+                                          <DialogTitle>Promocionar tu servicio cuesta 4,99€ </DialogTitle>
+                                          <DialogDescription>¿Cuantos puntos quieres usar para la promoción? </DialogDescription>
+                                          <DialogDescription>100 pts = 1 €</DialogDescription>
                                           <DialogDescription>Los puntos descontarán dinero del precio final.</DialogDescription>
                                           <DialogDescription>
                                              {" "}
@@ -338,10 +370,11 @@ export default function ServiceDetails() {
                                              <Input id="points" value={points} onChange={e => setPoints(e.target.value)} className="col-span-3" />
                                           </div>
                                           <DialogDescription>
-                                             {(tooManyPoints || positivePoints) && (
+                                             {(tooManyPoints || positivePoints || noMorePointsMoney) && (
                                                 <div className="text-red-500">
                                                    {(tooManyPoints && errorMessages.tooManyPoints) ||
-                                                      (positivePoints && errorMessages.positivePoints)}
+                                                      (positivePoints && errorMessages.positivePoints) ||
+                                                      (noMorePointsMoney && errorMessages.noMorePointsMoney)}
                                                 </div>
                                              )}
                                           </DialogDescription>

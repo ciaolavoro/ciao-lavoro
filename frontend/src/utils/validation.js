@@ -44,6 +44,19 @@ export function checkIfBirthDateValid(date) {
     return !(age > 16 && age < 80);
 }
 
+export function checkIfPointsPositive(points) {
+    return points < 0;
+}
+
+export function checkIfToManyPoints(yourPoints, pointsUsed) {
+    return yourPoints < pointsUsed;
+}
+
+export function checkIfPointsMoreThanMoney(points, money) {
+    // Hay un minimo de 0,50€ en Stripe, por eso al precio total se le resta 50 centimos
+    return points > ((money * 100)-50);
+}
+
 export const errorMessages = {
     required: "Este campo es requerido.",
     cityLength: "La ciudad no debe tener más de 50 caracteres.",
@@ -59,6 +72,7 @@ export const errorMessages = {
     birthDateNotValid: "Debes tener más de 16 años y menos de 80 años.",
     tooManyPoints: "Por favor, introduzca una cantidad de puntos que tengas disponibles.",
     positivePoints: "Por favor, introduzca un número de puntos positivos.",
+    noMorePointsMoney: "El pago debe ser mínimo de 0'50€. No puedes canjear más puntos si eso hace que el precio sea menor de 0'50€.",
 }
 
 function getAge(date) {
