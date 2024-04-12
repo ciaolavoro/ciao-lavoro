@@ -12,6 +12,7 @@
 | Nombre y Apellidos | Tipo de Contribución |
 |---------------------|-----------------------|
 | Javier Grosso         | Redacción             |
+| Alex Sánchez Hossdorf         | Revisión             |
 
 
 ### CONTROL DE VERSIONES
@@ -70,21 +71,21 @@ Para nuestra base de datos de conocimiento individual usamos la Wiki del proyect
 
 
 **SEMANA 7: BASE DE DATOS DE CONOCIMIENTO COMÚN, FEEDBACK E INFORMACIÓN DE INTERÉS PARA TODOS LOS GRUPOS**
-#### FEEDBACK Semana 7 19 / 03 / 2024
+#### FEEDBACK Semana 7 - 19 de marzo
 
 #### Presentación
 + El report de IA debe situarse en la penúltima diapositiva, siendo la ultima la diapositiva con la URL de la Landing Page.
 + La presentación de la demo debe ser coherente con lo que se represente en los Storyboards.
-- Hay que realizar zoom en las demos en los momentos donde veamos que se ve pequeño.
++ Hay que realizar zoom en las demos en los momentos donde veamos que se ve pequeño.
 
 #### Proyecto en general
 + La base de datos debe contener datos realistas
-+  Hay que implementar una API que valide si los correos usados para registrarse son reales.
++ Hay que implementar una API que valide si los correos usados para registrarse son reales.
 + Hay que asociar el Costumer Agreement al desarrollo del servicio, con los contratos de uso y alquiler de servicios en la nube.
 + Hay que tener en cuenta el impacto legal del proyecto (aceptar terminos legales de uso, políticas de protección de datos, etc)
 
 **SEMANA 7: BASE DE DATOS DE CONOCIMIENTO COMÚN, FEEDBACK E INFORMACIÓN DE INTERÉS PARA EL GRUPO 6**
-#### FEEDBACK Semana 7 19 / 03 / 2024
+#### FEEDBACK Semana 7 - 19  de marzo
 
 #### DIAPOSITIVAS
 
@@ -238,24 +239,19 @@ Para nuestra base de datos de conocimiento individual usamos la Wiki del proyect
 #### Para la próxima presentación
 
 En este documento vamos a encontrar las cosas generales enumeradas por los profesores durante esa semana que esperan ver en la presentación de la siguiente semana.
-****
-##### Semana 9
+
 Para la semana 10 los profesores esperan ver:
-- introducción
-- modelo de negocio
 - killer opener
 - elevator pitch
 - resumen analisis competidores
 - anuncio nuevo (si es un anuncio anterior modificado, indicarlo)
-- customer agreement (terminos servicios, claudette, explicar qué hacemos para arreglarlo)
-- pricing customer agreement
-- SLA
+- customer agreement (terminos servicios, claudette, explicar qué hacemos para arreglarlo, pricing customer agreement, SLA)
 - tareas de marketing preliminar (nada muy desarrollado, qué acciones podemos hacer para ganar tracción, conseguir clientes, quizás segmentar el mercado, redes sociales, anuncios…) ROL DE COMMUNITY MANAGER
-- resumen TCO (tener en cuenta una persona que sea el GDPR Officer y el Community Manager)
-- refinar la distribución del equipo con lo anterior
-- Commitment agreement (estado)
-- Demo Sprint 3 completo siguiendo una historieta realista
-- destacar mejoras en UX en la demo
+- resumen TCO (tener en cuenta una persona que sea el GDPR Officer y el Community Manager). Con la grafica del ROI vs TCO y estimaciones. 
+- refinar la distribución del equipo con lo anterior (tener en cuenta al Community Manager y GDPR officer)
+- Commitment agreement (estado y gráfica de evolución)
+- Demo Sprint 3 completo siguiendo una historieta realista. Debe tener descripción inicial, destacando el incremento. USAR A PERICO. 
+- Destacar mejoras en UX en la demo
 - http y derecho al olvido (un formulario para que el usuario diga que quiera borrar sus datos)
 - términos y condiciones
 - retrospectiva
