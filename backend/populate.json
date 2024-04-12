@@ -1,21 +1,5 @@
 [
     {
-      "model": "user.user",
-      "pk": 1,
-      "fields": {
-        "username": "admin",
-        "password": "4dm1n",
-        "first_name": "admin",
-        "last_name": "admin",
-        "birth_date": "2001-01-01",
-        "language": "Español",
-        "is_active": "True",
-        "points": 0,
-        "is_staff": "True"
-      }
-    },
-
-    {
         "model": "service.service",
         "pk": 1,
         "fields": {
