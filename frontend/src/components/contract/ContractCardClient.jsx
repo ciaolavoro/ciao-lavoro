@@ -152,8 +152,7 @@ export function ContractCardClient({ contract }) {
                      <Dialog>
                         <DialogTrigger asChild>
                            <button
-                              className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mt-4"
-                              onClick={() => handlePayment(contract.id, loggedUser.token, points)}>
+                              className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mt-4">
                               Pagar Contrato
                            </button>
                         </DialogTrigger>
