@@ -39,11 +39,12 @@ export const getServiceByUser = async (id) => {
     return fetchBackend(`/service/user/${id}`, options);
 }
 
-export const getServiceByCityAndProfession = async (city, profession) => {
+export const getServiceByCityAndProfession = async (city, profession, username) => {
 
     const queryParams = new URLSearchParams({
         search_city: city,
-        search_profession: profession
+        search_profession: profession,
+        search_username: username
     });
 
     const options = {
@@ -99,6 +100,27 @@ export async function updateServiceRequest(serviceId, serviceData, token) {
     }
 }
 
+export async function promoteService(serviceId, token, returnURL, points) {
+    const options = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
+        },
+        body: JSON.stringify({ returnURL, points })
+    };
+
+    try {
+        const response = await fetchBackend(`/service/promotion/${serviceId}/`, options);
+        const data = await response.json();
+        if (response.ok) {
+            return data;
+        }
+    } catch (error) {
+        console.error('Service Promotion error:', error);
+    }
+}
+
 export const getJobDetailsByServiceId = async (id) => {
     const options = {
         method: 'GET',
@@ -131,14 +153,4 @@ export const getProfessionsList = async (token) => {
         },
     };
     return fetchBackend(`/service/professionsList/`, options);
-}
-
-export const getAllProfessionsList = async () => {
-    const options = {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    };
-    return fetchBackend(`/service/allProfessionsList/`, options);
 }

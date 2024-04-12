@@ -12,6 +12,9 @@ from django.utils import timezone
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.contrib.admin.sites import AdminSite
 from django.test import RequestFactory
+
+from contract.models import Contract
+from service.models import Service
 from .admin import UserAdmin
 from .models import User
 
@@ -110,7 +113,7 @@ class RegisterViewTests(TestCase):
 
     def test_inexistent_email(self):
         user_data = self.base_user_data.copy()
-        user_data['email'] = 'inexistent@email.com'
+        user_data['email'] = 'inexistent@falseEmail.com'
         time.sleep(2)
         response = self.client.post(reverse('user:register'), user_data)
         self.assertEqual(response.json()['status'], '500')
@@ -263,7 +266,7 @@ class UserProfileUpdateTests(UserTestCase):
             'username': '',
             'first_name': '',
             'last_name': '',
-            'email': 'inexistent@email.com',
+            'email': 'inexistent@falseEmail.com',
             'language': '',
             'birth_date': '',
         }
@@ -310,3 +313,13 @@ class UserAdminTest(TestCase):
         self.user_admin.save_model(request, user, None, None)
         user = User.objects.get(username='testuser2')
         self.assertTrue(user.password.startswith('pbkdf2_sha256$'))
+
+class GetPointsTest(UserTestCase):
+    def test_get_points(self):
+        self.token, _ = Token.objects.get_or_create(user=self.user)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
+        self.user.points = 130
+        self.user.save()
+        response = self.client.get(reverse('user:user-points'))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEquals(response.json()['total_points'], 130)

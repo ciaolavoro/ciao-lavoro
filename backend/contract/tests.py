@@ -38,8 +38,7 @@ class ContractTestCase(TestCase):
             'profession': 2,
             'city': 'Sevilla',
             'experience': 3,
-            'is_active': True,
-            'is_promoted': True
+            'is_active': True
         }
         self.service = Service.objects.create(**self.service_data)
         self.service2_data = {
@@ -47,8 +46,7 @@ class ContractTestCase(TestCase):
             'profession': 1,
             'city': 'Sevilla',
             'experience': 3,
-            'is_active': True,
-            'is_promoted': True
+            'is_active': True
         }
         self.service = Service.objects.create(**self.service2_data)
         self.service3_data = {
@@ -56,8 +54,7 @@ class ContractTestCase(TestCase):
             'profession': 3,
             'city': 'Sevilla',
             'experience': 3,
-            'is_active': True,
-            'is_promoted': True
+            'is_active': True
         }
         self.service = Service.objects.create(**self.service3_data)
         self.contract_data={
@@ -66,10 +63,11 @@ class ContractTestCase(TestCase):
             'accept_worker':True,
             'accept_client':False,
             'description':'descristion',
+            'description_cancelation':'',
             'initial_date': '2024-05-4T14:30',
             'end_date': '2024-05-6T14:30',
             'cost': 4,
-            'status': 3,
+            'status': 1,
             'service': self.service
         }
         self.contract = Contract.objects.create(**self.contract_data)
@@ -79,7 +77,7 @@ class ContractTestCase(TestCase):
         contract = Contract(**self.contract_data)
         contract.clean()
         self.assertEqual(contract.description, self.contract_data['description'])
-        
+
 class CreateViewTests(TestCase):
     def setUp(self):
         self.user_data1 = {
@@ -108,8 +106,7 @@ class CreateViewTests(TestCase):
             'profession': 2,
             'city': 'Sevilla',
             'experience': 3,
-            'is_active': True,
-            'is_promoted': True
+            'is_active': True
         }
         self.service = Service.objects.create(**self.service_data)
         self.service2_data = {
@@ -117,8 +114,7 @@ class CreateViewTests(TestCase):
             'profession': 1,
             'city': 'Sevilla',
             'experience': 3,
-            'is_active': True,
-            'is_promoted': True
+            'is_active': True
         }
         self.service2 = Service.objects.create(**self.service2_data)
         self.service3_data = {
@@ -126,8 +122,7 @@ class CreateViewTests(TestCase):
             'profession': 3,
             'city': 'Sevilla',
             'experience': 3,
-            'is_active': True,
-            'is_promoted': True
+            'is_active': True
         }
         self.service3 = Service.objects.create(**self.service3_data)
         self.client = APIClient()
@@ -195,3 +190,212 @@ class ContractDeleteTests(ContractTestCase):
         response = self.client.get(reverse('contracts:contract-detail',kwargs={'contract_id': self.contract.id}))
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
+class ContractCancelTests(ContractTestCase):
+
+    def test_get_cancel_contract_client(self):
+        token, _ = Token.objects.get_or_create(user=self.user2)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        self.assertEqual(self.contract.description_cancelation, '')
+        cancelation_data = {
+            'description':'test description',
+        }
+        response = self.client.put(reverse('contracts:contract-cancel',kwargs={'contract_id': 1}), cancelation_data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.contract.refresh_from_db()
+        self.assertEqual(self.contract.description_cancelation, 'test description')
+        self.assertEqual(response.json()["refund"], "0")
+
+    def test_get_cancel_contract_worker(self):
+        token, _ = Token.objects.get_or_create(user=self.user1)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        self.assertEqual(self.contract.description_cancelation, '')
+        self.contract.initial_date = timezone.now() + datetime.timedelta(days=1)
+        self.contract.save()
+        cancelation_data = {
+            'description':'test description',
+        }
+        response = self.client.put(reverse('contracts:contract-cancel',kwargs={'contract_id': 1}), cancelation_data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.contract.refresh_from_db()
+        self.assertEqual(self.contract.description_cancelation, 'test description')
+        self.assertEqual(response.json()["refund"], "0")
+
+    def test_get_cancel_contract(self):
+        token, _ = Token.objects.get_or_create(user=self.user2)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        self.assertEqual(self.contract.description_cancelation, '')
+        self.contract.initial_date = timezone.now() + datetime.timedelta(days=1)
+        self.contract.save()
+        cancelation_data = {
+            'description':'test description',
+        }
+        response = self.client.put(reverse('contracts:contract-cancel',kwargs={'contract_id': 1}), cancelation_data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.contract.refresh_from_db()
+        self.assertEqual(self.contract.description_cancelation, 'test description')
+        self.assertEqual(response.json()["refund"], "0")
+
+    def test_get_cancel_contract_without_description(self):
+        token, _ = Token.objects.get_or_create(user=self.user2)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        self.assertEqual(self.contract.description_cancelation, '')
+        cancelation_data = {
+            'description':'',
+        }
+        response = self.client.put(reverse('contracts:contract-cancel',kwargs={'contract_id': 1}), cancelation_data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        
+    def test_get_cancel_contract_long_description(self):
+        token, _ = Token.objects.get_or_create(user=self.user2)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        self.assertEqual(self.contract.description_cancelation, '')
+        cancelation_data = {
+            'description':'''aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+            aaaaaa''',
+        }
+        response = self.client.put(reverse('contracts:contract-cancel',kwargs={'contract_id': 1}), cancelation_data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_get_cancel_contract_without_permission(self):
+        user_data = {
+            'username': 'testuser3',
+            'email': 'test@example.com',
+            'password': 'testpassword',
+            'first_name': 'Test',
+            'last_name': 'User',
+            'birth_date': (timezone.now() - datetime.timedelta(days=365*25)).date(),
+            'language': 'English',
+        }
+        user = User.objects.create_user(**user_data)
+        token, _ = Token.objects.get_or_create(user=user)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        self.assertEqual(self.contract.description_cancelation, '')
+        cancelation_data = {
+            'description':'Prueba',
+        }
+        response = self.client.put(reverse('contracts:contract-cancel',kwargs={'contract_id': 1}), cancelation_data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_get_cancel_finished_contract(self):
+        token, _ = Token.objects.get_or_create(user=self.user2)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        self.assertEqual(self.contract.description_cancelation, '')
+        self.contract.initial_date = timezone.now() + datetime.timedelta(days=1)
+        self.contract.status = 4
+        self.contract.save()
+        cancelation_data = {
+            'description':'test description',
+        }
+        response = self.client.put(reverse('contracts:contract-cancel',kwargs={'contract_id': 1}), cancelation_data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_get_cancel_paid_contract(self):
+        token, _ = Token.objects.get_or_create(user=self.user1)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        self.assertEqual(self.contract.description_cancelation, '')
+        self.contract.initial_date = timezone.now() + datetime.timedelta(days=1)
+        self.contract.status = 6
+        self.contract.save()
+        self.user2.points = self.contract.cost*5 + 100
+        self.user2.save()
+        cancelation_data = {
+            'description':'test description',
+        }
+        response = self.client.put(reverse('contracts:contract-cancel',kwargs={'contract_id': 1}), cancelation_data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.contract.refresh_from_db()
+        self.assertEqual(self.contract.status, 5)
+        self.assertEqual(response.json()['refund'], str(self.contract.cost))
+        self.user2.refresh_from_db()
+        self.assertEqual(self.user2.points, 100)
+
+    def test_get_cancel_paid_contract_without_points(self):
+        token, _ = Token.objects.get_or_create(user=self.user1)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        self.assertEqual(self.contract.description_cancelation, '')
+        self.contract.initial_date = timezone.now() + datetime.timedelta(days=1)
+        self.contract.status = 6
+        self.contract.save()
+        cancelation_data = {
+            'description':'test description',
+        }
+        response = self.client.put(reverse('contracts:contract-cancel',kwargs={'contract_id': 1}), cancelation_data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.contract.refresh_from_db()
+        self.assertEqual(self.contract.status, 5)
+        amount_to_refund = self.contract.cost + (self.user1.points - self.contract.cost*5)/100
+        self.assertEqual(response.json()['refund'], str(amount_to_refund))
+
+class ContractPaymentTests(ContractTestCase):
+    def setUp(self):
+        super().setUp()
+        self.payment_url = reverse('contracts:contract-payment', kwargs={'contract_id': self.contract.id})
+        self.return_url = 'http://example.com/payment-success/'
+
+    def test_payment_initiation_success(self):
+        token, _ = Token.objects.get_or_create(user=self.user2)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.post(self.payment_url, {'returnURL': self.return_url})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTrue('sessionUrl' in response.json())
+        self.assertEqual(response.json()['price'], self.contract.cost*100)
+
+    def test_payment_initiation_permission_denied(self):
+        token, _ = Token.objects.get_or_create(user=self.user1)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        token, _ = Token.objects.get_or_create(user=self.user1)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.post(self.payment_url, {'returnURL': self.return_url, 'points': 0})
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_payment_initiation_more_points_than_available(self):
+        token, _ = Token.objects.get_or_create(user=self.user2)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.post(self.payment_url, {'returnURL': self.return_url, 'points': 10})
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.json(), 'No se pueden gastar más puntos de los disponibles')
+
+    def test_payment_initiation_too_much_points(self):
+        self.user2.points = 1000000
+        self.user2.save()
+        token, _ = Token.objects.get_or_create(user=self.user2)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.post(self.payment_url, {'returnURL': self.return_url, 'points': 1000000})
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.json(), 'El precio del contrato es menor al valor de los puntos utilizados')
+
+    def test_payment_initiation_with_points(self):
+        self.user2.points = 100
+        self.user2.save()
+        token, _ = Token.objects.get_or_create(user=self.user2)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.post(self.payment_url, {'returnURL': self.return_url, 'points': 100})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTrue('sessionUrl' in response.json())
+        self.assertEqual(response.json()['price'], (self.contract.cost*100)-100)
+        self.user2.refresh_from_db()
+        self.assertEqual(self.user2.points, 0)
+
+    def test_payment_initiation_point_equals_cost(self):
+        self.user2.points = self.contract.cost*100
+        self.user2.save()
+        token, _ = Token.objects.get_or_create(user=self.user2)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.post(self.payment_url, {'returnURL': self.return_url, 'points': self.contract.cost*100})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.json(), 'El contrato se ha pagado sin necesidad de proceder al pago')
+        self.user2.refresh_from_db()
+        self.assertEqual(self.user2.points, 0)
+
+    def test_payment_initiation_error(self):
+        self.user2.points = self.contract.cost*100
+        self.user2.save()
+        token, _ = Token.objects.get_or_create(user=self.user2)
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        response = self.client.post(self.payment_url)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)

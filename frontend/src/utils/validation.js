@@ -5,16 +5,12 @@ export async function checkIfUsernameExists(username, userId) {
     return filteredData.length > 0;
 }
 
-export function checkLanguageLength(language) {
-    return language.length > 50;
-}
-
 export function checkIfEmpty(text) {
     return text.trim().length === 0;
 }
 
 export function checkOnlyCharactersInText(text) {
-    const onlyCharactersRegex = /^[a-zA-Z]+$/;
+    const onlyCharactersRegex = /^[a-zA-ZñÑáéíóúÁÉÍÓÚüÜç '`´]+$/;
     return !onlyCharactersRegex.test(text);
 }
 
@@ -31,15 +27,34 @@ export function checkProfessionDuplicated(profession, professions) {
 }
 
 export function checkExperienceYears(experience, userBirthDate) {
-    const today = new Date();
-    const birthDate = new Date(userBirthDate);
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const month = today.getMonth() - birthDate.getMonth();
-    if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-    }
-
+    const age = getAge(userBirthDate);
     return Number(experience) + 16 > age;
+}
+
+export function checkIfImage(file) {
+    return !file.type.startsWith("image/");
+}
+
+export function checkIfDateInFuture(date) {
+    return new Date(date) > new Date();
+}
+
+export function checkIfBirthDateValid(date) {
+    const age = getAge(date);
+    return !(age > 16 && age < 80);
+}
+
+export function checkIfPointsPositive(points) {
+    return points < 0;
+}
+
+export function checkIfToManyPoints(yourPoints, pointsUsed) {
+    return yourPoints < pointsUsed;
+}
+
+export function checkIfPointsMoreThanMoney(points, money) {
+    // Hay un minimo de 0,50€ en Stripe, por eso al precio total se le resta 50 centimos
+    return points > ((money * 100)-50);
 }
 
 export const errorMessages = {
@@ -48,9 +63,25 @@ export const errorMessages = {
     experienceNotValid: "La experiencia no puede ser menos que 0.",
     tooMuchExperience: "La experiencia no puede ser tan grande en comparación con la edad del usuario.",
     languageLength: "El idioma no debe tener más de 50 caracteres.",
-    imageNotUploaded: "Debe subir una imagen.",
+    imageNotValid: "La imagen no es válida.",
     emailNotValid: "El correo electrónico no es válido.",
     usernameExists: "El nombre de usuario ya existe.",
     professionDuplicate: "No se pueden crear dos servicios con la misma profesión.",
     onlyCharacters: "Este campo solo puede contener letras.",
+    dateInFuture: "La fecha no puede estar en el futuro.",
+    birthDateNotValid: "Debes tener más de 16 años y menos de 80 años.",
+    tooManyPoints: "Por favor, introduzca una cantidad de puntos que tengas disponibles.",
+    positivePoints: "Por favor, introduzca un número de puntos positivos.",
+    noMorePointsMoney: "El pago debe ser mínimo de 0'50€. No puedes canjear más puntos si eso hace que el precio sea menor de 0'50€.",
+}
+
+function getAge(date) {
+    const today = new Date();
+    const birthDate = new Date(date);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const month = today.getMonth() - birthDate.getMonth();
+    if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    return age;
 }
