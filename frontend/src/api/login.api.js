@@ -37,8 +37,8 @@ export const logoutRequest = async () => {
     localStorage.removeItem('token');
 };
 
-export const registerRequest = async (username, password, firstName, lastName, email, image, birthdate) => {
-    
+export const registerRequest = async (username, password, firstName, lastName, email, image, birthdate, language) => {
+
     const formData = new FormData();
     formData.append('username', username);
     formData.append('password', password);
@@ -47,12 +47,12 @@ export const registerRequest = async (username, password, firstName, lastName, e
     formData.append('email', email);
     formData.append('image', image);
     formData.append('birthdate', birthdate);
+    formData.append('language', language);
     const options = {
         method: 'POST',
         body: formData
     };
     try {
-        console.log(image)
         const response = await fetchBackend(`/user/register/`, options);
         const data = await response.json();
 

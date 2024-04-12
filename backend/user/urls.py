@@ -10,4 +10,5 @@ urlpatterns = [
     path('register/', views.register.as_view(), name='register'),
     path('login/', views.login_view.as_view(), name='login'),
     path('authenticated/', views.authenticated.as_view(), name='authenticated'),
+    path('getPoints/', views.GetPoints.as_view(), name='user-points')
 ]

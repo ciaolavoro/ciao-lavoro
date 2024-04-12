@@ -1,19 +1,21 @@
-from django.http import JsonResponse
-from django.shortcuts import render, get_object_or_404
-from user.models import User
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.decorators import permission_classes
-from rest_framework import viewsets, permissions, generics, status
-from rest_framework.exceptions import PermissionDenied
 from .models import Service, Job, Review
 from .serializers import ServiceSerializer, JobSerializer, ReviewSerializer
-from rest_framework.authtoken.models import Token
-from datetime import date, datetime
-from django.utils import timezone
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.decorators import authentication_classes
+from datetime import date, timedelta
+from django.conf import settings
 from django.forms import ValidationError
+from django.http import JsonResponse
+from django.shortcuts import render, get_object_or_404
+from django.utils import timezone
+from rest_framework import viewsets, permissions, generics, status
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.authtoken.models import Token
+from rest_framework.decorators import authentication_classes
+from rest_framework.decorators import permission_classes
+from rest_framework.exceptions import PermissionDenied
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from user.models import User
+import stripe
 
 class ServiceList(generics.ListAPIView):
     serializer_class = ServiceSerializer
@@ -21,10 +23,14 @@ class ServiceList(generics.ListAPIView):
         services = Service.objects.all()
         search_profession = self.request.query_params.get('search_profession')
         search_city = self.request.query_params.get('search_city')
+        search_username = self.request.query_params.get('search_username')
         if search_profession:
             services = services.filter(profession=search_profession)
         if search_city:
             services = services.filter(city__icontains=search_city)
+        if search_username:
+            users = User.objects.filter(username__icontains=search_username)
+            services = services.filter(user__in = users)
         return services
 
     def get(self, request, *args, **kwargs):
@@ -83,7 +89,9 @@ class JobView(APIView):
         estimated_price = job_data['estimated_price']
         if estimated_price == '':
             estimated_price = 10
-        if not isinstance(estimated_price, int):
+        if isinstance(estimated_price, int):
+            estimated_price = estimated_price + 0.001
+        if not isinstance(estimated_price, float):
             raise ValidationError('El precio estimado debe ser un número')
         job = Job.objects.create(service=service, name=name, estimated_price=estimated_price)
         serializer = JobSerializer(job, many=False)
@@ -109,7 +117,9 @@ class JobView(APIView):
         new_estimated_price = job_data['estimated_price']
         if new_estimated_price == '':
             new_estimated_price = 10
-        if not isinstance(new_estimated_price, int):
+        if isinstance(new_estimated_price, int):
+            new_estimated_price = new_estimated_price + 0.001
+        if not isinstance(new_estimated_price, float):
             raise ValidationError('El precio estimado debe ser un número')
         job.name = new_name
         job.estimated_price = new_estimated_price
@@ -149,6 +159,12 @@ class ReviewView(APIView):
         token_id = request.headers["Authorization"]
         token = get_object_or_404(Token, key = token_id.split()[-1])
         user = token.user
+
+        existing_review = Review.objects.filter(user=user, service = service)
+        if existing_review.exists():
+            return Response("Ya has dejado una reseña para este servicio", status=status.HTTP_400_BAD_REQUEST)
+        
+
         if review_data['description'] and review_data['description'].strip() != '':
             description = review_data['description'].strip()
         else:
@@ -276,3 +292,90 @@ class UserHasService(APIView):
         data = {'user_state': state}
         return JsonResponse(data)
     
+class PromotionPayment(APIView):
+    @authentication_classes([TokenAuthentication])
+    def post(self, request, service_id):
+        service = get_object_or_404(Service, pk = service_id)
+        token_id = self.request.headers['Authorization']
+        returnURL = request.data.get('returnURL')
+        points = request.data.get('points')
+        token = get_object_or_404(Token, key = token_id.split()[-1])
+        user = token.user
+        if not points:
+            points = 0
+        else:
+            points = int(points)
+        if user.points < points:
+            return Response('No se pueden gastar más puntos de los disponibles', status=status.HTTP_400_BAD_REQUEST)
+        user.points = user.points - points
+        user.save()
+        if user != service.user:
+            raise PermissionDenied("No puedes promocionar un servicio que no es tuyo")
+        if 4.99 < points/100:
+            return Response('El precio de la promoción es menor al valor de los puntos utilizados', status=status.HTTP_400_BAD_REQUEST)
+        if 4.99 == points/100:
+            return Response('El contrato se ha pagado sin necesidad de proceder al pago')
+        try:
+            stripe.api_key = settings.STRIPE_SECRET_KEY
+            promotionReceipt = stripe.Product.create(
+                name = 'Promoción de su servicio',
+            )
+            price = stripe.Price.create(
+                unit_amount = int(4.99 * 100)-int(points),
+                currency = 'eur',
+                product = promotionReceipt.id,
+            )
+
+            session = stripe.checkout.Session.create(
+                payment_method_types = ['card'],
+                line_items = [{
+                    'price': price.id,
+                    'quantity': 1,
+                    }],
+                mode = 'payment',
+                customer_email = user.email,
+                success_url = returnURL + '?session_id={CHECKOUT_SESSION_ID}',
+                cancel_url = returnURL,
+            )
+            return JsonResponse({'sessionUrl': session.url, 'price': price.unit_amount})
+        except stripe.error.StripeError as e:
+            error_msg = str(e)
+            return Response({'Error al completar el pago': error_msg}, status=status.HTTP_400_BAD_REQUEST)
+        
+class PromoteService(APIView):
+    def put(self, request, service_id):
+        service = get_object_or_404(Service, pk = service_id)
+        session_id = request.data.get('session_id', None)
+        if not session_id:
+            return Response('session_id is required for completing the payment', status=status.HTTP_400_BAD_REQUEST)
+        try:
+            stripe.api_key = settings.STRIPE_SECRET_KEY
+            session = stripe.checkout.Session.retrieve(session_id)
+        except stripe.error.StripeError as e:
+            error_msg = str(e)
+            return Response({'StripeError': error_msg}, status=status.HTTP_400_BAD_REQUEST)
+        if session.payment_status != 'paid':
+            return Response('Payment for the session is not completed', status=status.HTTP_400_BAD_REQUEST)
+        service.is_promoted=date.today()
+        service.save()
+        serializer = ServiceSerializer(service, many=False,context ={'request': request})
+        return Response(serializer.data)
+        
+class AllServiceInPromotion(APIView):
+    serializer_class = ServiceSerializer
+    def get(self, request):
+        month = date.today() - timedelta(days=30)
+        promotedService = Service.objects.filter(is_promoted__gte=month)
+        promotedService = sorted(promotedService, key = Service.rating, reverse=True)
+        serializer = self.serializer_class(promotedService, many=True, context ={'request': request})
+        response_data = {"promotedServices": serializer.data}
+        return Response(response_data, status=status.HTTP_200_OK)
+    
+class MostRatedServices(APIView):
+    serializer_class = ServiceSerializer
+    def get(self, request):
+        allService = Service.objects.all()
+        ratedService = sorted(allService, key = Service.rating, reverse=True)
+        serializer = self.serializer_class(ratedService, many=True, context ={'request': request})
+        response_data = {"ratedServices": serializer.data}
+        return Response(response_data, status=status.HTTP_200_OK)

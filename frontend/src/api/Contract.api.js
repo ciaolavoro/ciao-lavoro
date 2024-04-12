@@ -39,13 +39,14 @@ export const createContractRequest = async (description, initial_date, end_date,
     return fetchBackend(`/contracts/create/${service_id}/`, options);
 }
 
-export async function updateContractStatus(contractId, statusNum, token) {
+export async function updateContractStatus(contractId, statusNum, sessionId, token) {
     const options = {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Token ${token}`,
         },
+        body: JSON.stringify({ session_id: sessionId }),
     };
 
     try {
@@ -56,22 +57,21 @@ export async function updateContractStatus(contractId, statusNum, token) {
     }
 }
 
-export async function handleContractPayment(contractId, token, returnURL) {
+export async function handleContractPayment(contractId, token, returnURL, points) {
     const options = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Token ${token}`,
         },
-        body: JSON.stringify({ returnURL }),
+        body: JSON.stringify({ returnURL, points }),
     };
 
     try {
         const response = await fetchBackend(`/contracts/${contractId}/payment/`, options);
         const data = await response.json();
-        console.log(data)
         if (response.ok) {
-            return data; 
+            return data;
         }
     } catch (error) {
         console.error('Contract Payment error:', error);
@@ -129,5 +129,48 @@ export const checkWorkerAssociation = async (serviceId) => {
     } catch (error) {
         console.error('Error al verificar la asociación del trabajador:', error);
         return true;
+    }
+}
+export const getContractByService = async (id) => {
+    const options = {
+        method: 'Get',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    };
+    return fetchBackend(`/contracts/${id}/`, options);
+}
+
+export async function cancelContractStatus(contractId, description, token) {
+    const options = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
+        },
+        body: JSON.stringify({ description })
+    };
+
+    try {
+        const response = await fetchBackend(`/contracts/cancel/${contractId}/`, options);
+        return response;
+    } catch (error) {
+        console.error('Update Contract Status error:', error);
+    }
+}
+
+export const addPoints = async (contractId, token) => {
+    const options = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
+        },
+    };
+    try {
+        const response = await fetchBackend(`/user/addPoints/${contractId}/`, options);
+        return response;
+    } catch (error) {
+        console.error('Error add points: ', error);
     }
 }

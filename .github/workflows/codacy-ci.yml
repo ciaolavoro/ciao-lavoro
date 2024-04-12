@@ -21,8 +21,9 @@ on:
         required: true
       VITE_STRIPE_PUBLIC_KEY:
         required: true
-
       VERIFICATION_KEY:
+        required: true
+      DATABASE_URL:
         required: true
 
 
@@ -37,7 +38,7 @@ jobs:
       STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
       VITE_BACKEND_API_URL: ${{ secrets.VITE_BACKEND_API_URL }}
       VITE_STRIPE_PUBLIC_KEY: ${{ secrets.VITE_STRIPE_PUBLIC_KEY }}
-
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
       VERIFICATION_KEY: ${{ secrets.VERIFICATION_KEY }}
 
       
