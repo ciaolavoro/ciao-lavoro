@@ -1,8 +1,10 @@
+import { useSearchParams } from "react-router-dom"
 import { updateContractStatus, cancelContractStatus } from "../../api/Contract.api"
 import { useAuthContext } from "../auth/AuthContextProvider"
 
 export function ContractCardWorker({ contract }) {
    const { loggedUser } = useAuthContext()
+   const [searchParams] = useSearchParams()
 
    const formatDate = dateString => {
       const options = { year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false }
@@ -28,9 +30,9 @@ export function ContractCardWorker({ contract }) {
       }
    }
 
-   const updateStatus = async (contractId, statusNum, token) => {
+   const updateStatus = async (contractId, statusNum, sessionId, token) => {
       try {
-         const response = await updateContractStatus(contractId, statusNum, token)
+         const response = await updateContractStatus(contractId, statusNum, sessionId, token)
          if (response.ok) {
             alert("Estado actualizado correctamente")
             window.location.reload()
@@ -43,31 +45,23 @@ export function ContractCardWorker({ contract }) {
    }
    const cancelContract = async (contractId, cancelationDescription, token) => {
       try {
-          const response = await cancelContractStatus(contractId, cancelationDescription, token);
-          if (response.ok) {
-              alert('Estado actualizado correctamente');
-              const refund = (await response.json()).refund
-              if (refund==="0"){
-                  alert('No se devolvera el importe')
-              }else{
-                  alert("Se devolvera "+refund+ "€")
-              }
-              window.location.reload();
-          } else {
-              alert('Error al actualizar el estado. Por favor, intente de nuevo.');
-          }
+         const response = await cancelContractStatus(contractId, cancelationDescription, token)
+         if (response.ok) {
+            alert("Estado actualizado correctamente")
+            const refund = (await response.json()).refund
+            if (refund === "0") {
+               alert("No se devolvera el importe")
+            } else {
+               alert("Se devolvera " + refund + "€")
+            }
+            window.location.reload()
+         } else {
+            alert("Error al actualizar el estado. Por favor, intente de nuevo.")
+         }
       } catch (error) {
-          alert('Error al actualizar el estado. Por favor, intente de nuevo.');
+         alert("Error al actualizar el estado. Por favor, intente de nuevo.")
       }
-  };
-      // Recordatorio de los estados con su NUM:
-  // (1, "Negociacion"),
-  // (2, "Aceptado"),
-  // (3, "En proceso"),
-  // (4, "Finalizado"),
-  // (5, "Cancelado"),
-  // (6, "Pagado")
-
+   }
 
    return (
       <div className={`max-w-md mx-auto my-2 border rounded-lg overflow-hidden p-6 ${getStatusColor(contract.estatus)}`}>
@@ -99,7 +93,7 @@ export function ContractCardWorker({ contract }) {
          {contract.estatus === "Negociacion" && (
             <button
                className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mt-4 mr-3"
-               onClick={() => updateStatus(contract.id, 2, loggedUser.token)}>
+               onClick={() => updateStatus(contract.id, 2, searchParams.get("session_id"), loggedUser.token)}>
                Aceptar Contrato
             </button>
          )}
@@ -127,7 +121,7 @@ export function ContractCardWorker({ contract }) {
          {contract.estatus === "Pagado" && (
             <button
                className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mt-4 "
-               onClick={() => updateStatus(contract.id, 3, loggedUser.token)}>
+               onClick={() => updateStatus(contract.id, 3, searchParams.get("session_id"), loggedUser.token)}>
                Comenzar trabajo
             </button>
          )}
@@ -136,7 +130,7 @@ export function ContractCardWorker({ contract }) {
             {contract.estatus === "En proceso" && (
                <button
                   className="bg-green-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mt-4 self-center"
-                  onClick={() => updateStatus(contract.id, 4, loggedUser.token)}>
+                  onClick={() => updateStatus(contract.id, 4, searchParams.get("session_id"), loggedUser.token)}>
                   Trabajo terminado
                </button>
             )}

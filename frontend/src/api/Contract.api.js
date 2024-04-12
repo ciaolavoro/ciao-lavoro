@@ -39,13 +39,14 @@ export const createContractRequest = async (description, initial_date, end_date,
     return fetchBackend(`/contracts/create/${service_id}/`, options);
 }
 
-export async function updateContractStatus(contractId, statusNum, token) {
+export async function updateContractStatus(contractId, statusNum, sessionId, token) {
     const options = {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Token ${token}`,
         },
+        body: JSON.stringify({ session_id: sessionId }),
     };
 
     try {
@@ -166,10 +167,10 @@ export const addPoints = async (contractId, token) => {
             'Authorization': `Token ${token}`,
         },
     };
-    try{
+    try {
         const response = await fetchBackend(`/user/addPoints/${contractId}/`, options);
         return response;
-    }catch(error){
+    } catch (error) {
         console.error('Error add points: ', error);
     }
 }
