@@ -59,6 +59,7 @@ export const errorMessages = {
     birthDateNotValid: "Debes tener más de 16 años y menos de 80 años.",
     tooManyPoints: "Por favor, introduzca una cantidad de puntos que tengas disponibles.",
     positivePoints: "Por favor, introduzca un número de puntos positivos.",
+    noMorePointsMoney: "Para realizar el pago debe ser minimo 0'50€. Es decir, si la promoción cuesta 4'99 €, no puedes usar más de 449 puntos.",
 }
 
 function getAge(date) {

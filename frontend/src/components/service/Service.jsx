@@ -77,6 +77,7 @@ export default function ServiceDetails() {
    const [isExperienceError, setIsExperienceError] = useState(false)
    const [tooManyPoints, setTooManyPoints] = useState(false)
    const [positivePoints, setPositivePoints] = useState(false)
+   const [noMorePointsMoney, setNoMorePointsMoney] = useState(false)
 
    const resetServiceData = () => {
       setCity(service.city)
@@ -115,6 +116,7 @@ export default function ServiceDetails() {
    const resetPaymentErrors = () => {
       setPositivePoints(false)
       setTooManyPoints(false)
+      setNoMorePointsMoney(false)
    }
    
    const handleEdit = async event => {
@@ -177,6 +179,11 @@ export default function ServiceDetails() {
       } else if (points1 < 0) {
          resetPaymentErrors()
          setPositivePoints(true)
+         return
+      // como maximo se puede descontar 449 puntos, es decir 4,49€. Porque hay un minimo de 0,50€ en Stripe
+      }else if (points1 > 449) { 
+         resetPaymentErrors()
+         setNoMorePointsMoney(true)
          return
       }
       resetPaymentErrors()
@@ -323,7 +330,9 @@ export default function ServiceDetails() {
                                     </DialogTrigger>
                                     <DialogContent className="sm:max-w-[425px]">
                                        <DialogHeader>
-                                          <DialogTitle>¿Cuantos puntos quieres usar para la promoción?</DialogTitle>
+                                          <DialogTitle>Promocionar tu servicio cuesta 4,99€ </DialogTitle>
+                                          <DialogDescription>¿Cuantos puntos quieres usar para la promoción? </DialogDescription>
+                                          <DialogDescription>100 pts = 1 €</DialogDescription>
                                           <DialogDescription>Los puntos descontarán dinero del precio final.</DialogDescription>
                                           <DialogDescription>
                                              {" "}
@@ -338,10 +347,11 @@ export default function ServiceDetails() {
                                              <Input id="points" value={points} onChange={e => setPoints(e.target.value)} className="col-span-3" />
                                           </div>
                                           <DialogDescription>
-                                             {(tooManyPoints || positivePoints) && (
+                                             {(tooManyPoints || positivePoints || noMorePointsMoney) && (
                                                 <div className="text-red-500">
                                                    {(tooManyPoints && errorMessages.tooManyPoints) ||
-                                                      (positivePoints && errorMessages.positivePoints)}
+                                                      (positivePoints && errorMessages.positivePoints) ||
+                                                      (noMorePointsMoney && errorMessages.noMorePointsMoney)}
                                                 </div>
                                              )}
                                           </DialogDescription>
