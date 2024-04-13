@@ -1,20 +1,17 @@
 import random
-import re
 
 from django.forms import ValidationError
 
-from contract.models import Contract
 from .models import User
-from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.contrib.auth.hashers import check_password
 from rest_framework.authtoken.models import Token
-from rest_framework.authentication import TokenAuthentication, SessionAuthentication
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import authentication_classes
 from django.shortcuts import get_object_or_404
 from .serializers import UserSerializer
@@ -41,7 +38,7 @@ class login_view(APIView):
             return Response("Username is not registered", status=status.HTTP_400_BAD_REQUEST)
         if check_password(password,user.password):
             token,_ = Token.objects.get_or_create(user=user)
-            return JsonResponse({'user': UserSerializer(user).data, 'token': token.key, 'message': 'User logged in successfully'})
+            return Response({'user': UserSerializer(user).data, 'token': token.key, 'message': 'User logged in successfully'})
         else:
             return Response('Invalid login credentials', status=status.HTTP_400_BAD_REQUEST)
 
@@ -91,7 +88,7 @@ class UserDetails(APIView):
         user_id = self.kwargs['user_id']
         user = get_object_or_404(User, id=user_id)
         serializer = UserSerializer(user)
-        return JsonResponse(serializer.data)
+        return Response(serializer.data)
 
 class Profile(APIView):
     @authentication_classes([TokenAuthentication])
