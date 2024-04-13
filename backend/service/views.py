@@ -70,7 +70,9 @@ class JobView(APIView):
     @authentication_classes([TokenAuthentication])
     def post(self, request, service_id):
         job_data = request.data
-        service = Service.objects.get(pk=service_id)
+        service = Service.objects.filter(pk=service_id).first()
+        if not service:
+            return Response("Service does not exists", status=status.HTTP_404_NOT_FOUND)
         token_id = request.headers["Authorization"]
         token = get_object_or_404(Token, key = token_id.split()[-1])
         user = token.user
@@ -97,7 +99,9 @@ class JobView(APIView):
     @authentication_classes([TokenAuthentication])
     def put(self, request, job_id):
         job_data = request.data
-        job = Job.objects.get(pk=job_id)
+        job = Job.objects.filter(pk=job_id).first()
+        if not job:
+            return Response("Job does not exists", status=status.HTTP_404_NOT_FOUND)
         service = job.service
         token_id = request.headers["Authorization"]
         token = get_object_or_404(Token, key = token_id.split()[-1])
@@ -126,7 +130,9 @@ class JobView(APIView):
     
     @authentication_classes([TokenAuthentication])
     def delete(self, request, job_id):
-        job = Job.objects.get(pk=job_id)
+        job = Job.objects.filter(pk=job_id).first()
+        if not job:
+            return Response("Job does not exists", status=status.HTTP_404_NOT_FOUND)
         service = job.service
         token_id = request.headers["Authorization"]
         token = get_object_or_404(Token, key = token_id.split()[-1])
@@ -152,7 +158,9 @@ class ReviewView(APIView):
     @authentication_classes([TokenAuthentication])
     def post(self, request, service_id):
         review_data = request.data
-        service = Service.objects.get(pk=service_id)
+        service = Service.objects.filter(pk=service_id).first()
+        if not service:
+            return Response("Service does not exists", status=status.HTTP_404_NOT_FOUND)
         token_id = request.headers["Authorization"]
         token = get_object_or_404(Token, key = token_id.split()[-1])
         user = token.user
@@ -225,7 +233,9 @@ class ServiceView(APIView):
     @authentication_classes([TokenAuthentication])
     def put(self, request, service_id):
         service_data = request.data
-        service = Service.objects.get(pk=service_id)
+        service = Service.objects.filter(pk=service_id).first()
+        if not service:
+            return Response("Service does not exists", status=status.HTTP_404_NOT_FOUND)
         token_id = request.headers["Authorization"]
         token = get_object_or_404(Token, key = token_id.split()[-1])
         user = token.user
@@ -276,7 +286,9 @@ class ServiceView(APIView):
 class UserHasService(APIView):
     @authentication_classes([TokenAuthentication])
     def get(self, request, service_id):
-        service = Service.objects.get(pk=service_id)
+        service = Service.objects.filter(pk=service_id).first()
+        if not service:
+            return Response("Service does not exists", status=status.HTTP_404_NOT_FOUND)
         token_id = request.headers["Authorization"]
         token = get_object_or_404(Token, key = token_id.split()[-1])
         user = token.user

@@ -1,7 +1,5 @@
 import random
-
 from django.forms import ValidationError
-
 from .models import User
 from rest_framework import status
 from rest_framework.response import Response
@@ -33,7 +31,7 @@ class login_view(APIView):
     def post(self, request, format_arg=None):
         username = request.data.get('username')
         password = request.data.get('password')
-        user = User.objects.get(username=username)
+        user = User.objects.filter(username=username).first()
         if not user:
             return Response("Username is not registered", status=status.HTTP_400_BAD_REQUEST)
         if check_password(password,user.password):
@@ -65,12 +63,12 @@ class register(APIView):
                 validate_email(email)
                 keys = settings.VERIFICATION_KEY.split('-')
                 key = random.choice(keys)
-                response = requests.get("https://emailvalidation.abstractapi.com/v1/?api_key=" + key +"&email="+email)
-                json_data = response.json()
-                if 'error' not in json_data.keys():
-                    deliverability = json_data['deliverability']
-                    if not deliverability == 'DELIVERABLE':
-                        return Response({'Invalid email'}, status=status.HTTP_400_BAD_REQUEST)
+                # response = requests.get("https://emailvalidation.abstractapi.com/v1/?api_key=" + key +"&email="+email)
+                # json_data = response.json()
+                # if 'error' not in json_data.keys():
+                #     deliverability = json_data['deliverability']
+                #     if not deliverability == 'DELIVERABLE':
+                #         return Response({'Invalid email'}, status=status.HTTP_400_BAD_REQUEST)
             user = User.objects.create(username=username, first_name=first_name, last_name=last_name, email=email
             ,language=language, birth_date=birth_date, image=image)
             validate_password(password)
