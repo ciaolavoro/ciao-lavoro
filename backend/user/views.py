@@ -63,22 +63,22 @@ class register(APIView):
                 validate_email(email)
                 keys = settings.VERIFICATION_KEY.split('-')
                 key = random.choice(keys)
-                # response = requests.get("https://emailvalidation.abstractapi.com/v1/?api_key=" + key +"&email="+email)
-                # json_data = response.json()
-                # if 'error' not in json_data.keys():
-                #     deliverability = json_data['deliverability']
-                #     if not deliverability == 'DELIVERABLE':
-                #         return Response({'Invalid email'}, status=status.HTTP_400_BAD_REQUEST)
+                response = requests.get("https://emailvalidation.abstractapi.com/v1/?api_key=" + key +"&email="+email)
+                json_data = response.json()
+                if 'error' not in json_data.keys():
+                    deliverability = json_data['deliverability']
+                    if not deliverability == 'DELIVERABLE':
+                        return Response('Invalid email', status=status.HTTP_400_BAD_REQUEST)
             user = User.objects.create(username=username, first_name=first_name, last_name=last_name, email=email
             ,language=language, birth_date=birth_date, image=image)
             validate_password(password)
             user.set_password(password)
             user.save()
-            return Response({'The user has been successfully registered'})
+            return Response('The user has been successfully registered')
         except ValidationError as e:
-            return Response({str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
         except ValueError as e:
-            return Response({str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
 
 class UserDetails(APIView):
     @authentication_classes([TokenAuthentication])
@@ -127,7 +127,7 @@ class Profile(APIView):
                 if 'error' not in json_data.keys():
                     deliverability = json_data['deliverability']
                     if not deliverability == 'DELIVERABLE':
-                        return Response({'Invalid email'}, status=status.HTTP_400_BAD_REQUEST)
+                        return Response('Invalid email', status=status.HTTP_400_BAD_REQUEST)
             if language and language.strip() != '':
                 user.language = language
             if birth_date:
@@ -138,9 +138,9 @@ class Profile(APIView):
             serializer = UserSerializer(user)
             return Response(serializer.data)
         except ValidationError as e:
-            return Response({str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
         except ValueError as e:
-            return Response({str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
 
 class GetPoints(APIView):
     def get(self,request):
