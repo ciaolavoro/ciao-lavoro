@@ -102,7 +102,7 @@ export async function updateServiceRequest(serviceId, serviceData, token) {
 
 export async function promoteService(serviceId, token, returnURL, points) {
     const options = {
-        method: 'PUT',
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Token ${token}`,

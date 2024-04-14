@@ -153,6 +153,10 @@ class ContractStatusEdit(APIView):
                 return Response({'StripeError': error_msg}, status=status.HTTP_400_BAD_REQUEST)
             if session.payment_status != 'paid':
                 return Response('Payment for the session is not completed', status=status.HTTP_400_BAD_REQUEST)
+            points = request.data.get('points')
+            if points > 100*contract.cost or points > user.points or points < 0:
+                return Response('Invalid value for points', status=status.HTTP_400_BAD_REQUEST)
+            user.points = user.points - points
             user.points = user.points + int(5*contract.cost)
             user.save()
         contract.status = status_num
@@ -234,8 +238,6 @@ class ContractPayment(APIView):
             points = int(points)
         if user.points < points:
             return Response('No se pueden gastar más puntos de los disponibles', status=status.HTTP_400_BAD_REQUEST)
-        user.points = user.points - points
-        user.save()
         user_serializer = UserSerializer(user, many=False,context ={'request': request})
         token,_ = Token.objects.get_or_create(user=user)
         if user != contract.client:
@@ -264,7 +266,7 @@ class ContractPayment(APIView):
                     }],
                 mode = 'payment',
                 customer_email = user.email,
-                success_url = returnURL + '?session_id={CHECKOUT_SESSION_ID}',
+                success_url = returnURL + '?session_id={CHECKOUT_SESSION_ID}&points='+str(points),
                 cancel_url = returnURL,
             )
             return Response({'sessionUrl': session.url, 'price': price.unit_amount, 'user': user_serializer.data, 'token': token.key})
