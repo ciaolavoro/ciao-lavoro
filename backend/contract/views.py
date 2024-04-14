@@ -93,21 +93,6 @@ class ContractEdit(APIView):
             new_cost = float(contract_data['cost'])
         else:
             return Response("Todo contrato ha de tener un valor de coste aunque no sea definitivo", status=status.HTTP_400_BAD_REQUEST)
-        
-        if contract_data['accept_worker'] and contract_data['accept_worker'].strip() != '':
-            new_accept_worker = contract_data['accept_worker']
-            if user != contract.worker and new_accept_worker != str(contract.accept_worker):
-                raise PermissionDenied("No tienes permiso para cambiar la aceptación del trabajador siendo el cliente")
-        else:
-            return Response("El campo de aceptación de trabajador ha de tener un valor", status=status.HTTP_400_BAD_REQUEST)
-        
-        if contract_data['accept_client'] and contract_data['accept_client'].strip() != '':
-            new_accept_client = contract_data['accept_client']
-            if user != contract.client and new_accept_client != str(contract.accept_client):
-                raise PermissionDenied("No tienes permiso para cambiar la aceptación del cliente siendo el trabajador")
-        else:
-            return Response("El campo de aceptación de cliente ha de tener un valor", status=status.HTTP_400_BAD_REQUEST)
-        
         today = datetime.today()
         Init =  datetime.strptime(new_initial_date, '%Y-%m-%dT%H:%M')
         End = datetime.strptime(new_end_date, '%Y-%m-%dT%H:%M')
@@ -119,10 +104,12 @@ class ContractEdit(APIView):
             return Response("La fecha de inicio no puede ser antes que hoy", status=status.HTTP_400_BAD_REQUEST)
         if new_cost <= 0.0:
             return Response("El precio no puede ser menor o igual que 0", status=status.HTTP_400_BAD_REQUEST)
-        if contract_data['accept_worker'] != '':
-            contract.accept_worker = new_accept_worker
-        if contract_data['accept_client'] != '':
-            contract.accept_client = new_accept_client
+        if contract.worker == user:
+            contract.accept_client = False
+            contract.accept_worker = True
+        if contract.client == user:
+            contract.accept_client = True
+            contract.accept_worker = False
         contract.description = new_description
         contract.initial_date = new_initial_date
         contract.end_date = new_end_date
@@ -229,6 +216,8 @@ class ContractPayment(APIView):
         contract = get_object_or_404(Contract, pk = contract_id)
         token_id = self.request.headers['Authorization']
         returnURL = request.data.get('returnURL')
+        if not returnURL:
+            return Response('Debe enviar una ruta de retorno', status=status.HTTP_400_BAD_REQUEST)
         points = request.data.get('points')
         token = get_object_or_404(Token, key = token_id.split()[-1])
         user = token.user
