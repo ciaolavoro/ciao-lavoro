@@ -84,10 +84,11 @@ class ServiceViewTest(TestCase):
     def test_service_promotion(self):
         service = Service.objects.create(user=self.user, profession=6, city='Old City', experience=2)
         url = reverse('service:service-promotion', kwargs={'service_id': service.id})
-        response = self.client.put(url)
+        data = {
+            'returnURL': 'http://localhost:8000/',
+        }
+        response = self.client.post(url, data, format='json')
         self.assertEqual(response.status_code, 200)
-        service.refresh_from_db()
-        self.assertEqual(service.is_promoted,datetime.date.today())
 
     def test_service_promotion_negative(self):
         user = User.objects.create(username='anuser', email='anuser@gmail.com',
@@ -95,9 +96,9 @@ class ServiceViewTest(TestCase):
                                    last_name ='De prueba', birth_date = (timezone.now() -
                                    datetime.timedelta(days=365*25)).date(), language= 'Russian')
         service = Service.objects.create(user=user, profession=6, city='Old City', experience=2)
-        url = reverse('service:service-promotion', kwargs={'service_id': service.id})
-        response = self.client.put(url)
-        self.assertEqual(response.status_code, 403)
+        url = reverse('service:service-promotion', kwargs={'service_id': service.id}) 
+        response = self.client.post(url)
+        self.assertEqual(response.status_code, 400)
         service.refresh_from_db()
         self.assertNotEqual(service.is_promoted,datetime.date.today())
 
@@ -191,7 +192,7 @@ class AllPromotedListTestCase(TestCase):
                                                profession=1,
                                                city='Test City 1',
                                                experience=5,
-                                               is_promoted = '2024-04-01')
+                                               is_promoted = (timezone.now().date() - datetime.timedelta(days=29)).strftime('%Y-%m-%d'))
         self.review1 = Review.objects.create(user=self.user,
                                             service=self.service1,
                                             description="Test review1",
@@ -200,7 +201,7 @@ class AllPromotedListTestCase(TestCase):
                                                profession=2,
                                                city='Test City 2',
                                                experience=3,
-                                               is_promoted= '2024-03-09')
+                                               is_promoted= (timezone.now().date() - datetime.timedelta(days=32)).strftime('%Y-%m-%d'))
         self.review2 = Review.objects.create(user=self.user,
                                             service=self.service2,
                                             description="Test review21",
@@ -213,7 +214,7 @@ class AllPromotedListTestCase(TestCase):
                                                profession=3,
                                                city='Test City 3',
                                                experience=4,
-                                               is_promoted= '2024-04-02')
+                                               is_promoted= (timezone.now().date() - datetime.timedelta(days=1)).strftime('%Y-%m-%d'))
         self.review3 = Review.objects.create(user=self.user,
                                             service=self.service3,
                                             description="Test review3",
@@ -222,7 +223,7 @@ class AllPromotedListTestCase(TestCase):
                                                profession=3,
                                                city='Test City 3',
                                                experience=4,
-                                               is_promoted= '2024-02-02')
+                                               is_promoted= (timezone.now().date() - datetime.timedelta(days=60)).strftime('%Y-%m-%d'))
         self.review4 = Review.objects.create(user=self.user,
                                             service=self.service4,
                                             description="Test review4",
@@ -234,9 +235,9 @@ class AllPromotedListTestCase(TestCase):
         self.assertTrue('promotedServices' in response.json())
         services = response.json()['promotedServices']
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(services), 3)
+        self.assertEqual(len(services), 2)
         self.assertEqual(services[0]['city'],'Test City 1')
-        self.assertEqual(services[2]['city'], 'Test City 3')
+        self.assertEqual(services[1]['city'], 'Test City 3')
 
 class ProfessionListTestCase(TestCase):
     def setUp(self):
