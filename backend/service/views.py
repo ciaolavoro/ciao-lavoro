@@ -1,3 +1,4 @@
+from user.serializers import UserSerializer
 from .models import Service, Job, Review
 from .serializers import ServiceSerializer, JobSerializer, ReviewSerializer
 from datetime import date, timedelta
@@ -310,14 +311,14 @@ class PromotionPayment(APIView):
         points = request.data.get('points')
         token = get_object_or_404(Token, key = token_id.split()[-1])
         user = token.user
+        if service.user != user:
+            raise PermissionDenied('Debes ser el dueño del servicio')
         if not points:
             points = 0
         else:
             points = int(points)
         if user.points < points:
             return Response('No se pueden gastar más puntos de los disponibles', status=status.HTTP_400_BAD_REQUEST)
-        user.points = user.points - points
-        user.save()
         if user != service.user:
             raise PermissionDenied("No puedes promocionar un servicio que no es tuyo")
         if 4.99 < points/100:
@@ -353,7 +354,13 @@ class PromotionPayment(APIView):
         
 class PromoteService(APIView):
     def put(self, request, service_id):
+        token_id = self.request.headers['Authorization']
+        points = request.data.get('points')
+        token = get_object_or_404(Token, key = token_id.split()[-1])
+        user = token.user
         service = get_object_or_404(Service, pk = service_id)
+        if service.user != user:
+            raise PermissionDenied('Debes ser el dueño del servicio')
         session_id = request.data.get('session_id', None)
         if not session_id:
             return Response('session_id is required for completing the payment', status=status.HTTP_400_BAD_REQUEST)
@@ -367,8 +374,12 @@ class PromoteService(APIView):
             return Response('Payment for the session is not completed', status=status.HTTP_400_BAD_REQUEST)
         service.is_promoted=date.today()
         service.save()
-        serializer = ServiceSerializer(service, many=False,context ={'request': request})
-        return Response(serializer.data)
+        user.points = user.points - points
+        user.save()
+        user_serializer = UserSerializer(user, many=False,context ={'request': request})
+        service_serializer = ServiceSerializer(service, many=False,context ={'request': request})
+        token,_ = Token.objects.get_or_create(user=user)
+        return Response({'service': service_serializer.data, 'user': user_serializer.data, 'token': token.key})
         
 class AllServiceInPromotion(APIView):
     serializer_class = ServiceSerializer

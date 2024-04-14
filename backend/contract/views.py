@@ -1,4 +1,6 @@
 from django.conf import settings
+
+from user.serializers import UserSerializer
 from .models import Contract
 from service.models import Service
 from .serializers import ContractSerializer
@@ -155,8 +157,10 @@ class ContractStatusEdit(APIView):
             user.save()
         contract.status = status_num
         contract.save()
-        serializer = ContractSerializer(contract, many=False,context ={'request': request})
-        return Response(serializer.data)
+        user_serializer = UserSerializer(user, many=False,context ={'request': request})
+        contract_serializer = ContractSerializer(contract, many=False,context ={'request': request})
+        token,_ = Token.objects.get_or_create(user=user)
+        return Response({'user': user_serializer.data, 'contract': contract_serializer.data, 'token': token.key})
 
 class ContractDelete(APIView):
     @authentication_classes([TokenAuthentication])
@@ -232,6 +236,8 @@ class ContractPayment(APIView):
             return Response('No se pueden gastar más puntos de los disponibles', status=status.HTTP_400_BAD_REQUEST)
         user.points = user.points - points
         user.save()
+        user_serializer = UserSerializer(user, many=False,context ={'request': request})
+        token,_ = Token.objects.get_or_create(user=user)
         if user != contract.client:
             raise PermissionDenied("No puedes proceder al pago de un contrato que no te pertenece")
         if contract.cost < points/100:
@@ -261,7 +267,7 @@ class ContractPayment(APIView):
                 success_url = returnURL + '?session_id={CHECKOUT_SESSION_ID}',
                 cancel_url = returnURL,
             )
-            return Response({'sessionUrl': session.url, 'price': price.unit_amount})
+            return Response({'sessionUrl': session.url, 'price': price.unit_amount, 'user': user_serializer.data, 'token': token.key})
         except stripe.error.StripeError as e:
             error_msg = str(e)
             return Response({'Error al completar el pago': error_msg}, status=status.HTTP_400_BAD_REQUEST)

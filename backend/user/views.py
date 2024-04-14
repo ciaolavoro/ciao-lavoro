@@ -74,7 +74,8 @@ class register(APIView):
             validate_password(password)
             user.set_password(password)
             user.save()
-            return Response('The user has been successfully registered')
+            serializer = UserSerializer(user, many=False,context ={'request': request})
+            return Response(serializer.data)
         except ValidationError as e:
             return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
         except ValueError as e:
@@ -135,8 +136,9 @@ class Profile(APIView):
             if image:
                 user.image = image
             user.save()
-            serializer = UserSerializer(user)
-            return Response(serializer.data)
+            serializer = UserSerializer(user, many=False,context ={'request': request})
+            token,_ = Token.objects.get_or_create(user=user)
+            return Response({'user': serializer.data, 'token': token.key})
         except ValidationError as e:
             return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
         except ValueError as e:
