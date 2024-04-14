@@ -344,7 +344,7 @@ class PromotionPayment(APIView):
                     }],
                 mode = 'payment',
                 customer_email = user.email,
-                success_url = returnURL + '?session_id={CHECKOUT_SESSION_ID}',
+                success_url = returnURL + '?session_id={CHECKOUT_SESSION_ID}&points=' + str(points),
                 cancel_url = returnURL,
             )
             return Response({'sessionUrl': session.url, 'price': price.unit_amount})

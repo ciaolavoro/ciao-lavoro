@@ -121,6 +121,24 @@ export async function promoteService(serviceId, token, returnURL, points) {
     }
 }
 
+export async function updatePromoteService(serviceId, sessionId, points, token) {
+    const options = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
+        },
+        body: JSON.stringify({ session_id: sessionId, points }),
+    };
+
+    try {
+        const response = await fetchBackend(`/service/promote/${serviceId}/`, options);
+        return response;
+    } catch (error) {
+        console.error('Update Contract Status error:', error);
+    }
+}
+
 export const getJobDetailsByServiceId = async (id) => {
     const options = {
         method: 'GET',
