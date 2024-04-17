@@ -1,9 +1,8 @@
 # Evaluación de Desempeño de Usuarios Piloto
 Pilot Users Performance Evaluation 
 ## CIAOLAVORO
-**Grupo 6**
-<br>
-**Entregable: Sprint 3**
+### Grupo 6
+### Entregable: Sprint 3
 
 ## Miembros del equipo y contribuciones
 
@@ -22,7 +21,7 @@ Pilot Users Performance Evaluation
 | 01/04/2024 | 1.1     | Revision del documento en su versión Sprint 2    |
 | 17/04/2024 | 2.0     | Redacción del documento en su versión Sprint 3    |
 
-**PILOT USER ISSP GROUP NUMBER: 12** 
+### PILOT USER ISSP GROUP NUMBER: 12 
 |**Factor** |**#S1** |**#S2** |**#S3** |**#PPL** |**#WPL** |
 | - | - | - | - | - | - |
 |**Punctuality** |**10** |**10**|**10**|||
@@ -30,7 +29,7 @@ Pilot Users Performance Evaluation
 |**Feedback amount** |**9** |**10**|**10**|||
 |**Add any other factor you consider** | *Considerations || **Considerations |||
 
-**Please, score from 1 to 10 each factor in each development cycle of your product** 
+Please, score from 1 to 10 each factor in each development cycle of your product
 
 *Considerations:
 
