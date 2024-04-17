@@ -1,8 +1,8 @@
 # USUARIOS PILOTO
 
 ## CIAOLAVORO
-**Grupo 6**
-**Entregable: Sprint 3**
+###Grupo 6
+###Entregable: Sprint 3
 
 ## Miembros del equipo y contribuciones
 
