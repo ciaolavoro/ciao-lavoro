@@ -2,7 +2,7 @@
 
 ## CIAOLAVORO
 **Grupo 6**
-<br>
+
 **Entregable: Sprint 3**
 
 ## Miembros del equipo y contribuciones
