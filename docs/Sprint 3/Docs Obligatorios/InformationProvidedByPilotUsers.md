@@ -156,7 +156,11 @@ Fecha: 14/04/2024
 | CONTRATO | - He podido crear un contrato que comenzaba el mes pasado y que termina en el año 2214. <br> - Tras haber contratado un trabajo, haberlo pagado y haber comenzado el trabajo la persona correspondiente. Al pulsar el botón de terminar el trabajo por parte de la persona que lo está realizando, aparece un error 403 y un mensaje en pantalla que indica que se ha producido un error al actualizar el estado del trabajo. Sucede lo mismo por parte del contratante. | - | - |
 
 Imagen 1:
+![imagen](https://github.com/ciaolavoro/ciao-lavoro/assets/59439742/2886ab02-1584-4231-a4a4-5d46e4afdcdc)
 
 Imagen 2: 
+![imagen](https://github.com/ciaolavoro/ciao-lavoro/assets/59439742/2ed2d5bf-b1e4-4626-a213-276940bd50e7)
 
 Imagen 3: 
+![imagen](https://github.com/ciaolavoro/ciao-lavoro/assets/59439742/4d4fbf25-e4e2-4467-8072-908ff4374802)
+
