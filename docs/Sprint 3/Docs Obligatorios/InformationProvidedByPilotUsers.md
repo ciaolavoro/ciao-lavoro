@@ -8,7 +8,7 @@
 
 | Nombre y Apellidos | Tipo de Contribución |
 |---------------------|-----------------------|
-| Alexander | Alicia Sánchez Hossdorf         | Redacción             |
+| Alexander / Alicia Sánchez Hossdorf         | Redacción             |
 
 
 ### CONTROL DE VERSIONES
@@ -17,26 +17,28 @@
 | 31/03/2024 | 1.0     | Creación del documento en su versión Sprint 3    |
 
 ### FEEDBACK USUARIOS PILOTO CLIENTES
-- Para mantener el anonimato respecto a los usuarios piloto clientes, se usará "UsuarioXXYY" siendo X las dos primeras letra de su nombre e Y las dos primeras de su apellido.
+Para mantener el anonimato respecto a los usuarios piloto clientes, se usará "UsuarioXXYY" siendo X las dos primeras letra de su nombre e Y las dos primeras de su apellido.
 
 | USUARIO PILOTO | FECHA DE RESPUESTA | FALLOS ENCONTRADOS | RECOMENDACIONES DE MEJORA | COMENTARIOS POSITIVOS | OTROS COMENTARIOS |
 | -------------- | ------------------ | ---------------------------------------------- | ------------------------------------------ | ----------------------------------- | ---------- |
-| UsuarioMaRu    | 13/04/2024 | - | - | Cómoda y fácil  | - |
-| UsuarioLoGr    | 14/04/2024 | En el apartado de “todos tus contratos”, he rellenado la fecha de inicio, la fecha fin, el estado pero no encontraba donde darle para guardar esa selección                  | - | Muy intuitiva | Practica |
-| UsuarioMaMa    | 14/04/2024 | No logro encontrar como se debe realizar el pago para el contrato. | Una interfaz algo mas minimalista, pero eso siendo tiquismiquis. Estoy muy satisfecho con la app | Es muy intuitiva y facil de usar, es facil registrarse. | - |
-| UsuarioCaDi   | 14/04/2024 | Las fotos de los trabajadores no cargaban. | - |  La estética y su fácil uso. | - |
-| UsuarioAlLa   | 14/04/2024 | No cargan las fotos de los profesionales. <br> El máximo valor del coste del trabajo es 100.000 siendo incompatible con trabajos con altas pretensiones | Pudiendo ver las fotos de los profesionales | Su fácil manejo | - |
-| UsuarioMiPe   | 14/04/2024 | - | Poniendo más colores y menos texto que ayude a ir más rápido  | Su eficacia e intuición  | De gran utilidad para la función que se busca |
-| UsuarioPiGo   | 14/04/2024 | - | Yo la encuentro muy bien y cómoda de usar. | Es sencilla de usar y rápida . Además nos informa sobre el servicio que contratamos.Tambien valoro  que puedo ofrecer mis servicios. | Necesito un servicio,me registro,lo busco y contrato. Ofrezco un servicio,me registro y lo pongo. Cuando ya esté registrada directamente pongo iniciar sesión. |
+| UsuarioMaRu    | 13/04/2024 |  |  | Cómoda y fácil  |  |
+| UsuarioLoGr    | 14/04/2024 | En el apartado de “todos tus contratos”, he rellenado la fecha de inicio, la fecha fin, el estado pero no encontraba donde darle para guardar esa selección                  |  | Muy intuitiva | Practica |
+| UsuarioMaMa    | 14/04/2024 | No logro encontrar como se debe realizar el pago para el contrato. | Una interfaz algo mas minimalista, pero eso siendo tiquismiquis. Estoy muy satisfecho con la app | Es muy intuitiva y facil de usar, es facil registrarse. |  |
+| UsuarioCaDi   | 14/04/2024 | Las fotos de los trabajadores no cargaban. |  |  La estética y su fácil uso. |  |
+| UsuarioAlLa   | 14/04/2024 | No cargan las fotos de los profesionales. <br> El máximo valor del coste del trabajo es 100.000 siendo incompatible con trabajos con altas pretensiones | Pudiendo ver las fotos de los profesionales | Su fácil manejo |  |
+| UsuarioMiPe   | 14/04/2024 |  | Poniendo más colores y menos texto que ayude a ir más rápido  | Su eficacia e intuición  | De gran utilidad para la función que se busca |
+| UsuarioPiGo   | 14/04/2024 |  | Yo la encuentro muy bien y cómoda de usar. | Es sencilla de usar y rápida . Además nos informa sobre el servicio que contratamos.Tambien valoro  que puedo ofrecer mis servicios. | Necesito un servicio,me registro,lo busco y contrato. Ofrezco un servicio,me registro y lo pongo. Cuando ya esté registrada directamente pongo iniciar sesión. |
 | UsuarioRodri   | 14/04/2024 | No he encontrado ningún fallo  | Haciendo un mejor diseño  | La facilidad para encontrar las cosas  | Trabajo fácil  |
 | UsuarioCaBe   | 14/04/2024 | Fallo en la carga de ciertas imágenes  | Analizado las reseñas de los que la usamos | Su interfaz  | Útil  |
 
 #### Edad de los encuestados
+![imagen](https://github.com/ciaolavoro/ciao-lavoro/assets/59439742/0a8389cc-4351-440d-9806-269b316326e8)
 
 #### ¿Han utilizado alguna vez alguna aplicación para contratar servicios?
+![imagen](https://github.com/ciaolavoro/ciao-lavoro/assets/59439742/0c22b617-506f-4cb5-9e58-5e86f1b47631)
 
 #### ¿Ha gustado el diseño de la aplicación?
-
+![imagen](https://github.com/ciaolavoro/ciao-lavoro/assets/59439742/e30d0a64-8a67-417e-b3c5-615acfdb3217)
 
 
 ### FEEDBACK USUARIOS PILOTO GRUPO 12
@@ -44,10 +46,14 @@
 - URL de tiempo en clockify : NOS LO TIENEN QUE DAR
 
 #### ¿Cree que se ha mejorado la aplicación considerablemente?
+![imagen](https://github.com/ciaolavoro/ciao-lavoro/assets/59439742/84d30ca9-e86f-479a-a1a9-5faff2abbadb)
 
 #### ¿Cree que es útil la aplicación?
+![imagen](https://github.com/ciaolavoro/ciao-lavoro/assets/59439742/9e65b413-6cb0-432b-92ee-fad28b49d99c)
 
 #### Grado de satisfacción con la aplicación (siendo 1 el más bajo y 10 el más alto)
+![imagen](https://github.com/ciaolavoro/ciao-lavoro/assets/59439742/57da1916-e45c-4f3c-9a8a-b6781d965922)
+
 
 #### Alejandro Santiago Félix
 Fecha: 13/04/2024
@@ -55,8 +61,7 @@ Fecha: 13/04/2024
 |  | ERRORES ENCONTRADOS | VALIDACIONES | RECOMENDACIONES DE MEJORA |
 | -------------- | -------------- | -------------- | -------------- |
 | USUARIO | - No funciona la verificación de usuario,<br> -No hay consistencia entre los términos de condiciones y la edición (dice que una con 13 dte deja trabajzr pero el mínimo es 16). <br> - Para más información: https://uses0-my.sharepoint.com/:w:/g/personal/alesanfel_alum_us_es/Ef4sotTG_WZEj3bSGPRf1SQBeUMeLp0QjNC6K1w4lUkjlg?e=Vm7dYh | - Te deja poner trabajos gratis y fechas absurdas. <br> - Para más info: https://uses0-my.sharepoint.com/:w:/g/personal/alesanfel_alum_us_es/Ef4sotTG_WZEj3bSGPRf1SQBeUMeLp0QjNC6K1w4lUkjlg?e=Vm7dYh | - ¿Para qué sirve el megáfono? <br> - Diferenciar entre Home y Buscar Servicios. <br> - Pa más info: https://uses0-my.sharepoint.com/:w:/g/personal/alesanfel_alum_us_es/Ef4sotTG_WZEj3bSGPRf1SQBeUMeLp0QjNC6K1w4lUkjlg?e=Vm7dYh |
-| SERVICIO | Para más info: https://uses0-my.sharepoint.com/:w:/g/personal/alesanfel_alum_us_es/Ef4sotTG_WZEj3bSGPRf1SQBeUMeLp0QjNC6K1w4lUkjlg?e=Vm7dYh | - Para más info
-https://uses0-my.sharepoint.com/:w:/g/personal/alesanfel_alum_us_es/Ef4sotTG_WZEj3bSGPRf1SQBeUMeLp0QjNC6K1w4lUkjlg?e=Vm7dYh | - |
+| SERVICIO | Para más info: https://uses0-my.sharepoint.com/:w:/g/personal/alesanfel_alum_us_es/Ef4sotTG_WZEj3bSGPRf1SQBeUMeLp0QjNC6K1w4lUkjlg?e=Vm7dYh | - Para más info: https://uses0-my.sharepoint.com/:w:/g/personal/alesanfel_alum_us_es/Ef4sotTG_WZEj3bSGPRf1SQBeUMeLp0QjNC6K1w4lUkjlg?e=Vm7dYh | - |
 | CONTRATO | https://uses0-my.sharepoint.com/:w:/g/personal/alesanfel_alum_us_es/Ef4sotTG_WZEj3bSGPRf1SQBeUMeLp0QjNC6K1w4lUkjlg?e=Vm7dYh | https://uses0-my.sharepoint.com/:w:/g/personal/alesanfel_alum_us_es/Ef4sotTG_WZEj3bSGPRf1SQBeUMeLp0QjNC6K1w4lUkjlg?e=Vm7dYh | - |
 
 #### Diego García Linares
