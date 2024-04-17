@@ -9,7 +9,7 @@
 | Nombre y Apellidos | Tipo de Contribución |
 |---------------------|-----------------------|
 | Adrián García Chavero     |  Redacción      |
-| Alexander | Alicia Sánchez Hossdorf     |  Revisión      |
+| Alexander / Alicia Sánchez Hossdorf     |  Revisión      |
 
 ---
 
