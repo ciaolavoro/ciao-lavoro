@@ -2,7 +2,6 @@
 
 ## CIAOLAVORO
 **Grupo 6**
-<br>
 **Entregable: Sprint 3**
 
 ## Miembros del equipo y contribución
@@ -10,6 +9,7 @@
 | Nombre y Apellidos | Tipo de Contribución |
 |---------------------|-----------------------|
 | Adrián García Chavero     |  Redacción      |
+| Alexander | Alicia Sánchez Hossdorf     |  Revisión      |
 
 ---
 
