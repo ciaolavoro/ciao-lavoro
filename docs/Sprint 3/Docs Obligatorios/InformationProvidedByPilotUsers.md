@@ -14,7 +14,7 @@
 ### CONTROL DE VERSIONES
 | FECHA      | VERSIÓN | DESCRIPCIÓN                                      |
 |------------|---------|--------------------------------------------------|
-| 31/03/2024 | 1.0     | Creación del documento en su versión Sprint 3    |
+| 17/04/2024 | 1.0     | Creación del documento en su versión Sprint 3    |
 
 ### FEEDBACK USUARIOS PILOTO CLIENTES
 Para mantener el anonimato respecto a los usuarios piloto clientes, se usará "UsuarioXXYY" siendo X las dos primeras letra de su nombre e Y las dos primeras de su apellido.
