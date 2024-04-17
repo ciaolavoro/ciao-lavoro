@@ -1,9 +1,9 @@
 from django.conf import settings
-from django.http import JsonResponse
+
+from user.serializers import UserSerializer
 from .models import Contract
 from service.models import Service
 from .serializers import ContractSerializer
-from django.forms import ValidationError
 from datetime import datetime
 from django.shortcuts import get_object_or_404
 from rest_framework import generics, status
@@ -30,30 +30,30 @@ class ContractCreation(APIView):
         if contract_data['initial_date'] and contract_data['initial_date'].strip() != '':
             initial_date = contract_data['initial_date']
         else:
-            raise ValidationError("Todo contrato ha de tener una fecha de inicio")
+            return Response("Todo contrato ha de tener una fecha de inicio", status=status.HTTP_400_BAD_REQUEST)
         if contract_data['end_date'] and contract_data['end_date'].strip() != '':
             end_date = contract_data['end_date']
         else:
-            raise ValidationError("Todo contrato ha de tener una fecha de fin")
+            return Response("Todo contrato ha de tener una fecha de fin", status=status.HTTP_400_BAD_REQUEST)
         if contract_data['cost'] and contract_data['cost'] != '':
             cost = float(contract_data['cost'])
         else:
-            raise ValidationError("Todo contrato ha de tener un valor de coste aunque no sea definitivo")
+            return Response("Todo contrato ha de tener un valor de coste aunque no sea definitivo", status=status.HTTP_400_BAD_REQUEST)
 
         today = datetime.today()
         Init =  datetime.strptime(initial_date, '%Y-%m-%dT%H:%M')
         End = datetime.strptime(end_date, '%Y-%m-%dT%H:%M')
 
         if len(description) > 500:
-            return JsonResponse({'details': 'La descripción no puede superar los 500 caracteres', 'status': '500'})
+            return Response({'La descripción no puede superar los 500 caracteres'}, status=status.HTTP_400_BAD_REQUEST)
         if End < Init:
-            raise ValidationError("La fecha de finalizacion no puede ser antes que la inicial")
+            return Response("La fecha de finalizacion no puede ser antes que la inicial", status=status.HTTP_400_BAD_REQUEST)
         if Init < today:
-            raise ValidationError("La fecha de inicio no puede ser antes que hoy")
+            return Response("La fecha de inicio no puede ser antes que hoy", status=status.HTTP_400_BAD_REQUEST)
         if cost <= 0.0:
-            raise ValidationError("El precio no puede ser menor o igual que 0")
+            return Response("El precio no puede ser menor o igual que 0", status=status.HTTP_400_BAD_REQUEST)
         if client == worker:
-            raise ValidationError("No puede contratarse a sí mismo")
+            return Response("No puede contratarse a sí mismo", status=status.HTTP_400_BAD_REQUEST)
 
         contract = Contract.objects.create(worker = worker, client = client,
                                            description = description,
@@ -78,51 +78,38 @@ class ContractEdit(APIView):
         if contract_data['description']:
             new_description = contract_data['description']
         else:
-            ValidationError("La descripción no puede ser nula, como mucho ha de ser vacía")
+            return Response("La descripción no puede ser nula, como mucho ha de ser vacía", status=status.HTTP_400_BAD_REQUEST)
         if contract_data['initial_date'] and contract_data['initial_date'].strip() != '':
             new_initial_date = contract_data['initial_date']
         else:
-            raise ValidationError("Todo contrato ha de tener una fecha de inicio")
+            return Response("Todo contrato ha de tener una fecha de inicio", status=status.HTTP_400_BAD_REQUEST)
 
         if contract_data['end_date'] and contract_data['end_date'].strip() != '':
             new_end_date = contract_data['end_date']
         else:
-            raise ValidationError("Todo contrato ha de tener una fecha de fin")
+            return Response("Todo contrato ha de tener una fecha de fin", status=status.HTTP_400_BAD_REQUEST)
 
         if contract_data['cost'] and contract_data['cost'].strip() != '':
             new_cost = float(contract_data['cost'])
         else:
-            raise ValidationError("Todo contrato ha de tener un valor de coste aunque no sea definitivo")
-        
-        if contract_data['accept_worker'] and contract_data['accept_worker'].strip() != '':
-            new_accept_worker = contract_data['accept_worker']
-            if user != contract.worker and new_accept_worker != str(contract.accept_worker):
-                raise PermissionDenied("No tienes permiso para cambiar la aceptación del trabajador siendo el cliente")
-        else:
-            ValidationError("El campo de aceptación de trabajador ha de tener un valor")
-        
-        if contract_data['accept_client'] and contract_data['accept_client'].strip() != '':
-            new_accept_client = contract_data['accept_client']
-            if user != contract.client and new_accept_client != str(contract.accept_client):
-                raise PermissionDenied("No tienes permiso para cambiar la aceptación del cliente siendo el trabajador")
-        else:
-            ValidationError("El campo de aceptación de cliente ha de tener un valor")
-        
+            return Response("Todo contrato ha de tener un valor de coste aunque no sea definitivo", status=status.HTTP_400_BAD_REQUEST)
         today = datetime.today()
         Init =  datetime.strptime(new_initial_date, '%Y-%m-%dT%H:%M')
         End = datetime.strptime(new_end_date, '%Y-%m-%dT%H:%M')
         if len(new_description) > 500:
-            return JsonResponse({'details': 'La descripción no puede superar los 500 caracteres', 'status': '500'})
+            return Response({'La descripción no puede superar los 500 caracteres'}, status=status.HTTP_400_BAD_REQUEST)
         if End < Init:
-            raise ValidationError("La fecha de finalizacion no puede ser antes que la inicial")
+            return Response("La fecha de finalizacion no puede ser antes que la inicial", status=status.HTTP_400_BAD_REQUEST)
         if Init < today:
-            raise ValidationError("La fecha de inicio no puede ser antes que hoy")
+            return Response("La fecha de inicio no puede ser antes que hoy", status=status.HTTP_400_BAD_REQUEST)
         if new_cost <= 0.0:
-            raise ValidationError("El precio no puede ser menor o igual que 0")
-        if contract_data['accept_worker'] != '':
-            contract.accept_worker = new_accept_worker
-        if contract_data['accept_client'] != '':
-            contract.accept_client = new_accept_client
+            return Response("El precio no puede ser menor o igual que 0", status=status.HTTP_400_BAD_REQUEST)
+        if contract.worker == user:
+            contract.accept_client = False
+            contract.accept_worker = True
+        if contract.client == user:
+            contract.accept_client = True
+            contract.accept_worker = False
         contract.description = new_description
         contract.initial_date = new_initial_date
         contract.end_date = new_end_date
@@ -153,12 +140,18 @@ class ContractStatusEdit(APIView):
                 return Response({'StripeError': error_msg}, status=status.HTTP_400_BAD_REQUEST)
             if session.payment_status != 'paid':
                 return Response('Payment for the session is not completed', status=status.HTTP_400_BAD_REQUEST)
+            points = request.data.get('points')
+            if points > 100*contract.cost or points > user.points or points < 0:
+                return Response('Invalid value for points', status=status.HTTP_400_BAD_REQUEST)
+            user.points = user.points - points
             user.points = user.points + int(5*contract.cost)
             user.save()
         contract.status = status_num
         contract.save()
-        serializer = ContractSerializer(contract, many=False,context ={'request': request})
-        return Response(serializer.data)
+        user_serializer = UserSerializer(user, many=False,context ={'request': request})
+        contract_serializer = ContractSerializer(contract, many=False,context ={'request': request})
+        token,_ = Token.objects.get_or_create(user=user)
+        return Response({'user': user_serializer.data, 'contract': contract_serializer.data, 'token': token.key})
 
 class ContractDelete(APIView):
     @authentication_classes([TokenAuthentication])
@@ -223,6 +216,8 @@ class ContractPayment(APIView):
         contract = get_object_or_404(Contract, pk = contract_id)
         token_id = self.request.headers['Authorization']
         returnURL = request.data.get('returnURL')
+        if not returnURL:
+            return Response('Debe enviar una ruta de retorno', status=status.HTTP_400_BAD_REQUEST)
         points = request.data.get('points')
         token = get_object_or_404(Token, key = token_id.split()[-1])
         user = token.user
@@ -232,8 +227,8 @@ class ContractPayment(APIView):
             points = int(points)
         if user.points < points:
             return Response('No se pueden gastar más puntos de los disponibles', status=status.HTTP_400_BAD_REQUEST)
-        user.points = user.points - points
-        user.save()
+        user_serializer = UserSerializer(user, many=False,context ={'request': request})
+        token,_ = Token.objects.get_or_create(user=user)
         if user != contract.client:
             raise PermissionDenied("No puedes proceder al pago de un contrato que no te pertenece")
         if contract.cost < points/100:
@@ -260,10 +255,10 @@ class ContractPayment(APIView):
                     }],
                 mode = 'payment',
                 customer_email = user.email,
-                success_url = returnURL + '?session_id={CHECKOUT_SESSION_ID}',
+                success_url = returnURL + '?session_id={CHECKOUT_SESSION_ID}&points='+str(points),
                 cancel_url = returnURL,
             )
-            return JsonResponse({'sessionUrl': session.url, 'price': price.unit_amount})
+            return Response({'sessionUrl': session.url, 'price': price.unit_amount, 'user': user_serializer.data, 'token': token.key})
         except stripe.error.StripeError as e:
             error_msg = str(e)
             return Response({'Error al completar el pago': error_msg}, status=status.HTTP_400_BAD_REQUEST)

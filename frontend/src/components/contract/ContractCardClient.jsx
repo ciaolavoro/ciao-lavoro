@@ -53,9 +53,10 @@ export function ContractCardClient({ contract }) {
       return new Date(dateString).toLocaleDateString(undefined, options)
    }
 
-   const updateStatus = async (contractId, statusNum, sessionId, token) => {
+   const updateStatus = async (contractId, statusNum, sessionId, points, token) => {
       try {
-         const response = await updateContractStatus(contractId, statusNum, sessionId, token)
+
+         const response = await updateContractStatus(contractId, statusNum, sessionId, points, token)
          if (response.ok && queryParams.get("session_id")) {
             setStatus(contractStatus.paid)
          } else {
@@ -112,7 +113,8 @@ export function ContractCardClient({ contract }) {
 
    useEffect(() => {
       if (status === "Aceptado" && queryParams.get("session_id")) {
-         updateStatus(contract.id, 6, queryParams.get("session_id"), loggedUser.token)
+         const points = +queryParams.get('points')
+         updateStatus(contract.id, 6, queryParams.get("session_id"), points, loggedUser.token)
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [])
@@ -149,7 +151,7 @@ export function ContractCardClient({ contract }) {
                {contract.estatus === "En proceso" && (
                   <button
                      className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mt-4 self-center"
-                     onClick={() => updateStatus(contract.id, 4, loggedUser.token)}>
+                     onClick={() => updateStatus(contract.id, 4, '', 0, loggedUser.token)}>
                      Trabajo terminado
                   </button>
                )}

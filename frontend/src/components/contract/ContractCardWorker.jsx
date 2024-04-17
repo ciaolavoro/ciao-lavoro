@@ -1,10 +1,8 @@
-import { useSearchParams } from "react-router-dom"
 import { updateContractStatus, cancelContractStatus } from "../../api/Contract.api"
 import { useAuthContext } from "../auth/AuthContextProvider"
 
 export function ContractCardWorker({ contract }) {
    const { loggedUser } = useAuthContext()
-   const [searchParams] = useSearchParams()
 
    const formatDate = dateString => {
       const options = { year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false }
@@ -30,9 +28,9 @@ export function ContractCardWorker({ contract }) {
       }
    }
 
-   const updateStatus = async (contractId, statusNum, sessionId, token) => {
+   const updateStatus = async (contractId, statusNum, token) => {
       try {
-         const response = await updateContractStatus(contractId, statusNum, sessionId, token)
+         const response = await updateContractStatus(contractId, statusNum, '', 0, token)
          if (response.ok) {
             window.location.reload()
          } else {
@@ -92,7 +90,7 @@ export function ContractCardWorker({ contract }) {
          {contract.estatus === "Negociacion" && (
             <button
                className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mt-4 mr-3"
-               onClick={() => updateStatus(contract.id, 2, searchParams.get("session_id"), loggedUser.token)}>
+               onClick={() => updateStatus(contract.id, 2, loggedUser.token)}>
                Aceptar Contrato
             </button>
          )}
@@ -120,7 +118,7 @@ export function ContractCardWorker({ contract }) {
          {contract.estatus === "Pagado" && (
             <button
                className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mt-4 "
-               onClick={() => updateStatus(contract.id, 3, searchParams.get("session_id"), loggedUser.token)}>
+               onClick={() => updateStatus(contract.id, 3, loggedUser.token)}>
                Comenzar trabajo
             </button>
          )}
@@ -129,7 +127,7 @@ export function ContractCardWorker({ contract }) {
             {contract.estatus === "En proceso" && (
                <button
                   className="bg-green-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mt-4 self-center"
-                  onClick={() => updateStatus(contract.id, 4, searchParams.get("session_id"), loggedUser.token)}>
+                  onClick={() => updateStatus(contract.id, 4, loggedUser.token)}>
                   Trabajo terminado
                </button>
             )}

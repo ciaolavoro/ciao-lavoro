@@ -1,6 +1,6 @@
 import { useLoaderData, Link } from "react-router-dom"
 import { useState, useEffect } from "react"
-import { updateServiceRequest, getProfessionsList, promoteService } from "../../api/Service.api"
+import { updateServiceRequest, getProfessionsList, promoteService, updatePromoteService } from "../../api/Service.api"
 import { getContractByService } from "../../api/Contract.api"
 import ServiceData from "./ServiceData"
 import ServiceButton from "./ServiceButton"
@@ -38,6 +38,7 @@ export default function ServiceDetails() {
    const [points, setPoints] = useState(0)
    const [contract, setContract] = useState([])
    const [isPromoted, setIsPromoted] = useState(false)
+   const queryParams = new URLSearchParams(window.location.search)
 
    //Hecho con Copilot
    const hasPassedAMonth = (promotionDate) => {
@@ -81,6 +82,28 @@ export default function ServiceDetails() {
          setIsPromoted(false);
       }
    }, [loggedUser, service.id, service.is_promoted])
+
+   const updateServiceToPromote = async (serviceId, sessionId, points, token) => {
+      try {
+
+         const response = await updatePromoteService(serviceId, sessionId, points, token)
+         if (response.ok && queryParams.get("session_id")) {
+         setIsPromoted(true);
+         } else {
+            alert("Error al promocionar el servicio. Por favor, intente de nuevo.")
+         }
+      } catch (error) {
+         alert("Error al promocionar el servicio. Por favor, intente de nuevo.")
+      }
+   }
+   
+   useEffect(() => {
+      if (queryParams.get("session_id")) {
+         const points = +queryParams.get('points')
+         updateServiceToPromote(service.id, queryParams.get("session_id"), points, loggedUser.token)
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [])
 
    const [isEditing, setIsEditing] = useState(false)
    const [city, setCity] = useState(service.city)

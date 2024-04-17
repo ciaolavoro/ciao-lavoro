@@ -39,14 +39,14 @@ export const createContractRequest = async (description, initial_date, end_date,
     return fetchBackend(`/contracts/create/${service_id}/`, options);
 }
 
-export async function updateContractStatus(contractId, statusNum, sessionId, token) {
+export async function updateContractStatus(contractId, statusNum, sessionId, points, token) {
     const options = {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Token ${token}`,
         },
-        body: JSON.stringify({ session_id: sessionId }),
+        body: JSON.stringify({ session_id: sessionId, points }),
     };
 
     try {

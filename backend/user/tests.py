@@ -40,6 +40,11 @@ class UserTestCase(TestCase):
         user.clean()
         self.assertEqual(user.username, self.user_data['username'])
 
+class UserTests(UserTestCase):
+    def test_user_to_string(self):
+        username = str(self.user)
+        self.assertEqual(username, self.user.username)
+
 class LoginViewTests(UserTestCase):
     def test_login_success(self):
         response = self.client.post(reverse('user:login'), {
@@ -55,25 +60,15 @@ class LoginViewTests(UserTestCase):
             'username': 'worngusername',
             'password': self.user_data['password'],
         })
-        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_login_wrong_password(self):
         response = self.client.post(reverse('user:login'), {
             'username': self.user_data['username'],
             'password': 'wrongpassword',
         })
-        self.assertEqual(response.json()['status'], '0')
-
-class AuthenticatedViewTests(UserTestCase):
-    def test_authenticated_user(self):
-        token, _ = Token.objects.get_or_create(user=self.user)
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
-        response = self.client.get(reverse('user:authenticated'))
-        self.assertTrue(response.json()['isAuthenticated'])
-
-    def test_non_authenticated_user(self):
-        response = self.client.get(reverse('user:authenticated'))
-        self.assertFalse(response.json()['isAuthenticated'])
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.json(), 'Invalid login credentials')
 
 class RegisterViewTests(TestCase):
     def setUp(self):
@@ -109,14 +104,15 @@ class RegisterViewTests(TestCase):
         user_data = self.base_user_data.copy()
         user_data['email'] = 'notanemail'
         response = self.client.post(reverse('user:register'), user_data)
-        self.assertEqual(response.status_code, status.HTTP_500_INTERNAL_SERVER_ERROR)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_inexistent_email(self):
         user_data = self.base_user_data.copy()
         user_data['email'] = 'inexistent@falseEmail.com'
         time.sleep(2)
         response = self.client.post(reverse('user:register'), user_data)
-        self.assertEqual(response.json()['status'], '500')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.json(), 'Invalid email')
 
     def test_future_birth_date(self):
         user_data = self.base_user_data.copy()
@@ -156,13 +152,6 @@ class RegisterViewTests(TestCase):
         user_data['password'] = psw
         response = self.client.post(reverse('user:register'), user_data)
         self.assertNotEqual(response.status_code, status.HTTP_200_OK, "Common password validation failed")
-
-class UserListViewTests(UserTestCase):
-    def test_user_list(self):
-        self.client.force_authenticate(user=self.user)
-        response = self.client.get(reverse('user:user-list'))
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.json()), 1)
 
 class UserDetailsViewTests(UserTestCase):
     def test_user_details(self):
@@ -271,7 +260,8 @@ class UserProfileUpdateTests(UserTestCase):
             'birth_date': '',
         }
         response = self.client.put(reverse('user:profile'), update_data, format='json')
-        self.assertEqual(response.json()['status'], '500')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(response.json(), 'Invalid email')
 
     def test_update_age_out_of_bounds(self):
         update_data = {

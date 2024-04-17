@@ -23,7 +23,7 @@ export default function LoginPage() {
    const loginUser = async (username, password) => {
       try {
          const res = await loginRequest(username, password)
-         if (res.status === "1") {
+         if (res.token) {
             login({ user: res.user, token: res.token })
             navigate("/")
             toast({

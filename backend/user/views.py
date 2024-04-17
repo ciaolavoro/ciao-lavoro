@@ -1,20 +1,15 @@
 import random
-import re
-
 from django.forms import ValidationError
-
-from contract.models import Contract
 from .models import User
-from django.http import JsonResponse
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.contrib.auth.hashers import check_password
 from rest_framework.authtoken.models import Token
-from rest_framework.authentication import TokenAuthentication, SessionAuthentication
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import authentication_classes
 from django.shortcuts import get_object_or_404
 from .serializers import UserSerializer
@@ -36,24 +31,16 @@ class login_view(APIView):
     def post(self, request, format_arg=None):
         username = request.data.get('username')
         password = request.data.get('password')
-        user = get_object_or_404(User, username=username)
+        user = User.objects.filter(username=username).first()
+        if not user:
+            return Response("Username is not registered", status=status.HTTP_400_BAD_REQUEST)
         if check_password(password,user.password):
             token,_ = Token.objects.get_or_create(user=user)
-            return JsonResponse({'status': '1', 'user': UserSerializer(user).data, 'token': token.key, 'message': 'User logged in successfully'})
+            return Response({'user': UserSerializer(user).data, 'token': token.key, 'message': 'User logged in successfully'})
         else:
-            return JsonResponse({'status': '0', 'message': 'Invalid login credentials'})
- 
-class authenticated(APIView):
-    @authentication_classes([TokenAuthentication])
-    def get(self, request):
-        token = request.headers.get('Authorization', '')
-        isAuthenticated = False
-        pattern = re.compile(r'^Token [0-9a-f]{40}$')
-        isAuthenticated = bool(pattern.match(token))
-        return JsonResponse({'isAuthenticated': isAuthenticated})
+            return Response('Invalid login credentials', status=status.HTTP_400_BAD_REQUEST)
 
 class register(APIView):
-    
     permission_classes = [AllowAny]
 
     def post(self, request, format_arg=None):
@@ -67,7 +54,7 @@ class register(APIView):
             birth_date = request.data.get('birthdate')
             image = request.FILES.get('image')
             if User.objects.filter(username=username).exists():
-                return JsonResponse({'status': '0', 'message': 'El nombre de usuario ya está en uso'},status=status.HTTP_400_BAD_REQUEST)
+                return Response({'El nombre de usuario ya está en uso'}, status=status.HTTP_400_BAD_REQUEST)
             if not image:
                 default_image_path = os.path.join(settings.BASE_DIR, 'users', 'default.png').replace('\\','/')
                 with open(default_image_path, 'rb') as default_image_file:
@@ -81,32 +68,26 @@ class register(APIView):
                 if 'error' not in json_data.keys():
                     deliverability = json_data['deliverability']
                     if not deliverability == 'DELIVERABLE':
-                        return JsonResponse({'details': 'El email no es válido', 'status': '500'})
+                        return Response('Invalid email', status=status.HTTP_400_BAD_REQUEST)
             user = User.objects.create(username=username, first_name=first_name, last_name=last_name, email=email
             ,language=language, birth_date=birth_date, image=image)
             validate_password(password)
             user.set_password(password)
             user.save()
-            return JsonResponse({'status': '1', 'message': ' The user has been successfully registered'})
+            serializer = UserSerializer(user, many=False,context ={'request': request})
+            return Response(serializer.data)
         except ValidationError as e:
-            return JsonResponse({'details': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
         except ValueError as e:
-            return JsonResponse({'details': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
 
-class UserList(APIView):
-    def get(self, request):
-        users = User.objects.all()
-        serializer = UserSerializer(users, many=True)
-        return Response(serializer.data)
-    
 class UserDetails(APIView):
+    @authentication_classes([TokenAuthentication])
     def get(self, request, format_arg=None, *args, **kwargs):
-        authentication_classes = [SessionAuthentication]
-        permission_classes = [IsAuthenticated]
         user_id = self.kwargs['user_id']
         user = get_object_or_404(User, id=user_id)
         serializer = UserSerializer(user)
-        return JsonResponse(serializer.data)
+        return Response(serializer.data)
 
 class Profile(APIView):
     @authentication_classes([TokenAuthentication])
@@ -115,7 +96,7 @@ class Profile(APIView):
         token = get_object_or_404(Token, key=token_id.split()[-1])
         user = token.user
         serializer = UserSerializer(user)
-        return JsonResponse(serializer.data)
+        return Response(serializer.data)
 
     @authentication_classes([TokenAuthentication])
     def put(self, request, format_arg=None):
@@ -147,7 +128,7 @@ class Profile(APIView):
                 if 'error' not in json_data.keys():
                     deliverability = json_data['deliverability']
                     if not deliverability == 'DELIVERABLE':
-                        return JsonResponse({'details': 'El email no es válido', 'status': '500'})
+                        return Response('Invalid email', status=status.HTTP_400_BAD_REQUEST)
             if language and language.strip() != '':
                 user.language = language
             if birth_date:
@@ -155,16 +136,17 @@ class Profile(APIView):
             if image:
                 user.image = image
             user.save()
-            serializer = UserSerializer(user)
-            return JsonResponse(serializer.data)
+            serializer = UserSerializer(user, many=False,context ={'request': request})
+            token,_ = Token.objects.get_or_create(user=user)
+            return Response({'user': serializer.data, 'token': token.key})
         except ValidationError as e:
-            return JsonResponse({'details': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
         except ValueError as e:
-            return JsonResponse({'details': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
 
 class GetPoints(APIView):
     def get(self,request):
         token_id = request.headers['Authorization']
         token = get_object_or_404(Token, key=token_id.split()[-1])
         user = token.user
-        return JsonResponse({'total_points': user.points})
+        return Response({'total_points': user.points})
