@@ -96,7 +96,7 @@ class ServiceViewTest(TestCase):
                                    last_name ='De prueba', birth_date = (timezone.now() -
                                    datetime.timedelta(days=365*25)).date(), language= 'Russian')
         service = Service.objects.create(user=user, profession=6, city='Old City', experience=2)
-        url = reverse('service:service-promotion', kwargs={'service_id': service.id}) 
+        url = reverse('service:service-promotion', kwargs={'service_id': service.id})
         response = self.client.post(url)
         self.assertEqual(response.status_code, 400)
         service.refresh_from_db()
