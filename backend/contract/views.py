@@ -14,6 +14,7 @@ from rest_framework.exceptions import PermissionDenied
 from rest_framework.response import Response
 from rest_framework.views import APIView
 import stripe
+import math
 from django.utils import timezone
 import datetime as datetime2
 
@@ -234,7 +235,7 @@ class ContractPayment(APIView):
         if not points:
             points = 0
         else:
-            points = int(points)
+            points = math.floor(float(points))
         if user.points < points:
             return Response('No se pueden gastar más puntos de los disponibles', status=status.HTTP_400_BAD_REQUEST)
         user_serializer = UserSerializer(user, many=False,context ={'request': request})
