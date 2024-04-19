@@ -22,7 +22,7 @@ export default function UserProfile() {
    const [openLanguageSelector, setOpenLanguageSelector] = useState(false)
    const [openConfirmDialog, setOpenConfirmDialog] = useState(false)
    const [userData, setUserData] = useState(null)
-   const { logout, loggedUser } = useAuthContext()
+   const { loggedUser } = useAuthContext()
    const user = useLoaderData()
    const userId = user.id
    const navigate = useNavigate()
@@ -56,10 +56,9 @@ export default function UserProfile() {
          if (response.ok) {
             toast({
                title: "Perfil actualizado.",
-               description: "Se ha actualizado su perfil correctamente, vuelva a iniciar sesión.",
+               description: "Se ha actualizado su perfil correctamente.",
             })
             setIsEditing(false)
-            logout()
             navigate("/login")
          } else {
             alert("Error al actualizar el perfil. Por favor, intente de nuevo.")
@@ -283,7 +282,7 @@ export default function UserProfile() {
                      updateUser(userData)
                      setOpenConfirmDialog(false)
                   }}>
-                  Le recordamos que si decide continuar se procedera a <span className="font-bold">cerrar la sesión</span>.
+                  Le recordamos que si decide continuar <span className="font-bold">podrá editar su perfil de nuevo mas adelante</span>.
                </CustomAlertDialog>
             </div>
          ) : (
