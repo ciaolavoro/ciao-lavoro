@@ -106,7 +106,7 @@ export default function RegisterPage() {
    }
 
    const minDate = new Date()
-   minDate.setFullYear(minDate.getFullYear() - 200)
+   minDate.setFullYear(minDate.getFullYear() - 100)
    const maxDate = new Date()
    maxDate.setFullYear(maxDate.getFullYear() - 16)
 
