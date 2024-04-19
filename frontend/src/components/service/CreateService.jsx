@@ -14,7 +14,6 @@ import {
    getAge,
    checkIfProffesionEmpty,
 } from "../../utils/validation"
-import { set } from "react-hook-form"
 
 export default function CreateService() {
    const { loggedUser } = useAuthContext()
