@@ -36,11 +36,15 @@ export default function UserProfile() {
    const [email, setEmail] = useState(user.email)
    const [image, setImage] = useState(`${BACKEND_URL}${user.image}`)
    const [uploadedImage, setUploadedImage] = useState(null)
-   const [isRequiredError, setIsRequiredError] = useState(false)
    const [isUsernameError, setIsUsernameError] = useState(false)
    const [isImageError, setIsImageError] = useState(false)
    const [isDateError, setIsDateError] = useState(false)
    const [isDateNotValid, setIsDateNotValid] = useState(false)
+   const [isUsernameRequiredError, setIsUsernameRequiredError] = useState(false)
+   const [isNameRequiredError, setIsNameRequiredError] = useState(false)
+   const [isLastNameRequiredError, setIsLastNameRequiredError] = useState(false)
+   const [isBirthdayRequiredError, setIsBirthdayRequiredError] = useState(false)
+   const [isEmailRequiredError, setEmailIsRequiredError] = useState(false)
 
    if (!loggedUser || !userId) {
       return <Navigate to="/" />
@@ -77,18 +81,34 @@ export default function UserProfile() {
    }
 
    const resetErrors = () => {
-      setIsRequiredError(false)
       setIsUsernameError(false)
       setIsImageError(false)
       setIsDateError(false)
       setIsDateNotValid(false)
+      setIsUsernameRequiredError(false)
+      setIsBirthdayRequiredError(false)
+      setIsNameRequiredError(false)
+      setIsLastNameRequiredError(false)
+      setEmailIsRequiredError(false)
    }
 
    const handleEdit = async event => {
       event.preventDefault()
 
-      if (checkIfEmpty(username) || checkIfEmpty(firstName) || checkIfEmpty(lastName) || checkIfEmpty(birthDate) || checkIfEmpty(email)) {
-         setIsRequiredError(true)
+      if (!username.trim()) {
+         setIsUsernameRequiredError(true)
+         return
+      } else if (!firstName.trim()) {
+         setIsNameRequiredError(true)
+         return
+      } else if (!lastName.trim()) {
+         setIsLastNameRequiredError(true)
+         return
+      } else if (checkIfEmpty(birthDate)) {
+         setIsBirthdayRequiredError(true)
+         return
+      } else  if (checkIfEmpty(email)) {
+         setEmailIsRequiredError(true)
          return
       } else if (await checkIfUsernameExists(username, userId)) {
          resetErrors()
@@ -166,8 +186,8 @@ export default function UserProfile() {
                   inputValue={username}
                   isReadOnly={!isEditing}
                   onChange={event => setUsername(event.target.value)}
-                  isError={isRequiredError || isUsernameError}
-                  errorMessage={(isRequiredError && errorMessages.required) || (isUsernameError && errorMessages.usernameExists)}
+                  isError={isUsernameRequiredError || isUsernameError}
+                  errorMessage={(isUsernameRequiredError && errorMessages.required) || (isUsernameError && errorMessages.usernameExists)}
                />
                <section className="flex flex-col gap-y-2 md:flex-row md:gap-x-4">
                   <UserProfileData
@@ -177,7 +197,7 @@ export default function UserProfile() {
                      inputValue={firstName}
                      isReadOnly={!isEditing}
                      onChange={event => setFirstName(event.target.value)}
-                     isError={isRequiredError}
+                     isError={isNameRequiredError}
                      errorMessage={errorMessages.required}
                   />
                   <UserProfileData
@@ -187,7 +207,7 @@ export default function UserProfile() {
                      inputValue={lastName}
                      isReadOnly={!isEditing}
                      onChange={event => setLastName(event.target.value)}
-                     isError={isRequiredError}
+                     isError={isLastNameRequiredError}
                      errorMessage={errorMessages.required}
                   />
                </section>
@@ -231,9 +251,9 @@ export default function UserProfile() {
                      inputValue={birthDate}
                      isReadOnly={!isEditing}
                      onChange={event => setBirthDate(event.target.value)}
-                     isError={isRequiredError || isDateError || isDateNotValid}
+                     isError={isBirthdayRequiredError || isDateError || isDateNotValid}
                      errorMessage={
-                        (isRequiredError && errorMessages.required) ||
+                        (isBirthdayRequiredError && errorMessages.required) ||
                         (isDateError && errorMessages.dateInFuture) ||
                         (isDateNotValid && errorMessages.birthDateNotValid)
                      }
@@ -246,8 +266,8 @@ export default function UserProfile() {
                   inputValue={email}
                   isReadOnly={!isEditing}
                   onChange={event => setEmail(event.target.value)}
-                  isError={isRequiredError}
-                  errorMessage={isRequiredError && errorMessages.required}
+                  isError={isEmailRequiredError}
+                  errorMessage={isEmailRequiredError && errorMessages.required}
                />
             </section>
          </div>
