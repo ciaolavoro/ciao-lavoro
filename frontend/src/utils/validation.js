@@ -9,6 +9,10 @@ export function checkIfEmpty(text) {
     return text.trim().length === 0;
 }
 
+export function checkIfProffesionEmpty(profession) {
+    return profession === -1;
+}
+
 export function checkOnlyCharactersInText(text) {
     const onlyCharactersRegex = /^[a-zA-ZñÑáéíóúÁÉÍÓÚüÜç '`´]+$/;
     return !onlyCharactersRegex.test(text);
