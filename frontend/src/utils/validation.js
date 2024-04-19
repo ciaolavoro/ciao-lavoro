@@ -53,7 +53,7 @@ export function checkIntegerPoints(points){
 }
 
 export function checkNotStringPoints(points){
-    return typeof points !== 'number'
+    return typeof points !== 'number';
 }
 
 export function checkIfToManyPoints(yourPoints, pointsUsed) {

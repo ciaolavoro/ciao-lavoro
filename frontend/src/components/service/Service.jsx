@@ -387,7 +387,7 @@ export default function ServiceDetails() {
                                        type={"button"}
                                        text={"Promocionar Servicio"}
                                        icon={<MegaphoneIcon />}
-                                       onClick={() => handlePayment(service.id, loggedUser.token, points)}
+                                       onClick={() => handlePayment(service.id, loggedUser.token, Number(points))}
                                     />
                                  ) : (
                                     <Dialog>
@@ -429,7 +429,7 @@ export default function ServiceDetails() {
                                                    text={"Pagar promocion"}
                                                    icon={<WalletIcon />}
                                                    onClick={() => {
-                                                      handlePayment(service.id, loggedUser.token, points)
+                                                      handlePayment(service.id, loggedUser.token, Number(points))
                                                    }}
                                                 />
                                              </DialogFooter>
