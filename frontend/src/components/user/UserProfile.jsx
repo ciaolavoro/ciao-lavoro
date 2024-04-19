@@ -95,13 +95,13 @@ export default function UserProfile() {
    const handleEdit = async event => {
       event.preventDefault()
 
-      if (!username.trim()) {
+      if (!username.trim() || username.length < 3 || username.length >= 31) {
          setIsUsernameRequiredError(true)
          return
-      } else if (!firstName.trim()) {
+      } else if (!firstName.trim() || firstName.length < 3 || firstName.length >= 31) {
          setIsNameRequiredError(true)
          return
-      } else if (!lastName.trim()) {
+      } else if (!lastName.trim() || lastName.length < 3 || lastName.length >= 61) {
          setIsLastNameRequiredError(true)
          return
       } else if (checkIfEmpty(birthDate)) {
@@ -187,7 +187,7 @@ export default function UserProfile() {
                   isReadOnly={!isEditing}
                   onChange={event => setUsername(event.target.value)}
                   isError={isUsernameRequiredError || isUsernameError}
-                  errorMessage={(isUsernameRequiredError && errorMessages.required) || (isUsernameError && errorMessages.usernameExists)}
+                  errorMessage={(isUsernameRequiredError && errorMessages.usernameRequiredAndSize) || (isUsernameError && errorMessages.usernameExists)}
                />
                <section className="flex flex-col gap-y-2 md:flex-row md:gap-x-4">
                   <UserProfileData
@@ -198,7 +198,7 @@ export default function UserProfile() {
                      isReadOnly={!isEditing}
                      onChange={event => setFirstName(event.target.value)}
                      isError={isNameRequiredError}
-                     errorMessage={errorMessages.required}
+                     errorMessage={errorMessages.nameRequiredAndSize}
                   />
                   <UserProfileData
                      type={"text"}
@@ -208,7 +208,7 @@ export default function UserProfile() {
                      isReadOnly={!isEditing}
                      onChange={event => setLastName(event.target.value)}
                      isError={isLastNameRequiredError}
-                     errorMessage={errorMessages.required}
+                     errorMessage={errorMessages.lastnameRequiredAndSize}
                   />
                </section>
                <section className="flex flex-col gap-y-2 md:flex-row md:gap-x-4">

@@ -73,6 +73,9 @@ export const errorMessages = {
     tooManyPoints: "Por favor, introduzca una cantidad de puntos que tengas disponibles.",
     positivePoints: "Por favor, introduzca un número de puntos positivos.",
     noMorePointsMoney: "El pago debe ser mínimo de 0'50€. No puedes canjear más puntos si eso hace que el precio sea menor de 0'50€.",
+    usernameRequiredAndSize: "El nombre de usuario debe ser menos de 30 caracteres, mas de 3 y no debe estar en blanco",
+    nameRequiredAndSize: "El nombre de usuario debe ser menos de 30 caracteres, mas de 3 y no debe estar en blanco",
+    lastnameRequiredAndSize: "El nombre de usuario debe ser menos de 30 caracteres, mas de 3 y no debe estar en blanco",
 }
 
 function getAge(date) {
