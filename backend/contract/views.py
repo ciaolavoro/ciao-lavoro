@@ -48,8 +48,12 @@ class ContractCreation(APIView):
             return Response({'La descripción no puede superar los 500 caracteres'}, status=status.HTTP_400_BAD_REQUEST)
         if End < Init:
             return Response("La fecha de finalizacion no puede ser antes que la inicial", status=status.HTTP_400_BAD_REQUEST)
+        if (End - Init).seconds > 28800:
+            return Response("Un contrato no puede durar más de 8 horas", status=status.HTTP_400_BAD_REQUEST)
         if Init < today:
             return Response("La fecha de inicio no puede ser antes que hoy", status=status.HTTP_400_BAD_REQUEST)
+        if Init > today + datetime2.timedelta(days=182):
+            return Response("La fecha de inicio no puede ser para dentro de más de seis meses", status=status.HTTP_400_BAD_REQUEST)
         if cost <= 0.0:
             return Response("El precio no puede ser menor o igual que 0", status=status.HTTP_400_BAD_REQUEST)
         if client == worker:
@@ -100,8 +104,12 @@ class ContractEdit(APIView):
             return Response({'La descripción no puede superar los 500 caracteres'}, status=status.HTTP_400_BAD_REQUEST)
         if End < Init:
             return Response("La fecha de finalizacion no puede ser antes que la inicial", status=status.HTTP_400_BAD_REQUEST)
+        if (End - Init).seconds > 28800:
+            return Response("Un contrato no puede durar más de 8 horas", status=status.HTTP_400_BAD_REQUEST)
         if Init < today:
             return Response("La fecha de inicio no puede ser antes que hoy", status=status.HTTP_400_BAD_REQUEST)
+        if Init > today + datetime2.timedelta(days=182):
+            return Response("La fecha de inicio no puede ser para dentro de más de seis meses", status=status.HTTP_400_BAD_REQUEST)
         if new_cost <= 0.0:
             return Response("El precio no puede ser menor o igual que 0", status=status.HTTP_400_BAD_REQUEST)
         if contract.worker == user:
