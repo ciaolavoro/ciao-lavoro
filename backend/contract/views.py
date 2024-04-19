@@ -175,10 +175,12 @@ class ContractList(generics.ListAPIView):
         end_date = self.request.query_params.get('end_date')
         if estate:
             contracts = contracts.filter(status=estate)
-        if initial_date:
-            contracts = contracts.filter(initial_date=initial_date)
-        if end_date:
-            contracts = contracts.filter(end_date=end_date)
+        if initial_date and initial_date != '':
+            initial_date = datetime.strptime(self.request.query_params.get('initial_date'),'%Y-%m-%d')
+            contracts = contracts.filter(initial_date__date=initial_date)
+        if end_date and end_date != '':
+            end_date = datetime.strptime(self.request.query_params.get('end_date'),'%Y-%m-%d')
+            contracts = contracts.filter(end_date__date=end_date)
         return contracts
 
     @authentication_classes([TokenAuthentication])
