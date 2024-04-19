@@ -22,7 +22,7 @@ export default function UserProfile() {
    const [openLanguageSelector, setOpenLanguageSelector] = useState(false)
    const [openConfirmDialog, setOpenConfirmDialog] = useState(false)
    const [userData, setUserData] = useState(null)
-   const { loggedUser } = useAuthContext()
+   const { login, loggedUser } = useAuthContext()
    const user = useLoaderData()
    const userId = user.id
    const navigate = useNavigate()
@@ -54,12 +54,14 @@ export default function UserProfile() {
       try {
          const response = await updateUserRequest(userData, loggedUser.token)
          if (response.ok) {
+            setIsEditing(false)
+            const user = await response.json()
+            login(user)
+            navigate("/")
             toast({
-               title: "Perfil actualizado.",
+               title: "✔ Perfil actualizado",
                description: "Se ha actualizado su perfil correctamente.",
             })
-            setIsEditing(false)
-            navigate("/login")
          } else {
             alert("Error al actualizar el perfil. Por favor, intente de nuevo.")
          }
@@ -106,7 +108,7 @@ export default function UserProfile() {
       } else if (checkIfEmpty(birthDate)) {
          setIsBirthdayRequiredError(true)
          return
-      } else  if (checkIfEmpty(email)) {
+      } else if (checkIfEmpty(email)) {
          setEmailIsRequiredError(true)
          return
       } else if (await checkIfUsernameExists(username, userId)) {
@@ -186,7 +188,9 @@ export default function UserProfile() {
                   isReadOnly={!isEditing}
                   onChange={event => setUsername(event.target.value)}
                   isError={isUsernameRequiredError || isUsernameError}
-                  errorMessage={(isUsernameRequiredError && errorMessages.usernameRequiredAndSize) || (isUsernameError && errorMessages.usernameExists)}
+                  errorMessage={
+                     (isUsernameRequiredError && errorMessages.usernameRequiredAndSize) || (isUsernameError && errorMessages.usernameExists)
+                  }
                />
                <section className="flex flex-col gap-y-2 md:flex-row md:gap-x-4">
                   <UserProfileData
