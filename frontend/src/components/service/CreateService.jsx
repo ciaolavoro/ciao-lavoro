@@ -11,12 +11,14 @@ import {
    checkOnlyCharactersInText,
    checkExperienceYears,
    checkfloatExperience,
+   getAge,
 } from "../../utils/validation"
 
 export default function CreateService() {
    const { loggedUser } = useAuthContext()
    const [professions, setProfessions] = useState([])
    const navigate = useNavigate()
+   const maxExperience = getAge(loggedUser.user.birth_date) - 16;
 
    const [email] = useState(loggedUser.user.email)
    const [profession, setProfession] = useState("1")
@@ -170,15 +172,17 @@ export default function CreateService() {
                   onChange={e => setExperience(e.target.value)}
                   className="px-2 py-1 border rounded"
                />
+               
             </div>
             {(isRequiredExperienceError || isExperienceError || isBigExperienceError || floatExperienceError) && (
                <p className="text-red-500">
                   {(isRequiredExperienceError && errorMessages.required) ||
                      (isExperienceError && errorMessages.experienceNotValid) ||
-                     (isBigExperienceError && errorMessages.tooMuchExperience)||
+                     (isBigExperienceError && ("El máximo de experiencia son "+maxExperience+ " años. "+errorMessages.tooMuchExperience))||
                      (floatExperienceError && errorMessages.floatExperience)}
                </p>
             )}
+            <p className="text-gray-500"> Si no se pone nada en experiencia, se asumirá que se tiene 0 años de experiencia.</p>
          </div>
          <button type="submit" className="bg-orange-300 rounded px-3 py-1 font-semibold">
             Crear Servicio

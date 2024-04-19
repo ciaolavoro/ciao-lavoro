@@ -74,7 +74,7 @@ export const errorMessages = {
     required: "Este campo es requerido.",
     cityLength: "La ciudad no debe tener más de 50 caracteres.",
     experienceNotValid: "La experiencia no puede ser menos que 0.",
-    tooMuchExperience: "Tu experiencia más 16 no puede ser mayor a tu edad.",
+    tooMuchExperience: "Ya que tu experiencia más 16 no puede ser mayor a tu edad.",
     floatExperience: "Por favor solo introduzca los años completos de experiencia",
     languageLength: "El idioma no debe tener más de 50 caracteres.",
     imageNotValid: "La imagen no es válida.",
@@ -91,7 +91,7 @@ export const errorMessages = {
     notCorrectPoitns: "Por favor introduzca un número válido",
 }
 
-function getAge(date) {
+export function getAge(date) {
     const today = new Date();
     const birthDate = new Date(date);
     let age = today.getFullYear() - birthDate.getFullYear();
