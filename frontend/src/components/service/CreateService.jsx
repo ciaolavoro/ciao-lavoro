@@ -10,6 +10,7 @@ import {
    errorMessages,
    checkOnlyCharactersInText,
    checkExperienceYears,
+   checkfloatExperience,
 } from "../../utils/validation"
 
 export default function CreateService() {
@@ -28,6 +29,7 @@ export default function CreateService() {
    const [isExperienceError, setIsExperienceError] = useState(false)
    const [isOnlyCharacters, setIsOnlyCharacters] = useState(false)
    const [isBigExperienceError, setIsBigExperienceError] = useState(false)
+   const [floatExperienceError, setFloatExperienceError] = useState(false)
 
    useEffect(() => {
       const fetchProfessions = async () => {
@@ -74,6 +76,11 @@ export default function CreateService() {
          } else if (checkProfessionDuplicated(professions[professionNumber - 1], listprofession)) {
             resetErrors()
             setProfessionDuplicated(true)
+            return
+         }
+          else if (checkfloatExperience(experience)) {
+            resetErrors()
+            setFloatExperienceError(true)
             return
          }
          resetErrors()
@@ -164,11 +171,12 @@ export default function CreateService() {
                   className="px-2 py-1 border rounded"
                />
             </div>
-            {(isRequiredExperienceError || isExperienceError || isBigExperienceError) && (
+            {(isRequiredExperienceError || isExperienceError || isBigExperienceError || floatExperienceError) && (
                <p className="text-red-500">
                   {(isRequiredExperienceError && errorMessages.required) ||
                      (isExperienceError && errorMessages.experienceNotValid) ||
-                     (isBigExperienceError && errorMessages.tooMuchExperience)}
+                     (isBigExperienceError && errorMessages.tooMuchExperience)||
+                     (floatExperienceError && errorMessages.floatExperience)}
                </p>
             )}
          </div>
