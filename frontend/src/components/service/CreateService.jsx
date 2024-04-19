@@ -11,15 +11,18 @@ import {
    checkOnlyCharactersInText,
    checkExperienceYears,
    checkfloatExperience,
+   getAge,
+   checkIfProffesionEmpty,
 } from "../../utils/validation"
 
 export default function CreateService() {
    const { loggedUser } = useAuthContext()
    const [professions, setProfessions] = useState([])
    const navigate = useNavigate()
+   const maxExperience = getAge(loggedUser.user.birth_date) - 16;
 
    const [email] = useState(loggedUser.user.email)
-   const [profession, setProfession] = useState("1")
+   const [profession, setProfession] = useState("-1")
    const [city, setCity] = useState("")
    const [experience, setExperience] = useState("")
    const [isRequiredCityError, setIsRequiredCityError] = useState(false)
@@ -30,6 +33,7 @@ export default function CreateService() {
    const [isOnlyCharacters, setIsOnlyCharacters] = useState(false)
    const [isBigExperienceError, setIsBigExperienceError] = useState(false)
    const [floatExperienceError, setFloatExperienceError] = useState(false)
+   const [isRequiredProfessionError, setIsRequiredProfessionError] = useState(false)
 
    useEffect(() => {
       const fetchProfessions = async () => {
@@ -83,6 +87,11 @@ export default function CreateService() {
             setFloatExperienceError(true)
             return
          }
+         else if (checkIfProffesionEmpty(professionNumber)) {
+            resetErrors()
+            setIsRequiredProfessionError(true)
+            return
+         }
          resetErrors()
 
          const res = await createServiceRequest(email, professionNumber, city, experience, loggedUser.token)
@@ -118,6 +127,8 @@ export default function CreateService() {
       setIsExperienceError(false)
       setProfessionDuplicated(false)
       setIsOnlyCharacters(false)
+      setIsRequiredProfessionError(false)
+      setIsBigExperienceError(false)
    }
 
    const handleSubmit = event => {
@@ -137,6 +148,7 @@ export default function CreateService() {
                      setProfession(e.target.value)
                   }}
                   className="px-2 py-1 border rounded">
+                     <option value="-1"> Profesión </option>
                   {professions.map((prof, index) => (
                      <option key={index} value={prof.id}>
                         {prof.name}
@@ -144,7 +156,15 @@ export default function CreateService() {
                   ))}
                </select>
             </div>
-            {isProfessionDuplicated && <p className="text-red-500">{errorMessages.professionDuplicate}</p>}
+            {(isProfessionDuplicated || isRequiredProfessionError)  && (
+               <p className="text-red-500">
+               {(isProfessionDuplicated && errorMessages.professionDuplicate) ||
+                  (isRequiredProfessionError && errorMessages.required)
+               }
+            </p>
+            )}
+            
+
          </div>
          <div className="flex flex-col items-center gap-2">
             <div className="flex gap-x-2">
@@ -170,15 +190,17 @@ export default function CreateService() {
                   onChange={e => setExperience(e.target.value)}
                   className="px-2 py-1 border rounded"
                />
+               
             </div>
             {(isRequiredExperienceError || isExperienceError || isBigExperienceError || floatExperienceError) && (
                <p className="text-red-500">
                   {(isRequiredExperienceError && errorMessages.required) ||
                      (isExperienceError && errorMessages.experienceNotValid) ||
-                     (isBigExperienceError && errorMessages.tooMuchExperience)||
+                     (isBigExperienceError && ("El máximo de experiencia son "+maxExperience+ " años. "+errorMessages.tooMuchExperience))||
                      (floatExperienceError && errorMessages.floatExperience)}
                </p>
             )}
+            <p className="text-gray-500"> Si no se pone nada en experiencia, se asumirá que se tiene 0 años de experiencia.</p>
          </div>
          <button type="submit" className="bg-orange-300 rounded px-3 py-1 font-semibold">
             Crear Servicio
