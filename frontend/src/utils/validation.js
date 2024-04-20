@@ -51,7 +51,7 @@ export function checkIfDateInFuture(date) {
 
 export function checkIfBirthDateValid(date) {
     const age = getAge(date);
-    return !(age > 16 && age < 80);
+    return !(age >= 16 && age <= 80);
 }
 
 export function checkIfPointsPositive(points) {
