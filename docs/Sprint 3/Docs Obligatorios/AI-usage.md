@@ -680,11 +680,55 @@ y
 
 ## SPRINT 2
 ### Cancelar Git Push en Visual Studio:
-- **Persona que ha hecho el prompt:** javier Grosso
+- **Persona que ha hecho el prompt:** Javier Grosso
 
 - **IA Usada:** ChatGPT
 
-- **Prompt y respuestas:** Descritos en el enlace: []()
+- **Prompt y respuestas:** Descritos en el enlace: [https://chat.openai.com/share/772f2a50-cae6-46c9-a141-9dbc76571193](https://chat.openai.com/share/772f2a50-cae6-46c9-a141-9dbc76571193)
 
 ---
 
+### Instalar dj_database_url:
+- **Persona que ha hecho el prompt:** Javier Grosso
+
+- **IA Usada:** ChatGPT
+
+- **Prompt y respuestas:** Descritos en el enlace: [https://chat.openai.com/share/2a7a6f9b-03ad-4fd2-b8e4-31289d0f6c5d](https://chat.openai.com/share/2a7a6f9b-03ad-4fd2-b8e4-31289d0f6c5d)
+
+---
+
+### Instalar vite:
+- **Persona que ha hecho el prompt:** Javier Grosso
+
+- **IA Usada:** ChatGPT
+
+- **Prompt y respuestas:** Descritos en el enlace: [https://chat.openai.com/share/200592aa-8cbc-4eef-bd64-8312aa10f79f](https://chat.openai.com/share/200592aa-8cbc-4eef-bd64-8312aa10f79f)
+
+---
+
+### Fusion de cambios entre una rama y develop:
+- **Persona que ha hecho el prompt:** Javier Grosso
+
+- **IA Usada:** ChatGPT
+
+- **Prompt y respuestas:** Descritos en el enlace: [https://chat.openai.com/share/98868f14-92b2-4fac-9a66-2419e2c89e0f](https://chat.openai.com/share/98868f14-92b2-4fac-9a66-2419e2c89e0f)
+
+---
+
+### Ayuda cierre de sesion editar usuario:
+- **Persona que ha hecho el prompt:** Javier Grosso
+
+- **IA Usada:** ChatGPT
+
+- **Prompt y respuestas:** Descritos en el enlace: [https://chat.openai.com/share/3d3cb502-6ee0-497d-b838-e4e2bf5c6dec](https://chat.openai.com/share/3d3cb502-6ee0-497d-b838-e4e2bf5c6dec)
+
+---
+
+### Parametros de imput en jsx:
+- **Persona que ha hecho el prompt:** Javier Grosso
+
+- **IA Usada:** ChatGPT
+
+- **Prompt y respuestas:** Descritos en el enlace: [https://chat.openai.com/share/0ce8631a-5ea4-4c68-868c-940d13a25fe6](https://chat.openai.com/share/0ce8631a-5ea4-4c68-868c-940d13a25fe6)
+
+---
