@@ -5,7 +5,14 @@ import { useEffect, useState } from "react"
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { errorMessages } from "@/utils/validation"
+import {
+   checkIfPointsMoreThanMoney,
+   checkIfPointsPositive,
+   checkIfToManyPoints,
+   checkIntegerPoints,
+   checkNotStringPoints,
+   errorMessages,
+} from "@/utils/validation"
 
 const contractStatus = {
    negotiation: "Negociacion",
@@ -39,6 +46,9 @@ export function ContractCardClient({ contract }) {
    const { loggedUser } = useAuthContext()
    const [tooManyPoints, setTooManyPoints] = useState(false)
    const [positivePoints, setPositivePoints] = useState(false)
+   const [noMorePointsMoney, setNoMorePointsMoney] = useState(false)
+   const [integerPoints, setIntegerPoints] = useState(false)
+   const [notStringPoints, setNotStringPoints] = useState(false)
    const [points, setPoints] = useState(0)
    const [status, setStatus] = useState(contract.estatus)
    const queryParams = new URLSearchParams(window.location.search)
@@ -46,6 +56,9 @@ export function ContractCardClient({ contract }) {
    const resetPaymentErrors = () => {
       setPositivePoints(false)
       setTooManyPoints(false)
+      setNoMorePointsMoney(false)
+      setNotStringPoints(false)
+      setIntegerPoints(false)
    }
 
    const formatDate = dateString => {
@@ -55,10 +68,11 @@ export function ContractCardClient({ contract }) {
 
    const updateStatus = async (contractId, statusNum, sessionId, points, token) => {
       try {
-
          const response = await updateContractStatus(contractId, statusNum, sessionId, points, token)
          if (response.ok && queryParams.get("session_id")) {
             setStatus(contractStatus.paid)
+         } else if (response.ok) {
+            window.location.reload()
          } else {
             alert("Error al actualizar el estado. Por favor, intente de nuevo.")
          }
@@ -69,12 +83,25 @@ export function ContractCardClient({ contract }) {
 
    const handlePayment = async (contractId, token, points1) => {
       const returnURL = window.location.href
-      if (contract.client.points < points1) {
+      const money = contract.cost
+      if (checkIfToManyPoints(contract.client.points, points1)) {
          setTooManyPoints(true)
          return
-      } else if (points1 < 0) {
+      } else if (checkIfPointsPositive(points1)) {
          resetPaymentErrors()
          setPositivePoints(true)
+         return
+      } else if (checkIfPointsMoreThanMoney(points1, money)) {
+         resetPaymentErrors()
+         setNoMorePointsMoney(true)
+         return
+      } else if (checkIntegerPoints(points1)) {
+         resetPaymentErrors()
+         setIntegerPoints(true)
+         return
+      } else if (checkNotStringPoints(points1)) {
+         resetPaymentErrors()
+         setNotStringPoints(true)
          return
       }
       resetPaymentErrors()
@@ -103,6 +130,7 @@ export function ContractCardClient({ contract }) {
                alert("Se devolvera " + refund + "€")
             }
             setStatus(contractStatus.canceled)
+            window.location.reload()
          } else {
             alert("Error al actualizar el estado. Por favor, intente de nuevo.")
          }
@@ -113,7 +141,7 @@ export function ContractCardClient({ contract }) {
 
    useEffect(() => {
       if (status === "Aceptado" && queryParams.get("session_id")) {
-         const points = +queryParams.get('points')
+         const points = +queryParams.get("points")
          updateStatus(contract.id, 6, queryParams.get("session_id"), points, loggedUser.token)
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -151,7 +179,7 @@ export function ContractCardClient({ contract }) {
                {contract.estatus === "En proceso" && (
                   <button
                      className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mt-4 self-center"
-                     onClick={() => updateStatus(contract.id, 4, '', 0, loggedUser.token)}>
+                     onClick={() => updateStatus(contract.id, 4, "", 0, loggedUser.token)}>
                      Trabajo terminado
                   </button>
                )}
@@ -160,42 +188,56 @@ export function ContractCardClient({ contract }) {
             <div className="flex justify-center">
                {status === "Aceptado" && (
                   <div className="pt-4">
-                     <Dialog>
-                        <DialogTrigger asChild>
-                           <button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mt-4">Pagar Contrato</button>
-                        </DialogTrigger>
-                        <DialogContent className="sm:max-w-[425px]">
-                           <DialogHeader>
-                              <DialogTitle>¿Cuantos puntos quieres usar para pagar?</DialogTitle>
-                              <DialogDescription>Los puntos descontarán dinero del precio final.</DialogDescription>
-                              <DialogDescription>
-                                 <strong>Tus puntos:</strong> {contract.client.points}
-                              </DialogDescription>
-                           </DialogHeader>
-                           <div className="grid gap-4 py-4">
-                              <div className="grid grid-col-1 lg:grid-cols-2 md:grid-cols-2 gap-4">
-                                 <Label htmlFor="name" className="text-left">
-                                    Puntos
-                                 </Label>
-                                 <Input id="points" value={points} onChange={e => setPoints(e.target.value)} className="col-span-3" />
+                     {contract.client.points === 0 ? (
+                        <button
+                           className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mt-4"
+                           onClick={() => handlePayment(contract.id, loggedUser.token, Number(points))}>
+                           Pagar Contrato
+                        </button>
+                     ) : (
+                        <Dialog>
+                           <DialogTrigger asChild>
+                              <button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mt-4">
+                                 Pagar Contrato
+                              </button>
+                           </DialogTrigger>
+                           <DialogContent className="sm:max-w-[425px]">
+                              <DialogHeader>
+                                 <DialogTitle>¿Cuantos puntos quieres usar para pagar?</DialogTitle>
+                                 <DialogDescription>Los puntos descontarán dinero del precio final.</DialogDescription>
+                                 <DialogDescription>
+                                    <strong>Tus puntos:</strong> {contract.client.points}
+                                 </DialogDescription>
+                              </DialogHeader>
+                              <div className="grid gap-4 py-4">
+                                 <div className="grid grid-col-1 lg:grid-cols-2 md:grid-cols-2 gap-4">
+                                    <Label htmlFor="name" className="text-left">
+                                       Puntos
+                                    </Label>
+                                    <Input id="points" value={points} onChange={e => setPoints(e.target.value)} className="col-span-3" />
+                                 </div>
+                                 <DialogDescription>
+                                    {(tooManyPoints || positivePoints || noMorePointsMoney || notStringPoints || integerPoints) && (
+                                       <div className="text-red-500">
+                                          {(tooManyPoints && errorMessages.tooManyPoints) ||
+                                             (positivePoints && errorMessages.positivePoints) ||
+                                             (noMorePointsMoney && errorMessages.noMorePointsMoney) ||
+                                             (notStringPoints && errorMessages.notCorrectPoitns) ||
+                                             (integerPoints && errorMessages.notIntegerPoints)}
+                                       </div>
+                                    )}
+                                 </DialogDescription>
+                                 <DialogFooter>
+                                    <button
+                                       className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mt-4"
+                                       onClick={() => handlePayment(contract.id, loggedUser.token, Number(points))}>
+                                       Pagar
+                                    </button>
+                                 </DialogFooter>
                               </div>
-                              <DialogDescription>
-                                 {(tooManyPoints || positivePoints) && (
-                                    <div className="text-red-500">
-                                       {(tooManyPoints && errorMessages.tooManyPoints) || (positivePoints && errorMessages.positivePoints)}
-                                    </div>
-                                 )}
-                              </DialogDescription>
-                              <DialogFooter>
-                                 <button
-                                    className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mt-4"
-                                    onClick={() => handlePayment(contract.id, loggedUser.token, points)}>
-                                    Pagar
-                                 </button>
-                              </DialogFooter>
-                           </div>
-                        </DialogContent>
-                     </Dialog>
+                           </DialogContent>
+                        </Dialog>
+                     )}
                   </div>
                )}
             </div>
