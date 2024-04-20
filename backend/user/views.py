@@ -81,6 +81,12 @@ class register(APIView):
         except ValueError as e:
             return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
 
+class UserList(APIView):
+    def get(self, request):
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)
+
 class UserDetails(APIView):
     @authentication_classes([TokenAuthentication])
     def get(self, request, format_arg=None, *args, **kwargs):
