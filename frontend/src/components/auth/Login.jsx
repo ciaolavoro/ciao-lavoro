@@ -31,7 +31,10 @@ export default function LoginPage() {
                description: "El inicio de sesión se realizó correctamente. Bienvenido a CiaoLavoro.",
             })
          } else {
-            alert("Error en el inicio de sesión. Por favor, verifique su usuario y contraseña.")
+            toast({
+               title: "Error en el inicio de sesión.",
+               description: "Por favor, verifique su usuario y contraseña.",
+            })
          }
       } catch (error) {
          alert("Error en el inicio de sesión. Por favor, verifique su usuario y contraseña.")
