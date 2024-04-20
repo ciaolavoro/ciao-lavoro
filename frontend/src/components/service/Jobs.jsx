@@ -16,6 +16,8 @@ export default function Jobs() {
    const [jobs, setJobs] = useState(service.jobs)
    const [editingJobId, setEditingJobId] = useState(false)
    const [editJob, setEditJob] = useState(false)
+   const [errorNameMessage, setErrorNameMessage] = useState("")
+   const [errorPriceMessage, setErrorPriceMessage] = useState("")
 
    const updateJob = async (jobData, token) => {
       try {
@@ -69,54 +71,37 @@ export default function Jobs() {
       setEditingJobId(false)
    }
 
-   const [isNameEmpty, setNameEmpty] = useState(false)
-   const [isPriceEmpty, setPriceEmpty] = useState(false)
-   const [isNameOnlyNumber, setIsNameOnlyNumber] = useState(false)
-   const [isNotPositive, setIsNotPositive] = useState(false)
-   const [isPriceBig, setIsPriceBig] = useState(false)
-   const [isNotDecimal, setIsNotDecimal] = useState(false)
-   const [isNameLong, setIsNameLong] = useState(false)
-   const [isNameShort, setIsNameShort] = useState(false)
-
    const handleSaveJob = async (jobId, index) => {
       event.preventDefault()
       setJobs(service.jobs)
       const { name, estimated_price } = jobs[jobId]
       if (!name.trim()) {
-         setNameEmpty(true)
-         return
-      } else if (/^\d+$/.test(name)) {
-         resetErrors()
-         setIsNameOnlyNumber(true)
-         return
-      } else if (!estimated_price) {
-         resetErrors()
-         setPriceEmpty(true)
-         return
-      } else if (Number(estimated_price) <= 0) {
-         resetErrors()
-         setIsNotPositive(true)
-         return
-      } else if (!/^\d+(\.\d{1,2})?$/.test(Number(estimated_price))) {
-         resetErrors()
-         setIsNotDecimal(true)
-         return
-      } else if (Number(estimated_price) >= 100000) {
-         resetErrors()
-         setIsPriceBig(true)
-         return
-      } else if (name.length >= 100) {
-         resetErrors()
-         setIsNameLong(true)
-         return
-      } else if (name.length < 5) {
-         resetErrors()
-         setIsNameShort(true)
+         setErrorNameMessage("El nombre es obligatorio.")
          return
       }
+      if (/^\d+$/.test(name)) {
+         setErrorNameMessage("El nombre del trabajo no puede tener solo numeros.")
+         return
+      }
+      if (!estimated_price) {
+         setErrorPriceMessage("El precio es obligatorio.")
+         return
+      }
+      if (Number(estimated_price) <= 0) {
+         setErrorPriceMessage("El precio debe ser positivo.")
+         return
+      }
+      if (Number(estimated_price) >= 100000) {
+         setErrorPriceMessage("El precio debe ser menor que 100000.")
+         return
+      }
+      if (name.length >= 100) {
+         setErrorNameMessage("El nombre del trabajo no puede tener mas de 100 caracteres.")
+         return
+      }
+      setErrorNameMessage("")
+      setErrorPriceMessage("")
 
-      resetErrors()
-      
       const JobData = {
          id: index,
          name,
@@ -125,18 +110,7 @@ export default function Jobs() {
 
       if (window.confirm("¿Está seguro de guardar los cambios?")) {
          updateJob(JobData, loggedUser.token)
-         setEditJob(false)
       }
-   }
-   const resetErrors = () => {
-      setNameEmpty(false)
-      setPriceEmpty(false)
-      setIsNameOnlyNumber(false)
-      setIsNotPositive(false)
-      setIsPriceBig(false)
-      setIsNotDecimal(false)
-      setIsNameLong(false)
-      setIsNameShort(false)
    }
 
    return (
@@ -157,14 +131,7 @@ export default function Jobs() {
                      onChange={event => handleJobInputChangeName(event.target.value, index)}
                      renderAsText={!editJob}
                   />
-                  {(isNameEmpty || isNameOnlyNumber || isNameLong || isNameShort) && (
-                     <p className="text-red-500">
-                        {(isNameEmpty && "El nombre del trabajo no puede estar vacío.") ||
-                           (isNameOnlyNumber && "El nombre del trabajo no puede ser un número.") ||
-                           (isNameLong && "El nombre del trabajo no puede tener mas de 100 caracteres.") ||
-                           (isNameShort && "El nombre del trabajo debe tener al menos 5 caracteres.")}
-                     </p>
-                  )}
+                  {index === editingJobId && errorNameMessage && <p className="text-red-500">{errorNameMessage}</p>}
                   <JobData
                      labelText={"Precio estimado:"}
                      inputValue={job.estimated_price}
@@ -172,48 +139,17 @@ export default function Jobs() {
                      onChange={event => handleJobInputChangeEstimatedPrice(event.target.value, index)}
                      renderAsText={!editJob}
                   />
-                  {(isPriceEmpty || isNotPositive || isPriceBig || isNotDecimal) && (
-                     <p className="text-red-500">
-                        {(isPriceEmpty && "El precio del trabajo no puede estar vacío.") ||
-                           (isNotPositive && "El precio del trabajo debe ser positivo (el cero no cuenta).") ||
-                           (isPriceBig && "El precio del trabajo no puede ser mayor o igual a 100000.") ||
-                           (isNotDecimal &&
-                              "El precio del trabajo no es valido. Debe ser un número entero o con decimales. Por ejemplo: 2, 2.7 o 2.75")}
-                     </p>
-                  )}
+                  {index === editingJobId && errorPriceMessage && <p className="text-red-500">{errorPriceMessage}</p>}
                </div>
                {editingJobId === index ? (
                   <div className="flex justify-center gap-x-4">
-                     <ServiceButton
-                        type={"button"}
-                        text={"Guardar cambios"}
-                        icon={<CheckIcon />}
-                        onClick={() => {
-                           handleSaveJob(index, job.id)
-                        }}
-                     />
-                     <ServiceButton
-                        type={"button"}
-                        text={"Cancelar"}
-                        icon={<CrossIcon />}
-                        onClick={() => {
-                           handleCancelJob()
-                           setEditJob(false)
-                        }}
-                     />
+                     <ServiceButton type={"button"} text={"Guardar cambios"} icon={<CheckIcon />} onClick={() => {handleSaveJob(index, job.id); setEditJob(false)}} />
+                     <ServiceButton type={"button"} text={"Cancelar"} icon={<CrossIcon />} onClick={() => {handleCancelJob(); setEditJob(false)}} />
                   </div>
                ) : (
                   loggedUser &&
                   loggedUser.user.username === service.user.username && (
-                     <ServiceButton
-                        type={"button"}
-                        text={"Editar Trabajo"}
-                        icon={<PencilIcon />}
-                        onClick={() => {
-                           setEditingJobId(index)
-                           setEditJob(true)
-                        }}
-                     />
+                     <ServiceButton type={"button"} text={"Editar Trabajo"} icon={<PencilIcon />} onClick={() => {setEditingJobId(index); setEditJob(true)}} />
                   )
                )}
             </div>
