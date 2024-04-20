@@ -8,7 +8,7 @@ import CheckIcon from "../icons/CheckIcon"
 import CrossIcon from "../icons/CrossIcon"
 import { useState } from "react"
 import { updateUserRequest } from "../../api/user.api"
-import { checkIfBirthDateValid, checkIfDateInFuture, checkIfEmpty, checkIfImage, checkIfUsernameExists, errorMessages } from "../../utils/validation"
+import { checkLastNameIfEmptyAndSize, checkUsernameIfEmptyAndSize, checkFirstNameIfEmptyAndSize, checkIfBirthDateValid, checkIfDateInFuture, checkIfEmpty, checkIfImage, checkIfUsernameExists, errorMessages } from "../../utils/validation"
 import { BACKEND_URL } from "../../utils/backendApi"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 import ChevronUpDownIcon from "../icons/ChevronUpDownIcon"
@@ -96,13 +96,13 @@ export default function UserProfile() {
    const handleEdit = async event => {
       event.preventDefault()
 
-      if (!username.trim() || username.length < 3 || username.length >= 31) {
+      if (checkUsernameIfEmptyAndSize(username)) {
          setIsUsernameRequiredError(true)
          return
-      } else if (!firstName.trim() || firstName.length < 3 || firstName.length >= 31) {
+      } else if (checkFirstNameIfEmptyAndSize(firstName)) {
          setIsNameRequiredError(true)
          return
-      } else if (!lastName.trim() || lastName.length < 3 || lastName.length >= 61) {
+      } else if (checkLastNameIfEmptyAndSize(lastName)) {
          setIsLastNameRequiredError(true)
          return
       } else if (checkIfEmpty(birthDate)) {

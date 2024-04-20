@@ -8,6 +8,16 @@ export async function checkIfUsernameExists(username, userId) {
 export function checkIfEmpty(text) {
     return text.trim().length === 0;
 }
+export function checkUsernameIfEmptyAndSize(username){
+    return !username.trim() || username.length < 3 || username.length >= 31;
+}
+export function checkFirstNameIfEmptyAndSize(firstName){
+    return !firstName.trim() || firstName.length < 3 || firstName.length >= 31;
+}
+
+export function checkLastNameIfEmptyAndSize(lastName){
+    return !lastName.trim() || lastName.length < 3 || lastName.length >= 61;
+}
 
 export function checkOnlyCharactersInText(text) {
     const onlyCharactersRegex = /^[a-zA-ZñÑáéíóúÁÉÍÓÚüÜç '`´]+$/;
