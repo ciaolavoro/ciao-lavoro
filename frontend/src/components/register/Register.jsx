@@ -7,6 +7,10 @@ import EyeSlashIcon from "../icons/EyeSlashIcon.jsx"
 import { languages } from "@/utils/constants"
 import { checkIfImage } from "@/utils/validation"
 import { useToast } from "../ui/use-toast"
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "../ui/command"
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
+import ChevronUpDownIcon from "../icons/ChevronUpDownIcon"
+
 
 export default function RegisterPage() {
    const [username, setUsername] = useState("")
@@ -27,6 +31,7 @@ export default function RegisterPage() {
    const [language, setLanguage] = useState("")
    const navigate = useNavigate()
    const { toast } = useToast()
+   const [openLanguageSelector, setOpenLanguageSelector] = useState(false)
 
    const handleUsernameChange = e => {
       const value = e.target.value
@@ -173,15 +178,35 @@ export default function RegisterPage() {
                         </label>
                         <label className="block">
                            Idioma:
-                           <select
-                              value={language}
-                              onChange={e => setLanguage(e.target.value)}
-                              required
-                              className="w-full p-2 mb-4 border border-gray-300 rounded-md">
-                              {languages.map((lang, index) => (
-                                 <option key={index}>{lang}</option>
-                              ))}
-                           </select>
+                           <Popover open={openLanguageSelector} onOpenChange={setOpenLanguageSelector}>
+                        <PopoverTrigger asChild>
+                           <button className="flex items-center justify-between px-2 h-8 border rounded w-full">
+                              {language !== "" ? language : "Selecciona un idioma"}
+                              {<ChevronUpDownIcon />}
+                           </button>
+                        </PopoverTrigger>
+                        <PopoverContent>
+                           <Command>
+                              <CommandInput placeholder="Buscar idioma..." />
+                              <CommandList>
+                                 <CommandEmpty>No se ha encontrado el idioma.</CommandEmpty>
+                                 <CommandGroup>
+                                    {languages.map((lang, index) => (
+                                       <CommandItem
+                                          key={index}
+                                          value={lang}
+                                          onSelect={currentLang => {
+                                             setLanguage(currentLang === language ? "" : currentLang)
+                                             setOpenLanguageSelector(false)
+                                          }}>
+                                          {lang}
+                                       </CommandItem>
+                                    ))}
+                                 </CommandGroup>
+                              </CommandList>
+                           </Command>
+                        </PopoverContent>
+                     </Popover>
                         </label>
                      </section>
                      <section className="w-full md:w-1/2 md:pr-4">
