@@ -43,7 +43,7 @@ export default function SearchServices() {
                value={profession}
                onChange={e => setProfession(e.target.value)}
                className="hidden md:block font-semibold w-64 pl-2 bg-orange-200">
-               <option value=""> Profesion </option>
+               <option value=""> Profesión </option>
                {loadingProfessions ? (
                   <option>Cargando profesiones...</option>
                ) : (
