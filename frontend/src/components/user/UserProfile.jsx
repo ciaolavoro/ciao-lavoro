@@ -286,7 +286,6 @@ export default function UserProfile() {
                      updateUser(userData)
                      setOpenConfirmDialog(false)
                   }}>
-                  Le recordamos que si decide continuar <span className="font-bold">podrá editar su perfil de nuevo mas adelante</span>.
                </CustomAlertDialog>
             </div>
          ) : (
