@@ -58,10 +58,10 @@ export const registerRequest = async (username, password, firstName, lastName, e
 
         if (response.ok) {
             return data;
-        } else if (response.status === 400 && data.message === 'El nombre de usuario ya está en uso') {
-            throw new Error(data.message);
+        } else if (response.status === 400 && data === 'El nombre de usuario ya está en uso') {
+            throw new Error(data);
         } else {
-            throw new Error('Ha ocurrido un error en el registro');
+            throw new Error("Ha ocurrido un error en el registro");
         }
     } catch (error) {
         console.error('Registro error:', error);

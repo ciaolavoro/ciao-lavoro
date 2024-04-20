@@ -54,7 +54,7 @@ class register(APIView):
             birth_date = request.data.get('birthdate')
             image = request.FILES.get('image')
             if User.objects.filter(username=username).exists():
-                return Response({'El nombre de usuario ya está en uso'}, status=status.HTTP_400_BAD_REQUEST)
+                return Response('El nombre de usuario ya está en uso', status=status.HTTP_400_BAD_REQUEST)
             if not image:
                 default_image_path = os.path.join(settings.BASE_DIR, 'users', 'default.png').replace('\\','/')
                 with open(default_image_path, 'rb') as default_image_file:
