@@ -107,6 +107,6 @@ Grupo 3: Pablo M, Adrián, Antonio, Diego.
 
 
 -----
-**Firma del Alumno: ![image](https://github.com/ciaolavoro/ciao-lavoro/assets/73099537/60b6f134-7f75-4fd9-b381-793554c6b5f2)**
+**Firma del Alumno: ![firma](./ImágenesFirma/firmaPabloMateos.png)**
 
 Fecha: 02/04/2024
