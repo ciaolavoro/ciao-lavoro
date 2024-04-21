@@ -124,6 +124,7 @@ Grupo 3: Pablo M, Adrián, Antonio, Diego.
 - Doc - Manual de Usuario #349 
 - Doc - Information Provided By Pilot Users 343 
 - Fix 27 - Términos y Condiciones #437
+- FC terms review #329
 
 
 
