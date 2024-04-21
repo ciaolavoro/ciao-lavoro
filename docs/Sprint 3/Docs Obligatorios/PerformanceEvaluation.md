@@ -32,19 +32,19 @@ Fecha: 21 / 04 / 2024
 
 | Estudiante | #DP1 | #S1 | #S2 | #S3 | #PPL | #WPL | Total | PE |
 |------------|------|-----|-----|-----|------|------|-------|----|
-| Albalat Ortiz, Samuel | 10 | 10 | 9.5 | | | | 20 | 1 |
-| Arregui Díaz, Joaquín | 10 | 10 | 10 | | | | 20 | 1 |
-| Barea Jiménez, Antonio | 10 | 10 | 9 | | | | 20 | 1 |
-| Campos Campos, Francisco Antonio | 10 | 10 | 9 | | | | 20 | 1 |
-| Cobo Ariza, José Luis | 10 | 10 | 9 | | | | 20 | 1 |
-| Cuenca Pérez, Pablo | 10 | 10 | 9.5 | | | | 20 | 1 |
-| García Chavero, Adrián | 10 | 10 | 10 | | | | 20 | 1 |
-| González Quintanilla, Diego | 10 | 10 | 10 | | | | 20 | 1 |
-| Grosso de Terreros Goméz, Javier | 10 | 10 | 9.5 | | | | 20 | 1 |
-| Hidalgo Rodríguez, Álvaro | 10 | 10 | 8.5 | | | | 20 | 1 |
-| Mateos Angulo, Pablo | 10 | 10 | 5.5 | | | | 20 | 1 |
-| Sánchez Hossdorf, Alexander / Alicia | 10 | 10 | 10 | | | | 20 | 1 |
-| Total | 120 | 120 | 109.5 | | | | |
+| Albalat Ortiz, Samuel | 10 | 10 | 9.5 |  9.5 | | | 20 | 1 |
+| Arregui Díaz, Joaquín | 10 | 10 | 10 | 10 | | | 20 | 1 |
+| Barea Jiménez, Antonio | 10 | 10 | 9 | 9.5 | | | 20 | 1 |
+| Campos Campos, Francisco Antonio | 10 | 10 | 9 | 9.5 | | | 20 | 1 |
+| Cobo Ariza, José Luis | 10 | 10 | 9 | 9 | | | 20 | 1 |
+| Cuenca Pérez, Pablo | 10 | 10 | 9.5 | 9.5 | | | 20 | 1 |
+| García Chavero, Adrián | 10 | 10 | 10 | 10 | | | 20 | 1 |
+| González Quintanilla, Diego | 10 | 10 | 10 | 10 | | | 20 | 1 |
+| Grosso de Terreros Goméz, Javier | 10 | 10 | 9.5 | 9.5 | | | 20 | 1 |
+| Hidalgo Rodríguez, Álvaro | 10 | 10 | 8.5 | 9 | | | 20 | 1 |
+| Mateos Angulo, Pablo | 10 | 10 | 5.5 | 7 | | | 20 | 1 |
+| Sánchez Hossdorf, Alexander / Alicia | 10 | 10 | 10 | 10 | | | 20 | 1 |
+| Total | 120 | 120 | 109.5 | 112.5 | | | |
 
 ---
 
