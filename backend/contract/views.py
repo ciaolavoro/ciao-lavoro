@@ -14,6 +14,7 @@ from rest_framework.exceptions import PermissionDenied
 from rest_framework.response import Response
 from rest_framework.views import APIView
 import stripe
+import math
 from django.utils import timezone
 import datetime as datetime2
 
@@ -48,8 +49,12 @@ class ContractCreation(APIView):
             return Response({'La descripción no puede superar los 500 caracteres'}, status=status.HTTP_400_BAD_REQUEST)
         if End < Init:
             return Response("La fecha de finalizacion no puede ser antes que la inicial", status=status.HTTP_400_BAD_REQUEST)
+        if (End - Init).seconds > 28800:
+            return Response("Un contrato no puede durar más de 8 horas", status=status.HTTP_400_BAD_REQUEST)
         if Init < today:
             return Response("La fecha de inicio no puede ser antes que hoy", status=status.HTTP_400_BAD_REQUEST)
+        if Init > today + datetime2.timedelta(days=182):
+            return Response("La fecha de inicio no puede ser para dentro de más de seis meses", status=status.HTTP_400_BAD_REQUEST)
         if cost <= 0.0:
             return Response("El precio no puede ser menor o igual que 0", status=status.HTTP_400_BAD_REQUEST)
         if client == worker:
@@ -100,8 +105,12 @@ class ContractEdit(APIView):
             return Response({'La descripción no puede superar los 500 caracteres'}, status=status.HTTP_400_BAD_REQUEST)
         if End < Init:
             return Response("La fecha de finalizacion no puede ser antes que la inicial", status=status.HTTP_400_BAD_REQUEST)
+        if (End - Init).seconds > 28800:
+            return Response("Un contrato no puede durar más de 8 horas", status=status.HTTP_400_BAD_REQUEST)
         if Init < today:
             return Response("La fecha de inicio no puede ser antes que hoy", status=status.HTTP_400_BAD_REQUEST)
+        if Init > today + datetime2.timedelta(days=182):
+            return Response("La fecha de inicio no puede ser para dentro de más de seis meses", status=status.HTTP_400_BAD_REQUEST)
         if new_cost <= 0.0:
             return Response("El precio no puede ser menor o igual que 0", status=status.HTTP_400_BAD_REQUEST)
         if contract.worker == user:
@@ -138,14 +147,17 @@ class ContractStatusEdit(APIView):
             except stripe.error.StripeError as e:
                 error_msg = str(e)
                 return Response({'StripeError': error_msg}, status=status.HTTP_400_BAD_REQUEST)
-            if session.payment_status != 'paid':
-                return Response('Payment for the session is not completed', status=status.HTTP_400_BAD_REQUEST)
-            points = request.data.get('points')
-            if points > 100*contract.cost or points > user.points or points < 0:
-                return Response('Invalid value for points', status=status.HTTP_400_BAD_REQUEST)
-            user.points = user.points - points
-            user.points = user.points + int(5*contract.cost)
-            user.save()
+            paid_contract_id = int(session.metadata['contract_id'])
+            contract = get_object_or_404(Contract, pk = paid_contract_id)
+            if contract.status != 6:
+                if session.payment_status != 'paid':
+                    return Response('Payment for the session is not completed', status=status.HTTP_400_BAD_REQUEST)
+                points = int(session.metadata['points'])
+                if points > 100*contract.cost or points > user.points or points < 0:
+                    return Response('Invalid value for points', status=status.HTTP_400_BAD_REQUEST)
+                user.points = user.points - points
+                user.points = user.points + int(5*contract.cost)
+                user.save()
         contract.status = status_num
         contract.save()
         user_serializer = UserSerializer(user, many=False,context ={'request': request})
@@ -175,10 +187,12 @@ class ContractList(generics.ListAPIView):
         end_date = self.request.query_params.get('end_date')
         if estate:
             contracts = contracts.filter(status=estate)
-        if initial_date:
-            contracts = contracts.filter(initial_date=initial_date)
-        if end_date:
-            contracts = contracts.filter(end_date=end_date)
+        if initial_date and initial_date != '':
+            initial_date = datetime.strptime(self.request.query_params.get('initial_date'),'%Y-%m-%d')
+            contracts = contracts.filter(initial_date__date=initial_date)
+        if end_date and end_date != '':
+            end_date = datetime.strptime(self.request.query_params.get('end_date'),'%Y-%m-%d')
+            contracts = contracts.filter(end_date__date=end_date)
         return contracts
 
     @authentication_classes([TokenAuthentication])
@@ -224,7 +238,7 @@ class ContractPayment(APIView):
         if not points:
             points = 0
         else:
-            points = int(points)
+            points = math.floor(float(points))
         if user.points < points:
             return Response('No se pueden gastar más puntos de los disponibles', status=status.HTTP_400_BAD_REQUEST)
         user_serializer = UserSerializer(user, many=False,context ={'request': request})
@@ -255,8 +269,9 @@ class ContractPayment(APIView):
                     }],
                 mode = 'payment',
                 customer_email = user.email,
-                success_url = returnURL + '?session_id={CHECKOUT_SESSION_ID}&points='+str(points),
+                success_url = returnURL + '?session_id={CHECKOUT_SESSION_ID}&contract_id='+ str(contract_id),
                 cancel_url = returnURL,
+                metadata={'contract_id': contract_id, 'points':points}
             )
             return Response({'sessionUrl': session.url, 'price': price.unit_amount, 'user': user_serializer.data, 'token': token.key})
         except stripe.error.StripeError as e:

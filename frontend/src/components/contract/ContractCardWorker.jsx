@@ -30,7 +30,7 @@ export function ContractCardWorker({ contract }) {
 
    const updateStatus = async (contractId, statusNum, token) => {
       try {
-         const response = await updateContractStatus(contractId, statusNum, '', 0, token)
+         const response = await updateContractStatus(contractId, statusNum, '', token)
          if (response.ok) {
             window.location.reload()
          } else {

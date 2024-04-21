@@ -39,14 +39,14 @@ export const createContractRequest = async (description, initial_date, end_date,
     return fetchBackend(`/contracts/create/${service_id}/`, options);
 }
 
-export async function updateContractStatus(contractId, statusNum, sessionId, points, token) {
+export async function updateContractStatus(contractId, statusNum, sessionId, token) {
     const options = {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Token ${token}`,
         },
-        body: JSON.stringify({ session_id: sessionId, points }),
+        body: JSON.stringify({ session_id: sessionId }),
     };
 
     try {
@@ -112,8 +112,7 @@ export const getContractsClients = async (token, end_date, initial_date, status)
     return fetchBackend(`/contracts/list/0/?${queryParams}`, options);
 }
 
-export const checkWorkerAssociation = async (serviceId) => {
-    const token = localStorage.getItem('token');
+export const checkWorkerAssociation = async (serviceId, token) => {
     const options = {
         method: 'GET',
         headers: {

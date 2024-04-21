@@ -97,6 +97,35 @@ export function checkfloatExperience(experience) {
 
 }
 
+// Contrato
+
+export function isValidDateTimeFormat(dateString) {
+    const parsedDate = Date.parse(dateString)
+    return !isNaN(parsedDate)
+ }
+
+export function notOnlyNumbers(text) {
+    return (/^\d+$/.test(text));
+}
+
+export function checkIfPositive(number) {
+    return number < 0;
+}
+
+export function checkIfNumGreaterThanMax(num, max) {
+    return (num > max);
+}
+
+export function isTextNotGreaterThan(text, max) {
+    return text.length > max;
+}
+
+export function checkCostDecimal(cost){
+    return !/^\d+(\.\d{1,2})?$/.test(cost);
+}
+
+
+
 export const errorMessages = {
     required: "Este campo es requerido.",
     cityLength: "La ciudad no debe tener más de 50 caracteres.",
@@ -122,6 +151,18 @@ export const errorMessages = {
     passwordNotEqual: "Las contraseñas no coinciden.",
     notIntegerPoints: "Por favor introduzca un número entero de puntos que gastar",
     notCorrectPoitns: "Por favor introduzca un número válido",
+
+    // Contrato
+    descriptionBig: "La descripción no puede superar los 500 caracteres.",
+    startDateBeforeNow: "La fecha y hora de inicio debe ser posterior a la hora actual.",
+    endDateBeforeStartDate: "La fecha y hora de fin debe ser posterior a la fecha y hora de inicio.",
+    starDateLimit: "La fecha y hora de inicio no puede ser posterior a seis meses. Por favor, seleccione una fecha y hora de inicio más temprana.",
+    costNegative: "El coste no puede ser negativo.",
+    costBig: "El coste no puede ser mayor a 100000.",
+    descriptionNotOnlyNumbers: "La descripción no puede contener solo números.",
+    durationLessThanOneHour: "La duración del contrato debe ser mayor a una hora.",
+    durationMoreThanEightHours: "La duración del contrato no puede ser mayor a ocho horas.",
+    costDecimal: "El coste debe ser un numero, puede ser decimal. Ejemplo: 10.50",
 }
 
 export function getAge(date) {

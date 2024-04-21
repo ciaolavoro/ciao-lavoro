@@ -382,7 +382,7 @@ export default function ServiceDetails() {
                            </div>
                            {loggedUser && loggedUser.user.username === service.user.username && !isPromoted && (
                               <div className="pt-4">
-                                 {loggedUser.user.points === 0 ? (
+                                 {service.user.points === 0 ? (
                                     <PromotionButton
                                        type={"button"}
                                        text={"Promocionar Servicio"}
