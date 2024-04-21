@@ -75,7 +75,7 @@ class register(APIView):
             user.set_password(password)
             user.save()
             serializer = UserSerializer(user, many=False,context ={'request': request})
-            return Response(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         except ValidationError as e:
             return Response(str(e), status=status.HTTP_400_BAD_REQUEST)
         except ValueError as e:

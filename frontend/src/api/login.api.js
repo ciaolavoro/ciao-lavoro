@@ -48,23 +48,11 @@ export const registerRequest = async (username, password, firstName, lastName, e
     formData.append('image', image);
     formData.append('birthdate', birthdate);
     formData.append('language', language);
+
     const options = {
         method: 'POST',
         body: formData
     };
-    try {
-        const response = await fetchBackend(`/user/register/`, options);
-        const data = await response.json();
 
-        if (response.ok) {
-            return data;
-        } else if (response.status === 400 && data === 'El nombre de usuario ya está en uso') {
-            throw new Error(data);
-        } else {
-            throw new Error("Ha ocurrido un error en el registro");
-        }
-    } catch (error) {
-        console.error('Registro error:', error);
-        throw error;
-    }
+    return fetchBackend(`/user/register/`, options);
 };
