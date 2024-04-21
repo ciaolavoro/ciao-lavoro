@@ -631,7 +631,19 @@ Contribución del estudiante
 Contribución del estudiante
 
 **González Quintanilla, Diego**
-Contribución del estudiante
+- Asistir a las clases de ISPP y recopilar feedback
+- Ver Theory Pills
+- Coordinar al grupo, revisar tareas y verificar el avance del proyecto como Project Manager
+- Task 1 - Arreglar base de datos en Despliegue #320
+- Task 6 - Restricciones de las Reseñas (Backend) #327 (Revisión)
+- Task 12 - Despliegue del Sprint 3 #430 
+- Fix 32 - Despliegue #442
+- Doc - Contributions Report KB #332: Revisión 
+- Doc - Anuncio en video #377: Revisión
+- Doc - Commitment Agreement Usuarios Piloto Grupo 12 #379: Redacción
+- Doc - Pilot User Commitment Agreement #339: Revisión
+- Doc - Formulario Rendimiento #351: Redacción
+- Deployed Software review
 
 **Grosso de Terreros Goméz, Javier**
 - Asistir a las clases de ISPP y recopilar feedback
