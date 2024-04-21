@@ -30,5 +30,7 @@ Yo, **Álvaro Lara García**, me comprometo de manera voluntaria y consciente a 
   - Se recompensará al usuario piloto más destacado incluyéndolo en un agradecimiento especial durante la presentación semanal a los profesores. El criterio para ser el "mejor usuario piloto" será proporcionar un feedback detallado y constructivo que contribuya significativamente a la mejora de la aplicación.
 
 ### Firma:
+![WhatsApp Image 2024-04-21 at 16 57 06](https://github.com/ciaolavoro/ciao-lavoro/assets/72920772/0a25f74e-879e-42dd-b351-9fa4520ed7a0)
+
 Álvaro Lara García    14/04/2024
 
