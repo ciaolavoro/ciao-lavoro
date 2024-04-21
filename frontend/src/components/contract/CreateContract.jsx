@@ -53,7 +53,7 @@ export default function CreateContract() {
    const handleSubmit = async event => {
       event.preventDefault()
       const token = loggedUser.token
-      const isNotAssociated = await checkWorkerAssociation(service_Id) //La funcion a llamar, si esta asociado devuelve false
+      const isNotAssociated = await checkWorkerAssociation(service_Id,token) //La funcion a llamar, si esta asociado devuelve false
 
       if (isNotAssociated) {
          if (checkIfEmpty(description)) {

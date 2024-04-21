@@ -112,8 +112,7 @@ export const getContractsClients = async (token, end_date, initial_date, status)
     return fetchBackend(`/contracts/list/0/?${queryParams}`, options);
 }
 
-export const checkWorkerAssociation = async (serviceId) => {
-    const token = localStorage.getItem('token');
+export const checkWorkerAssociation = async (serviceId, token) => {
     const options = {
         method: 'GET',
         headers: {
