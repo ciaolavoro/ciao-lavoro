@@ -86,11 +86,13 @@ class JobView(APIView):
         
         if len(name) > 100:
             return Response('La cantidad de caracteres del nombre no puede ser superior a 100', status=status.HTTP_400_BAD_REQUEST)
+        if len(name.strip()) < 5:
+            return Response('La cantidad de caracteres del nombre no puede ser inferior a 5', status=status.HTTP_400_BAD_REQUEST)
         estimated_price = job_data['estimated_price']
         if estimated_price == '':
             estimated_price = 10
         if isinstance(estimated_price, int):
-            estimated_price = estimated_price + 0.001
+            estimated_price = float(estimated_price)
         if not isinstance(estimated_price, float):
             return Response('El precio estimado debe ser un número', status=status.HTTP_400_BAD_REQUEST)
         job = Job.objects.create(service=service, name=name, estimated_price=estimated_price)
@@ -116,11 +118,13 @@ class JobView(APIView):
         
         if len(new_name) > 100:
             return Response('La cantidad de caracteres del nombre no puede ser superior a 100', status=status.HTTP_400_BAD_REQUEST)
+        if len(new_name.strip()) < 5:
+            return Response('La cantidad de caracteres del nombre no puede ser inferior a 5', status=status.HTTP_400_BAD_REQUEST)
         new_estimated_price = job_data['estimated_price']
         if new_estimated_price == '':
             new_estimated_price = 10
         if isinstance(new_estimated_price, int):
-            new_estimated_price = new_estimated_price + 0.001
+            new_estimated_price = float(new_estimated_price)
         if not isinstance(new_estimated_price, float):
             return Response('El precio estimado debe ser un número', status=status.HTTP_400_BAD_REQUEST)
         job.name = new_name

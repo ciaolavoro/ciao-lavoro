@@ -2,7 +2,6 @@ import { Link, NavLink, useNavigate } from "react-router-dom"
 import ciaoLavoroLogo from "/ciaolavoro-logo.png"
 import { useAuthContext } from "./auth/AuthContextProvider"
 import defaultUserImage from "../assets/service/talonflame.jpg"
-import { BACKEND_URL } from "../utils/backendApi"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu"
 import UserProfileIcon from "./icons/UserProfileIcon"
 import BriefcaseIcon from "./icons/BriefcaseIcon"
@@ -136,11 +135,7 @@ function ResponsiveNavbarMenu({ navItemsUser, navItems, handleLogout }) {
             <DropdownMenu>
                <DropdownMenuTrigger>
                   <li className="rounded-full hover:shadow-lg transition">
-                     <img
-                        src={`${BACKEND_URL}${loggedUser.user.image}` || defaultUserImage}
-                        alt="Imagen de perfil"
-                        className="w-8 h-8 object-cover rounded-full"
-                     />
+                     <img src={`${loggedUser.user.image}` || defaultUserImage} alt="Imagen de perfil" className="w-8 h-8 object-cover rounded-full" />
                   </li>
                </DropdownMenuTrigger>
                <DropdownMenuContent>
@@ -204,11 +199,7 @@ function NavbarMenu({ navItemsUser, handleLogout }) {
             <DropdownMenu>
                <DropdownMenuTrigger>
                   <li className="rounded-full hover:shadow-lg transition">
-                     <img
-                        src={`${BACKEND_URL}${loggedUser.user.image}` || defaultUserImage}
-                        alt="Imagen de perfil"
-                        className="w-8 h-8 object-cover rounded-full"
-                     />
+                     <img src={`${loggedUser.user.image}` || defaultUserImage} alt="Imagen de perfil" className="w-8 h-8 object-cover rounded-full" />
                   </li>
                </DropdownMenuTrigger>
                <DropdownMenuContent>

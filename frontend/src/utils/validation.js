@@ -1,6 +1,7 @@
+import { fetchBackend } from "./backendApi";
 
 export async function checkIfUsernameExists(username, userId) {
-    const res = await fetch(`${import.meta.env.VITE_BACKEND_API_URL}/user/`);
+    const res = await fetchBackend(`/user/`);
     const data = await res.json();
     const filteredData = data.filter(existingUser => existingUser.id !== userId && existingUser.username === username);
     return filteredData.length > 0;
@@ -8,6 +9,16 @@ export async function checkIfUsernameExists(username, userId) {
 
 export function checkIfEmpty(text) {
     return text.trim().length === 0;
+}
+export function checkUsernameIfEmptyAndSize(username) {
+    return !username.trim() || username.length < 3 || username.length >= 31;
+}
+export function checkFirstNameIfEmptyAndSize(firstName) {
+    return !firstName.trim() || firstName.length < 3 || firstName.length >= 31;
+}
+
+export function checkLastNameIfEmptyAndSize(lastName) {
+    return !lastName.trim() || lastName.length < 3 || lastName.length >= 61;
 }
 
 export function checkIfProffesionEmpty(profession) {
@@ -46,18 +57,18 @@ export function checkIfDateInFuture(date) {
 
 export function checkIfBirthDateValid(date) {
     const age = getAge(date);
-    return !(age > 16 && age < 80);
+    return !(age >= 16 && age <= 80);
 }
 
 export function checkIfPointsPositive(points) {
     return points < 0;
 }
 
-export function checkIntegerPoints(points){
+export function checkIntegerPoints(points) {
     return !Number.isInteger(points);
 }
 
-export function checkNotStringPoints(points){
+export function checkNotStringPoints(points) {
     return typeof points !== 'number';
 }
 
@@ -67,10 +78,21 @@ export function checkIfToManyPoints(yourPoints, pointsUsed) {
 
 export function checkIfPointsMoreThanMoney(points, money) {
     // Hay un minimo de 0,50€ en Stripe, por eso al precio total se le resta 50 centimos
-    return points > ((money * 100)-50);
+    return points > ((money * 100) - 50);
 }
 
-export function checkfloatExperience(experience){
+export function checkEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    return !emailRegex.test(email)
+}
+
+export function checkValidPassword(password) {
+    const isPasswordLengthValid = password.length >= 8
+    const passwordRegex = /^(?=.*[a-zñ])(?=.*[A-ZÑ])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&_ñÑ]+$/
+    return !passwordRegex.test(password) || !isPasswordLengthValid
+}
+
+export function checkfloatExperience(experience) {
     return !Number.isInteger(experience);
 
 }
@@ -121,6 +143,12 @@ export const errorMessages = {
     tooManyPoints: "Por favor, introduzca una cantidad de puntos que tengas disponibles.",
     positivePoints: "Por favor, introduzca un número de puntos positivos.",
     noMorePointsMoney: "El pago debe ser mínimo de 0'50€. No puedes canjear más puntos si eso hace que el precio sea menor de 0'50€.",
+    usernameRequiredAndSize: "El nombre de usuario debe ser menos de 30 carácteres, más de 3 y no debe estar en blanco.",
+    nameRequiredAndSize: "El nombre debe ser menos de 30 carácteres, más de 3 y no debe estar en blanco.",
+    lastnameRequiredAndSize: "El apellido debe ser menos de 30 carácteres, más de 3 y no debe estar en blanco.",
+    termsNotAccepted: "Debes aceptar los términos y condiciones para continuar.",
+    passwordNotValid: "La contraseña debe tener mínimo de 8 carácteres, una minúscula, una mayúscula, un número y uno de los siguientes carácteres especiales: ?=.*[@$!%*?&_",
+    passwordNotEqual: "Las contraseñas no coinciden.",
     notIntegerPoints: "Por favor introduzca un número entero de puntos que gastar",
     notCorrectPoitns: "Por favor introduzca un número válido",
 
