@@ -587,7 +587,10 @@ Contribución del estudiante
 
 **Campos Campos, Francisco Antonio**
 - Asisitir a reuniones.
-- Asisitir a clase. 
+- Clase ISPP 09/04/2024 Primera Parte
+- Clase ISPP 09/04/2024 Segunda Parte
+- Clase ISPP 02/04/2024 Primera Parte
+- Clase ISPP 02/04/2024 Segunda Parte
 - Verme los videos de TheoryPills.
 - Hacer de usuario Piloto del equipo 12.
 - Revisar y dar feedback de numerosas Pull Request.
