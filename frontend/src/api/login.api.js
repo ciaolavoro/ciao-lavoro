@@ -8,33 +8,14 @@ export const loginRequest = async (username, password) => {
         },
         body: JSON.stringify({ username, password }),
     };
+
     try {
         const response = await fetchBackend(`/user/login/`, options);
         const data = await response.json();
-        const token = data.token;
-        localStorage.setItem("token", token);
         return data;
     } catch (error) {
         console.error('Login error:', error);
     }
-};
-
-
-export const isAuthenticated = async () => {
-    const token = localStorage.getItem('token');
-
-    const options = {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Token ${token}`,
-        },
-    };
-    return fetchBackend(`/user/authenticated/`, options);
-};
-
-export const logoutRequest = async () => {
-    localStorage.removeItem('token');
 };
 
 export const registerRequest = async (username, password, firstName, lastName, email, image, birthdate, language) => {

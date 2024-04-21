@@ -27,12 +27,12 @@ export default function LoginPage() {
             login({ user: res.user, token: res.token })
             navigate("/")
             toast({
-               title: "Inicio de sesión exitoso",
+               title: "✔ Inicio de sesión exitoso",
                description: "El inicio de sesión se realizó correctamente. Bienvenido a CiaoLavoro.",
             })
          } else {
             toast({
-               title: "Error en el inicio de sesión.",
+               title: "❌ Error en el inicio de sesión.",
                description: "Por favor, verifique su usuario y contraseña.",
             })
          }
