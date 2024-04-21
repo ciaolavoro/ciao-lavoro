@@ -499,6 +499,7 @@ Fecha: 21 / 04 / 2024
 - Redactar mi sección en el documento PerformanceEvaluation.md
 - Revisar la tarea Doc - TCO y ROI
 
+
 **Mateos Angulo, Pablo**
 - Asisitir a reuniones.
 - Asisitir a clase. 
@@ -649,6 +650,9 @@ Contribución del estudiante
 - Doc - User Pilot Report #333
 - Fix 28 - Usuario #438
 - Doc - Individual Performance Evaluation #334
+- FC terms review #329
+- Ayudar en las diapositivas
+- Ayudar a los compañeros en tareas varias
 
 
 **Hidalgo Rodríguez, Álvaro**
