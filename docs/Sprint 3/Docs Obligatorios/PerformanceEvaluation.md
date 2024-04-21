@@ -636,7 +636,31 @@ Contribución del estudiante
 Contribución del estudiante
 
 **García Chavero, Adrián**
-Contribución del estudiante
+- Asisitir a reuniones.
+- Clase ISPP 09/04/2024 Primera Parte
+- Clase ISPP 09/04/2024 Segunda Parte
+- Clase ISPP 02/04/2024 Primera Parte
+- Clase ISPP 02/04/2024 Segunda Parte
+- Verme los videos de TheoryPills.
+- Hacer de usuario Piloto del equipo 12.
+- Revisar y dar feedback de numerosas Pull Request.
+- Fix 32 - Despliegue
+- Fix 28 - Usuario
+- Doc - Feedback usuarios piloto S3
+- Task 12 - Despliegue del Sprint 3
+- Fix 20 - Arreglar pasarela de pago
+- Fix 16 - Rediseñar página de inicio
+- Fix 19 - Arreglar Listado de promocionados
+- Doc - Gestion de la configuracion actualizacion 05-04-2024
+- Fix 6 - Responsive Usuario
+- Fix 5 - Contratos
+- Fix 4 - Trabajos
+- Fix 2 - Edición de perfil
+- Deployed Software Review
+- Doc - Gestion de la Configuracion
+- Task 7 - Restricciones de las Reseñas (Frontend)
+- Task 1 - Arreglar base de datos en Despliegue
+- Task 10 - Despliegue Continuo en Github Actions
 
 **González Quintanilla, Diego**
 - Asistir a las clases de ISPP y recopilar feedback
