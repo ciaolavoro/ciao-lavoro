@@ -672,7 +672,15 @@ Contribución del estudiante
 Contribución del estudiante
 
 **Mateos Angulo, Pablo**
-Contribución del estudiante
+- Asisitir a reuniones.
+- Asisitir a clase.
+- Verme los videos de TheoryPills.
+- Fix 2 - Edición de perfil - Revisar PR
+- Task 7 - Restricciones de las Reseñas (Frontend)
+- Fix 4 - Trabajos
+- Fix 5 - Contratos
+- Fix 21 - Error crear y editar un Job
+- Fix 6 - Responsive Usuario - Revisar PR
 
 **Sánchez Hossdorf, Alexander | Alicia**
 - Doc - Diapositiva 09/04
