@@ -678,7 +678,7 @@ y
 - **Prompt y respuestas:** Descritos en el enlace: [https://chat.openai.com/share/9870a859-549f-42f8-bd48-f27dad6caae7](https://chat.openai.com/share/9870a859-549f-42f8-bd48-f27dad6caae7)
 
 
-## SPRINT 2
+## SPRINT 3
 ### Cancelar Git Push en Visual Studio:
 - **Persona que ha hecho el prompt:** Javier Grosso
 
