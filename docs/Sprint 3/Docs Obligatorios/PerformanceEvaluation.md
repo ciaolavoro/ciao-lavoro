@@ -56,7 +56,7 @@ Fecha: 21 / 04 / 2024
 - Trabajo como presentador a lo largo de toda la duración del tramo de proyecto
 - Colaboración de diseño para las diapositivas de las presentaciones realizadas por parte del equipo
 - Guionizado del recorrido a acotar por las transparencias, de cara a la presentación de evaluación
-- Revisión del contenido de la documentación para asegurar su compleción y posterior síntesis en las diapositivas para la presentación apoyado en la
+- Revisión del contenido de la documentación para asegurar su compleción y posterior síntesis en las diapositivas para la presentación
 
 **Arregui Díaz, Joaquín**
 - Análisis de mercado de la empresa: topayuda.
@@ -562,7 +562,22 @@ Fecha: 21 / 04 / 2024
 ## Sprint 3 (#S3)
 
 **Albalat Ortiz, Samuel**
-Contribución del estudiante
+- Task 4 - Ajustar la promoción de Servicios (Backend): DONE
+- Task 5 - Ajustar la promoción de Servicios (Frontend): IN PROGRESS
+- Task 11 - Listado Servicios Populares (Backend): DONE
+- Fix 3 - Servicios: IN PROGRESS
+- Fix 18 - Proceso de contrato: IN PROGRESS
+- Fix 31 - Contrato: IN PROGRESS
+- Reunión Informal Post Retrospectiva
+- Clase ISPP 09/04/2024 Primera Parte
+- Clase ISPP 09/04/2024 Segunda Parte
+- Clase ISPP 02/04/2024 Primera Parte
+- Clase ISPP 02/04/2024 Segunda Parte
+- Doc - Commitment Agreement 1.7: IN PROGRESS
+- Doc - Presentación 23/04: IN PROGRESS
+- Doc - Diapositiva 09/04
+- Review para el G12 Shar3d
+- watch_theory_pill_Theory_Pill_on_GDPR_and_UX
 
 **Arregui Díaz, Joaquín**
 Contribución del estudiante
