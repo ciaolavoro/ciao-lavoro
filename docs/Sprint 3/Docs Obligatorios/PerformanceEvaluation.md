@@ -581,7 +581,16 @@ Fecha: 21 / 04 / 2024
 - watch_theory_pill_Theory_Pill_on_GDPR_and_UX
 
 **Arregui Díaz, Joaquín**
-Contribución del estudiante
+ - Task 2 - Gamificación (Backend) #323
+ - Task 8 - Cancelación de contrato (Backend) #330
+ - Fix 12 - Aumentar número de request #383
+ - Fix 13 - Arreglar añadir puntos #387
+ - Fix 20 - Arreglar pasarela de pago #406
+ - Hotfix 1 - Unificar el backend y mejorar el testing #433
+ - Fix 30 - Trabajo #440
+ - Fix 31 - Contrato #441
+
+Fix 30 - Trabajo #440
 
 **Barea Jiménez, Antonio**
 - Doc - Presentación 23/04
