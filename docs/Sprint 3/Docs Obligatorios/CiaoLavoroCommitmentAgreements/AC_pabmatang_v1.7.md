@@ -99,11 +99,12 @@ Grupo 3: Pablo M, Adrián, Antonio, Diego.
 
   Las tareas de las que soy responsable en este Sprint son:
 
-- Issue 328
-- Issue 356
-- Issue 357
-- Issue 414
-
+- Fix 2 - Edición de perfil
+- Task 7 - Restricciones de las Reseñas (Frontend)
+- Fix 4 - Trabajos
+- Fix 5 - Contratos
+- Fix 21 - Error crear y editar un Job
+- Fix 6 - Responsive Usuario
 
 
 -----
