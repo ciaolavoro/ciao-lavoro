@@ -1,7 +1,7 @@
-# **Compromiso los integrantes del Grupo 6 de la asignatura ISPP (Ingeniería de Software y Práctica Profesional)**
+﻿# **Compromiso los integrantes del Grupo 6 de la asignatura ISPP (Ingeniería de Software y Práctica Profesional)**
 ## Curso 2023-24
 
-**Yo, Álvaro Hidalgo Rodríguez, perteneciente al grupo 6 de la asignatura, me comprometo de manera voluntaria y consciente a cumplir con las siguientes cláusulas y responsabilidades durante mi participación en la asignatura ISPP para el curso académico 2023-24.**
+**Yo, Diego González Quintanilla, perteneciente al grupo 6 de la asignatura, me comprometo de manera voluntaria y consciente a cumplir con las siguientes cláusulas y responsabilidades durante mi participación en la asignatura ISPP para el curso académico 2023-24.**
 
 1. **Dedicación Semanal:**
    1. Me comprometo a dedicar un mínimo de 10 horas semanales a las actividades relacionadas con la asignatura ISPP. Esta dedicación incluirá tiempo destinado a clases, reuniones de grupo, investigación, desarrollo de tareas y cualquier otra actividad relacionada con el proyecto.
@@ -99,18 +99,20 @@ Grupo 3: Pablo M, Adrián, Antonio, Diego.
 
   Las tareas de las que soy responsable en este Sprint son:
 
-- Task 5 - Ajustar la promoción de Servicios (frontend) #326
-- Doc - Time Effort Report #335
-- Doc - Software Reviewers Guidlines #346
-- Fix 31 - Contrato #441
-- Fix 15 - Renuevo de base de datos #399
-- Task 4 - Ajustar la promoción de servicios #325
-- Task 11 - Listado Servicios Populares (Backend) #408
-- Fix 25 - Pagar usando puntos promocion servicio #418
-
+- Task 1 - Arreglar base de datos en Despliegue #320
+- Task 6 - Restricciones de las Reseñas (Backend) #327
+- Task 10 - Despliegue Continuo en Github Actions #215
+- Task 12 - Despliegue del Sprint 3 #430
+- Doc - Pilot User Commitment Agreement #339
+- Doc - Commitment Agreement Usuarios Piloto Grupo 12 #379
+- Doc - Anuncio en video #377
+- Doc - Contributions Report KB #332 
+- Doc - Formulario Rendimiento #351
+- Fix 32 - Despliegue #442
+- Deployed Software review #345
 
 -----
-**Firma del Alumno: ![firma](./ImágenesFirma/FirmaÁlvaro.png)**
+**Firma del Alumno: ![firma](./ImágenesFirma/firmaDiego.png)**
 
 Fecha: 02/04/2024
 

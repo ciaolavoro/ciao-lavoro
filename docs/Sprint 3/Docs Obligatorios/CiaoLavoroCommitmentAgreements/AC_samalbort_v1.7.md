@@ -94,7 +94,7 @@ Grupo 3: Pablo M, Adrián, Antonio, Diego.
 
   Mi aspiración en el proyecto es **10** y lo he comunicado a los miembros del proyecto.
 
-1. **Tareas del Sprint 2 de las que soy responsable:**
+1. **Tareas del Sprint 3 de las que soy responsable:**
 - Me comprometo a ser uno de los responsables de las tareas que se me han asignado, cargando con las responsabilidades correspondientes cuando las tareas no se completen o se desarrollen con problemas.
 
   Las tareas de las que soy responsable en este Sprint son:
@@ -106,7 +106,7 @@ Grupo 3: Pablo M, Adrián, Antonio, Diego.
 
 
 -----
-**Firma del Alumno: ![firma](firmaSamalbort.png)**
+**Firma del Alumno: ![firma](./ImágenesFirma/firmaSamu.png)**
 
-Fecha: 21/04/2024
+Fecha: 02/04/2024
 
