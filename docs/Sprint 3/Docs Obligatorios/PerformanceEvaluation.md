@@ -584,7 +584,15 @@ Fecha: 21 / 04 / 2024
 Contribución del estudiante
 
 **Barea Jiménez, Antonio**
-Contribución del estudiante
+- Doc - Presentación 23/04
+- Doc - Anuncio
+- Doc - Diapositivas 09/04
+- Doc - Formulario de usuarios piloto
+- Task 6 - Restricciones de las Reseñas
+- Doc - Filtrar feedback de Usuarios Piloto S2
+- watch_theory_pill_X
+- Doc - Commitment Agreement 1.7
+- Asisitir a todas las clases
 
 **Campos Campos, Francisco Antonio**
 - Asisitir a reuniones.
