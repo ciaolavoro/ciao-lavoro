@@ -639,7 +639,35 @@ Contribución del estudiante
 Contribución del estudiante
 
 **Sánchez Hossdorf, Alexander | Alicia**
-Contribución del estudiante
+- Doc - Diapositiva 09/04
+- Doc - Contributions Report KB #332: REVISIÓN
+- Doc - Manual de Usuario #349
+- Doc - Feedback usuarios piloto S3 #434: REVISIÓN
+- feedbackUsuariosPilotoS3.md: REVISAR
+- InformationProvidedByPilotUsers.md: REDACCION
+- pilots.md: REDACCION
+- PilotUsersPerformanceEvaluation.md: REDACCION S3
+
+- Fix 3.3 - Servicios #355
+- Fix 3.7 - Resposive de Servicios #359
+- Fix 3.12 - Aumentar número de request #383: REVISAR PR
+- Fix 3.16 - Rediseñar página de inicio #402
+- Fix 3.17 - arreglar puntos del pago de contrato #410: REVISAR PR
+- Fix 3.18 - Proceso de contrato #404
+- Fix 3.21 - Error crear y editar un Job #414: REVISAR PR
+- Fix 3.22 - Campos dobles en editar servicio #415: REVISAR PR
+- Fix 3.25 - pagar usando puntos promocion servicio #418
+- Fix 3.26 - Publicar Opiniones de Servicios #419
+- Fix 3.29 - Servicio #439: REVISAR PR
+- Fix 3.31 - Contrato #441
+- Fix 3.30 - Trabajo #440
+
+- Task 3.3 - Gamificacion (frontend) #324: REVISAR PR
+- Task 3.5 - Ajustar la promoción de Servicios (Frontend) #326
+
+- Recoger Feedback en clase
+- Crear tareas en base al feedback de los Usuarios Pilotos.
+- Ejercer de Jefe de proyecto junto a Diego. 
 
 
 ## Preparing Project Launch (#PPL)
