@@ -689,7 +689,18 @@ Contribución del estudiante
 
 
 **Hidalgo Rodríguez, Álvaro**
-Contribución del estudiante
+- Asisitir a reuniones.
+- Asisitir a clase.
+- Verme los videos de TheoryPills.
+- Revisar que todos han visto las theory pills
+- Doc Time Effort Report
+- Expected Aspects Review
+- Fix 31 - Contrato
+- Doc - Software Reviewers Guidelines
+- Fix 15 - Renuevo de base de datos
+- Task 4 - Ajustar la promoción de Servicios (Backend)
+- Task 11 - Listado Servicios Populares (Backend)
+- Fix 25 - pagar usando puntos promocion servicio
 
 **Mateos Angulo, Pablo**
 - Asisitir a reuniones.
