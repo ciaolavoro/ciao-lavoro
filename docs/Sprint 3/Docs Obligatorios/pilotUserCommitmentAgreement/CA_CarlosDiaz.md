@@ -30,5 +30,6 @@ Yo, **Carlos Díaz Cejudo**, me comprometo de manera voluntaria y consciente a c
   - Se recompensará al usuario piloto más destacado incluyéndolo en un agradecimiento especial durante la presentación semanal a los profesores. El criterio para ser el "mejor usuario piloto" será proporcionar un feedback detallado y constructivo que contribuya significativamente a la mejora de la aplicación.
 
 ### Firma:
+![image](https://github.com/ciaolavoro/ciao-lavoro/assets/72920772/142e387c-0596-4472-8603-ab383bd26170)
 Carlos Díaz Cejudo    14/04/2024
 
