@@ -665,9 +665,10 @@ Contribución del estudiante
 - Task 3.3 - Gamificacion (frontend) #324: REVISAR PR
 - Task 3.5 - Ajustar la promoción de Servicios (Frontend) #326
 
-- Recoger Feedback en clase
+- Asisitir a todas las clases.
+- Asisitir a todas las reuniones como Jefe de Proyecto.
+- Recoger Feedback en clase.
 - Crear tareas en base al feedback de los Usuarios Pilotos.
-- Ejercer de Jefe de proyecto junto a Diego. 
 
 
 ## Preparing Project Launch (#PPL)
