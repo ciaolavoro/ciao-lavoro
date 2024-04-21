@@ -609,7 +609,20 @@ Contribución del estudiante
 - Revisaar el formulario pasado a los Usuarios Pilotos para recoger feedback
 
 **Cobo Ariza, José Luis**
-Contribución del estudiante
+- Asisitir a reuniones.
+- Clase ISPP 09/04/2024 Primera Parte
+- Clase ISPP 09/04/2024 Segunda Parte
+- Clase ISPP 02/04/2024 Primera Parte
+- Clase ISPP 02/04/2024 Segunda Parte
+- Verme los videos de TheoryPills.
+- Hacer de usuario Piloto del equipo 12.
+- Revisar y dar feedback de numerosas Pull Request.
+- Hotfix 1 - Unificar el backend y mejorar el testing
+- Doc - Presentación 23/04
+- Fix 13 - Arreglar añadir puntos
+- Doc - Diapositiva 09/04
+- Task 8 - Cancelación de contrato (Backend)
+- Task 2 - Gamificación (Backend)
 
 **Cuenca Pérez, Pablo**
 Contribución del estudiante
