@@ -647,7 +647,6 @@ Contribución del estudiante
 - InformationProvidedByPilotUsers.md: REDACCION
 - pilots.md: REDACCION
 - PilotUsersPerformanceEvaluation.md: REDACCION S3
-
 - Fix 3.3 - Servicios #355
 - Fix 3.7 - Resposive de Servicios #359
 - Fix 3.12 - Aumentar número de request #383: REVISAR PR
@@ -661,10 +660,8 @@ Contribución del estudiante
 - Fix 3.29 - Servicio #439: REVISAR PR
 - Fix 3.31 - Contrato #441
 - Fix 3.30 - Trabajo #440
-
 - Task 3.3 - Gamificacion (frontend) #324: REVISAR PR
 - Task 3.5 - Ajustar la promoción de Servicios (Frontend) #326
-
 - Asisitir a todas las clases.
 - Asisitir a todas las reuniones como Jefe de Proyecto.
 - Recoger Feedback en clase.
