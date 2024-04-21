@@ -21,6 +21,10 @@ export function checkLastNameIfEmptyAndSize(lastName) {
     return !lastName.trim() || lastName.length < 3 || lastName.length >= 61;
 }
 
+export function checkIfProffesionEmpty(profession) {
+    return profession === -1;
+}
+
 export function checkOnlyCharactersInText(text) {
     const onlyCharactersRegex = /^[a-zA-ZñÑáéíóúÁÉÍÓÚüÜç '`´]+$/;
     return !onlyCharactersRegex.test(text);
@@ -60,6 +64,14 @@ export function checkIfPointsPositive(points) {
     return points < 0;
 }
 
+export function checkIntegerPoints(points) {
+    return !Number.isInteger(points);
+}
+
+export function checkNotStringPoints(points) {
+    return typeof points !== 'number';
+}
+
 export function checkIfToManyPoints(yourPoints, pointsUsed) {
     return yourPoints < pointsUsed;
 }
@@ -80,11 +92,17 @@ export function checkValidPassword(password) {
     return !passwordRegex.test(password) || !isPasswordLengthValid
 }
 
+export function checkfloatExperience(experience) {
+    return !Number.isInteger(experience);
+
+}
+
 export const errorMessages = {
     required: "Este campo es requerido.",
     cityLength: "La ciudad no debe tener más de 50 caracteres.",
     experienceNotValid: "La experiencia no puede ser menos que 0.",
-    tooMuchExperience: "La experiencia no puede ser tan grande en comparación con la edad del usuario.",
+    tooMuchExperience: "Ya que tu experiencia más 16 no puede ser mayor a tu edad.",
+    floatExperience: "Por favor solo introduzca los años completos de experiencia",
     languageLength: "El idioma no debe tener más de 50 caracteres.",
     imageNotValid: "La imagen no es válida.",
     emailNotValid: "El correo electrónico no es válido.",
@@ -102,9 +120,11 @@ export const errorMessages = {
     termsNotAccepted: "Debes aceptar los términos y condiciones para continuar.",
     passwordNotValid: "La contraseña debe tener mínimo de 8 carácteres, una minúscula, una mayúscula, un número y uno de los siguientes carácteres especiales: ?=.*[@$!%*?&_",
     passwordNotEqual: "Las contraseñas no coinciden.",
+    notIntegerPoints: "Por favor introduzca un número entero de puntos que gastar",
+    notCorrectPoitns: "Por favor introduzca un número válido",
 }
 
-function getAge(date) {
+export function getAge(date) {
     const today = new Date();
     const birthDate = new Date(date);
     let age = today.getFullYear() - birthDate.getFullYear();

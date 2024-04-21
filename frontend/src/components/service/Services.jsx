@@ -77,7 +77,7 @@ export default function Services() {
                   value={profession}
                   onChange={e => setProfession(e.target.value)}
                   className="px-2 py-1 border rounded bg-orange-200 font-semibold">
-                  <option value=""> Profesion </option>
+                  <option value=""> Profesión </option>
                   {loadingProfessions ? (
                      <option>Cargando profesiones...</option>
                   ) : (
@@ -90,12 +90,17 @@ export default function Services() {
                </select>
             </form>
          </section>
-
-         <section className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
-            {loadingServices
-               ? [...Array(3)].map((_, index) => <ServiceCardSkeleton key={index} />)
-               : services.filter(service => service.is_active).map(service => <ServiceCard key={service.id} service={service} />)}
-         </section>
+         <div>
+            {services.length === 0 ? (
+               <p className="text-center">Ningún servicio encaja con sus criterios de búsqueda.</p>
+            ) : (
+               <section className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
+                  {loadingServices
+                     ? [...Array(3)].map((_, index) => <ServiceCardSkeleton key={index} />)
+                     : services.filter(service => service.is_active).map(service => <ServiceCard key={service.id} service={service} />)}
+               </section>
+            )}
+         </div>
       </div>
    )
 }
