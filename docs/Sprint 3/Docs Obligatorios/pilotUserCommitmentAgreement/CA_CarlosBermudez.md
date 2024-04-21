@@ -30,5 +30,7 @@ Yo, **Carlos Bermúdez Gutierrez**, me comprometo de manera voluntaria y conscie
   - Se recompensará al usuario piloto más destacado incluyéndolo en un agradecimiento especial durante la presentación semanal a los profesores. El criterio para ser el "mejor usuario piloto" será proporcionar un feedback detallado y constructivo que contribuya significativamente a la mejora de la aplicación.
 
 ### Firma:
+![WhatsApp Image 2024-04-21 at 16 56 29](https://github.com/ciaolavoro/ciao-lavoro/assets/72920772/46a8d62d-ef14-41dd-9c3b-604f3326ccdb)
+
 Carlos Bermúdez Gutierrez    14/04/2024
 
