@@ -586,7 +586,23 @@ Contribución del estudiante
 Contribución del estudiante
 
 **Campos Campos, Francisco Antonio**
-Contribución del estudiante
+- Asisitir a reuniones.
+- Asisitir a clase. 
+- Verme los videos de TheoryPills.
+- Hacer de usuario Piloto del equipo 12.
+- Revisar y dar feedback de numerosas Pull Request.
+- Doc- Pilot User Commitment Agreement #339
+- Fix 9- Añadir el idioma al registro(Frontend)#366
+- Fix 1- Registro de usuario #353
+- Task 3- Gamificación #324
+- Ayudar en la creación de diapositivas
+- Fix 8 - Responsive Contratos #360
+- Fix 17 - Arreglar puntos del pago de contratos #403
+- Doc - Formulario usuarios Pilotos #350
+- Fix 21- Error crear y editar job #414
+- Fix 23 - Boton para promocionar services de otros usuarios pilotos #416
+- Fix 14 - Corrección error refund(frontend) #397
+- Revisaar el formulario pasado a los Usuarios Pilotos para recoger feedback
 
 **Cobo Ariza, José Luis**
 Contribución del estudiante
