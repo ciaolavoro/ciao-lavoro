@@ -12,7 +12,7 @@
 |--------------------|
 |Firmado y cumplido        |
 
-Yo, **Rodri Jimenez**, me comprometo de manera voluntaria y consciente a cumplir con las siguientes cláusulas y responsabilidades mientras participe como usuario piloto en la página web de Ciao Lavoro:
+Yo, **Rodrigo Jimenez**, me comprometo de manera voluntaria y consciente a cumplir con las siguientes cláusulas y responsabilidades mientras participe como usuario piloto en la página web de Ciao Lavoro:
 
 1. **Cumplimiento de las fechas:**
    - Me comprometo a revisar la página web de Ciao Lavoro en las fechas específicas que sean comunicadas por el equipo de Ciao Lavoro, con el fin de brindar un feedback preciso y oportuno que contribuya al continuo desarrollo y mejora de la plataforma.
