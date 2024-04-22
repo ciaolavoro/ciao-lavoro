@@ -1,7 +1,0 @@
-### Título del commit: Borre los hashtags del título de commit deseado. Borre los corchetes
-### Task [Nº de Task] - [Título de Task] #[Nº de Issue]
-### Fix [Nº de Fix] - [Título de Fix] #[Nº de Issue]
-### Hotfix [Nº de Hotfix] - [Título de Hotfix] #[Nº de issue]
-
-### Descripción del commit (opcional, si el cambio es grande): Describa los cambios realizados en la siguiente línea
-

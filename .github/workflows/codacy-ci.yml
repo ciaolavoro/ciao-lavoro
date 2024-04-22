@@ -25,6 +25,8 @@ on:
         required: true
       DATABASE_URL:
         required: true
+      DEPLOY_PASSWORD:
+        required: true
 
 
 jobs:
@@ -40,7 +42,7 @@ jobs:
       VITE_STRIPE_PUBLIC_KEY: ${{ secrets.VITE_STRIPE_PUBLIC_KEY }}
       DATABASE_URL: ${{ secrets.DATABASE_URL }}
       VERIFICATION_KEY: ${{ secrets.VERIFICATION_KEY }}
-
+      DEPLOY_PASSWORD: ${{ secrets.DEPLOY_PASSWORD }}
       
     steps:
     - name: Checkout del codigo fuente

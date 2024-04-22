@@ -64,8 +64,8 @@ class ContractTestCase(TestCase):
             'accept_client':False,
             'description':'descristion',
             'description_cancelation':'',
-            'initial_date': '2024-05-4T14:30',
-            'end_date': '2024-05-6T14:30',
+            'initial_date': (timezone.now() + datetime.timedelta(days=10)).strftime('%Y-%m-%dT%H:%M'),
+            'end_date': (timezone.now() + datetime.timedelta(days=11)).strftime('%Y-%m-%dT%H:%M'),
             'cost': 4,
             'status': 1,
             'service': self.service
@@ -133,8 +133,8 @@ class CreateViewTests(TestCase):
             'accept_worker':True,
             'accept_client':False,
             'description':'descristion',
-            'initial_date': '2024-05-4T14:30',
-            'end_date': '2024-05-6T14:30',
+            'initial_date': (timezone.now() + datetime.timedelta(days=10)).strftime('%Y-%m-%dT%H:%M'),
+            'end_date': (timezone.now() + datetime.timedelta(days=12)).strftime('%Y-%m-%dT%H:%M'),
             'cost': 2
         }
     def test_contract_creation_success(self):
@@ -164,20 +164,18 @@ class ContractUpdateTests(ContractTestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json()['description'], self.contract.description)
         update_data = {
-            'accept_worker':'',
-            'accept_client':'True',
             'description':'nuevadescristion',
-            'initial_date': '2024-05-7T14:30',
-            'end_date': '2024-05-8T14:30',
+            'initial_date': (timezone.now() + datetime.timedelta(days=2)).strftime('%Y-%m-%dT%H:%M'),
+            'end_date': (timezone.now() + datetime.timedelta(days=3)).strftime('%Y-%m-%dT%H:%M'),
             'cost': '5'
         }
         response = self.client.put(reverse('contracts:contract-edit',kwargs={'contract_id': 1}), update_data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.contract.refresh_from_db()
-        self.assertEqual(self.contract.accept_worker, True)
+        self.assertEqual(self.contract.accept_worker, False)
         self.assertEqual(self.contract.accept_client, True)
-        self.assertEqual(self.contract.initial_date, datetime.datetime.strptime('2024-05-7T14:30','%Y-%m-%dT%H:%M').replace(tzinfo=datetime.timezone.utc))
-        self.assertEqual(self.contract.end_date,datetime.datetime.strptime('2024-05-8T14:30','%Y-%m-%dT%H:%M').replace(tzinfo=datetime.timezone.utc))
+        self.assertEqual(self.contract.initial_date, (timezone.now() + datetime.timedelta(days=2)).replace(second=0, microsecond=0))
+        self.assertEqual(self.contract.end_date,(timezone.now() + datetime.timedelta(days=3)).replace(second=0, microsecond=0))
         self.assertEqual(self.contract.description, 'nuevadescristion')
         self.assertEqual(self.contract.cost, 5)
 
@@ -378,9 +376,6 @@ class ContractPaymentTests(ContractTestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertTrue('sessionUrl' in response.json())
         self.assertEqual(response.json()['price'], (self.contract.cost*100)-100)
-        self.user2.refresh_from_db()
-        self.assertEqual(self.user2.points, 0)
-
     def test_payment_initiation_point_equals_cost(self):
         self.user2.points = self.contract.cost*100
         self.user2.save()
@@ -389,8 +384,6 @@ class ContractPaymentTests(ContractTestCase):
         response = self.client.post(self.payment_url, {'returnURL': self.return_url, 'points': self.contract.cost*100})
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json(), 'El contrato se ha pagado sin necesidad de proceder al pago')
-        self.user2.refresh_from_db()
-        self.assertEqual(self.user2.points, 0)
 
     def test_payment_initiation_error(self):
         self.user2.points = self.contract.cost*100

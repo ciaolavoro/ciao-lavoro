@@ -2,6 +2,16 @@ import { useState } from "react"
 import { useNavigate, useSearchParams } from "react-router-dom"
 import { createContractRequest, checkWorkerAssociation } from "../../api/Contract.api"
 import { useAuthContext } from "../auth/AuthContextProvider"
+import {
+   checkIfEmpty,
+   checkIfNumGreaterThanMax,
+   checkIfPositive,
+   isTextNotGreaterThan,
+   isValidDateTimeFormat,
+   notOnlyNumbers,
+   errorMessages,
+   checkCostDecimal,
+} from "../../utils/validation"
 
 export default function CreateContract() {
    const [description, setDescription] = useState("")
@@ -28,41 +38,72 @@ export default function CreateContract() {
       }
    }
 
+   const [isDescriptionEmpty, setIsDescriptionEmpty] = useState(false)
+   const [isDescriptionBig, setIsDescriptionBig] = useState(false)
+   const [isDescriptionOnlyNumber, setIsDescriptionOnlyNumber] = useState(false)
+   const [isStartDateAfterNow, setIsStartDateAfterNow] = useState(false)
+   const [isEndDateAfterStartDate, setIsEndDateAfterStartDate] = useState(false)
+   const [isTimeLessThanOneHour, setIsTimeLessThanOneHour] = useState(false)
+   const [isTimeMoreThanEightHour, setIsTimeMoreThanEightHour] = useState(false)
+   const [isStartTimeInSixMonths, setIsStartTimeInSixMonths] = useState(false)
+   const [isCostNotPositive, setIsCostNotPositive] = useState(false)
+   const [isCosteBig, setIsCosteBig] = useState(false)
+   const [isCostNotDecimal, setIsCostNotDecimal] = useState(false)
+
    const handleSubmit = async event => {
       event.preventDefault()
       const token = loggedUser.token
-      const isNotAssociated = await checkWorkerAssociation(service_Id) //La funcion a llamar, si esta asociado devuelve false
+      const isNotAssociated = await checkWorkerAssociation(service_Id,token) //La funcion a llamar, si esta asociado devuelve false
 
       if (isNotAssociated) {
-         if (!description.trim()) {
-            alert("La descripción no puede estar vacía.")
+         if (checkIfEmpty(description)) {
+            setIsDescriptionEmpty(true)
             return
          }
-         if (charCount > 500) {
-            alert("La descripción no puede superar los 500 caracteres.")
+         if (isTextNotGreaterThan(description, 500)) {
+            resetErrors()
+            setIsDescriptionBig(true)
             return
          }
          const now = new Date()
          const startDate = new Date(initial_date)
          const endDate = new Date(end_date)
+         const limitDate = new Date(now)
+         limitDate.setMonth(limitDate.getMonth() + 6)
+
          if (startDate <= now) {
-            alert("La fecha y hora de inicio debe ser posterior a la hora actual.")
+            resetErrors()
+            setIsStartDateAfterNow(true)
             return
          }
          if (endDate <= startDate) {
-            alert("La fecha y hora de fin debe ser posterior a la fecha y hora de inicio.")
+            resetErrors()
+            setIsEndDateAfterStartDate(true)
             return
          }
-         if (cost < 0) {
-            alert("El coste no puede ser negativo.")
+         if (startDate > limitDate) {
+            resetErrors()
+            setIsStartTimeInSixMonths(true)
             return
          }
-         if (cost > 100000) {
-            alert("El coste tiene que ser menor que 100000.")
+         if (checkIfPositive(cost)) {
+            resetErrors()
+            setIsCostNotPositive(true)
             return
          }
-         if (/^\d+$/.test(description)) {
-            alert("La descripcion no puede contener solo numeros.")
+         if (checkIfNumGreaterThanMax(cost, 100000)) {
+            resetErrors()
+            setIsCosteBig(true)
+            return
+         }
+         if (checkCostDecimal(cost)) {
+            resetErrors()
+            setIsCostNotDecimal(true)
+            return
+         }
+         if (notOnlyNumbers(description)) {
+            resetErrors()
+            setIsDescriptionOnlyNumber(true)
             return
          }
          if (!isValidDateTimeFormat(startDate)) {
@@ -77,21 +118,37 @@ export default function CreateContract() {
          const endDateMin = endDate.getTime()
          const timeDifferenceMin = endDateMin - startDateMin
          const timeDifferenceHours = timeDifferenceMin / (1000 * 60)
+
          if (timeDifferenceHours <= 60) {
-            alert("La duracion del contrato tiene que ser mayor que 1 hora.")
+            resetErrors()
+            setIsTimeLessThanOneHour(true)
             return
          }
-
+         if (timeDifferenceHours > 8 * 60) {
+            resetErrors()
+            setIsTimeMoreThanEightHour(true)
+            return
+         }
          await createContract(token)
       } else {
          alert("No puedes contratar un servicio del que eres trabajador")
       }
    }
 
-   function isValidDateTimeFormat(dateString) {
-      const parsedDate = Date.parse(dateString)
-      return !isNaN(parsedDate)
+   const resetErrors = () => {
+      setIsDescriptionEmpty(false)
+      setIsDescriptionBig(false)
+      setIsDescriptionOnlyNumber(false)
+      setIsStartDateAfterNow(false)
+      setIsEndDateAfterStartDate(false)
+      setIsTimeLessThanOneHour(false)
+      setIsTimeMoreThanEightHour(false)
+      setIsStartTimeInSixMonths(false)
+      setIsCostNotPositive(false)
+      setIsCosteBig(false)
+      setIsCostNotDecimal(false)
    }
+
    const handleDescriptionChange = e => {
       const newDescription = e.target.value
       setDescription(newDescription)
@@ -114,6 +171,13 @@ export default function CreateContract() {
                maxLength="500"
             />
             <span>{charCount}/500</span>
+            {(isDescriptionEmpty || isDescriptionBig || isDescriptionOnlyNumber) && (
+               <p className="text-red-500">
+                  {(isDescriptionEmpty && errorMessages.required) ||
+                     (isDescriptionBig && errorMessages.descriptionBig) ||
+                     (isDescriptionOnlyNumber && errorMessages.descriptionNotOnlyNumbers)}
+               </p>
+            )}
             <div className="grid grid-cols-1 gap-y-4 sm:grid-cols-2">
                <div className="flex flex-col gap-y-4">
                   <label>Fecha y hora de inicio:</label>
@@ -139,10 +203,20 @@ export default function CreateContract() {
                      required
                   />
                </div>
+               
             </div>
+            {(isStartDateAfterNow || isEndDateAfterStartDate || isTimeLessThanOneHour || isTimeMoreThanEightHour || isStartTimeInSixMonths) && (
+                  <p className="text-red-500">
+                     {(isStartDateAfterNow && errorMessages.startDateBeforeNow) ||
+                        (isEndDateAfterStartDate && errorMessages.endDateBeforeStartDate) ||
+                        (isTimeLessThanOneHour && errorMessages.durationLessThanOneHour) ||
+                        (isTimeMoreThanEightHour && errorMessages.durationMoreThanEightHours) ||
+                        (isStartTimeInSixMonths && errorMessages.starDateLimit)}
+                  </p>
+               )}
             <label>Coste del trabajo:</label>
             <input
-               type="number"
+               type="text"
                name="cost"
                value={cost}
                onChange={e => setCost(e.target.value)}
@@ -150,6 +224,14 @@ export default function CreateContract() {
                min="0"
                required
             />
+            {(isCostNotPositive || isCosteBig || isCostNotDecimal) && (
+               <p className="text-red-500">
+                  {(isCostNotPositive && errorMessages.costNegative) ||
+                     (isCosteBig && errorMessages.costBig) ||
+                     (isCostNotDecimal && errorMessages.costDecimal)
+                     }
+               </p>
+            )}
          </div>
          <button type="submit" className="bg-orange-300 hover:bg-orange-400 text-white rounded px-4 py-2 font-semibold">
             Crear Contrato

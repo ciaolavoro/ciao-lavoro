@@ -102,7 +102,7 @@ export async function updateServiceRequest(serviceId, serviceData, token) {
 
 export async function promoteService(serviceId, token, returnURL, points) {
     const options = {
-        method: 'PUT',
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Token ${token}`,
@@ -118,6 +118,24 @@ export async function promoteService(serviceId, token, returnURL, points) {
         }
     } catch (error) {
         console.error('Service Promotion error:', error);
+    }
+}
+
+export async function updatePromoteService(serviceId, sessionId, points, token) {
+    const options = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
+        },
+        body: JSON.stringify({ session_id: sessionId, points }),
+    };
+
+    try {
+        const response = await fetchBackend(`/service/promote/${serviceId}/`, options);
+        return response;
+    } catch (error) {
+        console.error('Update Contract Status error:', error);
     }
 }
 
