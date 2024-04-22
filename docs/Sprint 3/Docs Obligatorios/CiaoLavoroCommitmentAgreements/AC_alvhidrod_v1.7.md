@@ -110,7 +110,7 @@ Grupo 3: Pablo M, Adrián, Antonio, Diego.
 
 
 -----
-**Firma del Alumno: ![firma](./ImágenesFirma/FirmaÁlvaro.png)**
+**Firma del Alumno: ![firma](./ImágenesFirma/firmaÁlvaro.png)**
 
 Fecha: 02/04/2024
 
