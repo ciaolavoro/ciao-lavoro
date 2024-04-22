@@ -642,7 +642,20 @@ Fix 30 - Trabajo #440
 - Task 2 - Gamificación (Backend)
 
 **Cuenca Pérez, Pablo**
-Contribución del estudiante
+- Asistir a reuniones.
+- Ver videos de TheoryPills.
+- Revisar Pull Request.
+- Clase ISPP 02/04/2024 Primera Parte.
+- Clase ISPP 02/04/2024 Segunda Parte.
+- Task 5 - Ajustar la promoción de Servicios (frontend) #326
+- Doc - Time Effort Report #335
+- Doc - Testing Planning #341
+- Doc - Software Reviewer Guidelines 
+- Fix 3 - Servicios 
+- Fix 7 - Responsive de Servicios 
+- Fix 18 - Proceso de contrato 
+- Fix 29 - Servicio 
+- Expected Aspects Review
 
 **García Chavero, Adrián**
 - Asisitir a reuniones.
