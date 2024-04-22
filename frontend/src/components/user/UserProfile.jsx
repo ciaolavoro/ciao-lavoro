@@ -8,7 +8,18 @@ import CheckIcon from "../icons/CheckIcon"
 import CrossIcon from "../icons/CrossIcon"
 import { useState } from "react"
 import { updateUserRequest } from "../../api/user.api"
-import { checkIfBirthDateValid, checkIfDateInFuture, checkIfEmpty, checkIfImage, checkIfUsernameExists, errorMessages } from "../../utils/validation"
+import {
+   checkLastNameIfEmptyAndSize,
+   checkUsernameIfEmptyAndSize,
+   checkFirstNameIfEmptyAndSize,
+   checkIfBirthDateValid,
+   checkIfDateInFuture,
+   checkIfEmpty,
+   checkIfImage,
+   checkIfUsernameExists,
+   errorMessages,
+   checkEmail,
+} from "../../utils/validation"
 import { BACKEND_URL } from "../../utils/backendApi"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 import ChevronUpDownIcon from "../icons/ChevronUpDownIcon"
@@ -22,7 +33,7 @@ export default function UserProfile() {
    const [openLanguageSelector, setOpenLanguageSelector] = useState(false)
    const [openConfirmDialog, setOpenConfirmDialog] = useState(false)
    const [userData, setUserData] = useState(null)
-   const { logout, loggedUser } = useAuthContext()
+   const { login, loggedUser } = useAuthContext()
    const user = useLoaderData()
    const userId = user.id
    const navigate = useNavigate()
@@ -36,11 +47,18 @@ export default function UserProfile() {
    const [email, setEmail] = useState(user.email)
    const [image, setImage] = useState(`${BACKEND_URL}${user.image}`)
    const [uploadedImage, setUploadedImage] = useState(null)
-   const [isRequiredError, setIsRequiredError] = useState(false)
+
    const [isUsernameError, setIsUsernameError] = useState(false)
-   const [isImageError, setIsImageError] = useState(false)
+   const [isUsernameRequiredError, setIsUsernameRequiredError] = useState(false)
+   const [isNameRequiredError, setIsNameRequiredError] = useState(false)
+   const [isLastNameRequiredError, setIsLastNameRequiredError] = useState(false)
+   const [languageError, setLanguageError] = useState(false)
+   const [isBirthdayRequiredError, setIsBirthdayRequiredError] = useState(false)
    const [isDateError, setIsDateError] = useState(false)
    const [isDateNotValid, setIsDateNotValid] = useState(false)
+   const [isEmailRequiredError, setEmailIsRequiredError] = useState(false)
+   const [isEmailNotValidError, setEmailNotValidError] = useState(false)
+   const [isImageError, setIsImageError] = useState(false)
 
    if (!loggedUser || !userId) {
       return <Navigate to="/" />
@@ -50,15 +68,19 @@ export default function UserProfile() {
       try {
          const response = await updateUserRequest(userData, loggedUser.token)
          if (response.ok) {
-            toast({
-               title: "Perfil actualizado.",
-               description: "Se ha actualizado su perfil correctamente, vuelva a iniciar sesión.",
-            })
             setIsEditing(false)
-            logout()
-            navigate("/login")
+            const user = await response.json()
+            login(user)
+            navigate("/")
+            toast({
+               title: "✔ Perfil actualizado",
+               description: "Se ha actualizado su perfil correctamente.",
+            })
          } else {
-            alert("Error al actualizar el perfil. Por favor, intente de nuevo.")
+            toast({
+               title: "❌ Error al actualizar el perfil",
+               description: "Verifique que su correo eléctronico sea auténtico para continuar.",
+            })
          }
       } catch (error) {
          alert("Error al actualizar el perfil. Por favor, intente de nuevo.")
@@ -77,26 +99,44 @@ export default function UserProfile() {
    }
 
    const resetErrors = () => {
-      setIsRequiredError(false)
       setIsUsernameError(false)
       setIsImageError(false)
       setIsDateError(false)
       setIsDateNotValid(false)
+      setIsUsernameRequiredError(false)
+      setIsBirthdayRequiredError(false)
+      setIsNameRequiredError(false)
+      setIsLastNameRequiredError(false)
+      setEmailIsRequiredError(false)
+      setEmailNotValidError(false)
+      setLanguageError(false)
    }
 
    const handleEdit = async event => {
       event.preventDefault()
 
-      if (checkIfEmpty(username) || checkIfEmpty(firstName) || checkIfEmpty(lastName) || checkIfEmpty(birthDate) || checkIfEmpty(email)) {
-         setIsRequiredError(true)
+      if (checkUsernameIfEmptyAndSize(username)) {
+         setIsUsernameRequiredError(true)
          return
       } else if (await checkIfUsernameExists(username, userId)) {
          resetErrors()
          setIsUsernameError(true)
          return
-      } else if (!image) {
+      } else if (checkFirstNameIfEmptyAndSize(firstName)) {
          resetErrors()
-         setIsImageError(true)
+         setIsNameRequiredError(true)
+         return
+      } else if (checkLastNameIfEmptyAndSize(lastName)) {
+         resetErrors()
+         setIsLastNameRequiredError(true)
+         return
+      } else if (checkIfEmpty(language)) {
+         resetErrors()
+         setLanguageError(true)
+         return
+      } else if (checkIfEmpty(birthDate)) {
+         resetErrors()
+         setIsBirthdayRequiredError(true)
          return
       } else if (checkIfDateInFuture(birthDate)) {
          resetErrors()
@@ -105,6 +145,18 @@ export default function UserProfile() {
       } else if (checkIfBirthDateValid(birthDate)) {
          resetErrors()
          setIsDateNotValid(true)
+         return
+      } else if (checkIfEmpty(email)) {
+         resetErrors()
+         setEmailIsRequiredError(true)
+         return
+      } else if (checkEmail(email)) {
+         resetErrors()
+         setEmailNotValidError(true)
+         return
+      } else if (!image) {
+         resetErrors()
+         setIsImageError(true)
          return
       }
       resetErrors()
@@ -135,6 +187,8 @@ export default function UserProfile() {
          setIsImageError(true)
          return
       }
+      resetErrors()
+
       setIsImageError(false)
       setImage(image)
       setUploadedImage(URL.createObjectURL(image))
@@ -166,8 +220,10 @@ export default function UserProfile() {
                   inputValue={username}
                   isReadOnly={!isEditing}
                   onChange={event => setUsername(event.target.value)}
-                  isError={isRequiredError || isUsernameError}
-                  errorMessage={(isRequiredError && errorMessages.required) || (isUsernameError && errorMessages.usernameExists)}
+                  isError={isUsernameRequiredError || isUsernameError}
+                  errorMessage={
+                     (isUsernameRequiredError && errorMessages.usernameRequiredAndSize) || (isUsernameError && errorMessages.usernameExists)
+                  }
                />
                <section className="flex flex-col gap-y-2 md:flex-row md:gap-x-4">
                   <UserProfileData
@@ -177,8 +233,8 @@ export default function UserProfile() {
                      inputValue={firstName}
                      isReadOnly={!isEditing}
                      onChange={event => setFirstName(event.target.value)}
-                     isError={isRequiredError}
-                     errorMessage={errorMessages.required}
+                     isError={isNameRequiredError}
+                     errorMessage={errorMessages.nameRequiredAndSize}
                   />
                   <UserProfileData
                      type={"text"}
@@ -187,8 +243,8 @@ export default function UserProfile() {
                      inputValue={lastName}
                      isReadOnly={!isEditing}
                      onChange={event => setLastName(event.target.value)}
-                     isError={isRequiredError}
-                     errorMessage={errorMessages.required}
+                     isError={isLastNameRequiredError}
+                     errorMessage={errorMessages.lastnameRequiredAndSize}
                   />
                </section>
                <section className="flex flex-col gap-y-2 md:flex-row md:gap-x-4">
@@ -223,6 +279,7 @@ export default function UserProfile() {
                            </Command>
                         </PopoverContent>
                      </Popover>
+                     {languageError && <p className="pl-1 text-red-500 text-xs">{errorMessages.required}</p>}
                   </div>
                   <UserProfileData
                      type={"date"}
@@ -231,26 +288,27 @@ export default function UserProfile() {
                      inputValue={birthDate}
                      isReadOnly={!isEditing}
                      onChange={event => setBirthDate(event.target.value)}
-                     isError={isRequiredError || isDateError || isDateNotValid}
+                     isError={isBirthdayRequiredError || isDateError || isDateNotValid}
                      errorMessage={
-                        (isRequiredError && errorMessages.required) ||
+                        (isBirthdayRequiredError && errorMessages.required) ||
                         (isDateError && errorMessages.dateInFuture) ||
                         (isDateNotValid && errorMessages.birthDateNotValid)
                      }
                   />
                </section>
                <UserProfileData
-                  type={"email"}
+                  type={"text"}
                   formName={"email"}
                   labelText={"Correo:"}
                   inputValue={email}
                   isReadOnly={!isEditing}
                   onChange={event => setEmail(event.target.value)}
-                  isError={isRequiredError}
-                  errorMessage={isRequiredError && errorMessages.required}
+                  isError={isEmailRequiredError || isEmailNotValidError}
+                  errorMessage={(isEmailRequiredError && errorMessages.required) || (isEmailNotValidError && errorMessages.emailNotValid)}
                />
             </section>
          </div>
+
          {isEditing ? (
             <div className="flex gap-x-4">
                <UserProfileButton type={"submit"} text={"Guardar cambios"} icon={<CheckIcon />} />
@@ -263,7 +321,7 @@ export default function UserProfile() {
                      updateUser(userData)
                      setOpenConfirmDialog(false)
                   }}>
-                  Le recordamos que si decide continuar se procedera a <span className="font-bold">cerrar la sesión</span>.
+                  Podrá modificar su perfil en cualquier momento.
                </CustomAlertDialog>
             </div>
          ) : (
@@ -271,6 +329,15 @@ export default function UserProfile() {
                <UserProfileButton type={"button"} text={"Editar perfil"} icon={<PencilIcon />} onClick={() => setIsEditing(true)} />
             )
          )}
+         <p className="mt-8 px-4 py-3 bg-orange-200 text-black text-center rounded-lg">
+            Si quieres obtener los datos guardados sobre ti o quieres anonimizar tus datos contacte a
+            <br></br>
+            <a href="mailto:ciaolavoroispp@gmail.com" className="text-blue-500 underline">
+               ciaolavoroISPP@gmail.com
+            </a>
+            <br></br>
+            En caso de riesgos de seguridad o integridad de tus datos, se informará mediante correo electrónico
+         </p>
       </form>
    )
 }

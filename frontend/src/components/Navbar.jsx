@@ -2,22 +2,39 @@ import { Link, NavLink, useNavigate } from "react-router-dom"
 import ciaoLavoroLogo from "/ciaolavoro-logo.png"
 import { useAuthContext } from "./auth/AuthContextProvider"
 import defaultUserImage from "../assets/service/talonflame.jpg"
-import { BACKEND_URL } from "../utils/backendApi"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu"
 import UserProfileIcon from "./icons/UserProfileIcon"
 import BriefcaseIcon from "./icons/BriefcaseIcon"
 import DocumentIcon from "./icons/DocumentIcon"
 import LogoutIcon from "./icons/LogoutIcon"
+import { getUserPoints } from "../api/user.api"
+import { useState } from "react"
 import SearchIcon from "./icons/SearchIcon"
 import InfoIcon from "./icons/InfoIcon"
 import LoginIcon from "./icons/LoginIcon"
 import MenuIcon from "./icons/MenuIcon"
+import CustomAlertDialog from "./CustomAlertDialog"
 
 const navItemsStyle = "px-2 py-1 font-semibold rounded hover:bg-gray-300 transition"
 
 export default function Navbar() {
    const { logout, loggedUser } = useAuthContext()
    const navigate = useNavigate()
+   const [userPoints, setUserPoints] = useState(null)
+   const [openLogoutDialog, setOpenLogoutDialog] = useState(false)
+
+   const userPointsOnNavbar = async () => {
+      try {
+         const points = await getUserPoints(loggedUser.token)
+         setUserPoints(points)
+      } catch (error) {
+         console.error("Error al mostrar los puntos: ", error)
+      }
+   }
+
+   if (loggedUser && !userPoints) {
+      userPointsOnNavbar()
+   }
 
    const navItems = [
       {
@@ -58,10 +75,8 @@ export default function Navbar() {
    ]
 
    const handleLogout = () => {
-      if (window.confirm("¿Estás seguro de que deseas cerrar sesión?")) {
-         logout()
-         navigate("/")
-      }
+      logout()
+      navigate("/")
    }
 
    return (
@@ -85,16 +100,28 @@ export default function Navbar() {
                         <li className={navItemsStyle}>{item.title}</li>
                      </NavLink>
                   ))}
-                  <NavbarMenu navItemsUser={navItemsUser} handleLogout={handleLogout} />
+                  {loggedUser && (
+                     <li className="flex items-center">
+                        <span className="mr-1">Puntos: {userPoints}</span>
+                     </li>
+                  )}
+                  <NavbarMenu navItemsUser={navItemsUser} handleLogout={() => setOpenLogoutDialog(true)} />
                </ul>
             </section>
 
             <section className="md:hidden">
                <ul>
-                  <ResponsiveNavbarMenu navItemsUser={navItemsUser} navItems={navItems} handleLogout={handleLogout} />
+                  <ResponsiveNavbarMenu navItemsUser={navItemsUser} navItems={navItems} handleLogout={() => setOpenLogoutDialog(true)} />
                </ul>
             </section>
          </nav>
+         <CustomAlertDialog
+            open={openLogoutDialog}
+            setOpen={setOpenLogoutDialog}
+            title={"¿Estás seguro de que deseas cerrar sesión?"}
+            handleAction={handleLogout}>
+            <p>Si decide continuar, se procedera al cierre de sesion en CiaoLavoro.</p>
+         </CustomAlertDialog>
       </header>
    )
 }
@@ -108,11 +135,7 @@ function ResponsiveNavbarMenu({ navItemsUser, navItems, handleLogout }) {
             <DropdownMenu>
                <DropdownMenuTrigger>
                   <li className="rounded-full hover:shadow-lg transition">
-                     <img
-                        src={`${BACKEND_URL}${loggedUser.user.image}` || defaultUserImage}
-                        alt="Imagen de perfil"
-                        className="w-8 h-8 object-cover rounded-full"
-                     />
+                     <img src={`${loggedUser.user.image}` || defaultUserImage} alt="Imagen de perfil" className="w-8 h-8 object-cover rounded-full" />
                   </li>
                </DropdownMenuTrigger>
                <DropdownMenuContent>
@@ -176,11 +199,7 @@ function NavbarMenu({ navItemsUser, handleLogout }) {
             <DropdownMenu>
                <DropdownMenuTrigger>
                   <li className="rounded-full hover:shadow-lg transition">
-                     <img
-                        src={`${BACKEND_URL}${loggedUser.user.image}` || defaultUserImage}
-                        alt="Imagen de perfil"
-                        className="w-8 h-8 object-cover rounded-full"
-                     />
+                     <img src={`${loggedUser.user.image}` || defaultUserImage} alt="Imagen de perfil" className="w-8 h-8 object-cover rounded-full" />
                   </li>
                </DropdownMenuTrigger>
                <DropdownMenuContent>

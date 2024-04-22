@@ -5,10 +5,29 @@ import { registerRequest } from "../../api/login.api"
 import EyeIcon from "../icons/EyeIcon.jsx"
 import EyeSlashIcon from "../icons/EyeSlashIcon.jsx"
 import { languages } from "@/utils/constants"
-import { checkIfImage } from "@/utils/validation"
+import {
+   checkEmail,
+   checkFirstNameIfEmptyAndSize,
+   checkIfBirthDateValid,
+   checkIfEmpty,
+   checkIfImage,
+   checkIfUsernameExists,
+   checkLastNameIfEmptyAndSize,
+   checkUsernameIfEmptyAndSize,
+   checkValidPassword,
+   errorMessages,
+} from "@/utils/validation"
 import { useToast } from "../ui/use-toast"
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "../ui/command"
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
+import ChevronUpDownIcon from "../icons/ChevronUpDownIcon"
+import RegisterData from "./RegisterData"
 
 export default function RegisterPage() {
+   const navigate = useNavigate()
+   const { toast } = useToast()
+   const [openLanguageSelector, setOpenLanguageSelector] = useState(false)
+
    const [username, setUsername] = useState("")
    const [firstName, setName] = useState("")
    const [lastName, setLastName] = useState("")
@@ -23,74 +42,105 @@ export default function RegisterPage() {
    const [confirmPasswordIcon, setConfirmPasswordIcon] = useState(EyeSlashIcon)
    const [uploadedImage, setUploadedImage] = useState(null)
    const [termsAccepted, setTermsAccepted] = useState(false)
-   const [errorMessage, setErrorMessage] = useState("")
    const [language, setLanguage] = useState("")
-   const navigate = useNavigate()
-   const { toast } = useToast()
 
-   const handleUsernameChange = e => {
-      const value = e.target.value
+   const [imageError, setImageError] = useState(false)
+   const [usernameError, setUsernameError] = useState(false)
+   const [usernameExistsError, setUsernameExistsError] = useState(false)
+   const [firstNameError, setFirstNameError] = useState(false)
+   const [lastNameError, setLastNameError] = useState(false)
+   const [languageError, setLanguageError] = useState(false)
+   const [passwordError, setPasswordError] = useState(false)
+   const [passwordNotEqualError, setPasswordNotEqualError] = useState(false)
+   const [emailError, setEmailError] = useState(false)
+   const [birthDateError, setBirthDateError] = useState(false)
+   const [termsError, setTermsError] = useState(false)
 
-      if (value.includes(" ")) {
-         alert("El nombre de usuario no debe contener espacios en blanco")
-      } else {
-         setUsername(value)
-      }
-   }
-
-   const validateEmail = email => {
-      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-      return regex.test(email)
+   const resetErrors = () => {
+      setImageError(false)
+      setUsernameError(false)
+      setUsernameExistsError(false)
+      setFirstNameError(false)
+      setLastNameError(false)
+      setLanguageError(false)
+      setPasswordError(false)
+      setPasswordNotEqualError(false)
+      setEmailError(false)
+      setBirthDateError(false)
+      setTermsError(false)
    }
 
    const handleSubmit = async event => {
       event.preventDefault()
-      if (!validateEmail(email)) {
-         setErrorMessage("Por favor ingrese un email válido.")
+      if (checkUsernameIfEmptyAndSize(username)) {
+         setUsernameError(true)
+         return
+      } else if (await checkIfUsernameExists(username, -1)) {
+         resetErrors()
+         setUsernameExistsError(true)
+         return
+      } else if (checkFirstNameIfEmptyAndSize(firstName)) {
+         resetErrors()
+         setFirstNameError(true)
+         return
+      } else if (checkLastNameIfEmptyAndSize(lastName)) {
+         resetErrors()
+         setLastNameError(true)
+         return
+      } else if (checkIfEmpty(language)) {
+         resetErrors()
+         setLanguageError(true)
+         return
+      } else if (checkValidPassword(password)) {
+         resetErrors()
+         setPasswordError(true)
+         return
+      } else if (password !== confirmPassword) {
+         resetErrors()
+         setPasswordNotEqualError(true)
+         return
+      } else if (checkEmail(email)) {
+         resetErrors()
+         setEmailError(true)
+         return
+      } else if (checkIfBirthDateValid(birthdate)) {
+         resetErrors()
+         setBirthDateError(true)
+         return
+      } else if (!termsAccepted) {
+         resetErrors()
+         setTermsError(true)
          return
       }
-      if (!termsAccepted) {
-         setErrorMessage("Para poder registrarse debe aceptar los Terminos y Condiciones")
-         return
-      }
-      if (!firstName.trim()) {
-         alert("El nombre no puede estar vacío")
-         return
-      }
-      if (!lastName.trim()) {
-         alert("El apellido no puede estar vacío")
-         return
-      }
-      if (password !== confirmPassword) {
-         alert("Las contraseñas no coinciden")
-         return
-      }
+      resetErrors()
+
       try {
          const response = await registerRequest(username, password, firstName, lastName, email, image, birthdate, language)
-         if (response.status == 500) {
-            alert("El email no es valido")
-         } else {
+         if (response.status === 201) {
             toast({
-               title: "Registro de usuario exitoso",
+               title: "✔ Registro de usuario exitoso",
                description: "Te has registrado correctamente. Bienvenido a CiaoLavoro.",
             })
-            navigate("/")
+            navigate("/login")
+         } else {
+            toast({
+               title: "❌ Email no válido",
+               description: "El email que ha introducido no es válido. Por favor, introduzca un email correcto.",
+            })
          }
       } catch (error) {
          console.error("Error registrando usuario:", error)
-         if (error.message === "El nombre de usuario ya está en uso") {
-            alert("El nombre de usuario ya existe. Por favor, elige otro.")
-         } else {
-            alert("Ha ocurrido un error. Por favor intentelo de nuevo")
-         }
       }
    }
 
    const handleImageChange = event => {
       if (checkIfImage(event.target.files[0])) {
-         alert("Por favor, suba solo imágenes.")
+         resetErrors()
+         setImageError(true)
          return
       }
+      resetErrors()
+
       setImage(event.target.files[0])
       setUploadedImage(URL.createObjectURL(event.target.files[0]))
    }
@@ -105,11 +155,6 @@ export default function RegisterPage() {
       setConfirmPasswordIcon(confirmPasswordType === "password" ? <EyeIcon /> : <EyeSlashIcon />)
    }
 
-   const minDate = new Date()
-   minDate.setFullYear(minDate.getFullYear() - 200)
-   const maxDate = new Date()
-   maxDate.setFullYear(maxDate.getFullYear() - 16)
-
    return (
       <section className="flex flex-col items-center my-6">
          <div className="mb-4">
@@ -122,130 +167,127 @@ export default function RegisterPage() {
          <div className="bg-white px-8 py-6 border rounded-lg shadow-lg w-full max-w-xl">
             <form onSubmit={handleSubmit} className="flex flex-col items-center space-y-4">
                <section className="flex flex-col items-center md:justify-between w-full">
-                  <section className="w-full flex justify-center">
+                  <section className="flex flex-col w-full justify-center items-center">
                      <label htmlFor="image-upload" className="block">
                         <div className="flex items-center w-[150px] h-[60px] text-[16px] bg-green-500 text-black px-4 py-2 mb-2 rounded-lg shadow hover:cursor-pointer hover:bg-green-600 transition">
                            Selecciona tu foto de perfil
                            <input type="file" id="image-upload" accept="image/" onChange={handleImageChange} style={{ display: "none" }} />
                         </div>
                      </label>
+                     {imageError && <p className="text-red-500 text-xs">{errorMessages.imageNotValid}</p>}
                   </section>
                   <section className="flex flex-col md:flex-row">
-                     <section className="w-full md:w-1/2 md:pr-4">
-                        <label className="block">
-                           Nombre de usuario:
-                           <input
-                              type="text"
-                              value={username}
-                              onChange={handleUsernameChange}
-                              required
-                              minLength={3}
-                              maxLength={30}
-                              placeholder="Nombre de usuario"
-                              className="w-full p-2 mb-4 border border-gray-300 rounded-md"
-                           />
-                        </label>
-                        <label className="block">
-                           Nombre:
-                           <input
-                              type="text"
-                              value={firstName}
-                              onChange={e => setName(e.target.value)}
-                              required
-                              minLength={3}
-                              maxLength={30}
-                              placeholder="Nombre"
-                              className="w-full p-2 mb-4 border border-gray-300 rounded-md"
-                           />
-                        </label>
-                        <label className="block">
-                           Apellido:
-                           <input
-                              type="text"
-                              value={lastName}
-                              onChange={e => setLastName(e.target.value)}
-                              required
-                              minLength={3}
-                              maxLength={60}
-                              placeholder="Apellido"
-                              className="w-full p-2 mb-4 border border-gray-300 rounded-md"
-                           />
-                        </label>
-                        <label className="block">
+                     <section className="flex flex-col gap-y-2 w-full md:w-1/2 md:pr-4">
+                        <RegisterData
+                           type={"text"}
+                           inputName={"username"}
+                           labelText={"Nombre de usuario:"}
+                           inputValue={username}
+                           onChange={e => setUsername(e.target.value)}
+                           isError={usernameError || usernameExistsError}
+                           errorMessage={
+                              (usernameError && errorMessages.usernameRequiredAndSize) || (usernameExistsError && errorMessages.usernameExists)
+                           }
+                        />
+                        <RegisterData
+                           type={"text"}
+                           inputName={"firstName"}
+                           labelText={"Nombre:"}
+                           inputValue={firstName}
+                           onChange={e => setName(e.target.value)}
+                           isError={firstNameError}
+                           errorMessage={errorMessages.nameRequiredAndSize}
+                        />
+                        <RegisterData
+                           type={"text"}
+                           inputName={"lastName"}
+                           labelText={"Apellidos:"}
+                           inputValue={lastName}
+                           onChange={e => setLastName(e.target.value)}
+                           isError={lastNameError}
+                           errorMessage={errorMessages.lastnameRequiredAndSize}
+                        />
+                        <label>
                            Idioma:
-                           <select
-                              value={language}
-                              onChange={e => setLanguage(e.target.value)}
-                              required
-                              className="w-full p-2 mb-4 border border-gray-300 rounded-md">
-                              {languages.map((lang, index) => (
-                                 <option key={index}>{lang}</option>
-                              ))}
-                           </select>
+                           <Popover open={openLanguageSelector} onOpenChange={setOpenLanguageSelector}>
+                              <PopoverTrigger asChild>
+                                 <button className="flex items-center justify-between px-2 h-8 border rounded w-full">
+                                    {language !== "" ? language : "Selecciona un idioma"}
+                                    {<ChevronUpDownIcon />}
+                                 </button>
+                              </PopoverTrigger>
+                              <PopoverContent>
+                                 <Command>
+                                    <CommandInput placeholder="Buscar idioma..." />
+                                    <CommandList>
+                                       <CommandEmpty>No se ha encontrado el idioma.</CommandEmpty>
+                                       <CommandGroup>
+                                          {languages.map((lang, index) => (
+                                             <CommandItem
+                                                key={index}
+                                                value={lang}
+                                                onSelect={currentLang => {
+                                                   setLanguage(currentLang === language ? "" : currentLang)
+                                                   setOpenLanguageSelector(false)
+                                                }}>
+                                                {lang}
+                                             </CommandItem>
+                                          ))}
+                                       </CommandGroup>
+                                    </CommandList>
+                                 </Command>
+                              </PopoverContent>
+                           </Popover>
+                           {languageError && <p className="pl-1 text-red-500 text-xs">{errorMessages.required}</p>}
                         </label>
                      </section>
-                     <section className="w-full md:w-1/2 md:pr-4">
-                        <label className="block">
-                           Contraseña:
-                           <div className="relative">
-                              <input
-                                 type={passwordType}
-                                 value={password}
-                                 onChange={e => setPassword(e.target.value)}
-                                 required
-                                 minLength={8}
-                                 pattern="^(?=.*[a-zñ])(?=.*[A-ZÑ])(?=.*\d)(?=.*[@$!%*?&_])[A-Za-z\d@$!%*?&_ñÑ]+$"
-                                 placeholder="Contraseña"
-                                 className="w-full p-2 mb-4 border border-gray-300 rounded-md"
-                                 title="La contraseña debe tener mínimo una mayúscula, una minúscula, un número y un caracter especial(?=.*[@$!%*?&_)"
-                              />
-                              <span className="absolute right-0 top-2 pr-2 cursor-pointer" onClick={togglePasswordVisibility}>
-                                 {passwordIcon}
-                              </span>
-                           </div>
-                        </label>
-                        <label className="block">
-                           Confirmar Contraseña:
-                           <div className="relative">
-                              <input
-                                 type={confirmPasswordType}
-                                 value={confirmPassword}
-                                 onChange={e => setConfirmPassword(e.target.value)}
-                                 required
-                                 minLength={8}
-                                 placeholder="Confirmar Contraseña"
-                                 className="w-full p-2 mb-4 border border-gray-300 rounded-md"
-                                 title="Debe coincidir con la contraseña"
-                              />
-                              <span className="absolute right-0 top-2 pr-2 cursor-pointer" onClick={toggleConfirmPasswordVisibility}>
-                                 {confirmPasswordIcon}
-                              </span>
-                           </div>
-                        </label>
-                        <label className="block">
-                           Email:
-                           <input
-                              type="email"
-                              value={email}
-                              onChange={e => setEmail(e.target.value)}
-                              required
-                              placeholder="Email"
-                              className="w-full p-2 mb-4 border border-gray-300 rounded-md"
+                     <section className="flex flex-col gap-y-2 w-full md:w-1/2 md:pr-4">
+                        <div className="relative">
+                           <RegisterData
+                              type={passwordType}
+                              inputName={"password"}
+                              labelText={"Contraseña:"}
+                              inputValue={password}
+                              onChange={e => setPassword(e.target.value)}
+                              isError={passwordError}
+                              errorMessage={errorMessages.passwordNotValid}
                            />
-                        </label>
-                        <label className="block">
-                           Fecha de nacimiento:
-                           <input
-                              type="date"
-                              value={birthdate}
-                              onChange={e => setBirthdate(e.target.value)}
-                              required
-                              max={maxDate.toISOString().split("T")[0]}
-                              min={minDate.toISOString().split("T")[0]}
-                              placeholder="Fecha de nacimiento"
-                              className="w-full p-2 mb-4 border border-gray-300 rounded-md"
+                           <span className="absolute right-0 top-7 pr-2 cursor-pointer" onClick={togglePasswordVisibility}>
+                              {passwordIcon}
+                           </span>
+                        </div>
+                        <div className="relative">
+                           <RegisterData
+                              type={confirmPasswordType}
+                              inputName={"confirmPassword"}
+                              labelText={"Confirmar contraseña:"}
+                              inputValue={confirmPassword}
+                              onChange={e => setConfirmPassword(e.target.value)}
+                              isError={passwordNotEqualError}
+                              errorMessage={errorMessages.passwordNotEqual}
                            />
-                        </label>
+                           <span className="absolute right-0 top-7 pr-2 cursor-pointer" onClick={toggleConfirmPasswordVisibility}>
+                              {confirmPasswordIcon}
+                           </span>
+                        </div>
+                        <RegisterData
+                           type={"email"}
+                           inputName={"email"}
+                           labelText={"Email:"}
+                           inputValue={email}
+                           onChange={e => setEmail(e.target.value)}
+                           isError={emailError}
+                           errorMessage={errorMessages.emailNotValid}
+                        />
+                        <RegisterData
+                           type={"date"}
+                           inputName={"birthDate"}
+                           labelText={"Fecha de nacimiento:"}
+                           inputValue={birthdate}
+                           onChange={e => setBirthdate(e.target.value)}
+                           isError={birthDateError}
+                           errorMessage={errorMessages.birthDateNotValid}
+                        />
                      </section>
                   </section>
                </section>
@@ -265,7 +307,7 @@ export default function RegisterPage() {
                      .
                   </label>
                </div>
-               {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+               {termsError && <p className="text-red-500 text-xs">{errorMessages.termsNotAccepted}</p>}
 
                <div className="flex justify-center mt-8">
                   <button

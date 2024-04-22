@@ -1,0 +1,54 @@
+[
+    {
+        "model": "service.service",
+        "pk": 1,
+        "fields": {
+          "user": 1,
+          "profession": 1,
+          "city": "Sevilla",
+          "experience": 3,
+          "is_active": "True",
+          "is_promoted": null
+        }
+      },
+
+      {
+        "model": "service.service",
+        "pk": 2,
+        "fields": {
+          "user": 1,
+          "profession": 2,
+          "city": "Sevilla",
+          "experience": 4,
+          "is_active": "True",
+          "is_promoted": null
+        }
+      },
+
+      {
+        "model": "service.service",
+        "pk": 3,
+        "fields": {
+          "user": 1,
+          "profession": 3,
+          "city": "Sevilla",
+          "experience": 2,
+          "is_active": "True",
+          "is_promoted": null
+        }
+      },
+
+      {
+        "model": "service.service",
+        "pk": 4,
+        "fields": {
+          "user": 1,
+          "profession": 4,
+          "city": "Sevilla",
+          "experience": 1,
+          "is_active": "True",
+          "is_promoted": null
+        }
+      }
+      
+    ]

@@ -39,13 +39,14 @@ export const createContractRequest = async (description, initial_date, end_date,
     return fetchBackend(`/contracts/create/${service_id}/`, options);
 }
 
-export async function updateContractStatus(contractId, statusNum, token) {
+export async function updateContractStatus(contractId, statusNum, sessionId, token) {
     const options = {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Token ${token}`,
         },
+        body: JSON.stringify({ session_id: sessionId }),
     };
 
     try {
@@ -56,14 +57,14 @@ export async function updateContractStatus(contractId, statusNum, token) {
     }
 }
 
-export async function handleContractPayment(contractId, token, returnURL) {
+export async function handleContractPayment(contractId, token, returnURL, points) {
     const options = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Token ${token}`,
         },
-        body: JSON.stringify({ returnURL }),
+        body: JSON.stringify({ returnURL, points }),
     };
 
     try {
@@ -111,8 +112,7 @@ export const getContractsClients = async (token, end_date, initial_date, status)
     return fetchBackend(`/contracts/list/0/?${queryParams}`, options);
 }
 
-export const checkWorkerAssociation = async (serviceId) => {
-    const token = localStorage.getItem('token');
+export const checkWorkerAssociation = async (serviceId, token) => {
     const options = {
         method: 'GET',
         headers: {
@@ -155,5 +155,21 @@ export async function cancelContractStatus(contractId, description, token) {
         return response;
     } catch (error) {
         console.error('Update Contract Status error:', error);
+    }
+}
+
+export const addPoints = async (contractId, token) => {
+    const options = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
+        },
+    };
+    try {
+        const response = await fetchBackend(`/user/addPoints/${contractId}/`, options);
+        return response;
+    } catch (error) {
+        console.error('Error add points: ', error);
     }
 }

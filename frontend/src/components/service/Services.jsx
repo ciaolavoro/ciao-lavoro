@@ -1,50 +1,40 @@
 import { useEffect, useState } from "react"
 import ServiceCard from "./ServiceCard"
-import { getServiceByCityAndProfession, getAllProfessionsList } from "../../api/Service.api"
+import { getServiceByCityAndProfession } from "../../api/Service.api"
+import useGet from "@/hooks/useGet"
+import { BACKEND_URL } from "@/utils/backendApi"
+import { useSearchParams } from "react-router-dom"
+import ServiceCardSkeleton from "./ServiceCardSkeleton"
 
 export default function Services() {
-   const [city, setCity] = useState("")
-   const [username, setUsername] = useState("")
-   const [profession, setProfession] = useState("")
+   const [searchParams, setSearchParams] = useSearchParams()
+   const [city, setCity] = useState(decodeURIComponent(searchParams.get("city") || ""))
+   const [username, setUsername] = useState(decodeURIComponent(searchParams.get("username") || ""))
+   const [profession, setProfession] = useState(decodeURIComponent(searchParams.get("profession") || ""))
    const [services, setServices] = useState([])
-   const [professions, setProfessions] = useState([])
-
-   useEffect(() => {
-      const fetchProfessions = async () => {
-         try {
-            const res = await getAllProfessionsList()
-            if (res.status === 200) {
-               const data = await res.json()
-               setProfessions(data.professions)
-            } else {
-               console.error("No se pudieron cargar las profesiones")
-            }
-         } catch (error) {
-            console.error("Error al cargar las profesiones", error)
-         }
-      }
-      fetchProfessions()
-   }, [])
+   const [loadingServices, setLoadingServices] = useState(true)
+   const { data: professions, loading: loadingProfessions } = useGet(`${BACKEND_URL}/service/allProfessionsList/`)
 
    useEffect(() => {
       const getServices = async () => {
+         setLoadingServices(true)
          try {
             const res = await getServiceByCityAndProfession(city, profession, username)
             if (res.status === 200) {
                const data = await res.json()
                setServices(data)
+               setSearchParams({ city, username, profession })
             } else {
                alert("Error al cargar los servicios")
             }
+            setLoadingServices(false)
          } catch (error) {
+            setLoadingServices(false)
             alert("Error al cargar los servicios")
          }
       }
 
-      // Usado Copilot. Es para borrar algun timeout que se haya creado previamente
       let timeoutId = null
-
-      // Usado Copilot. Se establece el nuevo temporizador
       const handleTyping = () => {
          if (timeoutId) {
             clearTimeout(timeoutId)
@@ -57,6 +47,7 @@ export default function Services() {
       handleTyping()
 
       return () => clearTimeout(timeoutId)
+      // eslint-disable-next-line react-hooks/exhaustive-deps
    }, [city, profession, username])
 
    return (
@@ -86,23 +77,30 @@ export default function Services() {
                   value={profession}
                   onChange={e => setProfession(e.target.value)}
                   className="px-2 py-1 border rounded bg-orange-200 font-semibold">
-                  <option value=""> Profesion </option>
-                  {professions.map((prof, index) => (
-                     <option key={index} value={prof.id}>
-                        {prof.name}
-                     </option>
-                  ))}
+                  <option value=""> Profesión </option>
+                  {loadingProfessions ? (
+                     <option>Cargando profesiones...</option>
+                  ) : (
+                     professions.professions.map((prof, index) => (
+                        <option key={index} value={prof.id}>
+                           {prof.name}
+                        </option>
+                     ))
+                  )}
                </select>
             </form>
          </section>
-
-         <section className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
-            {services
-               .filter(service => service.is_active)
-               .map(service => (
-                  <ServiceCard key={service.id} service={service} />
-               ))}
-         </section>
+         <div>
+            {services.length === 0 ? (
+               <p className="text-center">Ningún servicio encaja con sus criterios de búsqueda.</p>
+            ) : (
+               <section className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
+                  {loadingServices
+                     ? [...Array(3)].map((_, index) => <ServiceCardSkeleton key={index} />)
+                     : services.filter(service => service.is_active).map(service => <ServiceCard key={service.id} service={service} />)}
+               </section>
+            )}
+         </div>
       </div>
    )
 }

@@ -70,19 +70,6 @@ export const getAllServices = async () => {
     return fetchBackend(`/service`, options);
 }
 
-export const getAllServicesPromoted = async () => {
-
-
-    const options = {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    };
-
-    return fetchBackend(`/service/promoted`, options);
-}
-
 export const createServiceRequest = async (email, profession, city, experience, token) => {
     const options = {
         method: 'POST',
@@ -115,7 +102,7 @@ export async function updateServiceRequest(serviceId, serviceData, token) {
 
 export async function promoteService(serviceId, token, returnURL, points) {
     const options = {
-        method: 'PUT',
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Token ${token}`,
@@ -127,10 +114,28 @@ export async function promoteService(serviceId, token, returnURL, points) {
         const response = await fetchBackend(`/service/promotion/${serviceId}/`, options);
         const data = await response.json();
         if (response.ok) {
-            return data; 
+            return data;
         }
     } catch (error) {
         console.error('Service Promotion error:', error);
+    }
+}
+
+export async function updatePromoteService(serviceId, sessionId, points, token) {
+    const options = {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
+        },
+        body: JSON.stringify({ session_id: sessionId, points }),
+    };
+
+    try {
+        const response = await fetchBackend(`/service/promote/${serviceId}/`, options);
+        return response;
+    } catch (error) {
+        console.error('Update Contract Status error:', error);
     }
 }
 
@@ -166,14 +171,4 @@ export const getProfessionsList = async (token) => {
         },
     };
     return fetchBackend(`/service/professionsList/`, options);
-}
-
-export const getAllProfessionsList = async () => {
-    const options = {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    };
-    return fetchBackend(`/service/allProfessionsList/`, options);
 }
