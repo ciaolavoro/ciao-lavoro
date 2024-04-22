@@ -732,3 +732,12 @@ y
 - **Prompt y respuestas:** Descritos en el enlace: [https://chat.openai.com/share/0ce8631a-5ea4-4c68-868c-940d13a25fe6](https://chat.openai.com/share/0ce8631a-5ea4-4c68-868c-940d13a25fe6)
 
 ---
+
+### Voz generada para el anuncio:
+- **Persona que ha hecho el prompt:** Antonio Barea
+
+- **IA Usada:** Speechgen.io
+
+- **No se disponen de los prompts generados por esta IA**
+
+---
