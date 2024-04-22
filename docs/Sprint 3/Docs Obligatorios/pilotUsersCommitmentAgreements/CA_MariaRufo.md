@@ -30,5 +30,5 @@ Yo, **Maria Rufo**, me comprometo de manera voluntaria y consciente a cumplir co
   - Se recompensará al usuario piloto más destacado incluyéndolo en un agradecimiento especial durante la presentación semanal a los profesores. El criterio para ser el "mejor usuario piloto" será proporcionar un feedback detallado y constructivo que contribuya significativamente a la mejora de la aplicación.
 
 ### Firma:
-Maria Rufo   13/04/2024
+Maria Rufo  ![maria](image-1.png) 13/04/2024
 

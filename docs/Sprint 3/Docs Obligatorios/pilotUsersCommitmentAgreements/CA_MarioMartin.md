@@ -30,5 +30,5 @@ Yo, **Mario Martin**, me comprometo de manera voluntaria y consciente a cumplir 
   - Se recompensará al usuario piloto más destacado incluyéndolo en un agradecimiento especial durante la presentación semanal a los profesores. El criterio para ser el "mejor usuario piloto" será proporcionar un feedback detallado y constructivo que contribuya significativamente a la mejora de la aplicación.
 
 ### Firma:
-Mario Martin    14/04/2024
+Mario Martin  ![mario](image-2.png)  14/04/2024
 

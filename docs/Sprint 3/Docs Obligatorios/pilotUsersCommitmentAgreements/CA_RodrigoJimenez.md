@@ -30,5 +30,5 @@ Yo, **Rodrigo Jimenez**, me comprometo de manera voluntaria y consciente a cumpl
   - Se recompensará al usuario piloto más destacado incluyéndolo en un agradecimiento especial durante la presentación semanal a los profesores. El criterio para ser el "mejor usuario piloto" será proporcionar un feedback detallado y constructivo que contribuya significativamente a la mejora de la aplicación.
 
 ### Firma:
-Rodri Jimenez    14/04/2024
+Rodri Jimenez   ![ro](image-5.png) 14/04/2024
 
