@@ -2,9 +2,9 @@
 
 ## CIAOLAVORO
 
-**Grupo 6**
+### Grupo 6 
 
-**Entregable: Sprint 3**
+### Entregable: Sprint 3
 
 ## Miembros del equipo y contribuciones
 
