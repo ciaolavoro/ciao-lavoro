@@ -85,7 +85,7 @@ class RegisterViewTests(TestCase):
 
     def test_user_registration_success(self):
         response = self.client.post(reverse('user:register'), self.base_user_data)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_empty_field(self):
         for field in self.base_user_data:
@@ -312,4 +312,4 @@ class GetPointsTest(UserTestCase):
         self.user.save()
         response = self.client.get(reverse('user:user-points'))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEquals(response.json()['total_points'], 130)
+        self.assertEqual(response.json()['total_points'], 130)
