@@ -30,19 +30,19 @@ https://ciaolavoro.github.io/landingpage/index.html
 
 # CREDENCIALES
 
-| Rol de usuario | Nombre de Usuario | Contraseña | Trabajos |
-|---------------------|-----------------------|-----------------------|-----------------------|
-| Administrador        | CiaoLavoroAdmin             | Admin_S2             |              |
-| Usuario        | ElenaTechSol             | Torres_S2             |   Mecanico, Electricista           |
-| Usuario        | JRobCarpentry             | Robertson_S2             |   Carpintero           |
-| Usuario        | CuidadorCarlos             | Martinez_S2             |   Celador, Lavandero, Profesor particular           |
-| Usuario        | ArtistryBySimone             | Clarke_S2             |   Pintor           |
-| Usuario        | NkosiForgeAndLocks             | Nkosi_S2             |   Herrero, cerrajero           |
-| Usuario        | ZhouChauffeurServices             | Zhou_S2             |   Conductor           |
-| Usuario        | RuizConstrucciones             | Ruiz_S2             |   Albañil, Carpintero           |
-| Usuario        | ProfeSofiaEducación             | Gomez_S2             |   Profesor particular          |
-| Usuario        | SastreriaClara             | Rodriguez_S2             |   Sastre          |
-| Usuario        | ProfLuisTutor             | Moreno_S2             |   Profesor particular          |
+| Rol de usuario | Nombre de Usuario | Contraseña |
+|---------------------|-----------------------|-----------------------|
+| Administrador        | ciaolavoro             | 4dm1n2024ISPP             |
+| Usuario        | Antoñeta             | SuperAntonia34             |
+| Usuario        | PacoElManitas             | Paco@2024             |
+| Usuario        | Maricarmen             | Maricarmen@2024             |
+| Usuario        | Pableto             | waoswaos             |
+| Usuario        | YunHuam             | Yumhuam@2024             |
+| Usuario        | Dorker             | usuariousuario             |
+| Usuario        | JoseMaria             | Jose@2024             |
+| Usuario        | Mohamed             | Mohamed@2024             |
+| Usuario        | PaolaDP01             | Paola@2024             |
+| Usuario        | Diego             | elhormiguero             |
 
 Credenciales governify:
 - Nombre de usuario: user
@@ -56,7 +56,7 @@ El resto de datos pueden ser inventados.
 
 Frontend: https://ciaolavoro-s3.pages.dev/
 
-Backend: https://ciao-lavoro-api-3.onrender.com/
+Backend: https://ciaolavoro.pythonanywhere.com/
 
 # URL DE GITHUB
 
