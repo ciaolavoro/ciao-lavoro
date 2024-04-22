@@ -1,6 +1,6 @@
 import { useLoaderData, Link } from "react-router-dom"
 import { useState, useEffect } from "react"
-import { updateServiceRequest, getProfessionsList, promoteService } from "../../api/Service.api"
+import { updateServiceRequest, getProfessionsList, promoteService, updatePromoteService } from "../../api/Service.api"
 import { getContractByService } from "../../api/Contract.api"
 import ServiceData from "./ServiceData"
 import ServiceButton from "./ServiceButton"
@@ -18,6 +18,8 @@ import {
    checkOnlyCharactersInText,
    checkIfPointsPositive,
    checkIfToManyPoints,
+   checkNotStringPoints,
+   checkIntegerPoints,
    checkIfPointsMoreThanMoney,
 } from "../../utils/validation"
 import Jobs from "./Jobs"
@@ -38,13 +40,14 @@ export default function ServiceDetails() {
    const [points, setPoints] = useState(0)
    const [contract, setContract] = useState([])
    const [isPromoted, setIsPromoted] = useState(false)
+   const queryParams = new URLSearchParams(window.location.search)
 
    //Hecho con Copilot
-   const hasPassedAMonth = (promotionDate) => {
-      const currentDate = new Date();
-      const promotionDateObj = new Date(promotionDate);
-      const oneMonth = 1000 * 60 * 60 * 24 * 30;
-      return currentDate - promotionDateObj > oneMonth;
+   const hasPassedAMonth = promotionDate => {
+      const currentDate = new Date()
+      const promotionDateObj = new Date(promotionDate)
+      const oneMonth = 1000 * 60 * 60 * 24 * 30
+      return currentDate - promotionDateObj > oneMonth
    }
 
    useEffect(() => {
@@ -75,12 +78,33 @@ export default function ServiceDetails() {
       fetchContracts()
 
       if (service.is_promoted) {
-         const hasPassed = hasPassedAMonth(service.is_promoted);
-         setIsPromoted(!hasPassed);
-      }else {
-         setIsPromoted(false);
+         const hasPassed = hasPassedAMonth(service.is_promoted)
+         setIsPromoted(!hasPassed)
+      } else {
+         setIsPromoted(false)
       }
    }, [loggedUser, service.id, service.is_promoted])
+
+   const updateServiceToPromote = async (serviceId, sessionId, points, token) => {
+      try {
+         const response = await updatePromoteService(serviceId, sessionId, points, token)
+         if (response.ok && queryParams.get("session_id")) {
+            setIsPromoted(true)
+         } else {
+            alert("Error al promocionar el servicio. Por favor, intente de nuevo.")
+         }
+      } catch (error) {
+         alert("Error al promocionar el servicio. Por favor, intente de nuevo.")
+      }
+   }
+
+   useEffect(() => {
+      if (queryParams.get("session_id")) {
+         const points = +queryParams.get("points")
+         updateServiceToPromote(service.id, queryParams.get("session_id"), points, loggedUser.token)
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [])
 
    const [isEditing, setIsEditing] = useState(false)
    const [city, setCity] = useState(service.city)
@@ -96,6 +120,8 @@ export default function ServiceDetails() {
    const [tooManyPoints, setTooManyPoints] = useState(false)
    const [positivePoints, setPositivePoints] = useState(false)
    const [noMorePointsMoney, setNoMorePointsMoney] = useState(false)
+   const [integerPoints, setIntegerPoints] = useState(false)
+   const [notStringPoints, setNotStringPoints] = useState(false)
 
    const resetServiceData = () => {
       setCity(service.city)
@@ -103,10 +129,10 @@ export default function ServiceDetails() {
       setExperience(service.experience)
       setIsActive(service.is_active)
       if (service.is_promoted) {
-         const hasPassed = hasPassedAMonth(service.is_promoted);
-         setIsPromoted(!hasPassed);
-      }else {
-         setIsPromoted(false);
+         const hasPassed = hasPassedAMonth(service.is_promoted)
+         setIsPromoted(!hasPassed)
+      } else {
+         setIsPromoted(false)
       }
    }
 
@@ -140,8 +166,10 @@ export default function ServiceDetails() {
       setPositivePoints(false)
       setTooManyPoints(false)
       setNoMorePointsMoney(false)
+      setNotStringPoints(false)
+      setIntegerPoints(false)
    }
-   
+
    const handleEdit = async event => {
       event.preventDefault()
 
@@ -204,9 +232,17 @@ export default function ServiceDetails() {
          resetPaymentErrors()
          setPositivePoints(true)
          return
-      }else if (checkIfPointsMoreThanMoney(points1, money)) { 
+      } else if (checkIfPointsMoreThanMoney(points1, money)) {
          resetPaymentErrors()
          setNoMorePointsMoney(true)
+         return
+      } else if (checkIntegerPoints(points1)) {
+         resetPaymentErrors()
+         setIntegerPoints(true)
+         return
+      } else if (checkNotStringPoints(points1)) {
+         resetPaymentErrors()
+         setNotStringPoints(true)
          return
       }
       resetPaymentErrors()
@@ -279,20 +315,20 @@ export default function ServiceDetails() {
                                  (isOnlyCharacters && errorMessages.onlyCharacters)
                               }
                            />
-                        <ServiceData
-                           type={"number"}
-                           formName={"experience"}
-                           labelText={"Experiencia(años):"}
-                           inputValue={experience}
-                           isError={isRequiredExperienceError || isExperienceError || isBigExperienceError}
-                           errorMessage={
-                              (isRequiredExperienceError && errorMessages.required) ||
-                              (isExperienceError && errorMessages.experienceNotValid) ||
-                              (isBigExperienceError && errorMessages.tooMuchExperience)
-                           }
-                           isReadOnly={!isEditing}
-                           onChange={event => setExperience(event.target.value)}
-                        />
+                           <ServiceData
+                              type={"number"}
+                              formName={"experience"}
+                              labelText={"Experiencia(años):"}
+                              inputValue={experience}
+                              isError={isRequiredExperienceError || isExperienceError || isBigExperienceError}
+                              errorMessage={
+                                 (isRequiredExperienceError && errorMessages.required) ||
+                                 (isExperienceError && errorMessages.experienceNotValid) ||
+                                 (isBigExperienceError && errorMessages.tooMuchExperience)
+                              }
+                              isReadOnly={!isEditing}
+                              onChange={event => setExperience(event.target.value)}
+                           />
 
                            <div className="grid grid-cols-2 gap-x-4 items-center w-full">
                               {loggedUser && loggedUser.user.username === service.user.username && (
@@ -340,57 +376,67 @@ export default function ServiceDetails() {
                         )}
                         <div className="flex justify-center gap-x-4">
                            <div className="pt-4">
-                           {loggedUser && loggedUser.user && loggedUser.user.username === service.user.username && (
-                              <ServiceButton type={"button"} text={"Editar servicio"} icon={<PencilIcon />} onClick={() => setIsEditing(true)} />
-                           )}
+                              {loggedUser && loggedUser.user && loggedUser.user.username === service.user.username && (
+                                 <ServiceButton type={"button"} text={"Editar servicio"} icon={<PencilIcon />} onClick={() => setIsEditing(true)} />
+                              )}
                            </div>
-
-                           {loggedUser && loggedUser.user.username == service.user.username && !isPromoted && (
+                           {loggedUser && loggedUser.user.username === service.user.username && !isPromoted && (
                               <div className="pt-4">
-                                 <Dialog>
-                                    <DialogTrigger asChild>
-                                       <PromotionButton type={"button"} text={"Promocionar Servicio"} icon={<MegaphoneIcon />} />
-                                    </DialogTrigger>
-                                    <DialogContent className="sm:max-w-[425px]">
-                                       <DialogHeader>
-                                          <DialogTitle>Promocionar tu servicio cuesta 4,99€ </DialogTitle>
-                                          <DialogDescription>¿Cuantos puntos quieres usar para la promoción? </DialogDescription>
-                                          <DialogDescription>100 pts = 1 €</DialogDescription>
-                                          <DialogDescription>Los puntos descontarán dinero del precio final.</DialogDescription>
-                                          <DialogDescription>
-                                             {" "}
-                                             <strong>Tus puntos:</strong> {service.user.points}
-                                          </DialogDescription>
-                                       </DialogHeader>
-                                       <div className="grid gap-4 py-4">
-                                          <div className="grid grid-col-1 lg:grid-cols-2 md:grid-cols-2 gap-4">
-                                             <Label htmlFor="name" className="text-left">
-                                                Puntos
-                                             </Label>
-                                             <Input id="points" value={points} onChange={e => setPoints(e.target.value)} className="col-span-3" />
+                                 {service.user.points === 0 ? (
+                                    <PromotionButton
+                                       type={"button"}
+                                       text={"Promocionar Servicio"}
+                                       icon={<MegaphoneIcon />}
+                                       onClick={() => handlePayment(service.id, loggedUser.token, Number(points))}
+                                    />
+                                 ) : (
+                                    <Dialog>
+                                       <DialogTrigger asChild>
+                                          <PromotionButton type={"button"} text={"Promocionar Servicio"} icon={<MegaphoneIcon />} />
+                                       </DialogTrigger>
+                                       <DialogContent className="sm:max-w-[425px]">
+                                          <DialogHeader>
+                                             <DialogTitle>Promocionar tu servicio cuesta 4,99€ </DialogTitle>
+                                             <DialogDescription>¿Cuantos puntos quieres usar para la promoción? </DialogDescription>
+                                             <DialogDescription>100 pts = 1 €</DialogDescription>
+                                             <DialogDescription>Los puntos descontarán dinero del precio final.</DialogDescription>
+                                             <DialogDescription>
+                                                {" "}
+                                                <strong>Tus puntos:</strong> {service.user.points}
+                                             </DialogDescription>
+                                          </DialogHeader>
+                                          <div className="grid gap-4 py-4">
+                                             <div className="grid grid-col-1 lg:grid-cols-2 md:grid-cols-2 gap-4">
+                                                <Label htmlFor="name" className="text-left">
+                                                   Puntos
+                                                </Label>
+                                                <Input id="points" value={points} onChange={e => setPoints(e.target.value)} className="col-span-3" />
+                                             </div>
+                                             <DialogDescription>
+                                                {(tooManyPoints || positivePoints || noMorePointsMoney || notStringPoints || integerPoints) && (
+                                                   <div className="text-red-500">
+                                                      {(tooManyPoints && errorMessages.tooManyPoints) ||
+                                                         (positivePoints && errorMessages.positivePoints) ||
+                                                         (noMorePointsMoney && errorMessages.noMorePointsMoney) ||
+                                                         (notStringPoints && errorMessages.notCorrectPoitns) ||
+                                                         (integerPoints && errorMessages.notIntegerPoints)}
+                                                   </div>
+                                                )}
+                                             </DialogDescription>
+                                             <DialogFooter>
+                                                <PromotionButton
+                                                   type={"submit"}
+                                                   text={"Pagar promocion"}
+                                                   icon={<WalletIcon />}
+                                                   onClick={() => {
+                                                      handlePayment(service.id, loggedUser.token, Number(points))
+                                                   }}
+                                                />
+                                             </DialogFooter>
                                           </div>
-                                          <DialogDescription>
-                                             {(tooManyPoints || positivePoints || noMorePointsMoney) && (
-                                                <div className="text-red-500">
-                                                   {(tooManyPoints && errorMessages.tooManyPoints) ||
-                                                      (positivePoints && errorMessages.positivePoints) ||
-                                                      (noMorePointsMoney && errorMessages.noMorePointsMoney)}
-                                                </div>
-                                             )}
-                                          </DialogDescription>
-                                          <DialogFooter>
-                                             <PromotionButton
-                                                type={"submit"}
-                                                text={"Pagar promocion"}
-                                                icon={<WalletIcon />}
-                                                onClick={() => {
-                                                   handlePayment(service.id, loggedUser.token, points)
-                                                }}
-                                             />
-                                          </DialogFooter>
-                                       </div>
-                                    </DialogContent>
-                                 </Dialog>
+                                       </DialogContent>
+                                    </Dialog>
+                                 )}
                               </div>
                            )}
 
@@ -430,17 +476,17 @@ export default function ServiceDetails() {
                            )}
                         </>
                      )}
-                     <div className="grid grid-cols-1 lg:grid-cols-2">
+                     <div className="grid sm:grid-cols-1 lg:grid-cols-2">
                         {service.reviews.length > 0 ? (
                            service.reviews.map(review => (
                               <div key={review.id} className="w-90 border bg-white shadow-md rounded-xl m-8">
-                                 <div className="px-10 py-6">
-                                    <div className="flex justify-between items-start mb-6">
+                                 <div className="flex flex-col justify-center px-4 py-6 sm:text-center">
+                                    <div className="justify-between mb-6">
                                        <div className="flex flex-col">
                                           <label className="block text-lg font-medium mb-1">Nombre de usuario:</label>
-                                          <div className="border p-2 rounded-md mb-4">{review.user.username}</div>
+                                          <div className="flex border p-2 rounded-md mb-4">{review.user.username}</div>
                                        </div>
-                                       <div className="flex flex-col items-end">
+                                       <div className="flex flex-col items-center">
                                           <div className="flex">
                                              {[1, 2, 3, 4, 5].map(value => (
                                                 <span
@@ -454,7 +500,7 @@ export default function ServiceDetails() {
                                     </div>
                                     <div className="flex flex-col w-full">
                                        <label className="block text-lg font-medium mb-1">Descripción:</label>
-                                       <div className="border p-2 rounded-md">{review.description}</div>
+                                       <div className="border p-2 rounded-md sm:text-2xl">{review.description}</div>
                                     </div>
                                  </div>
                               </div>

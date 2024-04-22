@@ -1,16 +1,14 @@
+from user.serializers import UserSerializer
 from .models import Service, Job, Review
 from .serializers import ServiceSerializer, JobSerializer, ReviewSerializer
 from datetime import date, timedelta
 from django.conf import settings
-from django.forms import ValidationError
-from django.http import JsonResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.utils import timezone
-from rest_framework import viewsets, permissions, generics, status
+from rest_framework import generics, status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import authentication_classes
-from rest_framework.decorators import permission_classes
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -39,7 +37,7 @@ class ServiceList(generics.ListAPIView):
             serializer = self.serializer_class(queryset, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 class ProfessionList(APIView):
     @authentication_classes([TokenAuthentication])
@@ -73,7 +71,9 @@ class JobView(APIView):
     @authentication_classes([TokenAuthentication])
     def post(self, request, service_id):
         job_data = request.data
-        service = Service.objects.get(pk=service_id)
+        service = Service.objects.filter(pk=service_id).first()
+        if not service:
+            return Response("Service does not exists", status=status.HTTP_404_NOT_FOUND)
         token_id = request.headers["Authorization"]
         token = get_object_or_404(Token, key = token_id.split()[-1])
         user = token.user
@@ -82,17 +82,19 @@ class JobView(APIView):
         if job_data['name'] and job_data['name'].strip() != '':
             name = job_data['name'].strip()
         else:
-            raise ValidationError('El nombre no puede estar vacío')
+            return Response('El nombre no puede estar vacío', status=status.HTTP_400_BAD_REQUEST)
         
         if len(name) > 100:
-            raise ValidationError('La cantidad de caracteres del nombre no puede ser superior a 100')
+            return Response('La cantidad de caracteres del nombre no puede ser superior a 100', status=status.HTTP_400_BAD_REQUEST)
+        if len(name.strip()) < 5:
+            return Response('La cantidad de caracteres del nombre no puede ser inferior a 5', status=status.HTTP_400_BAD_REQUEST)
         estimated_price = job_data['estimated_price']
         if estimated_price == '':
             estimated_price = 10
         if isinstance(estimated_price, int):
-            estimated_price = estimated_price + 0.001
+            estimated_price = float(estimated_price)
         if not isinstance(estimated_price, float):
-            raise ValidationError('El precio estimado debe ser un número')
+            return Response('El precio estimado debe ser un número', status=status.HTTP_400_BAD_REQUEST)
         job = Job.objects.create(service=service, name=name, estimated_price=estimated_price)
         serializer = JobSerializer(job, many=False)
         return Response(serializer.data)
@@ -100,7 +102,9 @@ class JobView(APIView):
     @authentication_classes([TokenAuthentication])
     def put(self, request, job_id):
         job_data = request.data
-        job = Job.objects.get(pk=job_id)
+        job = Job.objects.filter(pk=job_id).first()
+        if not job:
+            return Response("Job does not exists", status=status.HTTP_404_NOT_FOUND)
         service = job.service
         token_id = request.headers["Authorization"]
         token = get_object_or_404(Token, key = token_id.split()[-1])
@@ -110,17 +114,19 @@ class JobView(APIView):
         if job_data['name'] and job_data['name'].strip() != '':
             new_name = job_data['name'].strip()
         else:
-            raise ValidationError('El nombre no puede estar vacío')
+            return Response('El nombre no puede estar vacío', status=status.HTTP_400_BAD_REQUEST)
         
         if len(new_name) > 100:
-            raise ValidationError('La cantidad de caracteres del nombre no puede ser superior a 100')
+            return Response('La cantidad de caracteres del nombre no puede ser superior a 100', status=status.HTTP_400_BAD_REQUEST)
+        if len(new_name.strip()) < 5:
+            return Response('La cantidad de caracteres del nombre no puede ser inferior a 5', status=status.HTTP_400_BAD_REQUEST)
         new_estimated_price = job_data['estimated_price']
         if new_estimated_price == '':
             new_estimated_price = 10
         if isinstance(new_estimated_price, int):
-            new_estimated_price = new_estimated_price + 0.001
+            new_estimated_price = float(new_estimated_price)
         if not isinstance(new_estimated_price, float):
-            raise ValidationError('El precio estimado debe ser un número')
+            return Response('El precio estimado debe ser un número', status=status.HTTP_400_BAD_REQUEST)
         job.name = new_name
         job.estimated_price = new_estimated_price
         job.save()
@@ -129,7 +135,9 @@ class JobView(APIView):
     
     @authentication_classes([TokenAuthentication])
     def delete(self, request, job_id):
-        job = Job.objects.get(pk=job_id)
+        job = Job.objects.filter(pk=job_id).first()
+        if not job:
+            return Response("Job does not exists", status=status.HTTP_404_NOT_FOUND)
         service = job.service
         token_id = request.headers["Authorization"]
         token = get_object_or_404(Token, key = token_id.split()[-1])
@@ -155,7 +163,9 @@ class ReviewView(APIView):
     @authentication_classes([TokenAuthentication])
     def post(self, request, service_id):
         review_data = request.data
-        service = Service.objects.get(pk=service_id)
+        service = Service.objects.filter(pk=service_id).first()
+        if not service:
+            return Response("Service does not exists", status=status.HTTP_404_NOT_FOUND)
         token_id = request.headers["Authorization"]
         token = get_object_or_404(Token, key = token_id.split()[-1])
         user = token.user
@@ -168,17 +178,17 @@ class ReviewView(APIView):
         if review_data['description'] and review_data['description'].strip() != '':
             description = review_data['description'].strip()
         else:
-            raise ValidationError("Una valoración debe contener una descripción")
+            return Response("Una valoración debe contener una descripción", status=status.HTTP_400_BAD_REQUEST)
         if review_data['rating'] and review_data['rating'] != '':
             rating = review_data['rating']
         else:
-            raise ValidationError("Una valoración esta incompleta sin la puntuación")
+            return Response("Una valoración esta incompleta sin la puntuación", status=status.HTTP_400_BAD_REQUEST)
         
         date = timezone.now()
         if int(rating) > 5 or int(rating) < 0 :
-            raise ValidationError('La valoración debe de estar entre 0 y 5')
+            return Response('La valoración debe de estar entre 0 y 5', status=status.HTTP_400_BAD_REQUEST)
         if len(description) > 500:
-            raise ValidationError('La descripción no puede contener más de 500 caracteres')
+            return Response('La descripción no puede contener más de 500 caracteres', status=status.HTTP_400_BAD_REQUEST)
         review = Review.objects.create(user=user, service=service, description=description, rating=rating, date=date)
         serializer = ReviewSerializer(review, many=False)
         return Response(serializer.data)
@@ -193,35 +203,34 @@ class ServiceView(APIView):
         if service_data['city'] and service_data['city'].strip() != '':
             city = service_data['city'].strip()
         else:
-            raise ValidationError("Debe indicar la ciudad")
+            return Response("Debe indicar la ciudad", status=status.HTTP_400_BAD_REQUEST)
         if service_data['profession'] and service_data['profession'] != '':
             profession = service_data['profession']
-        else: 
-            raise ValidationError("Se debe introducir una profesión")
-        
+        else:
+            return Response("Se debe introducir una profesión", status=status.HTTP_400_BAD_REQUEST)
         profesions = Service.PROFESSIONS
         profession_exists = False
         for profession_id, _ in profesions:
             if profession_id == int(profession):
                 profession_exists = True
         if not profession_exists:
-            raise ValidationError('La profesión no es valida')
+            return Response('La profesión no es valida', status=status.HTTP_400_BAD_REQUEST)
         user_services = list(Service.objects.filter(user=user))
         for s in user_services:
             if s.profession == int(profession):
-                raise ValidationError('No se pueden crear dos servicios de la misma profesión')
+                return Response('No se pueden crear dos servicios de la misma profesión', status=status.HTTP_400_BAD_REQUEST)
         experience = service_data['experience']
         if experience == '':
             experience = 0
         if (len(city) > 200):
-            raise ValidationError("La ciudad no puede contener más de 200 caracteres")
+            return Response("La ciudad no puede contener más de 200 caracteres", status=status.HTTP_400_BAD_REQUEST)
         if not isinstance(experience, int):
-            raise ValidationError('La experiencia debe ser un número entero')
+            return Response('La experiencia debe ser un número entero', status=status.HTTP_400_BAD_REQUEST)
         birth_date = user.birth_date
         today = date.today()
         age = today.year - birth_date.year - ((today.month, today.day) < (birth_date.month, birth_date.day))
         if int(experience)+16 > age:
-            raise ValidationError('La experiencia es demasiado alta')
+            return Response('La experiencia es demasiado alta', status=status.HTTP_400_BAD_REQUEST)
         service = Service.objects.create(user=user, profession=profession, city=city, experience=experience)
         serializer = ServiceSerializer(service, many=False)
         return Response(serializer.data)
@@ -229,7 +238,9 @@ class ServiceView(APIView):
     @authentication_classes([TokenAuthentication])
     def put(self, request, service_id):
         service_data = request.data
-        service = Service.objects.get(pk=service_id)
+        service = Service.objects.filter(pk=service_id).first()
+        if not service:
+            return Response("Service does not exists", status=status.HTTP_404_NOT_FOUND)
         token_id = request.headers["Authorization"]
         token = get_object_or_404(Token, key = token_id.split()[-1])
         user = token.user
@@ -239,11 +250,11 @@ class ServiceView(APIView):
             city = service_data['city'].strip()
             service.city = city
         else:
-            raise ValidationError("Debe indicar la ciudad")
+            return Response("Debe indicar la ciudad", status=status.HTTP_400_BAD_REQUEST)
         if service_data['profession'] and service_data['profession'] != '':
             profession = service_data['profession']
         else: 
-            raise ValidationError("Se debe introducir una profesión")
+            return Response("Se debe introducir una profesión", status=status.HTTP_400_BAD_REQUEST)
         profesions = Service.PROFESSIONS
         profession_exists = False
         for profession_id, profession_name in profesions:
@@ -251,28 +262,27 @@ class ServiceView(APIView):
                 profession_exists = True
                 profession = profession_id
         if not profession_exists:
-            raise ValidationError('La profesión no es valida')
+            return Response('La profesión no es valida', status=status.HTTP_400_BAD_REQUEST)
         user_services = list(Service.objects.filter(user=user))
         for s in user_services:  
             if s.profession == profession and service.id != s.id:
-                raise ValidationError('No se pueden crear dos servicios de la misma profesión')
+                return Response('No se pueden crear dos servicios de la misma profesión', status=status.HTTP_400_BAD_REQUEST)
         service.profession = profession
         experience = service_data['experience']
         if  experience == '':
             experience = 0  
         if not isinstance(experience, int):
-            raise ValidationError('La experiencia debe ser un número entero')
+            return Response('La experiencia debe ser un número entero', status=status.HTTP_400_BAD_REQUEST)
         is_active = service_data['is_active']
         if not is_active == '':
             service.is_active = is_active
-
         if (len(city)>200):
-            raise ValidationError("La ciudad no puede contener más de 200 caracteres")
+            return Response("La ciudad no puede contener más de 200 caracteres", status=status.HTTP_400_BAD_REQUEST)
         birth_date = user.birth_date
         today = date.today()
         age = today.year - birth_date.year - ((today.month, today.day) < (birth_date.month, birth_date.day))
         if int(experience)+16 > age:
-            raise ValidationError('La experiencia es demasiado alta')
+            return Response('La experiencia es demasiado alta', status=status.HTTP_400_BAD_REQUEST)
         service.experience = experience
         service.save()
         serializer = ServiceSerializer(service, many=False)
@@ -281,7 +291,9 @@ class ServiceView(APIView):
 class UserHasService(APIView):
     @authentication_classes([TokenAuthentication])
     def get(self, request, service_id):
-        service = Service.objects.get(pk=service_id)
+        service = Service.objects.filter(pk=service_id).first()
+        if not service:
+            return Response("Service does not exists", status=status.HTTP_404_NOT_FOUND)
         token_id = request.headers["Authorization"]
         token = get_object_or_404(Token, key = token_id.split()[-1])
         user = token.user
@@ -290,7 +302,7 @@ class UserHasService(APIView):
         else :
             state = False
         data = {'user_state': state}
-        return JsonResponse(data)
+        return Response(data)
     
 class PromotionPayment(APIView):
     @authentication_classes([TokenAuthentication])
@@ -298,17 +310,19 @@ class PromotionPayment(APIView):
         service = get_object_or_404(Service, pk = service_id)
         token_id = self.request.headers['Authorization']
         returnURL = request.data.get('returnURL')
+        if not returnURL:
+            return Response('Se debe introducir una url de retorno', status=status.HTTP_400_BAD_REQUEST)
         points = request.data.get('points')
         token = get_object_or_404(Token, key = token_id.split()[-1])
         user = token.user
+        if service.user != user:
+            raise PermissionDenied('Debes ser el dueño del servicio')
         if not points:
             points = 0
         else:
             points = int(points)
         if user.points < points:
             return Response('No se pueden gastar más puntos de los disponibles', status=status.HTTP_400_BAD_REQUEST)
-        user.points = user.points - points
-        user.save()
         if user != service.user:
             raise PermissionDenied("No puedes promocionar un servicio que no es tuyo")
         if 4.99 < points/100:
@@ -334,17 +348,23 @@ class PromotionPayment(APIView):
                     }],
                 mode = 'payment',
                 customer_email = user.email,
-                success_url = returnURL + '?session_id={CHECKOUT_SESSION_ID}',
+                success_url = returnURL + '?session_id={CHECKOUT_SESSION_ID}&points=' + str(points),
                 cancel_url = returnURL,
             )
-            return JsonResponse({'sessionUrl': session.url, 'price': price.unit_amount})
+            return Response({'sessionUrl': session.url, 'price': price.unit_amount})
         except stripe.error.StripeError as e:
             error_msg = str(e)
-            return Response({'Error al completar el pago': error_msg}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({error_msg}, status=status.HTTP_400_BAD_REQUEST)
         
 class PromoteService(APIView):
     def put(self, request, service_id):
+        token_id = self.request.headers['Authorization']
+        points = request.data.get('points')
+        token = get_object_or_404(Token, key = token_id.split()[-1])
+        user = token.user
         service = get_object_or_404(Service, pk = service_id)
+        if service.user != user:
+            raise PermissionDenied('Debes ser el dueño del servicio')
         session_id = request.data.get('session_id', None)
         if not session_id:
             return Response('session_id is required for completing the payment', status=status.HTTP_400_BAD_REQUEST)
@@ -353,13 +373,17 @@ class PromoteService(APIView):
             session = stripe.checkout.Session.retrieve(session_id)
         except stripe.error.StripeError as e:
             error_msg = str(e)
-            return Response({'StripeError': error_msg}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({error_msg}, status=status.HTTP_400_BAD_REQUEST)
         if session.payment_status != 'paid':
             return Response('Payment for the session is not completed', status=status.HTTP_400_BAD_REQUEST)
         service.is_promoted=date.today()
         service.save()
-        serializer = ServiceSerializer(service, many=False,context ={'request': request})
-        return Response(serializer.data)
+        user.points = user.points - points
+        user.save()
+        user_serializer = UserSerializer(user, many=False,context ={'request': request})
+        service_serializer = ServiceSerializer(service, many=False,context ={'request': request})
+        token,_ = Token.objects.get_or_create(user=user)
+        return Response({'service': service_serializer.data, 'user': user_serializer.data, 'token': token.key})
         
 class AllServiceInPromotion(APIView):
     serializer_class = ServiceSerializer
