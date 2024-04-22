@@ -282,3 +282,9 @@ Para la semana 10 los profesores esperan ver:
 + hay que valorar las acciones a realizar para que la aplicación gane tracción
 + Intentar segmentar el mercado
 + Sopesar la clase de anuncios y redes sociales que pensamos usar para promocionar la aplicación.
+
+
+### ANEXO II: ACCIONES DE CONSOLIDACIÓN LLEVADAS A CABO
+
++ Se ha añadido toda la nueva información de las semanas de desarrollo del sprint y del feedback recibido.
++ Se ha ido mejorando la presentación, gráficas y elementos de desarrollo en base a la información recibida en clase.
