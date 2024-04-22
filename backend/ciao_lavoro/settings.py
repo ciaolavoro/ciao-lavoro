@@ -97,6 +97,7 @@ WSGI_APPLICATION = 'ciao_lavoro.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASE_URL = env('DATABASE_URL')
+DEPLOY_PASSWORD = env('DEPLOY_PASSWORD')
 
 if DEBUG == 'True':
     #Configuración Base de Datos Local (SQLite)
@@ -108,12 +109,15 @@ if DEBUG == 'True':
     }
 
 if DEBUG == 'False':
-    #Configuración Base de Datos Render (PostgreSQL)
+    #Configuración Base de Datos PythonAnywhere (MySQL)
     DATABASES = {
-        'default': dj_database_url.config(
-            default=DATABASE_URL,
-            conn_max_age=600
-        )
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'ciaolavoro$deploy',
+            'USER': 'ciaolavoro',
+            'PASSWORD': DEPLOY_PASSWORD,
+            'HOST': 'ciaolavoro.mysql.pythonanywhere-services.com',
+        }
     }
     
 # Password validation
