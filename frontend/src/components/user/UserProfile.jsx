@@ -308,6 +308,7 @@ export default function UserProfile() {
                />
             </section>
          </div>
+
          {isEditing ? (
             <div className="flex gap-x-4">
                <UserProfileButton type={"submit"} text={"Guardar cambios"} icon={<CheckIcon />} />
@@ -328,6 +329,15 @@ export default function UserProfile() {
                <UserProfileButton type={"button"} text={"Editar perfil"} icon={<PencilIcon />} onClick={() => setIsEditing(true)} />
             )
          )}
+         <p className="mt-8 px-4 py-3 bg-orange-200 text-black text-center rounded-lg">
+            Si quieres obtener los datos guardados sobre ti o quieres anonimizar tus datos contacte a
+            <br></br>
+            <a href="mailto:ciaolavoroispp@gmail.com" className="text-blue-500 underline">
+               ciaolavoroISPP@gmail.com
+            </a>
+            <br></br>
+            En caso de riesgos de seguridad o integridad de tus datos, se informará mediante correo electrónico
+         </p>
       </form>
    )
 }
