@@ -127,16 +127,29 @@ export default function Navbar() {
    )
 }
 
+//Hecho con Github Copilot
+function normalizeUserImageUrl(imageUrl) {
+   if (imageUrl.startsWith("http://") || imageUrl.startsWith("https://")) {
+
+       const parts = imageUrl.split("/");
+       const index = parts.indexOf("users");
+       return "/" + parts.slice(index).join("/");
+   } else {
+       return imageUrl;
+   }
+}
+
+
+
 function ResponsiveNavbarMenu({ navItemsUser, navItems, handleLogout }) {
    const { loggedUser } = useAuthContext()
-
    return (
       <>
          {loggedUser ? (
             <DropdownMenu>
                <DropdownMenuTrigger>
                   <li className="rounded-full hover:shadow-lg transition">
-                     <img src={`${BACKEND_URL}${loggedUser.user.image}` ?? defaultUserImage} alt="Imagen de perfil" className="w-8 h-8 object-cover rounded-full" />
+                     <img src={`${BACKEND_URL}${normalizeUserImageUrl(loggedUser.user.image)}` ?? defaultUserImage} alt="Imagen de perfil" className="w-8 h-8 object-cover rounded-full" />
                   </li>
                </DropdownMenuTrigger>
                <DropdownMenuContent>
@@ -193,14 +206,14 @@ function ResponsiveNavbarMenu({ navItemsUser, navItems, handleLogout }) {
 
 function NavbarMenu({ navItemsUser, handleLogout }) {
    const { loggedUser } = useAuthContext()
-
+   
    return (
       <>
          {loggedUser ? (
             <DropdownMenu>
                <DropdownMenuTrigger>
                   <li className="rounded-full hover:shadow-lg transition">
-                     <img src={`${BACKEND_URL}${loggedUser.user.image}` ??  defaultUserImage} alt="Imagen de perfil" className="w-8 h-8 object-cover rounded-full" />
+                     <img src={`${BACKEND_URL}${normalizeUserImageUrl(loggedUser.user.image)}` ??  defaultUserImage} alt="Imagen de perfil" className="w-8 h-8 object-cover rounded-full" />
                   </li>
                </DropdownMenuTrigger>
                <DropdownMenuContent>
