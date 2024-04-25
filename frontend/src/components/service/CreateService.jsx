@@ -137,7 +137,7 @@ export default function CreateService() {
    }
 
    return (
-      <form className="flex flex-col justify-center items-center gap-y-10 mt-10 mx-44 py-14 bg-white border rounded-lg" onSubmit={handleSubmit}>
+      <form className="flex flex-col justify-center items-center gap-y-10 mt-10 lg:mx-60 md:mx-10 mx-1 py-14 lg:px-4 pd:mx-4 px-10 bg-white border rounded-lg" onSubmit={handleSubmit}>
          <h1 className="text-4xl font-bold">Creación del servicio</h1>
          <div className="flex flex-col items-center gap-2">
             <div className="flex gap-x-2">
