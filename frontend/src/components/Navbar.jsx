@@ -1,7 +1,7 @@
 import { Link, NavLink, useNavigate } from "react-router-dom"
 import ciaoLavoroLogo from "/ciaolavoro-logo.png"
 import { useAuthContext } from "./auth/AuthContextProvider"
-import defaultUserImage from "../assets/service/talonflame.jpg"
+import defaultUserImage from "../assets/register/defaultRegisterImage.png" 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu"
 import UserProfileIcon from "./icons/UserProfileIcon"
 import BriefcaseIcon from "./icons/BriefcaseIcon"
@@ -14,6 +14,7 @@ import InfoIcon from "./icons/InfoIcon"
 import LoginIcon from "./icons/LoginIcon"
 import MenuIcon from "./icons/MenuIcon"
 import CustomAlertDialog from "./CustomAlertDialog"
+export const BACKEND_URL = import.meta.env.VITE_BACKEND_API_URL;
 
 const navItemsStyle = "px-2 py-1 font-semibold rounded hover:bg-gray-300 transition"
 
@@ -126,16 +127,29 @@ export default function Navbar() {
    )
 }
 
+//Hecho con Github Copilot
+function normalizeUserImageUrl(imageUrl) {
+   if (imageUrl.startsWith("http://") || imageUrl.startsWith("https://")) {
+
+       const parts = imageUrl.split("/");
+       const index = parts.indexOf("users");
+       return "/" + parts.slice(index).join("/");
+   } else {
+       return imageUrl;
+   }
+}
+
+
+
 function ResponsiveNavbarMenu({ navItemsUser, navItems, handleLogout }) {
    const { loggedUser } = useAuthContext()
-
    return (
       <>
          {loggedUser ? (
             <DropdownMenu>
                <DropdownMenuTrigger>
                   <li className="rounded-full hover:shadow-lg transition">
-                     <img src={`${loggedUser.user.image}` || defaultUserImage} alt="Imagen de perfil" className="w-8 h-8 object-cover rounded-full" />
+                     <img src={`${BACKEND_URL}${normalizeUserImageUrl(loggedUser.user.image)}` ?? defaultUserImage} alt="Imagen de perfil" className="w-8 h-8 object-cover rounded-full" />
                   </li>
                </DropdownMenuTrigger>
                <DropdownMenuContent>
@@ -192,14 +206,14 @@ function ResponsiveNavbarMenu({ navItemsUser, navItems, handleLogout }) {
 
 function NavbarMenu({ navItemsUser, handleLogout }) {
    const { loggedUser } = useAuthContext()
-
+   
    return (
       <>
          {loggedUser ? (
             <DropdownMenu>
                <DropdownMenuTrigger>
                   <li className="rounded-full hover:shadow-lg transition">
-                     <img src={`${loggedUser.user.image}` || defaultUserImage} alt="Imagen de perfil" className="w-8 h-8 object-cover rounded-full" />
+                     <img src={`${BACKEND_URL}${normalizeUserImageUrl(loggedUser.user.image)}` ??  defaultUserImage} alt="Imagen de perfil" className="w-8 h-8 object-cover rounded-full" />
                   </li>
                </DropdownMenuTrigger>
                <DropdownMenuContent>
