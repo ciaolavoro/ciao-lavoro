@@ -108,7 +108,8 @@ Realizar el Formulario de Rendimiento
 - Ver las Theory Pills
 - Realizar el Formulario de Rendimiento
 - Hacer de Usuario Piloto para el Grupo 12
-- Doc - User Pilot Report 
+- Doc - User Pilot Report#491
+- Doc - AI Usage Report#490
 
 
 
