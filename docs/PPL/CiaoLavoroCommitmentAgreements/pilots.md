@@ -2,19 +2,21 @@
 
 ## CIAOLAVORO
 ### Grupo 6
-### Entregable: Sprint 3
+### Entregable: PPL
 
 ## Miembros del equipo y contribuciones
 
 | Nombre y Apellidos | Tipo de Contribución |
 |---------------------|-----------------------|
 | Alexander / Alicia Sánchez Hossdorf         | Redacción             |
+| Pablo Mateos Angulo         | Revisión             |
 
 
 ### CONTROL DE VERSIONES
 | FECHA      | VERSIÓN | DESCRIPCIÓN                                      |
 |------------|---------|--------------------------------------------------|
 | 17/04/2024 | 1.0     | Creación del documento en su versión Sprint 3    |
+| 28/04/2024 | 1.1     | Revisión del documento en su versión PPL    |
 
 
 ### CRITERIO DE SELECCIÓN DE USUARIOS PILOTOS
