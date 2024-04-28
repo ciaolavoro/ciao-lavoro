@@ -101,8 +101,8 @@ Grupo 3: Pablo M, Adrián, Antonio, Diego.
 
   Las tareas de las que soy responsable en este Sprint son:
 
--
--
+- Realizar el formulario de usuarios piloto
+- Doc - User Pilot Report
 -
 -
 
