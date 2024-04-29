@@ -2,7 +2,7 @@
 
 ## CIAOLAVORO
 **Grupo 6**
-<br>
+
 **Entregable: PPL**
 
 ## Miembros del equipo y contribuciones
@@ -28,25 +28,25 @@ En este documento se pretende realizar un estudio de mercado para buscar los pun
 
 La aplicación *Ciao Lavoro* apunta a resolver necesidades específicas y puntuales, esto hace que escoger un segmento de población al que apuntar sea complicado. Dado que no existe tal segmento de la población como "personas con necesidades puntuales" iremos revisando una a una los distintos sectores para tratar de encontrar cuál sería el mas adecuado para esta aplicación.
 
-# 1. Segmentación Demográfica/Geográfica.
+### 1. Segmentación Demográfica/Geográfica.
 
 La segmentación geográfica consiste en dividir a la población según razones geográficas. *Ciao Lavoro* no tiene una estrecha relación con grupos geográficos, por tanto, **descartamos** la posibilidad de buscar la relación con una razón de lugar.
 
 A su vez, consideramos que **no** hay una razón especial de género, edad o ingreso para decidir contratar o no servicios a través de la aplicación. Dado que la intención gira en torno a necesidades puntuales que necesitan ser resueltas no consideramos que sea algo reducible a través de las agrupaciones mencionadas anteriormente. 
 
-# 2. Segmentación Firmográfica.
+### 2. Segmentación Firmográfica.
 
 La segmentación firmográfica es una herramienta que permite agrupar posibles clientes por diversas características demográficas. Se diferencia de la demográfica en cuanto a la búsqueda de parecido de los clientes con los productos de la empresa. La idea detrás de esta segmentación es entender mejor a los clientes y ofrecerles un producto que necesiten.
 
 Si bien podría parecer de primeras que sería una segmentación adecuada, no se alinea con el funcionamiento de la empresa. Podría funcionar como estrategia de muestreo de servicios dirigida según cliente pero dado que los desarroladores no pueden controlar los servicios que ofertan los usuarios no es posible orientar el rumbo que toma la aplicación sin cerrar mercados en el proceso. Por estos motivos **descartamos esta opción**
 
-# 3. Segmentación Psicográfica.
+### 3. Segmentación Psicográfica.
 
 Esta clasificación divide a los usuarios o potenciales usuarios en grupos basandose en sus valores, creencias, estilo de vida, anhelos y deseos.
 
 Consideramos que esta opción **si** es válida. De la misma manera que podemos agruparles por deseos podemos tratar de encontrar cuáles son las tendencias de los usuarios, es decir, si son personas que valoran mucho su tiempo libre, si tienen alguna situación de necesidad que no pueden resolver o si  prefieren invertir dinero a invertir tiempo son elementos que podemos usar para dividir el mercado hacia los usuarios que tienen mayor tendencia a utilizar nuestro producto.
 
-# 4. Segmentación según comportamiento.
+### 4. Segmentación según comportamiento.
 
 El nombre es autoexplicativo. Por motivos muy similares a la anterior esta segmentación **si** nos es válida. Dado que podemos analizar que tendencias de comportamiento tienen las personas podemos saber que personas tendrían mayor tendencia a contratar nuestro servicio.
 
@@ -66,15 +66,15 @@ Para seleccionar a los segmentos mas prometedores utilizaremos las estrategias a
 
 A continuación enumeraremos los segmentos escogidos como mas prometedores junto a la justificación que les hace estar en esta lista.
 
-# 1. Personas que prioricen tener mas tiempo a cambio de dinero.
+### 1. Personas que prioricen tener mas tiempo a cambio de dinero.
 
 Esto se debe a que las personas que se encuentren en este segmento de la población van a ser mas propensas a invertir dinero en la contratación de un trabajador de *Ciao Lavoro*. Las personas que se encuentren en el segmento contrario es más probable que busquen la manera de resolverlo por si mismas sin la necesidad de invertir dinero en un trabajador que lo haga por ellos.
 
-# 2. Personas que tienden a mantener fidelidad a las aplicaciones.
+### 2. Personas que tienden a mantener fidelidad a las aplicaciones.
 
 Este segmento se encuentra aquí dada la funcionalidad de gamificación que posee la aplicación. Una persona que tenga tendencia a mantener fidelidad es probable que se sienta tentada a continuar usando la aplicación gracias a la mecánica de acumulación de puntos.
 
-# 3. Personas con tendencia a entrar en pánico ante problemas.
+### 3. Personas con tendencia a entrar en pánico ante problemas.
 
 Las personas con esta tendencia son más propensas a buscar ayuda externa cuando se encuentren ante algún problema. Al encontrarse con una adversidad buscarán la manera mas sencilla de solucionarlo. Con ello es probable que consideren utilizar la aplicación.
 
