@@ -1,3 +1,4 @@
+from contract.models import Contract
 from user.serializers import UserSerializer
 from .models import Service, Job, Review
 from .serializers import ServiceSerializer, JobSerializer, ReviewSerializer
@@ -403,3 +404,15 @@ class MostRatedServices(APIView):
         serializer = self.serializer_class(ratedService, many=True, context ={'request': request})
         response_data = {"ratedServices": serializer.data}
         return Response(response_data, status=status.HTTP_200_OK)
+    
+class IsReviewService(APIView):
+    def get(self, request, service_id):
+        token_id = self.request.headers['Authorization']
+        token = get_object_or_404(Token, key = token_id.split()[-1])
+        user = token.user
+        service = get_object_or_404(Service, pk=service_id)
+        contracts = Contract.objects.filter(service=service, client=user, status=4)
+        res = True
+        if len(contracts) == 0:
+            res = False
+        return Response(res)
