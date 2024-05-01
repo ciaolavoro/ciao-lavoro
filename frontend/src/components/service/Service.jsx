@@ -1,7 +1,6 @@
 import { useLoaderData, Link } from "react-router-dom"
 import { useState, useEffect } from "react"
-import { updateServiceRequest, getProfessionsList, promoteService, updatePromoteService } from "../../api/Service.api"
-import { getContractByService } from "../../api/Contract.api"
+import { updateServiceRequest, getProfessionsList, promoteService, updatePromoteService, getUserCanReviewInService } from "../../api/Service.api"
 import ServiceData from "./ServiceData"
 import ServiceButton from "./ServiceButton"
 import PencilIcon from "../icons/PencilIcon"
@@ -38,7 +37,7 @@ export default function ServiceDetails() {
    const { loggedUser } = useAuthContext()
    const [professions, setProfessions] = useState([])
    const [points, setPoints] = useState(0)
-   const [contract, setContract] = useState([])
+   const [canReview, setCanReview] = useState(false)
    const [isPromoted, setIsPromoted] = useState(false)
    const queryParams = new URLSearchParams(window.location.search)
 
@@ -64,18 +63,18 @@ export default function ServiceDetails() {
       if (loggedUser && loggedUser.token) {
          fetchProfessions()
       }
-      const fetchContracts = async () => {
+      const fetchCanReview = async () => {
          try {
-            const res = await getContractByService(service.id)
+            const res = await getUserCanReviewInService(service.id, loggedUser.token)
             if (res.status === 200) {
                const data = await res.json()
-               setContract(data)
+               setCanReview(data)
             }
          } catch (error) {
-            console.error("Failed to fetch contract", error)
+            console.error("Failed to fetch if user can review this service", error)
          }
       }
-      fetchContracts()
+      fetchCanReview()
 
       if (service.is_promoted) {
          const hasPassed = hasPassedAMonth(service.is_promoted)
@@ -467,7 +466,7 @@ export default function ServiceDetails() {
                         <>
                            {!service.reviews.some(review => review.user.username === loggedUser.user.username) && (
                               <>
-                                 {contract.estatus === "Finalizado" ? (
+                                 {canReview === true ? (
                                     <Link to={`/review?service_id=${service.id}`}>
                                        <button className="bg-slate-300 rounded px-2 py-1 font-semibold flex">Añadir una nueva reseña</button>
                                     </Link>
