@@ -15,6 +15,7 @@ import {
    checkLastNameIfEmptyAndSize,
    checkUsernameIfEmptyAndSize,
    checkValidPassword,
+   checkEmailExist,
    errorMessages,
 } from "@/utils/validation"
 import { useToast } from "../ui/use-toast"
@@ -72,6 +73,9 @@ export default function RegisterPage() {
 
    const handleSubmit = async event => {
       event.preventDefault()
+
+      const emailExists = await checkEmailExist(email);
+
       if (checkUsernameIfEmptyAndSize(username)) {
          setUsernameError(true)
          return
@@ -100,6 +104,10 @@ export default function RegisterPage() {
          setPasswordNotEqualError(true)
          return
       } else if (checkEmail(email)) {
+         resetErrors()
+         setEmailError(true)
+         return
+      } else if (emailExists) {
          resetErrors()
          setEmailError(true)
          return

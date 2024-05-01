@@ -7,6 +7,19 @@ export async function checkIfUsernameExists(username, userId) {
     return filteredData.length > 0;
 }
 
+export async function checkEmailExist(email) {
+    const res = await fetchBackend(`/user/`);
+    const data = await res.json();
+
+    console.log('Datos de usuarios: ', data);
+
+    const existingUser = data.find(user => user.email === email);
+
+    console.log('Usuario existente: ', existingUser);
+
+    return existingUser !== undefined;
+}
+
 export function checkIfEmpty(text) {
     return text.trim().length === 0;
 }
@@ -83,8 +96,10 @@ export function checkIfPointsMoreThanMoney(points, money) {
 
 export function checkEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    return !emailRegex.test(email)
+    
+    return !emailRegex.test(email);
 }
+
 
 export function checkValidPassword(password) {
     const isPasswordLengthValid = password.length >= 8
