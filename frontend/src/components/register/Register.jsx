@@ -211,7 +211,7 @@ export default function RegisterPage() {
                            Idioma:
                            <Popover open={openLanguageSelector} onOpenChange={setOpenLanguageSelector}>
                               <PopoverTrigger asChild>
-                                 <button className="flex items-center justify-between px-2 h-8 border rounded w-full">
+                                 <button className="flex items-center justify-between px-2 h-12 border rounded w-full">
                                     {language !== "" ? language : "Selecciona un idioma"}
                                     {<ChevronUpDownIcon />}
                                  </button>
