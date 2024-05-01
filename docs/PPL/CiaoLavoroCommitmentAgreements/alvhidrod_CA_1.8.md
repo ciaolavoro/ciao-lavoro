@@ -1,7 +1,7 @@
 ﻿# **Compromiso los integrantes del Grupo 6 de la asignatura ISPP (Ingeniería de Software y Práctica Profesional)**
 ## Curso 2023-24
 
-**Yo, [Nombre y apellidos], perteneciente al grupo 6 de la asignatura, me comprometo de manera voluntaria y consciente a cumplir con las siguientes cláusulas y responsabilidades durante mi participación en la asignatura ISPP para el curso académico 2023-24.**
+**Yo, Álvaro Hidalgo Rodríguez, perteneciente al grupo 6 de la asignatura, me comprometo de manera voluntaria y consciente a cumplir con las siguientes cláusulas y responsabilidades durante mi participación en la asignatura ISPP para el curso académico 2023-24.**
 
 1. **Dedicación Semanal:**
    1. Me comprometo a dedicar un mínimo de 8 horas semanales a las actividades relacionadas con la asignatura ISPP. Esta dedicación incluirá tiempo destinado a clases, reuniones de grupo, investigación, desarrollo de tareas y cualquier otra actividad relacionada con el proyecto.
@@ -101,15 +101,15 @@ Grupo 3: Pablo M, Adrián, Antonio, Diego.
 
   Las tareas de las que soy responsable en este Sprint son:
 
-- Issue 85
-- Issue 46
-- Issue 45
-- Issue 40
-
-
+- Fix 2-Foto perfil icono #477
+- Fix 1-Hacer responsive crear un servicio #473
+- Doc-Plan de accion de creación de contenido #483
+- watch_theory_pill_market_segmentation_traction_and_community_management
+- Doc firmar los commitment agreement a 28 de abril #500
+- Hacer de usuario piloto para el grupo 12.
 
 -----
-**Firma del Alumno: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_**
+**Firma del Alumno: ![firma](./ImágenesFirma/firmaÁlvaro.png)**
 
 Fecha: 26/04/2024
 
