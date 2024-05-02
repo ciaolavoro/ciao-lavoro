@@ -753,3 +753,23 @@ y
 - **Prompt y respuestas:** Descritos en el enlace: [https://chat.openai.com/share/12e42e91-9e57-4fcd-b757-8bae11493a5f](https://chat.openai.com/share/12e42e91-9e57-4fcd-b757-8bae11493a5f)
 
 ---
+
+### Ventana fija error:
+- **Persona que ha hecho el prompt:** Javier Grosso
+
+- **IA Usada:** ChatGPT
+
+- **Prompt y respuestas:** Descritos en el enlace: [https://chat.openai.com/share/cffcfb0e-77ac-4e35-9de4-11f003704234](https://chat.openai.com/share/cffcfb0e-77ac-4e35-9de4-11f003704234)
+
+- **Este promp solo obtenía alucinaciones**
+
+---
+
+### Textarea con descripcion react, ayuda con el elemento textarea:
+- **Persona que ha hecho el prompt:** Javier Grosso
+
+- **IA Usada:** ChatGPT
+
+- **Prompt y respuestas:** Descritos en el enlace: [https://chat.openai.com/share/7bed23ab-9187-4a59-a53d-87d7444447a0](https://chat.openai.com/share/7bed23ab-9187-4a59-a53d-87d7444447a0)
+
+---
