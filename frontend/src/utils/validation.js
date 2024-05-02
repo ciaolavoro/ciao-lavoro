@@ -7,18 +7,31 @@ export async function checkIfUsernameExists(username, userId) {
     return filteredData.length > 0;
 }
 
+export async function checkEmailExist(email) {
+    const res = await fetchBackend(`/user/`);
+    const data = await res.json();
+
+    console.log('Datos de usuarios: ', data);
+
+    const existingUser = data.find(user => user.email === email);
+
+    console.log('Usuario existente: ', existingUser);
+
+    return existingUser !== undefined;
+}
+
 export function checkIfEmpty(text) {
     return text.trim().length === 0;
 }
 export function checkUsernameIfEmptyAndSize(username) {
-    return !username.trim() || username.length < 3 || username.length >= 31;
+    return !username.trim() || username.length < 3 || username.length >= 31 || username.charAt(0) === ' ' || username.indexOf(' ') !== -1;
 }
 export function checkFirstNameIfEmptyAndSize(firstName) {
-    return !firstName.trim() || firstName.length < 3 || firstName.length >= 31;
+    return !firstName.trim() || firstName.length < 3 || firstName.length >= 31 ||  firstName.charAt(0) === ' ' || /^\d+$/.test(firstName);
 }
 
 export function checkLastNameIfEmptyAndSize(lastName) {
-    return !lastName.trim() || lastName.length < 3 || lastName.length >= 61;
+    return !lastName.trim() || lastName.length < 3 || lastName.length >= 61 ||  lastName.charAt(0) === ' '|| /^\d+$/.test(lastName);
 }
 
 export function checkIfProffesionEmpty(profession) {
@@ -83,8 +96,10 @@ export function checkIfPointsMoreThanMoney(points, money) {
 
 export function checkEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    return !emailRegex.test(email)
+    
+    return !emailRegex.test(email);
 }
+
 
 export function checkValidPassword(password) {
     const isPasswordLengthValid = password.length >= 8
@@ -143,9 +158,9 @@ export const errorMessages = {
     tooManyPoints: "Por favor, introduzca una cantidad de puntos que tengas disponibles.",
     positivePoints: "Por favor, introduzca un número de puntos positivos.",
     noMorePointsMoney: "El pago debe ser mínimo de 0'50€. No puedes canjear más puntos si eso hace que el precio sea menor de 0'50€.",
-    usernameRequiredAndSize: "El nombre de usuario debe ser menos de 30 carácteres, más de 3 y no debe estar en blanco.",
-    nameRequiredAndSize: "El nombre debe ser menos de 30 carácteres, más de 3 y no debe estar en blanco.",
-    lastnameRequiredAndSize: "El apellido debe ser menos de 30 carácteres, más de 3 y no debe estar en blanco.",
+    usernameRequiredAndSize: "El nombre de usuario debe ser menos de 30 carácteres, más de 3 y no debe estar en blanco ni contener espacios.",
+    nameRequiredAndSize: "El nombre debe ser menos de 30 carácteres, más de 3 y no debe estar en blanco, estar formado unicamente por números ni empezar con un espacio.",
+    lastnameRequiredAndSize: "El apellido debe ser menos de 30 carácteres, más de 3 y no debe estar en blanco, estar formado unicamente por números ni empezar con un espacio.",
     termsNotAccepted: "Debes aceptar los términos y condiciones para continuar.",
     passwordNotValid: "La contraseña debe tener mínimo de 8 carácteres, una minúscula, una mayúscula, un número y uno de los siguientes carácteres especiales: ?=.*[@$!%*?&_",
     passwordNotEqual: "Las contraseñas no coinciden.",
