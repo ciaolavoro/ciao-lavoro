@@ -52,6 +52,7 @@ export default function Navbar() {
          icon: <InfoIcon />,
          path: "https://ciaolavoro.github.io/landingpage",
       },
+      
    ]
 
    const navItemsUser = [
@@ -112,7 +113,7 @@ export default function Navbar() {
 
             <section className="md:hidden">
                <ul>
-                  <ResponsiveNavbarMenu navItemsUser={navItemsUser} navItems={navItems} handleLogout={() => setOpenLogoutDialog(true)} />
+                  <ResponsiveNavbarMenu navItemsUser={navItemsUser} navItems={navItems} handleLogout={() => setOpenLogoutDialog(true) } userPoints={userPoints} />
                </ul>
             </section>
          </nav>
@@ -141,10 +142,15 @@ function normalizeUserImageUrl(imageUrl) {
 
 
 
-function ResponsiveNavbarMenu({ navItemsUser, navItems, handleLogout }) {
+function ResponsiveNavbarMenu({ navItemsUser, navItems, handleLogout, userPoints }) {
    const { loggedUser } = useAuthContext()
    return (
-      <>
+      <div className="flex items-center">
+      {loggedUser && (
+         <li className="flex items-center">
+            <span className="mr-1">Puntos: {userPoints}</span>
+         </li>
+      )}
          {loggedUser ? (
             <DropdownMenu>
                <DropdownMenuTrigger>
@@ -200,7 +206,7 @@ function ResponsiveNavbarMenu({ navItemsUser, navItems, handleLogout }) {
                </DropdownMenuContent>
             </DropdownMenu>
          )}
-      </>
+      </div>
    )
 }
 
