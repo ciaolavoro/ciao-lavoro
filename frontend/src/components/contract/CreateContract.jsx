@@ -12,6 +12,7 @@ import {
    errorMessages,
    checkCostDecimal,
 } from "../../utils/validation"
+import { toast } from "../ui/use-toast"
 
 export default function CreateContract() {
    const [description, setDescription] = useState("")
@@ -107,11 +108,11 @@ export default function CreateContract() {
             return
          }
          if (!isValidDateTimeFormat(startDate)) {
-            alert("La fecha y hora de inicio tiene un formato incorrecto.")
+            toast("La fecha y hora de inicio tiene un formato incorrecto.")
             return
          }
          if (!isValidDateTimeFormat(endDate)) {
-            alert("La fecha y hora de fin tiene un formato incorrecto.")
+            toast("La fecha y hora de fin tiene un formato incorrecto.")
             return
          }
          const startDateMin = startDate.getTime()
@@ -131,7 +132,7 @@ export default function CreateContract() {
          }
          await createContract(token)
       } else {
-         alert("No puedes contratar un servicio del que eres trabajador")
+         toast("No puedes contratar un servicio del que eres trabajador")
       }
    }
 
