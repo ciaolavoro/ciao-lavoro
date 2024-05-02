@@ -14,7 +14,7 @@ export default function Home() {
    const { loggedUser } = useAuthContext()
    const { data: promotedServices, loading: loadingPromotingServices } = useGet(`${BACKEND_URL}/service/promoted`)
    const { data: popularServices, loading: loadingPopularServices } = useGet(`${BACKEND_URL}/service/rated`)
-
+   console.log()
    return (
       <>
          {loggedUser ? (
@@ -32,11 +32,10 @@ export default function Home() {
                   {loadingPromotingServices
                      ? [...Array(4)].map((_, index) => <ServiceCardSkeleton key={index} />)
                      : promotedServices.promotedServices
+                          .sort((a, b) => new Date(b.is_promoted) - new Date(a.is_promoted))
                           .slice(0, 4)
-                          .filter(service => service.is_active)
                           .map(service => <ServiceCard key={service.id} service={service} />)}
                </section>
-
                <section>
                   <h2 className="text-3xl font-bold text-center">Servicios más populares:</h2>
                </section>
