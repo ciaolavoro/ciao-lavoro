@@ -14,7 +14,6 @@ export default function Home() {
    const { loggedUser } = useAuthContext()
    const { data: promotedServices, loading: loadingPromotingServices } = useGet(`${BACKEND_URL}/service/promoted`)
    const { data: popularServices, loading: loadingPopularServices } = useGet(`${BACKEND_URL}/service/rated`)
-   console.log()
    return (
       <>
          {loggedUser ? (
