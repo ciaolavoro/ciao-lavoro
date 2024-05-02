@@ -124,7 +124,7 @@ export function notOnlyNumbers(text) {
 }
 
 export function checkIfPositive(number) {
-    return number < 0;
+    return number <= 0;
 }
 
 export function checkIfNumGreaterThanMax(num, max) {
@@ -172,7 +172,7 @@ export const errorMessages = {
     startDateBeforeNow: "La fecha y hora de inicio debe ser posterior a la hora actual.",
     endDateBeforeStartDate: "La fecha y hora de fin debe ser posterior a la fecha y hora de inicio.",
     starDateLimit: "La fecha y hora de inicio no puede ser posterior a seis meses. Por favor, seleccione una fecha y hora de inicio más temprana.",
-    costNegative: "El coste no puede ser negativo.",
+    costNegative: "El coste no puede ser negativo ni cero.",
     costBig: "El coste no puede ser mayor a 100000.",
     descriptionNotOnlyNumbers: "La descripción no puede contener solo números.",
     durationLessThanOneHour: "La duración del contrato debe ser mayor a una hora.",
