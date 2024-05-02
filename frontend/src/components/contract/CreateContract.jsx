@@ -54,7 +54,7 @@ export default function CreateContract() {
    const handleSubmit = async event => {
       event.preventDefault()
       const token = loggedUser.token
-      const isNotAssociated = await checkWorkerAssociation(service_Id,token) //La funcion a llamar, si esta asociado devuelve false
+      const isNotAssociated = await checkWorkerAssociation(service_Id, token)
 
       if (isNotAssociated) {
          if (checkIfEmpty(description)) {
@@ -130,6 +130,7 @@ export default function CreateContract() {
             setIsTimeMoreThanEightHour(true)
             return
          }
+         resetErrors()
          await createContract(token)
       } else {
          toast("No puedes contratar un servicio del que eres trabajador")
@@ -167,10 +168,9 @@ export default function CreateContract() {
                name="description"
                value={description}
                onChange={handleDescriptionChange}
-               className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:shadow-outline"
+               className="w-full min-h-[35px] px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:shadow-outline"
                rows="3"
                maxLength="500"
-               style={{ minHeight: "35px" }}
             />
             <span>{charCount}/500</span>
             {(isDescriptionEmpty || isDescriptionBig || isDescriptionOnlyNumber) && (
@@ -205,17 +205,16 @@ export default function CreateContract() {
                      required
                   />
                </div>
-               
             </div>
             {(isStartDateAfterNow || isEndDateAfterStartDate || isTimeLessThanOneHour || isTimeMoreThanEightHour || isStartTimeInSixMonths) && (
-                  <p className="text-red-500">
-                     {(isStartDateAfterNow && errorMessages.startDateBeforeNow) ||
-                        (isEndDateAfterStartDate && errorMessages.endDateBeforeStartDate) ||
-                        (isTimeLessThanOneHour && errorMessages.durationLessThanOneHour) ||
-                        (isTimeMoreThanEightHour && errorMessages.durationMoreThanEightHours) ||
-                        (isStartTimeInSixMonths && errorMessages.starDateLimit)}
-                  </p>
-               )}
+               <p className="text-red-500">
+                  {(isStartDateAfterNow && errorMessages.startDateBeforeNow) ||
+                     (isEndDateAfterStartDate && errorMessages.endDateBeforeStartDate) ||
+                     (isTimeLessThanOneHour && errorMessages.durationLessThanOneHour) ||
+                     (isTimeMoreThanEightHour && errorMessages.durationMoreThanEightHours) ||
+                     (isStartTimeInSixMonths && errorMessages.starDateLimit)}
+               </p>
+            )}
             <label>Coste del trabajo:</label>
             <input
                type="text"
@@ -230,8 +229,7 @@ export default function CreateContract() {
                <p className="text-red-500">
                   {(isCostNotPositive && errorMessages.costNegative) ||
                      (isCosteBig && errorMessages.costBig) ||
-                     (isCostNotDecimal && errorMessages.costDecimal)
-                     }
+                     (isCostNotDecimal && errorMessages.costDecimal)}
                </p>
             )}
          </div>

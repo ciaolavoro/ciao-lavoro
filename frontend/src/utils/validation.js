@@ -11,12 +11,7 @@ export async function checkEmailExist(email) {
     const res = await fetchBackend(`/user/`);
     const data = await res.json();
 
-    console.log('Datos de usuarios: ', data);
-
     const existingUser = data.find(user => user.email === email);
-
-    console.log('Usuario existente: ', existingUser);
-
     return existingUser !== undefined;
 }
 
@@ -27,11 +22,11 @@ export function checkUsernameIfEmptyAndSize(username) {
     return !username.trim() || username.length < 3 || username.length >= 31 || username.charAt(0) === ' ' || username.indexOf(' ') !== -1;
 }
 export function checkFirstNameIfEmptyAndSize(firstName) {
-    return !firstName.trim() || firstName.length < 3 || firstName.length >= 31 ||  firstName.charAt(0) === ' ' || /^\d+$/.test(firstName);
+    return !firstName.trim() || firstName.length < 3 || firstName.length >= 31 || firstName.charAt(0) === ' ' || /^\d+$/.test(firstName);
 }
 
 export function checkLastNameIfEmptyAndSize(lastName) {
-    return !lastName.trim() || lastName.length < 3 || lastName.length >= 61 ||  lastName.charAt(0) === ' '|| /^\d+$/.test(lastName);
+    return !lastName.trim() || lastName.length < 3 || lastName.length >= 61 || lastName.charAt(0) === ' ' || /^\d+$/.test(lastName);
 }
 
 export function checkIfProffesionEmpty(profession) {
@@ -96,7 +91,7 @@ export function checkIfPointsMoreThanMoney(points, money) {
 
 export function checkEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    
+
     return !emailRegex.test(email);
 }
 
@@ -117,7 +112,7 @@ export function checkfloatExperience(experience) {
 export function isValidDateTimeFormat(dateString) {
     const parsedDate = Date.parse(dateString)
     return !isNaN(parsedDate)
- }
+}
 
 export function notOnlyNumbers(text) {
     return (/^\d+$/.test(text));
@@ -135,7 +130,7 @@ export function isTextNotGreaterThan(text, max) {
     return text.length > max;
 }
 
-export function checkCostDecimal(cost){
+export function checkCostDecimal(cost) {
     return !/^\d+(\.\d{1,2})?$/.test(cost);
 }
 
