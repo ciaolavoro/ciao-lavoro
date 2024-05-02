@@ -169,6 +169,7 @@ export default function CreateContract() {
                className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:shadow-outline"
                rows="3"
                maxLength="500"
+               style={{ minHeight: "35px" }}
             />
             <span>{charCount}/500</span>
             {(isDescriptionEmpty || isDescriptionBig || isDescriptionOnlyNumber) && (
