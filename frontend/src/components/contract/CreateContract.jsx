@@ -11,6 +11,8 @@ import {
    notOnlyNumbers,
    errorMessages,
    checkCostDecimal,
+   checkIsTimeLessThanOneHour,
+   checkIsTimeMoreThanEightHour,
 } from "../../utils/validation"
 import { toast } from "../ui/use-toast"
 
@@ -120,12 +122,12 @@ export default function CreateContract() {
          const timeDifferenceMin = endDateMin - startDateMin
          const timeDifferenceHours = timeDifferenceMin / (1000 * 60)
 
-         if (timeDifferenceHours <= 60) {
+         if (checkIsTimeLessThanOneHour(timeDifferenceHours)) {
             resetErrors()
             setIsTimeLessThanOneHour(true)
             return
          }
-         if (timeDifferenceHours > 8 * 60) {
+         if (checkIsTimeMoreThanEightHour(timeDifferenceHours)) {
             resetErrors()
             setIsTimeMoreThanEightHour(true)
             return

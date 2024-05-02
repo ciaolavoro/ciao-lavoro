@@ -134,6 +134,12 @@ export function checkCostDecimal(cost) {
     return !/^\d+(\.\d{1,2})?$/.test(cost);
 }
 
+export function checkIsTimeLessThanOneHour(timeDifferenceHours) {
+    return timeDifferenceHours <= 60;
+}
+export function checkIsTimeMoreThanEightHour(timeDifferenceHours) {
+    return timeDifferenceHours > 8 * 60;
+}
 
 
 export const errorMessages = {
