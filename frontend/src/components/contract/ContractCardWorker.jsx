@@ -123,15 +123,7 @@ export function ContractCardWorker({ contract }) {
             </button>
          )}
 
-         <div className="flex justify-center items-center">
-            {contract.estatus === "En proceso" && (
-               <button
-                  className="bg-green-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded mt-4 self-center"
-                  onClick={() => updateStatus(contract.id, 4, loggedUser.token)}>
-                  Trabajo terminado
-               </button>
-            )}
-         </div>
+         
       </div>
    )
 }
