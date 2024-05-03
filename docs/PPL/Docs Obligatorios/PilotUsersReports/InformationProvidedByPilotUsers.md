@@ -21,13 +21,13 @@
 - URL de tiempo en clockify : [https://app.clockify.me/shared/661f87cbea745f2d088f7d42](https://app.clockify.me/shared/661f87cbea745f2d088f7d42) hay que actualizar este link
 
 #### ¿Cree que se ha mejorado la aplicación considerablemente?
-![imagen](.\img-improvement.png)
+![imagen](img-improvement.png)
 
 #### ¿Cree que es útil la aplicación?
-![imagen](.\img-usefulness.png)
+![imagen](img-usefulness.png)
 
 #### Grado de satisfacción con la aplicación (siendo 1 el más bajo y 10 el más alto)
-![imagen](.\img-satisfaction.png)
+![imagen](img-satisfaction.png)
 
 
 #### Alejandro Santiago Félix
