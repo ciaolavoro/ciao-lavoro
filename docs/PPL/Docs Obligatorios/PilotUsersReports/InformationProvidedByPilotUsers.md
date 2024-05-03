@@ -14,7 +14,7 @@
 ### CONTROL DE VERSIONES
 | FECHA      | VERSIÓN | DESCRIPCIÓN                                      |
 |------------|---------|--------------------------------------------------|
-| 17/04/2024 | 1.0     | Creación del documento en su versión Sprint 3    |
+| 03/05/2024 | 1.0     | Creación del documento en su versión PPL    |
 
 ### FEEDBACK USUARIOS PILOTO GRUPO 12
 
@@ -31,22 +31,22 @@
 
 
 #### Alejandro Santiago Félix
-Fecha: 13/04/2024
+Fecha: 03/05/2024
 
 |  | ERRORES ENCONTRADOS | VALIDACIONES | RECOMENDACIONES DE MEJORA |
 | -------------- | -------------- | -------------- | -------------- |
-| USUARIO | - No funciona la verificación de usuario.  -No hay consistencia entre los términos de condiciones y la edición (dice que una con 13 dte deja trabajzr pero el mínimo es 16).   - Para más información: https://uses0-my.sharepoint.com/:w:/g/personal/alesanfel_alum_us_es/Ef4sotTG_WZEj3bSGPRf1SQBeUMeLp0QjNC6K1w4lUkjlg?e=Vm7dYh | - Te deja poner trabajos gratis y fechas absurdas.   - Para más info: https://uses0-my.sharepoint.com/:w:/g/personal/alesanfel_alum_us_es/Ef4sotTG_WZEj3bSGPRf1SQBeUMeLp0QjNC6K1w4lUkjlg?e=Vm7dYh | - ¿Para qué sirve el megáfono?   - Diferenciar entre Home y Buscar Servicios.   - Pa más info: https://uses0-my.sharepoint.com/:w:/g/personal/alesanfel_alum_us_es/Ef4sotTG_WZEj3bSGPRf1SQBeUMeLp0QjNC6K1w4lUkjlg?e=Vm7dYh |
-| SERVICIO | Para más info: https://uses0-my.sharepoint.com/:w:/g/personal/alesanfel_alum_us_es/Ef4sotTG_WZEj3bSGPRf1SQBeUMeLp0QjNC6K1w4lUkjlg?e=Vm7dYh | - Para más info: https://uses0-my.sharepoint.com/:w:/g/personal/alesanfel_alum_us_es/Ef4sotTG_WZEj3bSGPRf1SQBeUMeLp0QjNC6K1w4lUkjlg?e=Vm7dYh | - |
-| CONTRATO | https://uses0-my.sharepoint.com/:w:/g/personal/alesanfel_alum_us_es/Ef4sotTG_WZEj3bSGPRf1SQBeUMeLp0QjNC6K1w4lUkjlg?e=Vm7dYh | https://uses0-my.sharepoint.com/:w:/g/personal/alesanfel_alum_us_es/Ef4sotTG_WZEj3bSGPRf1SQBeUMeLp0QjNC6K1w4lUkjlg?e=Vm7dYh | - |
+| USUARIO | https://uses0-my.sharepoint.com/:w:/g/personal/alesanfel_alum_us_es/EUvrgBN-A29NjLD6kF4Xlz8BZl5jolVBtsF6W_11u6gxTA?e=StfuqG | https://uses0-my.sharepoint.com/:w:/g/personal/alesanfel_alum_us_es/EUvrgBN-A29NjLD6kF4Xlz8BZl5jolVBtsF6W_11u6gxTA?e=StfuqG | - |
+| SERVICIO | https://uses0-my.sharepoint.com/:w:/g/personal/alesanfel_alum_us_es/EUvrgBN-A29NjLD6kF4Xlz8BZl5jolVBtsF6W_11u6gxTA?e=StfuqG | https://uses0-my.sharepoint.com/:w:/g/personal/alesanfel_alum_us_es/EUvrgBN-A29NjLD6kF4Xlz8BZl5jolVBtsF6W_11u6gxTA?e=StfuqG | - |
+| CONTRATO | - | - | - |
 
 #### Diego García Linares
-Fecha: 13/04/2024
+Fecha: 03/05/2024
 
 |  | ERRORES ENCONTRADOS | VALIDACIONES | RECOMENDACIONES DE MEJORA |
 | -------------- | -------------- | -------------- | -------------- |
-| USUARIO | - | - | Es un poco simple y blanca pero todo bien. |
-| SERVICIO | - Cuando tengo un servicio creado e intento crear otro me sale todo el rato el error de que no puedo crear un servicio con la misma profesión.  - Cuando modifico un servicio y pongo experiencia 3,3 me salta un error 500.   - No puedo crear una review porque no me deja terminar el contrato ni como cliente ni como trabajador después de pagar.   - En la búsqueda de servicios y la aplicación en general no se ven las fotos que tenéis puestas de stock, sin embargo las que pongo yo si se ven.   - No puedo promocionar ningún servicio siempre das error 405. | Habría que cambiar la validación de cuando se modifica un servicio con un float y la validación de crear más servicios ya que todo el rato te dice que no se puede crear un servicio con la misma profesión. | - |
-| CONTRATO | He encontrado un error y es que no puedo terminar el trabajo ni desde el punto de vista del contratado ni del contratador, no sé si es porque tengo que esperar a que la fecha de finalización termine pero claro si le he contratado para cierta hora y acaba media hora antes podría acabarlo. Eso creo que es un fallo en la lógica de negocio. | - | - |
+| USUARIO | - | - | - |
+| SERVICIO | He promocionado un servicio pero no sale en la página principal. Me siento estafado | - | Cuando estoy en vista movil no sale los puntos o por lo menos yo no lo encuentro |
+| CONTRATO | HNo puedo terminar el contrato ya he pagado y todo pero no se porque como trabajador no puedo terminar el contrato sigue pasando lo mismo que en el sprint anterior. Los puntos funcionan bien lo unico que en vista movil no se ven. | - | - |
 
 #### Juan Jesús Campos Garrido
 Fecha: 03/05/2024
@@ -57,77 +57,59 @@ Fecha: 03/05/2024
 | SERVICIO | No es un error, pero creo recordar que en el sprint pasado al crear un trabajo habia que poner una descripción, e incluso recuerdo que se recomendaba poner en la descripción si el trabajo tenia un precio unitario o si era precio por hora, no se si recuerdo mal, pero si es así, esta vez no he visto la descripción y realmente me parecía muy interesante dicho campo | - | - |
 | CONTRATO | En la creación de contratos, he intentado haer un contrato de dos días, ya que pensaba que para la labor podrían necesitarse dos días, pero me ha dado el error de que el contrato no puede durar más de ocho horas, entonces para contratar a alguien durante una semana necesito crear 7 contratos distintos??? | - | - |
 
-#### Úrsula Garrucho Sánchez
-Fecha: 13/04/2024
-
-|  | ERRORES ENCONTRADOS | VALIDACIONES | RECOMENDACIONES DE MEJORA |
-| -------------- | -------------- | -------------- | -------------- |
-| USUARIO | - | - | - |
-| SERVICIO | Tanto en la edicion como creacion del trabajo no funcionan bien del todo los decimales, me sale un error de que se debe poner un número entero, tras insistir si que se pueden poner decimales pero el error no concuerda con el campo del formulario. | - | Pondria más errores concretos en los campos del formulario ya que si no se rellena algo bien te sale unicamente que ha surgido un error pero no el error concreto en el campo para que el usuario pueda corregirlo antes de rehacer el formulario entero9 de  nuevop |
-| CONTRATO | - | - | - |
-
-#### David Reyes Alés
-Fecha: 13/04/2024
-
-|  | ERRORES ENCONTRADOS | VALIDACIONES | RECOMENDACIONES DE MEJORA |
-| -------------- | -------------- | -------------- | -------------- |
-| USUARIO | Estaría bien que la sesión no se perdiera  al cambiar los datos de usuario.De nuevo, se sigue pasando al localstorage toda la información del usuario loggeado, el token ya puede contener toda esta información y solo habría que decodificarlo  y así no  habría fallas de seguridad.   Al depender de el atributo de "loggedUser" en vez de  solo el token, se pierde la sesión innecesariamente. | - | - |
-| SERVICIO | - | - | - |
-| CONTRATO | Estaría bien que si no tienes puntos, ni si quiera te mestre el pop up de  pagar 0 puntos. | - | - |
-
 #### Antonio Carretero Díaz
-Fecha: 13/04/2024
+Fecha: 03/05/2024
 
 |  | ERRORES ENCONTRADOS | VALIDACIONES | RECOMENDACIONES DE MEJORA |
 | -------------- | -------------- | -------------- | -------------- |
-| USUARIO | He podido iniciar sesión con las credenciales de admin dado que es una contraseña sencilla. | Se debería incluir una contraseña más difícil del usuario admin para que no pueda entrar cualquiera a la aplicación | - |
-| SERVICIO | - Tras iniciar sesión, aparecen fotos rotas.   - Al actualizar el servicio, salta un error 500 cuando pongo decimales en los años de experiencia.   - Al crear un nuevo trabajo, he podido introducir un precio de 0.0 al introducir un precio muy bajo, es decir, 0.00000001.   - Al intentar pulsar sobre el botón de terminar trabajo, salta un error 500.   - Al intentar promocionar un servicio, si introduzco puntos decimales aparece un error 500. Tampoco me deja si introduzco 0 puntos. También me permite introducir la cantidad de -0 puntos o valores no numéricos. | Al buscar el servicio que necesitas, añadiría un mensaje de que no se encuentra ningún servicio en el caso de que no se encuentre ninguno con los filtros aplicados. | - |
-| CONTRATO | - Si intento pagar un contrato con puntos decimales, me salta un error 500. Tampoco he podido pagar con ninguna cantidad.   - Si pulso varias veces en el botón para cancelar el trabajo e ignoro el mensaje de alerta, no tengo la posibilidad de cancelar ningún trabajo.   - Si tengo más de un contrato con un trabajador, al pagar uno de los contratos se paga automáticamente el otro. | Se deberían aplicar validaciones a los errores que he mencionado anteriormente, así como evitar el uso de alertas. | - |
+| USUARIO | - Al registrarme en la aplicación, no he observado ningún tipo de validación de correo y he podido introducir direcciones que no existen. Al iniciar sesión, sobresalen las imágenes del menú principal, provocando que se rompa el responsive. Algunas imágenes usadas se ven algo pixeladas y se debería buscar la mayor calidad posible. Al editar perfil, puedo introducir mi nombre o apellido con espacios al inicio.| Comprobar que el menú principal es perfectamente responsive y comprobar que no se puedan introducir espacios al inicio del texto introducido en el campo Nombre y Apellido | - |
+| SERVICIO | - Al actualizar el servicio, salta un error genérico cuando introduzco la experiencia con decimales. Al dejar una opinión, el campo para dejar la opinión se puede reducir tanto que es ilegible. En el menú principal, en el apartado de servicios populares, aparece listado un servicio que no está promocionado como el resto. | Corregir lo comentado | - |
+| CONTRATO | - Al crear un contrato, se puede reducir el campo descripción tanto que es ilegible. También me salta un error genérico al crear un contrato con el campo coste del trabajo a cero. Al añadir los puntos de descuento a la hora de pagar un contrato, puedo introducir la cantidad de -0 puntos. Tras pagar por el contrato, puedo terminar el trabajo desde ambos usuarios y, al pulsar, me aparece un nuevo botón "Cancelar trabajo" y me permite cancelar el trabajo. Si estoy utilizando Firefox, puedo spamear la alerta al pulsar sobre el botón "Cancelar trabajo" y puedo eliminarla, provocando que nunca más pueda cancelar un trabajo. | Corregir lo comentado | - |
 
 #### Pablo Mera Gómez
-Fecha: 14/04/2024
+Fecha: 03/05/2024
 
 |  | ERRORES ENCONTRADOS | VALIDACIONES | RECOMENDACIONES DE MEJORA |
 | -------------- | -------------- | -------------- | -------------- |
-| USUARIO | Al registrarme no me aparecía nada por mucho que le diera al botón, al paso del tiempo me dejó a pesar de poner un correo falso | La validación del email debería contemplarse mejor | - |
-| SERVICIO | Al editar un servicio da error los números decimales, además se pueden crear trabajos a precio 0 poniendo 0.0001 | Lo de los decimales debería validarse mejor | - |
-| CONTRATO | No he podido probar la pasarela de pago porque no sé cómo hacer que tenga yo un contrato para pagar, lo mismo me ha pasado con los puntos | - | - |
+| USUARIO | - | - | Que no puedas pulsar sobre los distintos campos a editar si no estás editándolo, queda quizás un poco raro pero lo demás perfecto |
+| SERVICIO | Al crear trabajo, si pones mal un campo, se agranda el ancho del formulario. Promociono mi servicio pero no aparece en la página principal. | Falta validar la ciudad, puedes poner como ciudad "a", aparece el usuario a la hora de editar un servicio, si no se puede editar el campo que no aparezca. | - |
+| CONTRATO | - | No sé si limitar los contratos entre 1 y 8 horas conllevaría a que tuviera que repetir estos pasos muchas veces si quiere hacer un contrato de 1 mes por ejemplo | - |
 
 #### Alejandro García Sánchez-Hermosilla
-Fecha: 14/04/2024
+Fecha: 03/05/2024
+
+|  | ERRORES ENCONTRADOS | VALIDACIONES | RECOMENDACIONES DE MEJORA |
+| -------------- | -------------- | -------------- | -------------- |
+| USUARIO  | - | - | - |
+| SERVICIO |No me permite la aplicación hacer una review de un servicio contratado anteriormente además de que cuando se filtra por el nombre de usuario tuve que prestar atención a cual era realmente el nombre, puede ser de ayuda filtrar tanto por el nombre como por el username de un usuario que publicita un servicio | - | - |
+| CONTRATO | Pues a la hora de Terminar un proceso de contratación de servicio también he observado que en ambas partes aparece el botón para dar por terminado el servicio, sin embargo solo te permite terminarlo por parte de la persona que lo contrata, por ello creo que es conveniente eliminar el botón de la parte que no tiene permisos para terminar el contrato. | - | - |
+
+#### Alejandro Campano Galán
+Fecha: 03/05/2024
+
+|  | ERRORES ENCONTRADOS | VALIDACIONES | RECOMENDACIONES DE MEJORA |
+| -------------- | -------------- | -------------- | -------------- |
+| USUARIO | Al modificar la fecha de tu perfil puedes poner valores imposibles como un año con más cifras que 4| - | - |
+| SERVICIO | No puedo terminar un trabajo y, por tanto, no puedo realizar la review. Sin embargo, puedo realizar una review a otro servicio que , segun el manual, no se debería poder. Mis servicios promocionados no aparecen. | - | - |
+| CONTRATO | Se me han gastado mis 115 puntos al promocionar un servicio y se me ha cobrado los 4,99. Por tanto, no se me han aplicado. | - | - |
+
+#### Carlos Baquero Villena
+Fecha: 03/05/2024
+
+|  | ERRORES ENCONTRADOS | VALIDACIONES | RECOMENDACIONES DE MEJORA |
+| -------------- | -------------- | -------------- | -------------- |
+| USUARIO | - | No entiendo por qué solamente hay unos pocos idiomas disponibles al crear el usuario, podríais utilizar una librería para poder tener una lista de más idiomas si el problema es introducirlos a mano. | El placeholder de seleccionar un idioma en el registro de usuario se sale del marco del input |
+| SERVICIO | He podido añadir una review a algunos servicios los cuales no he contratado. A algunos me deja y a otros no. Los servicios promocionados de la pestaña principal no cambian por mucho que recargue la página | - | - |
+| CONTRATO | Por decir algo, al estado del contrato Negociación le falta la tilde | - | - |
+
+#### David Cortabarra Romero
+Fecha: 03/05/2024
 
 |  | ERRORES ENCONTRADOS | VALIDACIONES | RECOMENDACIONES DE MEJORA |
 | -------------- | -------------- | -------------- | -------------- |
 | USUARIO | - | - | - |
-| SERVICIO | Cuando estoy en plena negociación de un contrato no puedo ponerlo en terminado y al no dejar el trabajo terminado, pues no puedo hacer la review de un servicio y en cuanto a promocionar un servicio no me deja acceder a la pasarela de pago debido a un error de que el método no parece estar disponible. | No se ha llevado a cabo una revisión sobre las funionalidades anteriores que daban fallo | - |
-| CONTRATO | Las imagenes no se visulizan, solo aquellas que se crean en la misma sesión que la tuya, y ademas en la promoción de un trabajo no te deja acceder a la pasarela de pago | - | - |
-
-#### Alejandro Campano Galán
-Fecha: 14/04/2024
-
-|  | ERRORES ENCONTRADOS | VALIDACIONES | RECOMENDACIONES DE MEJORA |
-| -------------- | -------------- | -------------- | -------------- |
-| USUARIO | No me funciona el desplegable al pulsar en el icono de perfíl. Por tanto, no he podido editar el perfil. | - | No funcionan la mayoria de botones pero la interfaz como tal me parece muy bonita |
-| SERVICIO | No me funciona el desplegable al pulsar en el icono de perfíl. Por tanto, no he podido ni editar el perfil, ni crear un servicio, ni editar un servicio, ni crear un trabajo, ni listar mis contratos, ni promocionar mis servicios. El botón de poner una opinion dentro de un servicio no me funciona. El botón de buscar servicios de la cabecera no funciona. | - | - |
-| CONTRATO | No me funciona el desplegable al pulsar en el icono de perfíl. Por tanto, no he podido ni editar el perfil, ni crear un servicio, ni editar un servicio, ni crear un trabajo, ni listar mis contratos, ni promocionar mis servicios | - | - |
-
-#### Maria Escalante Ramos
-Fecha: 15/04/2024
-
-|  | ERRORES ENCONTRADOS | VALIDACIONES | RECOMENDACIONES DE MEJORA |
-| -------------- | -------------- | -------------- | -------------- |
-| USUARIO | Es poco práctico que se cierre la sesion al editar mi perfil | - | - |
-| SERVICIO | - En la creacion de servicio se puede introducir cualquier valor en la ciudad.   -Al darle en pagar promocion me da error | - | - |
-| CONTRATO | - | - | - |
-
-#### David Cortabarra Romero
-Fecha: 14/04/2024
-
-|  | ERRORES ENCONTRADOS | VALIDACIONES | RECOMENDACIONES DE MEJORA |
-| -------------- | -------------- | -------------- | -------------- |
-| USUARIO | He encontrado un error 500 a la hora de registrar un nuevo usuario. El error es el siguiente: (Ver en la imagen 1).   No se realiza la validación del correo electrónico al crear un usuario.   Por otra parte, a la hora de modificar los datos de usuario, aparece el siguiente error al pulsar sobre el selector de idiomas sin haber pulsado en el botón de editar perfil: (Ver en la imagen 2).   También creo que no debería cerrarse la sesión del usuario simplemente por actualizar un dato como el idioma.   He creado un perfil correctamente con fecha de nacimiento 10/04/2002. Al editar y guardar los cambios sin modificar la fecha de nacimiento, aparece un mensaje de validación indicando que la edad debe estar comprendida entre 16 y 80 años, cuando la validación no saltó en el registro. | - | - |
-| SERVICIO | En los detalles de un servicio, aparece el siguiente error por consola: (Ver en la imagen 3) | Al crear un servicio, si introduzco un número mayor a la edad del usuario, salta un mensaje de error, sin embargo, cuando pongo un número, por ejemplo, 5 años menor a la edad establecida en mi perfil, me sigue saliendo el mismo mensaje de error, cuando el número ya es menor que el de la edad del usuario. Sería conveniente cambiar dicho mensaje de error. | - Si introduzco un lugar muy largo al crear el servicio, luego dicho texto se sale de la tarjeta que contiene al servicio en el listado de servicios. Pasa lo mismo en los detalles del servicio.   - Las estrellas en las opiniones se salen de su contenedor cuando se reduce el tamaño de la pantalla.   No aparecen las imágenes de los usuarios. En el caso de que no tengan imágenes, creo que estaría bien añadir una imagen por defecto. |
-| CONTRATO | - He podido crear un contrato que comenzaba el mes pasado y que termina en el año 2214.   - Tras haber contratado un trabajo, haberlo pagado y haber comenzado el trabajo la persona correspondiente. Al pulsar el botón de terminar el trabajo por parte de la persona que lo está realizando, aparece un error 403 y un mensaje en pantalla que indica que se ha producido un error al actualizar el estado del trabajo. Sucede lo mismo por parte del contratante. | - | - |
+| SERVICIO | No he tenido problemas en ninguno de los apartados anteriores, sin embargo, al acceder a los detalles del servicio que he creado me aparece el siguiente error por consola: index-BSSWul_X.js:68 GET https://ciaolavoro.pythonanywhere.com/contracts/22/ 404 (Not Found). Por otra parte, tengo un trabajo ya en estado finalizado, sin embargo, no puedo añadir reseñas a la persona que he contratado para realizar dicho trabajo pues no me sale la opción para ello. No he dejado que pase el tiempo para que finalice el trabajo, sino que lo he terminado manualmente. Aun así, el trabajo está pagado y aceptado por ambas partes, por lo que debería aparecer la opción para dejar una opinión. | Me han gustado las validaciones pero cambiaría este mensaje por uno más entendible para los usuarios: "Ya que tu experiencia más 16 no puede ser mayor a tu edad", que salta al establecer la experiencia al crear y editar un servicio. | Creo que los servicios de la persona que ha iniciado sesión no deberían aparecer en los listados de servicios, tan solo deberían aparecer en la sección de Mis servicios.|
+| CONTRATO | El problema que he tenido ha sido más bien al terminar el contrato por parte del que lo está haciendo. Al pulsar en el botón verde de terminar contrato, aparece un mensaje de error en pantalla diciendo que no es posible realizar esa acción pero sin dar más explicaciones. Por parte de la persona que contrata no he encontrado ese problema, cosa que sí pasaba en el sprint 3. | - | - |
 
 Imagen 1:
 ![imagen](https://github.com/ciaolavoro/ciao-lavoro/assets/59439742/2886ab02-1584-4231-a4a4-5d46e4afdcdc)
