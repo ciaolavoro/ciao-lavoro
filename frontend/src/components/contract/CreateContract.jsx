@@ -14,7 +14,7 @@ import {
    checkIsTimeLessThanOneHour,
    checkIsTimeMoreThanEightHour,
 } from "../../utils/validation"
-import { toast } from "../ui/use-toast"
+import { useToast } from "../ui/use-toast"
 
 export default function CreateContract() {
    const [description, setDescription] = useState("")
@@ -27,6 +27,7 @@ export default function CreateContract() {
    const [searchParams] = useSearchParams()
    const service_Id = searchParams.get("service_id")
    const { loggedUser } = useAuthContext()
+   const { toast } = useToast()
 
    const createContract = async token => {
       try {
@@ -110,11 +111,17 @@ export default function CreateContract() {
             return
          }
          if (!isValidDateTimeFormat(startDate)) {
-            toast("La fecha y hora de inicio tiene un formato incorrecto.")
+            toast({
+               variant: "destructive",
+               title: "La fecha y hora de inicio tiene un formato incorrecto.",
+            })
             return
          }
          if (!isValidDateTimeFormat(endDate)) {
-            toast("La fecha y hora de fin tiene un formato incorrecto.")
+            toast({
+               variant: "destructive",
+               title: "La fecha y hora de fin tiene un formato incorrecto.",
+            })
             return
          }
          const startDateMin = startDate.getTime()
@@ -135,7 +142,10 @@ export default function CreateContract() {
          resetErrors()
          await createContract(token)
       } else {
-         toast("No puedes contratar un servicio del que eres trabajador")
+         toast({
+            variant: "destructive",
+            title: "No puedes contratar un servicio del que eres trabajador",
+         })
       }
    }
 
