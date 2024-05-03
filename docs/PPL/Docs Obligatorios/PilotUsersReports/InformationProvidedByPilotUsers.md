@@ -21,13 +21,13 @@
 - URL de tiempo en clockify : [https://app.clockify.me/shared/661f87cbea745f2d088f7d42](https://app.clockify.me/shared/661f87cbea745f2d088f7d42) hay que actualizar este link
 
 #### ¿Cree que se ha mejorado la aplicación considerablemente?
-![imagen](docs\PPL\Docs Obligatorios\PilotUsersReports\img-improvement.png)
+![imagen](.\img-improvement.png)
 
 #### ¿Cree que es útil la aplicación?
-![imagen](docs\PPL\Docs Obligatorios\PilotUsersReports\img-usefulness.png)
+![imagen](.\img-usefulness.png)
 
 #### Grado de satisfacción con la aplicación (siendo 1 el más bajo y 10 el más alto)
-![imagen](docs\PPL\Docs Obligatorios\PilotUsersReports\img-satisfaction.png)
+![imagen](.\img-satisfaction.png)
 
 
 #### Alejandro Santiago Félix
@@ -110,13 +110,4 @@ Fecha: 03/05/2024
 | USUARIO | - | - | - |
 | SERVICIO | No he tenido problemas en ninguno de los apartados anteriores, sin embargo, al acceder a los detalles del servicio que he creado me aparece el siguiente error por consola: index-BSSWul_X.js:68 GET https://ciaolavoro.pythonanywhere.com/contracts/22/ 404 (Not Found). Por otra parte, tengo un trabajo ya en estado finalizado, sin embargo, no puedo añadir reseñas a la persona que he contratado para realizar dicho trabajo pues no me sale la opción para ello. No he dejado que pase el tiempo para que finalice el trabajo, sino que lo he terminado manualmente. Aun así, el trabajo está pagado y aceptado por ambas partes, por lo que debería aparecer la opción para dejar una opinión. | Me han gustado las validaciones pero cambiaría este mensaje por uno más entendible para los usuarios: "Ya que tu experiencia más 16 no puede ser mayor a tu edad", que salta al establecer la experiencia al crear y editar un servicio. | Creo que los servicios de la persona que ha iniciado sesión no deberían aparecer en los listados de servicios, tan solo deberían aparecer en la sección de Mis servicios.|
 | CONTRATO | El problema que he tenido ha sido más bien al terminar el contrato por parte del que lo está haciendo. Al pulsar en el botón verde de terminar contrato, aparece un mensaje de error en pantalla diciendo que no es posible realizar esa acción pero sin dar más explicaciones. Por parte de la persona que contrata no he encontrado ese problema, cosa que sí pasaba en el sprint 3. | - | - |
-
-Imagen 1:
-![imagen](https://github.com/ciaolavoro/ciao-lavoro/assets/59439742/2886ab02-1584-4231-a4a4-5d46e4afdcdc)
-
-Imagen 2: 
-![imagen](https://github.com/ciaolavoro/ciao-lavoro/assets/59439742/2ed2d5bf-b1e4-4626-a213-276940bd50e7)
-
-Imagen 3: 
-![imagen](https://github.com/ciaolavoro/ciao-lavoro/assets/59439742/4d4fbf25-e4e2-4467-8072-908ff4374802)
 
