@@ -53,13 +53,10 @@ Fecha: 03/05/2024
 
 |  | ERRORES ENCONTRADOS | VALIDACIONES | RECOMENDACIONES DE MEJORA |
 | -------------- | -------------- | -------------- | -------------- |
-| USUARIO
-| He tenido un problema, y es que nada más acceder a la aplicación aparecía como si ya estuviera logueado, no se si es que ha habido algún problema y se ha guardado la cookie de mi sesión de la ultima vez que dimos feedback, pero aparezco logueado como el usuario con id 11, que es mohamed, y al aparecer logueado como mohamed, puedo editar sus datos
+| USUARIO | He tenido un problema, y es que nada más acceder a la aplicación aparecía como si ya estuviera logueado, no se si es que ha habido algún problema y se ha guardado la cookie de mi sesión de la ultima vez que dimos feedback, pero aparezco logueado como el usuario con id 11, que es mohamed, y al aparecer logueado como mohamed, puedo editar sus datos
 Solo como propuesta de mejora, quizas es buena idea que igual que desde la barra de navegación teneis un botón para iniciar sesión, que tengais en dicha barra de navegación una opción que nos lleve directamente a registrarnos, se que teneis un botón en el welcome, pero quizás estaría bien ponerlo además en la barra junto a iniciar sesión
 No hace falta confirmar el correo para registrarse????
-Me encanta que al modificar el perfil, ya no se cierre mi sesión, ¡enhorabuena!
-| - 
-|Desde el segundo entregable la interfaz esta muy bien e incluso tiene mejoras sutiles que la hacen más atractiva|
+Me encanta que al modificar el perfil, ya no se cierre mi sesión, ¡enhorabuena!| - |Desde el segundo entregable la interfaz esta muy bien e incluso tiene mejoras sutiles que la hacen más atractiva|
 | SERVICIO 
 | No es un error, pero creo recordar que en el sprint pasado al crear un trabajo habia que poner una descripción, e incluso recuerdo que se recomendaba poner en la descripción si el trabajo tenia un precio unitario o si era precio por hora, no se si recuerdo mal, pero si es así, esta vez no he visto la descripción y realmente me parecía muy interesante dicho campo 
 | - 
