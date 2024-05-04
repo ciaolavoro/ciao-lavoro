@@ -9,6 +9,7 @@
 | Nombre y Apellidos  | Tipo de Contribución  |
 |---------------------|-----------------------|
 | Samuel Albalat Ortiz| Redacción             |
+| Alex Sánchez Hossdorf| Revisión             |
 
 
 ### CONTROL DE VERSIONES
