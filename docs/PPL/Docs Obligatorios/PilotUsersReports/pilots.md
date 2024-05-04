@@ -47,7 +47,7 @@ Las fechas acordadas con los usuarios pilotos son las siguientes:
 | Entrega S1 – 4/03/2024   | 1/03/2024                       | 3/03/2024               |
 | Entrega S2 – 1/04/2024   | 24/03/2024                      | 27/03/2024              |
 | Entrega S3 – 22/04/2024  | 12/04/2024                      | 14/04/2024              |
-| Entrega PPL - 06/05/2024 | 01/05/2024                      | 03/05/2024              |
+| Entrega PPL - 06/05/2024 | 26/04/2024                      | 28/04/2024              |
 
 ### PROCEDIMIENTOS Y PROTOCOLOS
 El procedimiento que seguirá el usuario piloto tras recibir la aplicación será directo y fácil de entender. Junto con la
