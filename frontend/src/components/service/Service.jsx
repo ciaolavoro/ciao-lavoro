@@ -20,6 +20,8 @@ import {
    checkNotStringPoints,
    checkIntegerPoints,
    checkIfPointsMoreThanMoney,
+   getAge,
+   checkfloatExperience,
 } from "../../utils/validation"
 import Jobs from "./Jobs"
 import PromotionButton from "./PromotionButton"
@@ -116,11 +118,13 @@ export default function ServiceDetails() {
    const [isCityError, setIsCityError] = useState(false)
    const [isOnlyCharacters, setIsOnlyCharacters] = useState(false)
    const [isExperienceError, setIsExperienceError] = useState(false)
+   const [isExperienceFloatError, setIsExperienceFloatError] = useState(false)
    const [tooManyPoints, setTooManyPoints] = useState(false)
    const [positivePoints, setPositivePoints] = useState(false)
    const [noMorePointsMoney, setNoMorePointsMoney] = useState(false)
    const [integerPoints, setIntegerPoints] = useState(false)
    const [notStringPoints, setNotStringPoints] = useState(false)
+   const maxExperience = getAge(loggedUser.user.birth_date) - 16;
 
    const resetServiceData = () => {
       setCity(service.city)
@@ -159,6 +163,7 @@ export default function ServiceDetails() {
       setIsExperienceError(false)
       setIsBigExperienceError(false)
       setIsOnlyCharacters(false)
+      setIsExperienceFloatError(false)
    }
 
    const resetPaymentErrors = () => {
@@ -187,7 +192,11 @@ export default function ServiceDetails() {
          resetErrors()
          setIsExperienceError(true)
          return
-      } else if (checkExperienceYears(experience, loggedUser.user.birth_date)) {
+      } else if (checkfloatExperience(Number(experience))) {
+         resetErrors()
+         setIsExperienceFloatError(true)
+         return
+      }else if (checkExperienceYears(experience, loggedUser.user.birth_date)) {
          resetErrors()
          setIsBigExperienceError(true)
          return
@@ -319,11 +328,12 @@ export default function ServiceDetails() {
                               formName={"experience"}
                               labelText={"Experiencia(años):"}
                               inputValue={experience}
-                              isError={isRequiredExperienceError || isExperienceError || isBigExperienceError}
+                              isError={isRequiredExperienceError || isExperienceError || isBigExperienceError || isExperienceFloatError}
                               errorMessage={
                                  (isRequiredExperienceError && errorMessages.required) ||
-                                 (isExperienceError && errorMessages.experienceNotValid) ||
-                                 (isBigExperienceError && errorMessages.tooMuchExperience)
+                                    (isExperienceError && errorMessages.experienceNotValid) ||
+                                    (isBigExperienceError && ("El máximo de experiencia son "+maxExperience+ " años. "+errorMessages.tooMuchExperience))||
+                                    (isExperienceFloatError && errorMessages.floatExperience)
                               }
                               isReadOnly={!isEditing}
                               onChange={event => setExperience(event.target.value)}
@@ -344,7 +354,6 @@ export default function ServiceDetails() {
                                  </p>
                               )}
                            </div>
-
                            <div className="flex justify-center gap-x-4">
                               <ServiceButton type={"submit"} text={"Guardar cambios"} icon={<CheckIcon />} />
                               <ServiceButton type={"button"} text={"Cancelar"} icon={<CrossIcon />} onClick={handleCancel} />
