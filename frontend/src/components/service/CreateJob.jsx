@@ -104,8 +104,8 @@ export default function CreateService() {
                   <p className="text-red-500">
                      {(isNameEmpty && "El nombre del trabajo no puede estar vacío.") ||
                         (isNameOnlyNumber && "El nombre del trabajo no puede ser un número.") ||
-                        (isNameLong && "El nombre del trabajo no puede tener mas de 100 caracteres.") ||
-                        (isNameShort && "El nombre del trabajo debe tener al menos 5 caracteres.")}
+                        (isNameLong && "Debe ser menos de 100 caracteres.") ||
+                        (isNameShort && "Debe ser más de 5 caracteres.")}
                   </p>
                )}
                <div className="flex flex-col gap-2">
@@ -121,11 +121,15 @@ export default function CreateService() {
                   <p className="text-gray-500 text-sm">Por ejemplo: 2.7</p>
                </div>
                {(isPriceEmpty || isNotPositive || isPriceBig || isNotDecimal) && (
-                  <p className="text-red-500">
+                  <p className="text-red-500" >
                      {(isPriceEmpty && "El precio del trabajo no puede estar vacío.") ||
-                        (isNotPositive && "El precio del trabajo debe ser positivo (el cero no cuenta).") ||
-                        (isPriceBig && "El precio del trabajo no puede ser mayor o igual a 100000.") ||
-                        (isNotDecimal && "El precio del trabajo no es valido. Debe ser un número entero o con decimales. Por ejemplo: 2, 2.7 o 2.75")}
+                        (isNotPositive && "El precio del trabajo debe ser mayor a 0") ||
+                        (isPriceBig && "No puede ser mayor o igual a 100000.") ||
+                        (isNotDecimal && <span>
+                           El precio del trabajo no es valido. <br />
+                           Debe ser un número entero o con decimales. <br />
+                           Por ejemplo: 2, 2.7 o 2.75
+                         </span>)}
                   </p>
                )}
                <button type="submit" className="bg-orange-300 rounded px-3 py-1 font-semibold">

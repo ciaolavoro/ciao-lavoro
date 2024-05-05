@@ -28,7 +28,7 @@ const Review = () => {
          const res = await createServiceReview(service_id, rating, review, loggedUser.token)
          if (res.status === 200) {
             alert("La valoración se ha creado correctamente")
-            navigate("/")
+            navigate(`/services/${service_id}`)
          } else {
             alert("Error al crear la valoración. Por favor, inténtelo de nuevo.")
          }
@@ -83,6 +83,7 @@ const Review = () => {
                   onChange={handleReviewTextChange}
                   placeholder="Escribe tu opinión aquí..."
                   className="w-full p-2 border border-gray-300 rounded-md mb-4"
+                  style={{minHeight: '200px'}}
                   required
                />
                <button type="submit" className="w-full px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">

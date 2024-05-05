@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import UserHasService, AllServiceInPromotion, ServiceList, AllProfessionList
 from .views import ServiceView, JobView, ReviewView, UserServiceList, ProfessionList
-from .views import PromotionPayment, MostRatedServices, PromoteService
+from .views import PromotionPayment, MostRatedServices, PromoteService, IsReviewService
 app_name = 'service'
 
 urlpatterns = [
@@ -21,4 +21,5 @@ urlpatterns = [
     path('promoted/', AllServiceInPromotion.as_view(), name= 'service-all-promotion'),
     path('rated/', MostRatedServices.as_view(), name= 'service-most-rated'),
     path('promote/<int:service_id>/', PromoteService.as_view(), name= 'service-promote'),
+    path('<int:service_id>/review/', IsReviewService.as_view(), name= 'service-promote'),
 ]
