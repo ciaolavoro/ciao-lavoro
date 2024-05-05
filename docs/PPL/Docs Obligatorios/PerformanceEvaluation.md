@@ -795,7 +795,11 @@ Fix 30 - Trabajo #440
 Contribución del estudiante
 
 **Arregui Díaz, Joaquín**
-Contribución del estudiante
+- Ver pildoras teoricas.
+- Grabar anuncio para inversores.
+- Edición anuncio para inversores.
+- Grabar demostración de la aplicación.
+- Editar demostración de la aplicación.
 
 **Barea Jiménez, Antonio**
 Contribución del estudiante
