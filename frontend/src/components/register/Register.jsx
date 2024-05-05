@@ -15,6 +15,7 @@ import {
    checkLastNameIfEmptyAndSize,
    checkUsernameIfEmptyAndSize,
    checkValidPassword,
+   checkEmailExist,
    errorMessages,
 } from "@/utils/validation"
 import { useToast } from "../ui/use-toast"
@@ -72,6 +73,9 @@ export default function RegisterPage() {
 
    const handleSubmit = async event => {
       event.preventDefault()
+
+      const emailExists = await checkEmailExist(email);
+
       if (checkUsernameIfEmptyAndSize(username)) {
          setUsernameError(true)
          return
@@ -100,6 +104,10 @@ export default function RegisterPage() {
          setPasswordNotEqualError(true)
          return
       } else if (checkEmail(email)) {
+         resetErrors()
+         setEmailError(true)
+         return
+      } else if (emailExists) {
          resetErrors()
          setEmailError(true)
          return
@@ -211,7 +219,7 @@ export default function RegisterPage() {
                            Idioma:
                            <Popover open={openLanguageSelector} onOpenChange={setOpenLanguageSelector}>
                               <PopoverTrigger asChild>
-                                 <button className="flex items-center justify-between px-2 h-8 border rounded w-full">
+                                 <button className="flex items-center justify-between px-2 h-12 border rounded w-full">
                                     {language !== "" ? language : "Selecciona un idioma"}
                                     {<ChevronUpDownIcon />}
                                  </button>

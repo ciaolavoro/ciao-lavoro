@@ -7,18 +7,26 @@ export async function checkIfUsernameExists(username, userId) {
     return filteredData.length > 0;
 }
 
+export async function checkEmailExist(email) {
+    const res = await fetchBackend(`/user/`);
+    const data = await res.json();
+
+    const existingUser = data.find(user => user.email === email);
+    return existingUser !== undefined;
+}
+
 export function checkIfEmpty(text) {
     return text.trim().length === 0;
 }
 export function checkUsernameIfEmptyAndSize(username) {
-    return !username.trim() || username.length < 3 || username.length >= 31;
+    return !username.trim() || username.length < 3 || username.length >= 31 || username.charAt(0) === ' ' || username.indexOf(' ') !== -1;
 }
 export function checkFirstNameIfEmptyAndSize(firstName) {
-    return !firstName.trim() || firstName.length < 3 || firstName.length >= 31;
+    return !firstName.trim() || firstName.length < 3 || firstName.length >= 31 || firstName.charAt(0) === ' ' || /^\d+$/.test(firstName);
 }
 
 export function checkLastNameIfEmptyAndSize(lastName) {
-    return !lastName.trim() || lastName.length < 3 || lastName.length >= 61;
+    return !lastName.trim() || lastName.length < 3 || lastName.length >= 61 || lastName.charAt(0) === ' ' || /^\d+$/.test(lastName);
 }
 
 export function checkIfProffesionEmpty(profession) {
@@ -83,8 +91,10 @@ export function checkIfPointsMoreThanMoney(points, money) {
 
 export function checkEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    return !emailRegex.test(email)
+
+    return !emailRegex.test(email);
 }
+
 
 export function checkValidPassword(password) {
     const isPasswordLengthValid = password.length >= 8
@@ -102,14 +112,14 @@ export function checkfloatExperience(experience) {
 export function isValidDateTimeFormat(dateString) {
     const parsedDate = Date.parse(dateString)
     return !isNaN(parsedDate)
- }
+}
 
 export function notOnlyNumbers(text) {
     return (/^\d+$/.test(text));
 }
 
 export function checkIfPositive(number) {
-    return number < 0;
+    return number <= 0;
 }
 
 export function checkIfNumGreaterThanMax(num, max) {
@@ -120,10 +130,16 @@ export function isTextNotGreaterThan(text, max) {
     return text.length > max;
 }
 
-export function checkCostDecimal(cost){
+export function checkCostDecimal(cost) {
     return !/^\d+(\.\d{1,2})?$/.test(cost);
 }
 
+export function checkIsTimeLessThanOneHour(timeDifferenceHours) {
+    return timeDifferenceHours <= 60;
+}
+export function checkIsTimeMoreThanEightHour(timeDifferenceHours) {
+    return timeDifferenceHours > 8 * 60;
+}
 
 
 export const errorMessages = {
@@ -143,9 +159,9 @@ export const errorMessages = {
     tooManyPoints: "Por favor, introduzca una cantidad de puntos que tengas disponibles.",
     positivePoints: "Por favor, introduzca un número de puntos positivos.",
     noMorePointsMoney: "El pago debe ser mínimo de 0'50€. No puedes canjear más puntos si eso hace que el precio sea menor de 0'50€.",
-    usernameRequiredAndSize: "El nombre de usuario debe ser menos de 30 carácteres, más de 3 y no debe estar en blanco.",
-    nameRequiredAndSize: "El nombre debe ser menos de 30 carácteres, más de 3 y no debe estar en blanco.",
-    lastnameRequiredAndSize: "El apellido debe ser menos de 30 carácteres, más de 3 y no debe estar en blanco.",
+    usernameRequiredAndSize: "El nombre de usuario debe ser menos de 30 carácteres, más de 3 y no debe estar en blanco ni contener espacios.",
+    nameRequiredAndSize: "El nombre debe ser menos de 30 carácteres, más de 3 y no debe estar en blanco, estar formado unicamente por números ni empezar con un espacio.",
+    lastnameRequiredAndSize: "El apellido debe ser menos de 30 carácteres, más de 3 y no debe estar en blanco, estar formado unicamente por números ni empezar con un espacio.",
     termsNotAccepted: "Debes aceptar los términos y condiciones para continuar.",
     passwordNotValid: "La contraseña debe tener mínimo de 8 carácteres, una minúscula, una mayúscula, un número y uno de los siguientes carácteres especiales: ?=.*[@$!%*?&_",
     passwordNotEqual: "Las contraseñas no coinciden.",
@@ -157,7 +173,7 @@ export const errorMessages = {
     startDateBeforeNow: "La fecha y hora de inicio debe ser posterior a la hora actual.",
     endDateBeforeStartDate: "La fecha y hora de fin debe ser posterior a la fecha y hora de inicio.",
     starDateLimit: "La fecha y hora de inicio no puede ser posterior a seis meses. Por favor, seleccione una fecha y hora de inicio más temprana.",
-    costNegative: "El coste no puede ser negativo.",
+    costNegative: "El coste no puede ser negativo ni cero.",
     costBig: "El coste no puede ser mayor a 100000.",
     descriptionNotOnlyNumbers: "La descripción no puede contener solo números.",
     durationLessThanOneHour: "La duración del contrato debe ser mayor a una hora.",

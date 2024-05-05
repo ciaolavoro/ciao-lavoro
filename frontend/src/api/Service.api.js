@@ -172,3 +172,15 @@ export const getProfessionsList = async (token) => {
     };
     return fetchBackend(`/service/professionsList/`, options);
 }
+
+export const getUserCanReviewInService = async (serviceId, token) => {
+    const options = {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
+        },
+    };
+
+    return fetchBackend(`/service/${serviceId}/review/`, options);
+}
