@@ -792,7 +792,14 @@ Fix 30 - Trabajo #440
 ## Preparing Project Launch (#PPL)
 
 **Albalat Ortiz, Samuel**
-Contribución del estudiante
+- Presentaciones del 07/05 y el 30/04
+- Asistencia en clase
+- Grabación de vídeos para demos
+- Clausulas abusivas de caludette FIX
+- Ver theory pill Week 12
+- InformationByPilotUsers y pilot .md
+- Product Traction Management
+- Hacer de usuario piloto para el G12 (Shar3d)
 
 **Arregui Díaz, Joaquín**
 - Ver pildoras teoricas.
