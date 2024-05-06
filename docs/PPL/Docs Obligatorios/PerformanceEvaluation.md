@@ -832,7 +832,11 @@ Fix 30 - Trabajo #440
 - Doc Firmar commitment agreement G12
 - Fix 8 - Reviews
 **Cobo Ariza, José Luis**
-Contribución del estudiante
+- Ver píldoras teóricas 
+- Realizar las diferentes presentaciones 
+- Vídeo de inversores 
+- Hacer de usuario piloto para el grupo 12
+- Asistencia a clase
 
 **Cuenca Pérez, Pablo**
 - Ver píldoras teóricas.
