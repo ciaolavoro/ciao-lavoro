@@ -853,7 +853,15 @@ Fix 30 - Trabajo #440
 - Ayudar en las diapositivas.
 
 **García Chavero, Adrián**
-Contribución del estudiante
+- Asistir a las clases de ISPP y recopilar feedback
+- Asistir a las reuniones de Sprint Planning
+- Ver las pildoras teoricas y tomar anotaciones
+- Hacer de usuario piloto equipo 12 Shar3D
+- Revision de tareas
+- ReDespliegue de la aplicación
+- watch_theory_pill_market_segmentation_traction_and_community_management
+- Deployed software review
+- Fix 7 - Contratos
 
 **González Quintanilla, Diego**
 - Asistir a las clases de ISPP y recopilar feedback
