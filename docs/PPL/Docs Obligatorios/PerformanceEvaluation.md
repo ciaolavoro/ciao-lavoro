@@ -820,7 +820,17 @@ Contribución del estudiante
 Contribución del estudiante
 
 **Cuenca Pérez, Pablo**
-Contribución del estudiante
+- Ver píldoras teóricas.
+- Doc - Segmentación del mercado.
+- Fix 5 - Servicios.
+- Participar en el anuncio para inversores.
+- Participar video promoción.
+- Participar e idear el anuncio para trabajadores.
+- Hacer de usuario piloto para el grupo 12.
+- Doc - Time effort report.
+- Participar en calendario Niko Niko.
+- Firmar commitment agreement.
+- Ayudar en las diapositivas.
 
 **García Chavero, Adrián**
 Contribución del estudiante
