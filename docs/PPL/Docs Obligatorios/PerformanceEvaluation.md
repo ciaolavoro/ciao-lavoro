@@ -857,8 +857,20 @@ Contribución del estudiante
 Contribución del estudiante
 
 **Sánchez Hossdorf, Alexander | Alicia**
-Contribución del estudiante
-
+- Asistir a las clases de ISPP y recopilar feedback
+- Presentación 07/05/2024 #519
+- Doc - Anuncio trabajadores #541
+- Doc - Anuncio para las pantallas de la ETSII #517
+- Doc - Anuncio para inversores #515
+- Doc - pilots.md #530 : REVISION
+- Fix P.1: Hacer responsive crear un servicio #473
+- Fix P.3 - Boton de review #503
+- Fix P.2: Foto perfil icono #477
+- Fix P.10 - Términos y servicios. #514 REVISION
+- Crear LinkTree
+- Crear contenido para twitter
+- Hacer de usuario piloto para el grupo 12
+- Ayudar a compañeros en tareas y revisar PR. 
 
 ## World Project Launch (#WPL)
 
