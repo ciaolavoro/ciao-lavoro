@@ -821,8 +821,16 @@ Fix 30 - Trabajo #440
 - Hacer de usuario piloto para el grupo 12
 
 **Campos Campos, Francisco Antonio**
-Contribución del estudiante
-
+- Ver píldoras teóricas
+- Doc - Formulario de usuarios piloto(Revision)
+- Gestionar y organizar el Sprint(co-PM)
+- Crear tareas para el Sprint
+- Ayudar a realizar la presentación
+- Hacer de usuario piloto para el grupo 12
+- Fix 6 - Trabajos #510(Revision)
+- Fix 4 - Usuarios #508(Revision)
+- Doc Firmar commitment agreement G12
+- Fix 8 - Reviews
 **Cobo Ariza, José Luis**
 Contribución del estudiante
 
