@@ -831,6 +831,7 @@ Fix 30 - Trabajo #440
 - Fix 4 - Usuarios #508(Revision)
 - Doc Firmar commitment agreement G12
 - Fix 8 - Reviews
+  
 **Cobo Ariza, José Luis**
 - Ver píldoras teóricas 
 - Realizar las diferentes presentaciones 
