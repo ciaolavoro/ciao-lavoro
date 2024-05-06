@@ -864,7 +864,13 @@ Contribución del estudiante
 Contribución del estudiante
 
 **Mateos Angulo, Pablo**
-Contribución del estudiante
+- Ver píldoras teóricas.
+- Asistir a las clases de ISPP
+- Doc - User Pilot Report
+- Doc - AI Usage Report
+- Participar en calendario Niko Niko.
+- Firmar commitment agreement.
+- Hacer de usuario piloto para el grupo 12.
 
 **Sánchez Hossdorf, Alexander | Alicia**
 - Asistir a las clases de ISPP y recopilar feedback
