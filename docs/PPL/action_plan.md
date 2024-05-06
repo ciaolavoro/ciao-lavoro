@@ -22,12 +22,9 @@
 |------------|----------------|---------------------------|-----------------------------|------------------------------|
 | 29/04/2024 |AWARENESS|Meme |Imagen|Instagram, Twitter|
 | 30/04/2024 |AWARENESS|Meme |Imagen|Instagram, Twitter|
-| 1/05/2024 |AWARENESS|Publicación normal|Imagen|Instagram, Twitter|
 | 2/05/2024 |AWARENESS|Anuncio Tiktok|Video|TikTok, Instagram, Twitter|
-| 3/05/2024 |LOYALTY|Salida oficial ticket de descuento de 5€|Descuento en masa|Instagram, Twitter|
-| 4/05/2024 |AWARENESS|Publicación normal |Encuesta|Instagram, Twitter|
 | 5/05/2024 |AWARENESS|Meme |Imagen|Instagram, Twitter|
-| 6/05/2024 |AWARENESS|Camisetas ciao lavoro|Merchandising|Físico|
+| 6/05/2024 |LOYALTY|Salida oficial ticket de descuento de 20€|Descuento en masa|Instagram, Twitter|
 | 7/05/2024 |AWARENESS|Meme |Imagen|Instagram, Twitter|
 | 8/05/2024 |AWARENESS|Publicacion publicitaria |Imagen|Instagram, Twitter|
 | 9/05/2024 |AWARENESS|Meme |Imagen|Instagram, Twitter|
