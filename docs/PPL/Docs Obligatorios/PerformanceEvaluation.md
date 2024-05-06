@@ -851,6 +851,7 @@ Contribución del estudiante
 - Redespliegue de la aplicación
 - FC terms review
 - Expected aspects review
+- Deployed software review
 
 **Grosso de Terreros Goméz, Javier**
 - Asistir a las clases de ISPP y recopilar feedback
