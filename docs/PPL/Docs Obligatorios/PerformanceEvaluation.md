@@ -868,8 +868,13 @@ Contribución del estudiante
 - Ayudar a los compañeros en tareas varias
 
 **Hidalgo Rodríguez, Álvaro**
-Contribución del estudiante
-
+- Ver pildoras teoricas.
+- Doc - Anuncio trabajadores #541
+- Grabar y editar anuncio para promoción.
+- Fix P.1: Hacer responsive crear un servicio #473
+- Fix P.3 - Boton de review #503
+- Fix P.2: Foto perfil icono #477
+  
 **Mateos Angulo, Pablo**
 - Ver píldoras teóricas.
 - Asistir a las clases de ISPP
