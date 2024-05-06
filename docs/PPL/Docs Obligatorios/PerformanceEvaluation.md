@@ -802,7 +802,16 @@ Contribución del estudiante
 - Editar demostración de la aplicación.
 
 **Barea Jiménez, Antonio**
-Contribución del estudiante
+- Ver píldoras teóricas
+- Doc - report.md
+- Doc - Anuncio para las pantallas de la ETSII
+- Doc - Filtrar feedback de Usuarios Piloto PPL
+- Doc - Formulario de usuarios piloto
+- Gestionar y organizar el Sprint
+- Doc - Individual Performance Evaluation (Revisar)
+- Crear tareas para el Sprint
+- Ayudar a realizar la presentación
+- Hacer de usuario piloto para el grupo 12
 
 **Campos Campos, Francisco Antonio**
 Contribución del estudiante
