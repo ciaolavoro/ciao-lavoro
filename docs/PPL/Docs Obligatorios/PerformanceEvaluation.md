@@ -871,6 +871,7 @@ Contribución del estudiante
 - Participar en calendario Niko Niko.
 - Firmar commitment agreement.
 - Hacer de usuario piloto para el grupo 12.
+- Revisar documentos
 
 **Sánchez Hossdorf, Alexander | Alicia**
 - Asistir a las clases de ISPP y recopilar feedback
