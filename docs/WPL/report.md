@@ -129,7 +129,7 @@ Invertimos demasiado tiempo en transparencias de costes Dejar la transparencia d
 **Musclemate**
 - La demo y el anuncio se centran en los aspectos principales de la aplicación, sin repetir funcionalidades en una y otra. Han hecho una demo rapida, centrandose en lo principal que los diferencia.
 
-**ITalent*
+**ITalent**
 - Tienen un buen Elevator Pitch porque venden bien la app, dice lo que hacen en poco tiempo
 
 **Cohabify**
