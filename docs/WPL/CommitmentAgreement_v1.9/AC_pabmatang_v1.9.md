@@ -48,7 +48,7 @@
 Los roles asignados y que tendrán la última palabra en todo lo que a su área respecta serán los siguientes:
 
 
-- Jefe de proyecto: Antonio | Auxiliar: Fran
+- Jefe de proyecto: Antonio | Auxiliar: Diego y Alex
 - Coordinador Backend: Joaquín |Auxiliar: Antonio
 - Coordinador Frontend: Adrián | Auxiliar: Javi
 - Diapositivas: Samuel 
