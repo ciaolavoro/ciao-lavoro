@@ -105,11 +105,11 @@ Grupo 3: Pablo M, Adrián, Antonio, Diego.
 - Contribución KB #556
 - Doc - pilotUsersCommitmentAgreement.md #581
 - FC terms review #574
-- Expected aspects review #575
+- Expected aspects review #575 
 
 
 
------
+------
 **Firma del Alumno: ![firma](./ImágenesFirma/firmaJavi.png)**
 
 Fecha: 07/05/2024
