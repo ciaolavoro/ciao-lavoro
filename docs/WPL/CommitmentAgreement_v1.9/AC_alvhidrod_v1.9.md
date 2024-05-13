@@ -104,8 +104,6 @@ Grupo 3: Pablo M, Adrián, Antonio, Diego.
 - Testing Shar3D #569
 - Hacer un nuevo anuncio #561
 
-
-
 -----
 **Firma del Alumno: ![firma](./ImágenesFirma/firmaÁlvaro.png)**
 
