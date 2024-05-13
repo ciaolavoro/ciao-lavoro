@@ -4,7 +4,7 @@
 **Yo, [Nombre y apellidos], perteneciente al grupo 6 de la asignatura, me comprometo de manera voluntaria y consciente a cumplir con las siguientes cláusulas y responsabilidades durante mi participación en la asignatura ISPP para el curso académico 2023-24.**
 
 1. **Dedicación Semanal:**
-   1. Me comprometo a dedicar un mínimo de 8 horas semanales a las actividades relacionadas con la asignatura ISPP. Esta dedicación incluirá tiempo destinado a clases, reuniones de grupo, investigación, desarrollo de tareas y cualquier otra actividad relacionada con el proyecto.
+   1. Me comprometo a dedicar un mínimo de 6 horas semanales a las actividades relacionadas con la asignatura ISPP. Esta dedicación incluirá tiempo destinado a clases, reuniones de grupo, investigación, desarrollo de tareas y cualquier otra actividad relacionada con el proyecto.
 
 1. **Abandono Responsable:**
    1. En caso de que mi nivel de esfuerzo no alcance el 50% del compromiso acordado, me comprometo a comunicarlo de manera transparente al grupo. En caso de que persista esta situación, me comprometo a abandonar el grupo de manera responsable para no convertirme en un obstáculo para el progreso del equipo.
@@ -69,8 +69,8 @@ Grupo 3: Pablo M, Adrián, Antonio, Diego.
 # **Sistema de Penalizaciones**
 
 1. **Reconocimiento Semanal:**
-   1. **Recompensa:** Aquel miembro del equipo que haya demostrado un compromiso excepcional, cumpliendo o superando consistentemente las 8 horas semanales de dedicación y contribuyendo de manera significativa a las tareas del proyecto, será reconocido públicamente durante nuestras reuniones semanales.
-   1. **Penalización:** Quienes no cumplan con el mínimo de 10 horas semanales de dedicación o que no hayan contribuido de manera significativa a las tareas del proyecto recibirán una advertencia formal por parte del equipo.
+   1. **Recompensa:** Aquel miembro del equipo que haya demostrado un compromiso excepcional, cumpliendo o superando consistentemente las 6 horas semanales de dedicación y contribuyendo de manera significativa a las tareas del proyecto, será reconocido públicamente durante nuestras reuniones semanales.
+   1. **Penalización:** Quienes no cumplan con el mínimo de 6 horas semanales de dedicación o que no hayan contribuido de manera significativa a las tareas del proyecto recibirán una advertencia formal por parte del equipo.
 1. **Finalización en el tiempo estimado de Tareas:**
    1. **Recompensa:** Se otorgará un reconocimiento especial a aquellos miembros que finalicen sus tareas antes de los plazos establecidos, permitiendo así un avance fluido del proyecto.
    1. **Penalización:** Si un miembro incumple repetidamente con los plazos acordados para la finalización de tareas, se establecerá una reunión especial para discutir y encontrar soluciones al problema.
@@ -96,7 +96,7 @@ Grupo 3: Pablo M, Adrián, Antonio, Diego.
 
   Mi aspiración en el proyecto es **10** y lo he comunicado a los miembros del proyecto.
 
-1. **Tareas del PPL de las que soy responsable:**
+1. **Tareas del WPL de las que soy responsable:**
 - Me comprometo a ser uno de los responsables de las tareas que se me han asignado, cargando con las responsabilidades correspondientes cuando las tareas no se completen o se desarrollen con problemas.
 
   Las tareas de las que soy responsable en este Sprint son:
@@ -111,5 +111,5 @@ Grupo 3: Pablo M, Adrián, Antonio, Diego.
 -----
 **Firma del Alumno: \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_**
 
-Fecha: 26/04/2024
+Fecha: 07/05/2024
 
