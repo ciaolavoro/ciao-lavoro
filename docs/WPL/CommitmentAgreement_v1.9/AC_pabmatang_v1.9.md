@@ -102,7 +102,7 @@ Grupo 3: Pablo M, Adrián, Antonio, Diego.
   Las tareas de las que soy responsable en este Sprint son:
 
 - Actualización Commitment Agreement versión 1.9#557
-
+- Testing Shar3D #569
 
 
 
