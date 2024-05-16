@@ -60,7 +60,12 @@ export default function CreateContract() {
         setCost(value);
       }
     };
-    
+    const handleInitialDateChange = e => {
+      const newInitialDate = e.target.value;
+      setInitial_date(newInitialDate);
+      // Resetear la fecha de finalización si la fecha de inicio cambia
+      setEnd_date("");
+    };
 
    const handleSubmit = async event => {
       event.preventDefault()
@@ -207,7 +212,7 @@ export default function CreateContract() {
                      type="datetime-local"
                      name="initial_date"
                      value={initial_date}
-                     onChange={e => setInitial_date(e.target.value)}
+                     onChange={handleInitialDateChange}
                      className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:shadow-outline"
                      min={new Date().toISOString().slice(0, 16)}
                      required
