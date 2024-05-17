@@ -58,13 +58,13 @@ export default function CreateService() {
          resetErrors()
          setIsNotPositive(true)
          return
-      } else if (!/^\d+(\.\d{1,2})?$/.test(Number(estimated_price))) {
-         resetErrors()
-         setIsNotDecimal(true)
-         return
       } else if (Number(estimated_price) >= 100000) {
          resetErrors()
          setIsPriceBig(true)
+         return
+      } else if (!/^\d+(\.\d{1,2})?$/.test(Number(estimated_price))) {
+         resetErrors()
+         setIsNotDecimal(true)
          return
       } else if (nameJob.length >= 100) {
          resetErrors()
