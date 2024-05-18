@@ -4,7 +4,7 @@
 
 **Grupo 6**
 
-**Entregable: PPL**
+**Entregable: WPL**
 
 ## Miembros del equipo y contribuciones
 
@@ -867,7 +867,7 @@ Fix 30 - Trabajo #440
 - Asistir a las clases de ISPP y recopilar feedback
 - Ver las pildoras teóricas y tomar anotaciones
 - Participar en calendario Niko Niko
-- Firmar Commitment Agreement
+- Asistir a las clases de ISPP
 - Realizar el Formulario de Rendimiento del PPL (Semana 1 y Semana 2)
 - Redespliegue de la aplicación
 - FC terms review
@@ -963,7 +963,12 @@ Contribucion del estudiante
 Contribución del estudiante
 
 **Mateos Angulo, Pablo**
-Contribución del estudiante
-
+- Actualización Commitment Agreement versión 1.9#557
+- Usuario Piloto Grupo 12
+- Crear PerformanceEvaluation.md#578
+- Revisión Doc - pilots.md#577
+- Asistir a las clases de ISPP
+- Firmar commitment agreement.
+  
 **Sánchez Hossdorf, Alexander | Alicia**
 Contribución del estudiante
