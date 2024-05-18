@@ -5,15 +5,15 @@
 **Grupo 6**
 
 
-**Entregable: PPL**
+**Entregable: WPL**
 
 
 
 ## Miembros del equipo y contribuciones
 | Nombre y Apellidos | Tipo de Contribución |
 |---------------------|-----------------------|
-| Pablo Cuenca         | Revisión             |
-| Alvaro Hidalgo         | Redacción             |
+| Pablo Mateos         | Redacción             |
+| Alvaro Hidalgo         | Revisión             |
 
 
 ### CONTROL DE VERSIONES
@@ -22,6 +22,7 @@
 | 31/03/2024 | 1.0     | Creación del documento     |
 | 20/04/2024 | 2.0     | Revisión para el tercer sprint     |
 | 05/05/2024 | 2.1   | Revisión para el PPL (queda igual)     |
+| 18/05/2024 | 2.2   | Revisión para el WPL (queda igual)     |
 
 
 ## DATOS NECESARIOS 
