@@ -957,7 +957,16 @@ Contribución del estudiante
 Contribución del estudiante
 
 **Grosso de Terreros Goméz, Javier**
-Contribucion del estudiante
+- Asistir a las clases de ISPP y recopilar feedback
+-  Ayudar a los compañeros en tareas varias
+- Testing Shar3D #569
+- Filtrar Feedback Martes 07/05/2024 #555
+- Contribución KB #556
+- Presentación 14/05/2024 #553
+- Doc - pilotUsersCommitmentAgreement.md #581
+- Fix 2 - Contratos /589 FIXED #593: Revisión
+- Presentación 21/05/2024 #563
+- Doc - PerformanceEvaluation.md #578: rellenar mis contribuciones
 
 **Hidalgo Rodríguez, Álvaro**
 Contribución del estudiante
