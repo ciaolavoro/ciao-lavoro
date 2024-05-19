@@ -1008,4 +1008,11 @@ Contribución del estudiante
 - Firmar commitment agreement.
   
 **Sánchez Hossdorf, Alexander | Alicia**
-Contribución del estudiante
+- Asistir a las clases de ISPP y recopilar feedback
+- Recopilación de Feedback: REVISAR
+- Campaña de Marketing #564: buscar camisetas, hacer pegatinas y flyers, imprimirlos y recortarlos.
+- Fix 1 - Servicios #588
+- Testing Shar3D #569
+- Hacer un nuevo anuncio para los Clientes #561: ACTUAR
+- Presentación 14/05/2024 #553: REVISAR
+- Presentación 21/05/2024 #563: REVISAR
