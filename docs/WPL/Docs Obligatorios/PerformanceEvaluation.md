@@ -24,7 +24,7 @@
 | Pablo Mateos Angulo         | Redacción segmentos de contribución de Pablo Mateos Angulo          |
 ---
 
-**Versión: 4.0**
+**Versión: 5.0**
 
 Fecha: 20 / 05 / 2024
 
