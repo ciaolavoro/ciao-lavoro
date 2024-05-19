@@ -26,7 +26,7 @@
 
 **Versión: 4.0**
 
-Fecha: 05 / 05 / 2024
+Fecha: 20 / 05 / 2024
 
 ### Agreed Individual Performance Evaluation
 
@@ -972,7 +972,17 @@ Contribución del estudiante
 Contribución del estudiante
 
 **González Quintanilla, Diego**
-Contribución del estudiante
+- Asistencia a las clases de ISPP
+- Recopilación de Feedback
+- Ejercer de Project Manager (coordinar equipo, crear tareas, controlar entrega...)
+- Doc - Formulario Rendimiento WPL Semana 1 #572
+- Campaña de Marketing #564
+- Doc - Pilot User Commitment Agreement CiaoLavoro+SHAR3D V1.5 #570
+- Mejora del Elevator Pitch #559
+- Doc - Formulario Rendimiento WPL Semana 2 #573
+- Realizar Release Final WPL #580
+- Presentación 14/05/2024 #553
+- Presentación 21/05/2024 #563
 
 **Grosso de Terreros Goméz, Javier**
 - Asistir a las clases de ISPP y recopilar feedback
