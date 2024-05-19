@@ -935,7 +935,14 @@ Fecha: 05 / 05 / 2024
 Contribución del estudiante
 
 **Arregui Díaz, Joaquín**
-Contribución del estudiante
+- Asistir a las clases de ISPP
+- Ayudar a los compañeros en tareas varias
+- Testing Shar3D #569
+- Doc - pilotUsersCommitmentAgreement.md #581 
+- Doc - PerformanceEvaluation.md #578
+- Deployed Software review revisión #576
+- FC terms review revisión #574
+- Revisión y actualización de la Demo #558
 
 **Barea Jiménez, Antonio**
 - Revisar Anuncio Inversores #562
