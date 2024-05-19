@@ -1002,7 +1002,13 @@ Contribución del estudiante
 - Doc - PerformanceEvaluation.md #578: rellenar mis contribuciones
 
 **Hidalgo Rodríguez, Álvaro**
-Contribución del estudiante
+- Asistir clases de ISPP
+- Usuario Piloto Grupo 12
+- revision.md #584
+- Revisión de calendario de grupo #554
+- Nuevo anuncio de clientes #561
+- Doc - Time-Effor-Report.md #579
+- Actividad en redes sociales #565
 
 **Mateos Angulo, Pablo**
 - Actualización Commitment Agreement versión 1.9#557
