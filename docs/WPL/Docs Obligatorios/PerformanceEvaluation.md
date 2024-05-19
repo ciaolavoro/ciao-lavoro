@@ -966,7 +966,12 @@ Contribución del estudiante
 Contribución del estudiante
 
 **Cuenca Pérez, Pablo**
-Contribución del estudiante
+- Asistir clases de ISPP
+- Fix 5.1 Servicios #588
+- Revisión de calendario de grupo #554
+- Participar en anuncios
+- Participar en la demo
+- Doc - Time-Effor-Report.md #579
 
 **García Chavero, Adrián**
 Contribución del estudiante
