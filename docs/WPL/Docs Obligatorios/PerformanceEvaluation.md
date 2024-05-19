@@ -938,7 +938,15 @@ Contribución del estudiante
 Contribución del estudiante
 
 **Barea Jiménez, Antonio**
-Contribución del estudiante
+- Revisar Anuncio Inversores #562
+- Doc - Formulario Rendimiento WPL Semana 2 #573
+- Doc - Formulario de usuarios piloto #567
+- Doc - InformationProvidedByPilotUsers.md #568
+- Doc - Pilot User Commitment Agreement CiaoLavoro+SHAR3D V1.5 #570
+- Doc - Formulario Rendimiento WPL Semana 1 #572
+- Doc - pilots.md #577
+- Creación de tareas
+- Participar en el anuncio para clientes
 
 **Campos Campos, Francisco Antonio**
  - Asistir a la retrospectiva
