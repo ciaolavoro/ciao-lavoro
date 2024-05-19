@@ -589,8 +589,7 @@ Fecha: 05 / 05 / 2024
  - Hotfix 1 - Unificar el backend y mejorar el testing #433
  - Fix 30 - Trabajo #440
  - Fix 31 - Contrato #441
-
-Fix 30 - Trabajo #440
+ - Fix 30 - Trabajo #440
 
 **Barea Jiménez, Antonio**
 - Doc - Presentación 23/04
@@ -942,7 +941,11 @@ Contribución del estudiante
 Contribución del estudiante
 
 **Campos Campos, Francisco Antonio**
-Contribución del estudiante
+ - Asistir a la retrospectiva
+ - Correción de fixes varios de contrato(Fix 5.2)
+ - Ayudar a la presentación del WPL
+ - Revisar tareas
+ - Ayudar a compañeros
 
 **Cobo Ariza, José Luis**
 Contribución del estudiante
