@@ -981,7 +981,14 @@ Contribución del estudiante
 - Doc - Time-Effor-Report.md #579
 
 **García Chavero, Adrián**
-Contribución del estudiante
+- Asistencia a las clases de ISPP
+- Recopilación de Feedback
+- Testing Shar3D #569
+- Realizar Release Final WPL #580
+- Deployed Software review #576
+- Actividad en Redes Sociales #565
+- Revisión y actualización de la Demo #558
+- Actualización Commitment Agreement versión 1.9 #557
 
 **González Quintanilla, Diego**
 - Asistencia a las clases de ISPP
