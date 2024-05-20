@@ -30,21 +30,21 @@ Fecha: 20 / 05 / 2024
 
 ### Agreed Individual Performance Evaluation
 
-| Estudiante | #DP1 | #S1 | #S2 | #S3 | #PPL | #WPL | Total | PE |
+| Estudiante | #DP | #S1 | #S2 | #S3 | #PPL | #WPL | Total | PE |
 |------------|------|-----|-----|-----|------|------|-------|----|
-| Albalat Ortiz, Samuel | 10 | 10 | 9.5 |  9.5 | 9.5 | | 20 | 1 |
-| Arregui Díaz, Joaquín | 10 | 10 | 10 | 10 | 10 | | 20 | 1 |
-| Barea Jiménez, Antonio | 10 | 10 | 9 | 9.5 | 10 | | 20 | 1 |
-| Campos Campos, Francisco Antonio | 10 | 10 | 9 | 9.5 | 10 | | 20 | 1 |
-| Cobo Ariza, José Luis | 10 | 10 | 9 | 9 | 9.5 | | 20 | 1 |
-| Cuenca Pérez, Pablo | 10 | 10 | 9.5 | 9.5 | 9.5 | | 20 | 1 |
-| García Chavero, Adrián | 10 | 10 | 10 | 10 | 10 | | 20 | 1 |
-| González Quintanilla, Diego | 10 | 10 | 10 | 10 | 9.5 | | 20 | 1 |
-| Grosso de Terreros Goméz, Javier | 10 | 10 | 9.5 | 9.5 | 10 | | 20 | 1 |
-| Hidalgo Rodríguez, Álvaro | 10 | 10 | 8.5 | 9 | 10 | | 20 | 1 |
-| Mateos Angulo, Pablo | 10 | 10 | 5.5 | 7 | 7 | | 20 | 1 |
-| Sánchez Hossdorf, Alexander / Alicia | 10 | 10 | 10 | 10 | 10 | | 20 | 1 |
-| Total | 120 | 120 | 109.5 | 112.5 | 115 | | |
+| Albalat Ortiz, Samuel | 10 | 10 | 9.5 |  9.5 | 9.5 | 10 | 58.5 | 0.97 |
+| Arregui Díaz, Joaquín | 10 | 10 | 10 | 10 | 10 | 10 | 60 | 1 |
+| Barea Jiménez, Antonio | 10 | 10 | 9 | 9.5 | 10 | 10 | 58.5 | 0.97 |
+| Campos Campos, Francisco Antonio | 10 | 10 | 9 | 9.5 | 10 | 10 | 58.5 | 0.97 |
+| Cobo Ariza, José Luis | 10 | 10 | 9 | 9 | 9.5 | 10 | 57.5 | 0.96 |
+| Cuenca Pérez, Pablo | 10 | 10 | 9.5 | 9.5 | 9.5 | 10 | 58.5 | 0.97 |
+| García Chavero, Adrián | 10 | 10 | 10 | 10 | 10 | 10 | 60 | 1 |
+| González Quintanilla, Diego | 10 | 10 | 10 | 10 | 9.5 | 10 | 59.5 | 0.99 |
+| Grosso de Terreros Goméz, Javier | 10 | 10 | 9.5 | 9.5 | 10 | 10 | 59 | 0.98 |
+| Hidalgo Rodríguez, Álvaro | 10 | 10 | 8.5 | 9 | 10 | 10 | 57.5 | 0.96 |
+| Mateos Angulo, Pablo | 10 | 10 | 5.5 | 7 | 7 | 9 | 48.5 | 0.8 |
+| Sánchez Hossdorf, Alexander / Alicia | 10 | 10 | 10 | 10 | 10 | 10 | 60 | 1 |
+| Total | 120 | 120 | 109.5 | 112.5 | 115 | 119 | 
 
 ---
 
