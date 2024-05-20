@@ -963,7 +963,14 @@ Contribución del estudiante
  - Ayudar a compañeros
 
 **Cobo Ariza, José Luis**
-Contribución del estudiante
+- Asistir a las clases de ISPP
+- Testing Shar3D #569
+- Doc - PilotUsersPerformanceEvaluation.md 
+- Doc - AI-usage.md
+- Actividad en Instagram y YouTube
+- Presentación 21/05/2024
+- Presentación 14/05/2024
+- Participación en los anuncios
 
 **Cuenca Pérez, Pablo**
 - Asistir clases de ISPP
