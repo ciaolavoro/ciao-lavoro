@@ -932,7 +932,11 @@ Fecha: 20 / 05 / 2024
 ## World Project Launch (#WPL)
 
 **Albalat Ortiz, Samuel**
-Contribución del estudiante
+- Testing Shar3D #569
+- Doc - PerformanceEvaluation.md #578
+- Mejora del Elevator Pitch #559
+- Presentaciones del 14 y 21 de Mayo #553 y #563
+- Doc - AI-Usage.md #582
 
 **Arregui Díaz, Joaquín**
 - Asistir a las clases de ISPP
