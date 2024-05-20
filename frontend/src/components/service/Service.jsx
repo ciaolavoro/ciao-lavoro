@@ -124,7 +124,6 @@ export default function ServiceDetails() {
    const [noMorePointsMoney, setNoMorePointsMoney] = useState(false)
    const [integerPoints, setIntegerPoints] = useState(false)
    const [notStringPoints, setNotStringPoints] = useState(false)
-   const maxExperience = getAge(loggedUser.user.birth_date) - 16;
 
    const resetServiceData = () => {
       setCity(service.city)
@@ -332,7 +331,7 @@ export default function ServiceDetails() {
                               errorMessage={
                                  (isRequiredExperienceError && errorMessages.required) ||
                                     (isExperienceError && errorMessages.experienceNotValid) ||
-                                    (isBigExperienceError && ("El máximo de experiencia son "+maxExperience+ " años. "+errorMessages.tooMuchExperience))||
+                                    (isBigExperienceError && ("El máximo de experiencia son "+ (getAge(loggedUser.user.birth_date) - 16) + " años. "+errorMessages.tooMuchExperience))||
                                     (isExperienceFloatError && errorMessages.floatExperience)
                               }
                               isReadOnly={!isEditing}

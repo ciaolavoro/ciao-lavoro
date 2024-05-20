@@ -54,6 +54,19 @@ export default function CreateContract() {
    const [isCosteBig, setIsCosteBig] = useState(false)
    const [isCostNotDecimal, setIsCostNotDecimal] = useState(false)
 
+   const handleCostChange = (e) => {
+      const value = e.target.value;
+      if (value === "" || /^[0-9]*\.?[0-9]{0,2}$/.test(value)) {
+        setCost(value);
+      }
+    };
+    const handleInitialDateChange = e => {
+      const newInitialDate = e.target.value;
+      setInitial_date(newInitialDate);
+      // Resetear la fecha de finalización si la fecha de inicio cambia
+      setEnd_date("");
+    };
+
    const handleSubmit = async event => {
       event.preventDefault()
       const token = loggedUser.token
@@ -199,7 +212,7 @@ export default function CreateContract() {
                      type="datetime-local"
                      name="initial_date"
                      value={initial_date}
-                     onChange={e => setInitial_date(e.target.value)}
+                     onChange={handleInitialDateChange}
                      className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:shadow-outline"
                      min={new Date().toISOString().slice(0, 16)}
                      required
@@ -232,7 +245,7 @@ export default function CreateContract() {
                type="text"
                name="cost"
                value={cost}
-               onChange={e => setCost(e.target.value)}
+               onChange={handleCostChange}
                className="w-full px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:shadow-outline"
                min="0"
                required
