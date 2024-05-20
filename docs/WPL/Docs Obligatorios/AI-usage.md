@@ -3,7 +3,7 @@
 ## CIAOLAVORO
 **Grupo 6**
 <br>
-**Entregable: PPL**
+**Entregable: WPL**
 
 ## Miembros del equipo y contribución
 

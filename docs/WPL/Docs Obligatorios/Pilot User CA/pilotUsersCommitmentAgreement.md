@@ -1,3 +1,14 @@
+## CIAOLAVORO
+**Grupo 6**
+<br>
+**Entregable: WPL**
+
+## Miembros del equipo y contribución
+
+| Nombre y Apellidos | Tipo de Contribución |
+|---------------------|-----------------------|
+| Javier Grosso Gómez de Terreros  |    Creación/Redacción version WPL   |
+
 # Compromiso de Usuario Piloto
 Destacar que a pesar de tener esta plantilla, en el WPL no ha sido necesario usarla debido a que los unicos usuarios piloto que han participado han sido los miembros del Equipo 12 (Shar3D).
 
